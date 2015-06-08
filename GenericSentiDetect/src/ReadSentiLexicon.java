@@ -9,9 +9,10 @@ public class ReadSentiLexicon
 {
 	public static void main(String[] args) throws IOException
 	{
-//		String InputSentence = "I abuse you and hate you very much";
-//		String InputSentence = "I love you and adore you very much";
-		String InputSentence = "I am feeling awesome and horrible simultaneously";
+		Scanner in = new Scanner(System.in);
+		System.out.println("Enter string:");
+		String InputSentence = in.nextLine();		
+		
 		int PolarityThreshold = 1;
 		int DisplayIndividualScores = 1;
 		
@@ -81,13 +82,13 @@ public class ReadSentiLexicon
 
 				Add2Score = 0;
 				Sign = 0;
-				if (temp[i].equals(X.Term))
+				if (temp[i].equalsIgnoreCase(X.Term))
 				{
-					if (X.Type.equals("strongsubj")) Add2Score += 2;
-					else if (X.Type.equals("weaksubj")) Add2Score += 1;
+					if (X.Type.equalsIgnoreCase("strongsubj")) Add2Score += 2;
+					else if (X.Type.equalsIgnoreCase("weaksubj")) Add2Score += 1;
 
-					if (X.PriorPolarity.equals("positive")) Sign = 1;
-					else if (X.PriorPolarity.equals("negative")) Sign = -1;
+					if (X.PriorPolarity.equalsIgnoreCase("positive")) Sign = 1;
+					else if (X.PriorPolarity.equalsIgnoreCase("negative")) Sign = -1;
 					else Sign = 0;
 					
 					Add2Score *= Sign;
