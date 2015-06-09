@@ -5,7 +5,7 @@ import java.util.*;
  * @author abhishek
  *
  */
-public class ReadSentiLexicon 
+public class OpinionFinder 
 {
 	public static void main(String[] args) throws IOException
 	{
@@ -17,10 +17,10 @@ public class ReadSentiLexicon
 		int DisplayIndividualScores = 1;
 		
 		long startTime = System.currentTimeMillis();
-		int saveFlag = 0;
+		int saveFlag = 1;
 		int sentenceScore;
-		File fin = new File("./senti.txt");
-		File fout = new File("./OpinionFinderWordList.tmp");
+		File fin = new File("./Datasets/senti.txt");
+		File fout = new File("./Outputs/OpinionFinderWordList.tmp");
 
 		ArrayList<OpinionFinderWord> Words = new ArrayList<OpinionFinderWord>();
 		Words = readDataset_OpinionFinder(fin,fout, saveFlag);	//Create the list of words
