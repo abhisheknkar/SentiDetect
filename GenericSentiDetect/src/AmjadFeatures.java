@@ -29,7 +29,6 @@ public class AmjadFeatures
 		}
 	}
 	
-	
 
 	public static int findNoOfOccurrences(String str, String findStr)
 	{

@@ -44,8 +44,9 @@ public class AANOperations
 					count = 0;
 				}
 			}
+			
 		}
-				
+
 		if (saveFlag != 0) 
 		{
 			FileOutputStream foutStream = new FileOutputStream(fout);

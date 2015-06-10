@@ -15,10 +15,22 @@ public class TheMain {
 	{
 		long startTime = System.currentTimeMillis();
 		
-		ArrayList<AANPaper> AANPapers = new ArrayList<AANPaper>();
-		AANPapers = AANOperations.readAANMetadata();
+		doAmjadOperations();
 		
 		long endTime   = System.currentTimeMillis();
 		System.out.println("Total time: " + (endTime - startTime) + "ms.");		
 	}
+
+	public static void doAmjadOperations() throws IOException
+	{
+		ArrayList<AANPaper> AANPapers = new ArrayList<AANPaper>();
+		ArrayList<AmjadCitation> Citations = new ArrayList<AmjadCitation>();
+
+		Citations = AmjadOperations.readDataSet();
+		AANPapers = AANOperations.readAANMetadata();
+		AmjadFeatures.getRefCountandIsSeparate(Citations);
+		
+		
+	}
+
 }
