@@ -28,9 +28,8 @@ public class TheMain {
 
 		Citations = AmjadOperations.readDataSet();
 		AANPapers = AANOperations.readAANMetadata();
-		AmjadFeatures.getRefCountandIsSeparate(Citations);
-		
-		
+		AmjadFeatures.getRefCountandIsSeparate(Citations);	
+		AmjadFeatures.getSelfCitations(Citations, AANPapers);	
 	}
-
+	
 }

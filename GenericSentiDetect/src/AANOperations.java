@@ -1,7 +1,6 @@
 import java.io.*;
 import java.util.*;
 
-
 public class AANOperations
 {
 	public static ArrayList<AANPaper> readAANMetadata() throws IOException
