@@ -9,8 +9,23 @@ public class AmjadCitation implements Serializable
 	int [] SentenceScore = new int[4];
 	int FunctionIndex;
 	int PolarityIndex;
-	
-	 public AmjadCitation(String[] Input)
+	int[] Features = new int[11];
+	/*
+	 * 0: Ref count
+	 * 1: Is Separate (1 means is separate)
+	 * 2: Self Citation
+	 * 3: Contains 1/3 PP
+	 * 4. Contains negation
+	 * 5. Contains speculation
+	 * 6: Contains contrary expression
+	 * 7: Headline of the sections which appear
+	 * 
+	 * ?: Closest subjective clue
+	 * ?: Closest Verb / Adjective
+	 * ?: Dependency Relations
+	 */
+
+	public AmjadCitation(String[] Input)
 	{
 		 Citer = Input[0];
 		 Cited = Input[1];
