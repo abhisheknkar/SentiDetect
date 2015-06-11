@@ -65,16 +65,15 @@ public class AmjadFeatures
 			if (CommonAuthorsList.size() > 0)
 			{
 				Citation.Features[2] = 1;
-/*				for (String CommonAuthor : CommonAuthorsList)
+				for (String CommonAuthor : CommonAuthorsList)
 				{						
 					System.out.println(CommonAuthor);
 				}
-*/
+
 				CommonAuthorsList.clear();
 			}
 		}
-		
-	}
+}
 	
 	public static int findNoOfOccurrences(String str, String findStr)
 	{

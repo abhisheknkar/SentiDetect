@@ -30,6 +30,5 @@ public class TheMain {
 		AANPapers = AANOperations.readAANMetadata();
 		AmjadFeatures.getRefCountandIsSeparate(Citations);	
 		AmjadFeatures.getSelfCitations(Citations, AANPapers);	
-	}
-	
+	}	
 }
