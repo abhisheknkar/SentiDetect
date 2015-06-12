@@ -34,7 +34,8 @@ public class TheMain {
 //		AmjadFeatures.getSelfCitations(Citations, AANPapers);	
 //		AmjadFeatures.computeSentenceScore_OpinionFinder(Citations, Words);	
 
-		SentiWordnetWords = SentiWordnet.readDataset_SentiWordnet();
-		AmjadFeatures.computeSentenceScore_SentiWordnet(Citations, SentiWordnetWords);
+//		SentiWordnetWords = SentiWordnet.readDataset_SentiWordnet();
+//		AmjadFeatures.computeSentenceScore_SentiWordnet(Citations, SentiWordnetWords);
+		AmjadFeatures.computeSentenceScore_VaderSentiment(Citations);
 	}	
 }

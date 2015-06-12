@@ -12,6 +12,7 @@ public class AmjadCitation implements Serializable
 	int FunctionIndex;
 	int PolarityIndex;
 	int[] Features = new int[11];
+	int StanfordNLPScore_explicit;
 	/*
 	 * 0: Ref count
 	 * 1: Is Separate (1 means is separate)

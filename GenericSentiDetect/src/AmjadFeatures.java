@@ -1,6 +1,14 @@
 import java.io.*;
 import java.util.*;
 
+import edu.stanford.nlp.ling.CoreAnnotations;
+import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
+import edu.stanford.nlp.pipeline.Annotation;
+import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
+import edu.stanford.nlp.trees.Tree;
+import edu.stanford.nlp.util.CoreMap;
+
 //All members are static functions
 public class AmjadFeatures 
 {
@@ -137,5 +145,74 @@ public class AmjadFeatures
 		}		
 	}
 
+	public static void computeSentenceScore_StanfordNLP(ArrayList<AmjadCitation> Citations)
+	{
+        String[] sentimentText = { "Very Negative","Negative", "Neutral", "Positive", "Very Positive"};
+        
+        int score;
+        
+		String Sentence;
+		int DisplayScore = 1;
+		for (AmjadCitation Citation : Citations)
+		{
+			Properties props = new Properties();
+	        props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
+	        StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+
+	        Sentence = "";
+			for(int i = 0; i < 4; ++i)
+			{
+				if (Citation.SentenceScore[i] != 0) Sentence = Sentence + Citation.Sentence[i];
+			}
+			Annotation annotation = pipeline.process(Sentence);
+	        for (CoreMap sentence : annotation.get(CoreAnnotations.SentencesAnnotation.class)) 
+	        {
+	        	Tree tree = sentence.get(SentimentCoreAnnotations.AnnotatedTree.class);
+	        	score = RNNCoreAnnotations.getPredictedClass(tree);
+
+	        	Citation.StanfordNLPScore_explicit = score;
+
+	        	if (DisplayScore == 1) 
+				{
+					System.out.println(Sentence + ": " + sentimentText[score]);
+				}
+	        }
+		}
+
+	}
+	
+	public static void computeSentenceScore_VaderSentiment(ArrayList<AmjadCitation> Citations) throws IOException
+	{
+		String Sentence;
+		int DisplayScore = 1;
+		String s;
+		for (AmjadCitation Citation : Citations)
+		{
+			for (int i = 0; i < 4; ++i)
+			{
+				if (Citation.SentenceScore[i] != 0)
+				{
+					Sentence = Citation.Sentence[i];
+					if (DisplayScore == 1) System.out.println(Sentence);
+		            Process p = Runtime.getRuntime().exec("python VaderSentiment.py \"" + Sentence + "\"");
+		             
+		            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+		            if (DisplayScore == 1)
+		            {
+		            	while ((s = stdInput.readLine()) != null) 
+		            	{
+		            		System.out.println(s);
+		            	}
+		                while ((s = stdError.readLine()) != null) {
+		                    System.out.println(s);
+		                }
+		            }
+		
+				
+				}
+			}
+		}
+	}
 
 }
