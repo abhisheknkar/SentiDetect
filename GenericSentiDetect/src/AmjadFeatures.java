@@ -93,11 +93,49 @@ public class AmjadFeatures
 		return count;
 	}
 
-}
+	public static void computeSentenceScore_OpinionFinder(ArrayList<AmjadCitation> Citations, ArrayList<OpinionFinderWord> Words)
+	{
+		String Sentence;
+		int PolarityThreshold = 1;
+		int DisplayIndividualScores = 0;
+		int NoPrintFlag = 1;
+		
+		for (AmjadCitation Citation : Citations)
+		{
+			for (int i = 0; i < 4; ++i)
+			{
+				if (Citation.SentenceScore[i] != 0)
+				{
+					Sentence = Citation.Sentence[i];
+					if (DisplayIndividualScores == 1) System.out.println(Sentence);
+					Citation.OpinionFinderScore[i] = OpinionFinder.computeScore_OpinionFinder(Words, Sentence, PolarityThreshold, DisplayIndividualScores, NoPrintFlag);
+					
+				}
+			}
+		}		
+	}
 
-/*		Citations2 = AmjadFeatures.readObj(fout);
-for (AmjadCitation X : Citations2)
-{
-	System.out.println(X.Sentence[0]);
+	public static void computeSentenceScore_SentiWordnet(ArrayList<AmjadCitation> Citations, HashMap<String, double[]> SentiWordnetWords)
+	{
+		String Sentence;
+		int PolarityThreshold = 1;
+		int DisplayIndividualScores = 0;
+		int NoPrintFlag = 1;
+		
+		for (AmjadCitation Citation : Citations)
+		{
+			for (int i = 0; i < 4; ++i)
+			{
+				if (Citation.SentenceScore[i] != 0)
+				{
+					Sentence = Citation.Sentence[i];
+					if (DisplayIndividualScores == 1) System.out.println(Sentence);
+					Citation.SentiWordnetScore[i] = SentiWordnet.computeScore_SentiWordnet(SentiWordnetWords, Sentence, PolarityThreshold, DisplayIndividualScores, NoPrintFlag);
+					
+				}
+			}
+		}		
+	}
+
+
 }
-*/		

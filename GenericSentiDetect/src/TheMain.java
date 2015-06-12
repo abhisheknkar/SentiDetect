@@ -10,7 +10,6 @@ import java.util.*;
 
 //Class to perform operations on the Amjad dataset
 public class TheMain {
-
 	public static void main(String[] args) throws IOException
 	{
 		long startTime = System.currentTimeMillis();
@@ -25,10 +24,17 @@ public class TheMain {
 	{
 		ArrayList<AANPaper> AANPapers = new ArrayList<AANPaper>();
 		ArrayList<AmjadCitation> Citations = new ArrayList<AmjadCitation>();
-
+		ArrayList<OpinionFinderWord> Words = new ArrayList<OpinionFinderWord>();
+		HashMap<String, double[]> SentiWordnetWords = new HashMap <String, double[]>();
+		
 		Citations = AmjadOperations.readDataSet();
-		AANPapers = AANOperations.readAANMetadata();
-		AmjadFeatures.getRefCountandIsSeparate(Citations);	
-		AmjadFeatures.getSelfCitations(Citations, AANPapers);	
+//		Words = OpinionFinder.readDataset_OpinionFinder();
+//		AANPapers = AANOperations.readAANMetadata();
+//		AmjadFeatures.getRefCountandIsSeparate(Citations);	
+//		AmjadFeatures.getSelfCitations(Citations, AANPapers);	
+//		AmjadFeatures.computeSentenceScore_OpinionFinder(Citations, Words);	
+
+		SentiWordnetWords = SentiWordnet.readDataset_SentiWordnet();
+		AmjadFeatures.computeSentenceScore_SentiWordnet(Citations, SentiWordnetWords);
 	}	
 }

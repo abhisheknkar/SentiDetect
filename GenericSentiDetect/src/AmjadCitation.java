@@ -7,6 +7,8 @@ public class AmjadCitation implements Serializable
 	int year;
 	String[] Sentence = new String[4];
 	int [] SentenceScore = new int[4];
+	int [] OpinionFinderScore = new int[4];
+	double [][] SentiWordnetScore = new double[4][2];
 	int FunctionIndex;
 	int PolarityIndex;
 	int[] Features = new int[11];

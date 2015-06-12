@@ -15,18 +15,19 @@ public class OpinionFinder
 		
 		int PolarityThreshold = 1;
 		int DisplayIndividualScores = 1;
+		int NoPrintFlag = 0;
 		
 		long startTime = System.currentTimeMillis();
 		int saveFlag = 1;
 		int sentenceScore;
-		File fin = new File("./Datasets/senti.txt");
+		File fin = new File("./Datasets/OpinionFinder/senti.txt");
 		File fout = new File("./Outputs/OpinionFinderWordList.tmp");
 
 		ArrayList<OpinionFinderWord> Words = new ArrayList<OpinionFinderWord>();
 		Words = readDataset_OpinionFinder(fin,fout, saveFlag);	//Create the list of words
 		//Given sentence, parse each word, see if it exists in the list. If it does, add its score to aggregate.
 
-		sentenceScore = computeScore_OpinionFinder(Words, InputSentence, PolarityThreshold, DisplayIndividualScores);
+		sentenceScore = computeScore_OpinionFinder(Words, InputSentence, PolarityThreshold, DisplayIndividualScores, NoPrintFlag);
 		
 		long endTime   = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
@@ -65,7 +66,17 @@ public class OpinionFinder
 		return Words;
 	}
 
-	public static int computeScore_OpinionFinder(ArrayList<OpinionFinderWord> Words, String InputSentence, int PolarityThreshold, int DisplayIndividualScores)
+	public static  ArrayList<OpinionFinderWord> readDataset_OpinionFinder() throws IOException
+	{
+		File fin = new File("./Datasets/OpinionFinder/senti.txt");
+		File fout = new File("./Outputs/OpinionFinderWordList.tmp");
+		int saveFlag = 1;
+		ArrayList<OpinionFinderWord> Words = readDataset_OpinionFinder(fin,fout,saveFlag);
+		return Words;
+		
+	}
+
+	public static int computeScore_OpinionFinder(ArrayList<OpinionFinderWord> Words, String InputSentence, int PolarityThreshold, int DisplayIndividualScores, int NoPrintFlag)
 	{
 		int Score = 0;
 		int Add2Score = 0;
@@ -100,10 +111,14 @@ public class OpinionFinder
 				}
 			}
 		}
-		System.out.println("Sentence Score is " + Score);
-		if (Score > PolarityThreshold) System.out.println("The sentence is positive.");
-		else if (Score < -PolarityThreshold) System.out.println("The sentence is negative.");
-		else System.out.println("The sentence is neutral.");
+		
+		if (NoPrintFlag == 0)
+		{
+			System.out.println("Sentence Score is " + Score);
+			if (Score > PolarityThreshold) System.out.println("The sentence is positive.");
+			else if (Score < -PolarityThreshold) System.out.println("The sentence is negative.");
+			else System.out.println("The sentence is neutral.");
+		}
 		return Score;
 	}
 }
