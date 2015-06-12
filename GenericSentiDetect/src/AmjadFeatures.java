@@ -194,7 +194,7 @@ public class AmjadFeatures
 				{
 					Sentence = Citation.Sentence[i];
 					if (DisplayScore == 1) System.out.println(Sentence);
-		            Process p = Runtime.getRuntime().exec("python VaderSentiment.py \"" + Sentence + "\"");
+		            Process p = Runtime.getRuntime().exec("python vaderSentiment_test.py \"" + Sentence + "\"");
 		             
 		            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
