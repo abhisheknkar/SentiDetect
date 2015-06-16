@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.*;
+
 import edu.uci.ics.jung.graph.*;
+import edu.uci.ics.jung.graph.util.EdgeType;
 
 
 public class AANOperations
@@ -58,14 +60,8 @@ public class AANOperations
 		}
 		finally
 		{
-			if (in!= null)
-			{
-				in.close();
-			}
-			if (oos != null)
-			{
-				oos.close();
-			}
+			if (in!= null) in.close();
+			if (oos != null) oos.close();
 		}
 		return AANPapers;
 	}
@@ -106,14 +102,93 @@ public class AANOperations
 		System.out.println(earliest);
 	}
 	
-	public static HashMap<Integer, SparseGraph<Integer, Integer>> formCoAuthorshipNetwork()
+	public static HashMap<String, Integer> getAuthorHashMap() throws IOException
 	{
-		//Returns the yearwise edgelist
-		
-		HashMap<Integer, SparseGraph<Integer, Integer>> CoAuthorshipNetwork = null;
-		
+		HashMap AuthorHashMap = new HashMap<String, Integer>();
+		File fin = null;
+		BufferedReader in = null;
+		String line;
+		String[] linesplit;
+		try
+		{
+			fin = new File("./Datasets/AAN/author_ids.txt");
+			in = new BufferedReader(new FileReader(fin));
 
+			while((line = in.readLine()) != null)
+			{
+				linesplit = line.split("\t");
+				AuthorHashMap.put(linesplit[1], Integer.parseInt(linesplit[0]));				
+			}
+		}
+		finally
+		{
+			if (in!= null) in.close();
+		}
 		
+		return AuthorHashMap;
+	}
+	
+	public static HashMap<Integer, String> getReverseAuthorHashMap() throws IOException
+	{
+		HashMap AuthorHashMap = new HashMap<Integer, String>();
+		File fin = null;
+		BufferedReader in = null;
+		String line;
+		String[] linesplit;
+		try
+		{
+			fin = new File("./Datasets/AAN/author_ids.txt");
+			in = new BufferedReader(new FileReader(fin));
+
+			while((line = in.readLine()) != null)
+			{
+				linesplit = line.split("\t");
+				AuthorHashMap.put(Integer.parseInt(linesplit[0]), linesplit[1]);				
+			}
+		}
+		finally
+		{
+			if (in!= null) in.close();
+		}
+		
+		return AuthorHashMap;
+	}
+	
+	public static HashMap<Integer, SparseMultigraph<Integer, String>> formCoAuthorshipNetwork(ArrayList<AANPaper> Papers) throws IOException
+	{
+		//Returns the yearwise coauthorship edgelist
+		//For each paper in the metadata, for all authors in that paper, form cliques between them
+		
+		HashMap<Integer, SparseMultigraph<Integer, String>> CoAuthorshipNetwork = new HashMap<Integer, SparseMultigraph<Integer, String>>();
+		HashMap<String, Integer> AuthorHashMap = getAuthorHashMap();
+		String[] Authors;
+		
+		for (AANPaper Paper : Papers)
+		{
+			//Get authors
+			SparseMultigraph<Integer, String> g = new SparseMultigraph<Integer, String>();
+			Authors = Paper.Authors;
+			
+			//If graph for the year doesn't exist, put it
+			if(!CoAuthorshipNetwork.containsKey(Paper.year)) CoAuthorshipNetwork.put(Paper.year, g);
+			
+			//Create nodes for authors
+			for (int i = 0; i < Authors.length; ++i)
+			{
+				CoAuthorshipNetwork.get(Paper.year).addVertex(AuthorHashMap.get(Authors[i]));
+			}
+
+			//Form an edge between authors with edge label as paper ID in the graph of the corresponding year
+			for (int i = 0; i < Authors.length; ++i)
+			{
+				CoAuthorshipNetwork.get(Paper.year).addVertex(AuthorHashMap.get(Authors[i]));
+
+				for (int j = i+1; j < Authors.length; ++j )
+				{
+					CoAuthorshipNetwork.get(Paper.year).addEdge(Paper.ID, AuthorHashMap.get(Authors[i]), AuthorHashMap.get(Authors[j]), EdgeType.UNDIRECTED);
+				}
+			}
+		}
 		
 		return CoAuthorshipNetwork;
 	}
