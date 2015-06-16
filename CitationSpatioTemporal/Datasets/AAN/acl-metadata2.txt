@@ -1,0 +1,11 @@
+id = {D10-1001}
+author = {Rush, Alexander M.; Sontag, David; Collins, Michael John; Jaakkola, Tommi}
+title = {On Dual Decomposition and Linear Programming Relaxations for Natural Language Processing}
+venue = {EMNLP}
+year = {2010}
+
+id = {D11-1057}
+author = {Dreyer, Markus; Eisner, Jason M.}
+title = {Discovering Morphological Paradigms from Plain Text Using a Dirichlet Process Mixture Model}
+venue = {EMNLP}
+year = {2011}
