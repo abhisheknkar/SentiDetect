@@ -8,7 +8,7 @@ import edu.uci.ics.jung.graph.util.Pair;
 
 public class AANOperations
 {
-	public static ArrayList<AANPaper> readAANMetadata() throws IOException
+	public static HashMap <String, AANPaper> readAANMetadata() throws IOException
 	{
 		File fin = null;
 		File fout = null;
@@ -19,7 +19,7 @@ public class AANOperations
 		String line;
 		int count = 0;
 		String[] Metadata = new String[5];
-		ArrayList<AANPaper> AANPapers = new ArrayList<AANPaper>();
+		HashMap <String, AANPaper> AANPapers = new HashMap <String, AANPaper>();
 		
 		try
 		{
@@ -44,7 +44,7 @@ public class AANOperations
 				if (count == 5)
 				{
 					AANPaper Paper = new AANPaper(Metadata);
-					AANPapers.add(Paper);
+					AANPapers.put(Paper.ID, Paper);
 					count = 0;
 				}
 			}
@@ -67,16 +67,16 @@ public class AANOperations
 		return AANPapers;
 	}
 	
-	public static ArrayList<AANPaper> readAANObj(File fin) throws IOException
+	public static HashMap <String, AANPaper> readAANObj(File fin) throws IOException
 	{
 		FileInputStream finstream = null;
 		ObjectInputStream objinstream = null;
-		ArrayList<AANPaper> Papers = null;
+		HashMap <String, AANPaper> Papers = null;
 		try
 		{
 			finstream = new FileInputStream(fin);
 			objinstream = new ObjectInputStream(finstream);
-			Papers = (ArrayList<AANPaper>) objinstream.readObject(); 
+			Papers = (HashMap <String, AANPaper>) objinstream.readObject(); 
 		}
 		catch (Exception e) 
 		{
@@ -93,12 +93,12 @@ public class AANOperations
 		return Papers;
 	}
 
-	public static void getEarliest(ArrayList<AANPaper> AANPapers)
+	public static void getEarliest(HashMap <String, AANPaper> AANPapers)
 	{
 		int earliest = Integer.MAX_VALUE;
-		for (AANPaper X: AANPapers)
+		for (Map.Entry<String, AANPaper> X: AANPapers.entrySet())
 		{
-			if (X.year < earliest) earliest = X.year;			
+			if (X.getValue().year < earliest) earliest = X.getValue().year;			
 		}
 		System.out.println(earliest);
 	}
@@ -182,7 +182,7 @@ public class AANOperations
 		return AuthorNodeHashMap;
 	}
 
-	public static HashMap<Integer, SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink>> formCoAuthorshipNetwork(ArrayList<AANPaper> Papers) throws IOException
+	public static HashMap<Integer, SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink>> formCoAuthorshipNetwork(HashMap <String, AANPaper> Papers) throws IOException
 	{
 		//Nodes are of type CoAuthorNode, edges are of type CoAuthorEdge
 		//Returns the yearwise coauthorship edgelist
@@ -194,13 +194,13 @@ public class AANOperations
 		String[] Authors;
 
 		HashMap <String, CoAuthorshipNode> AuthorNodeHashMap = getAuthorNodeHashMap();
-		for (AANPaper Paper : Papers)
+		for (Map.Entry<String, AANPaper> Paper : Papers.entrySet())
 		{
 			//Get authors
-			Authors = Paper.Authors;
+			Authors = Paper.getValue().Authors;
 			
 			//If graph for the year doesn't exist, put it
-			if(!CoAuthorshipNetwork.containsKey(Paper.year)) CoAuthorshipNetwork.put(Paper.year, new SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink>());
+			if(!CoAuthorshipNetwork.containsKey(Paper.getValue().year)) CoAuthorshipNetwork.put(Paper.getValue().year, new SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink>());
 			
 			//Form an edge between authors with edge label as paper ID in the graph of the corresponding year
 			for (int i = 0; i < Authors.length; ++i)
@@ -210,7 +210,7 @@ public class AANOperations
 //					System.out.println(Paper.ID + " : " + Authors[i] + "; " + Authors[j]);
 					if (AuthorNodeHashMap.containsKey(Authors[i]) && AuthorNodeHashMap.containsKey(Authors[j]) ) 
 					{
-						CoAuthorshipNetwork.get(Paper.year).addEdge(new CoAuthorshipLink(Paper.ID), AuthorNodeHashMap.get(Authors[i]), AuthorNodeHashMap.get(Authors[j]), EdgeType.UNDIRECTED);
+						CoAuthorshipNetwork.get(Paper.getValue().year).addEdge(new CoAuthorshipLink(Paper.getValue().ID), AuthorNodeHashMap.get(Authors[i]), AuthorNodeHashMap.get(Authors[j]), EdgeType.UNDIRECTED);
 					}
 				}
 			}
@@ -219,7 +219,7 @@ public class AANOperations
 		return CoAuthorshipNetwork;
 	}	
 
-	public static HashMap<Integer, SparseGraph<CitationNode, CitationLink>> formCitationNetwork(ArrayList<AANPaper> Papers) throws IOException
+	public static HashMap<Integer, SparseGraph<CitationNode, CitationLink>> formCitationNetwork(HashMap <String, AANPaper> Papers) throws IOException
 	{	
 		HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork = new HashMap<Integer, SparseGraph<CitationNode, CitationLink>>();	
 		HashMap<String, CitationNode> CitationNodeHashMap = new HashMap<String, CitationNode>();
@@ -230,9 +230,9 @@ public class AANOperations
 		String[] linesplit;
 		int year;
 		
-		for (AANPaper Paper : Papers)
+		for (Map.Entry<String, AANPaper> Paper : Papers.entrySet())
 		{
-			CitationNodeHashMap.put(Paper.ID, new CitationNode(Paper.ID, Paper.year));
+			CitationNodeHashMap.put(Paper.getValue().ID, new CitationNode(Paper.getValue().ID, Paper.getValue().year));
 		}
 
 		try
