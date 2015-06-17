@@ -20,6 +20,5 @@ public class TheMain
 		
 		long endTime   = System.currentTimeMillis();
 		System.out.println("Total time: " + (endTime - startTime) + "ms.");		
-
 	}
 }

@@ -1,8 +1,10 @@
 import java.io.*;
 import java.util.*;
 
+import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath;
 import edu.uci.ics.jung.graph.*;
 import edu.uci.ics.jung.graph.util.EdgeType;
+import edu.uci.ics.jung.graph.util.Pair;
 
 public class AANOperations
 {
@@ -230,7 +232,7 @@ public class AANOperations
 		
 		for (AANPaper Paper : Papers)
 		{
-			CitationNodeHashMap.put(Paper.ID, new CitationNode(Paper.year));
+			CitationNodeHashMap.put(Paper.ID, new CitationNode(Paper.ID, Paper.year));
 		}
 
 		try
@@ -273,9 +275,33 @@ public class AANOperations
 			if (waitforkeypress == 1) System.in.read();
 		}
 	}
-	
-}
+/*
+	public static void runAlgo01(HashMap<Integer, SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink>> CoAuthorshipNetwork, HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork, ArrayList<AANPaper> AANPapers)
+	{
+		String[] AuthorSource;
+		String[] AuthorDestination;
+		
+		for (Map.Entry<Integer, SparseGraph<CitationNode, CitationLink>> E : CitationNetwork.entrySet())
+		{
+			SparseGraph<CitationNode, CitationLink> gCitation = E.getValue();
+			SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink> gCoAuthor = CoAuthorshipNetwork.get(E.getKey());
 
+			DijkstraShortestPath<CitationNode,CitationLink> alg = new DijkstraShortestPath(gCoAuthor);			
+
+			for (CitationLink C : gCitation.getEdges())
+			{
+				//Get the citer and the cited
+				Pair<CitationNode> P = gCitation.getEndpoints(C);
+				
+				//Get the author lists
+//				AuthorSource = AANPapers.
+				List<CitationLink> L = alg.getPath(P.getFirst(), P.getSecond());
+			}
+
+		}
+	}
+*/
+}
 
 class CoAuthorshipNode
 {
@@ -305,20 +331,23 @@ class CoAuthorshipLink
 
 class CitationNode
 {
+	public String ID;
 	public int year;
-	public CitationNode(int year)
+	public CitationNode(String ID, int year)
 	{
+		this.ID = ID;
 		this.year = year;
 	}
 	public String toString()
 	{
-		return "V" + year;
+		return "V" + ID;
 	}
 }
 
 class CitationLink
 {
 	boolean EdgeLabel;
+	public int AuthorshipDistance;
 	public CitationLink(boolean EdgeLabel)
 	{
 		this.EdgeLabel = EdgeLabel;
