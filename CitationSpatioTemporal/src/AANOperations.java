@@ -275,18 +275,52 @@ public class AANOperations
 			if (waitforkeypress == 1) System.in.read();
 		}
 	}
-/*
-	public static void runAlgo01(HashMap<Integer, SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink>> CoAuthorshipNetwork, HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork, ArrayList<AANPaper> AANPapers)
+
+	public static SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink> AuthorNetworkTill(int year, HashMap<Integer, SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink>> CoAuthorshipNetwork) throws IOException
+	{
+		SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink> G = new SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink>();
+		HashMap<String, CoAuthorshipNode> AuthorNodeHashMap = getAuthorNodeHashMap();
+		
+		for (CoAuthorshipNode C : AuthorNodeHashMap.values())
+		{
+			G.addVertex(C);
+		}
+
+		for (int curryear : CoAuthorshipNetwork.keySet())
+		{
+			if (curryear <= year)
+			{
+//				System.out.println("Curryear = " + curryear + "; Year = " + year + "\n");
+				for (CoAuthorshipLink E : CoAuthorshipNetwork.get(curryear).getEdges())
+				{
+					System.out.println(CoAuthorshipNetwork.get(curryear).toString());
+					System.out.println("E details: " + E.EdgeLabel + "; Dest: " + CoAuthorshipNetwork.get(curryear).findEdge(AuthorNodeHashMap.get("5647"), AuthorNodeHashMap.get("1745")));
+					G.addEdge(E, CoAuthorshipNetwork.get(curryear).getSource(E), CoAuthorshipNetwork.get(curryear).getDest(E));
+				}
+			}
+		}
+		
+		return G;
+	}
+	public static HashMap<Integer, SparseGraph<CitationNode, CitationLink>> runAlgo01(HashMap<Integer, SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink>> CoAuthorshipNetwork, HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork, HashMap <String, AANPaper> AANPapers) throws IOException
 	{
 		String[] AuthorSource;
 		String[] AuthorDestination;
+		int PathLength, currLength;
+		HashMap<String, CoAuthorshipNode> AuthorNodeHashMap = getAuthorNodeHashMap();
+/*		for (CoAuthorshipNode D : AuthorNodeHashMap.values())
+		{
+			System.out.println(D.toString());
+		}
+*/		
+		HashMap<String,Integer> CoAuthorshipDistanceMap = new HashMap<String,Integer>(); 
 		
 		for (Map.Entry<Integer, SparseGraph<CitationNode, CitationLink>> E : CitationNetwork.entrySet())
 		{
 			SparseGraph<CitationNode, CitationLink> gCitation = E.getValue();
-			SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink> gCoAuthor = CoAuthorshipNetwork.get(E.getKey());
+			SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink> gCoAuthor = AuthorNetworkTill(E.getKey(), CoAuthorshipNetwork);
 
-			DijkstraShortestPath<CitationNode,CitationLink> alg = new DijkstraShortestPath(gCoAuthor);			
+			DijkstraShortestPath<CoAuthorshipNode,CoAuthorshipNode> alg = new DijkstraShortestPath(gCoAuthor);			
 
 			for (CitationLink C : gCitation.getEdges())
 			{
@@ -294,13 +328,43 @@ public class AANOperations
 				Pair<CitationNode> P = gCitation.getEndpoints(C);
 				
 				//Get the author lists
-//				AuthorSource = AANPapers.
-				List<CitationLink> L = alg.getPath(P.getFirst(), P.getSecond());
-			}
+				AuthorSource = AANPapers.get(P.getFirst().ID).Authors;
+				AuthorDestination = AANPapers.get(P.getSecond().ID).Authors;
+				
+				PathLength = Integer.MAX_VALUE;
+				currLength = Integer.MAX_VALUE;
+				for (int i = 0; i < AuthorSource.length; ++i)
+				{
+					for (int j = 0; j < AuthorDestination.length; ++j)
+					{
+//						System.out.println(AuthorSource[i] + "," + AuthorDestination[j]);
+//						System.in.read();
+						//For each pair of authors, get their shortest path in the coauthorship network
+						if (!CoAuthorshipDistanceMap.containsKey(AuthorSource[i] + "," + AuthorDestination[j]))
+						{
+							if(AuthorNodeHashMap.containsKey(AuthorSource[i]) && AuthorNodeHashMap.containsKey(AuthorDestination[j]))
+							{
+								List<CoAuthorshipNode> L = alg.getPath(AuthorNodeHashMap.get(AuthorSource[i]),AuthorNodeHashMap.get(AuthorDestination[j]));
+								currLength = L.size();
+								CoAuthorshipDistanceMap.put(AuthorSource[i] + "," + AuthorDestination[j], currLength);
+							}
+						}
+						else 
+						{
+							currLength = CoAuthorshipDistanceMap.get(AuthorSource[i] + "," + AuthorDestination[j]);
+						}
+						
+						if (currLength < PathLength) PathLength = currLength;						
+					}
+				}
+				C.AuthorshipDistance = PathLength;
+				CoAuthorshipDistanceMap.put(P.getFirst().ID + "," + P.getSecond().ID, PathLength);
 
+				E.setValue(gCitation);
+			}
 		}
+		return CitationNetwork;
 	}
-*/
 }
 
 class CoAuthorshipNode
@@ -354,6 +418,6 @@ class CitationLink
 	}
 	public String toString()
 	{
-		return String.valueOf(EdgeLabel);
+		return String.valueOf(AuthorshipDistance);
 	}
 }
