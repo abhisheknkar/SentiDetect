@@ -4,7 +4,6 @@ import java.util.*;
 import edu.uci.ics.jung.graph.*;
 import edu.uci.ics.jung.graph.util.EdgeType;
 
-
 public class AANOperations
 {
 	public static ArrayList<AANPaper> readAANMetadata() throws IOException
@@ -94,7 +93,7 @@ public class AANOperations
 
 	public static void getEarliest(ArrayList<AANPaper> AANPapers)
 	{
-		int earliest = 3000;
+		int earliest = Integer.MAX_VALUE;
 		for (AANPaper X: AANPapers)
 		{
 			if (X.year < earliest) earliest = X.year;			
@@ -131,15 +130,15 @@ public class AANOperations
 	public static HashMap<Integer, String> getReverseAuthorHashMap() throws IOException
 	{
 		HashMap<Integer, String> AuthorHashMap = new HashMap<Integer, String>();
-		File fin = null;
+		FileInputStream fin = null;
 		BufferedReader in = null;
 		String line;
 		String[] linesplit;
 		try
 		{
-			fin = new File("./Datasets/AAN/author_ids.txt");
-			in = new BufferedReader(new FileReader(fin));
-
+			fin = new FileInputStream("./Datasets/AAN/author_ids.txt");
+			in = new BufferedReader(new InputStreamReader(fin, "UTF-16"));
+			
 			while((line = in.readLine()) != null)
 			{
 				linesplit = line.split("\t");
@@ -218,9 +217,57 @@ public class AANOperations
 		return CoAuthorshipNetwork;
 	}	
 
+	public static HashMap<Integer, SparseGraph<CitationNode, CitationLink>> formCitationNetwork(ArrayList<AANPaper> Papers) throws IOException
+	{	
+		HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork = new HashMap<Integer, SparseGraph<CitationNode, CitationLink>>();	
+		HashMap<String, CitationNode> CitationNodeHashMap = new HashMap<String, CitationNode>();
+
+		File fin = null;
+		BufferedReader in = null;
+		String line;
+		String[] linesplit;
+		int year;
+		
+		for (AANPaper Paper : Papers)
+		{
+			CitationNodeHashMap.put(Paper.ID, new CitationNode(Paper.year));
+		}
+
+		try
+		{
+			fin = new File("./Datasets/AAN/acl.txt");
+			in = new BufferedReader(new FileReader(fin));
+
+			while((line = in.readLine()) != null)
+			{
+				linesplit = line.split(" ==> ");
+				year = CitationNodeHashMap.get(linesplit[0]).year;
+				
+				//If graph for the year doesn't exist, put it
+				if(!CitationNetwork.containsKey(year)) CitationNetwork.put(year, new SparseGraph<CitationNode, CitationLink>());
+				
+				CitationNetwork.get(year).addEdge(new CitationLink(true), CitationNodeHashMap.get(linesplit[0]),CitationNodeHashMap.get(linesplit[1]));
+			}
+		}
+		finally
+		{
+			if (in!= null) in.close();
+		}
+		return CitationNetwork;
+	}	
+
 	public static void printCoAuthorshipNetwork(HashMap<Integer, SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink>> CoAuthorshipNetwork, int waitforkeypress) throws IOException
 	{
 		for(Map.Entry<Integer, SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink>> g : CoAuthorshipNetwork.entrySet())
+		{
+			System.out.println(g.getKey() + " : " + g.getValue().toString());
+			if (waitforkeypress == 1) System.in.read();
+		}
+	}
+	
+	public static void printCitationNetwork(HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork, int waitforkeypress) throws IOException
+	{
+		for(Map.Entry<Integer, SparseGraph<CitationNode, CitationLink>> g : CitationNetwork.entrySet())
 		{
 			System.out.println(g.getKey() + " : " + g.getValue().toString());
 			if (waitforkeypress == 1) System.in.read();
@@ -253,5 +300,31 @@ class CoAuthorshipLink
 	public String toString()
 	{
 		return EdgeLabel;
+	}
+}
+
+class CitationNode
+{
+	public int year;
+	public CitationNode(int year)
+	{
+		this.year = year;
+	}
+	public String toString()
+	{
+		return "V" + year;
+	}
+}
+
+class CitationLink
+{
+	boolean EdgeLabel;
+	public CitationLink(boolean EdgeLabel)
+	{
+		this.EdgeLabel = EdgeLabel;
+	}
+	public String toString()
+	{
+		return String.valueOf(EdgeLabel);
 	}
 }
