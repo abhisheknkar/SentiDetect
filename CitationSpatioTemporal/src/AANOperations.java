@@ -194,6 +194,7 @@ public class AANOperations
 		String[] Authors;
 
 		HashMap <String, CoAuthorshipNode> AuthorNodeHashMap = getAuthorNodeHashMap();
+
 		for (Map.Entry<String, AANPaper> Paper : Papers.entrySet())
 		{
 			//Get authors
@@ -207,10 +208,10 @@ public class AANOperations
 			{
 				for (int j = i+1; j < Authors.length; ++j )
 				{
-//					System.out.println(Paper.ID + " : " + Authors[i] + "; " + Authors[j]);
+//					System.out.println(Paper.getValue().ID + " : " + Authors[i] + "; " + Authors[j]);
 					if (AuthorNodeHashMap.containsKey(Authors[i]) && AuthorNodeHashMap.containsKey(Authors[j]) ) 
 					{
-						CoAuthorshipNetwork.get(Paper.getValue().year).addEdge(new CoAuthorshipLink(Paper.getValue().ID), AuthorNodeHashMap.get(Authors[i]), AuthorNodeHashMap.get(Authors[j]), EdgeType.UNDIRECTED);
+						CoAuthorshipNetwork.get(Paper.getValue().year).addEdge(new CoAuthorshipLink(Paper.getValue().ID), AuthorNodeHashMap.get(Authors[i]), AuthorNodeHashMap.get(Authors[j]), EdgeType.DIRECTED);
 					}
 				}
 			}
@@ -248,7 +249,7 @@ public class AANOperations
 				//If graph for the year doesn't exist, put it
 				if(!CitationNetwork.containsKey(year)) CitationNetwork.put(year, new SparseGraph<CitationNode, CitationLink>());
 				
-				CitationNetwork.get(year).addEdge(new CitationLink(true), CitationNodeHashMap.get(linesplit[0]),CitationNodeHashMap.get(linesplit[1]));
+				CitationNetwork.get(year).addEdge(new CitationLink(true), CitationNodeHashMap.get(linesplit[0]),CitationNodeHashMap.get(linesplit[1]), EdgeType.DIRECTED);
 			}
 		}
 		finally
@@ -283,7 +284,7 @@ public class AANOperations
 		
 		for (CoAuthorshipNode C : AuthorNodeHashMap.values())
 		{
-			G.addVertex(C);
+//			G.addVertex(C);
 		}
 
 		for (int curryear : CoAuthorshipNetwork.keySet())
@@ -293,13 +294,10 @@ public class AANOperations
 //				System.out.println("Curryear = " + curryear + "; Year = " + year + "\n");
 				for (CoAuthorshipLink E : CoAuthorshipNetwork.get(curryear).getEdges())
 				{
-					System.out.println(CoAuthorshipNetwork.get(curryear).toString());
-					System.out.println("E details: " + E.EdgeLabel + "; Dest: " + CoAuthorshipNetwork.get(curryear).findEdge(AuthorNodeHashMap.get("5647"), AuthorNodeHashMap.get("1745")));
-					G.addEdge(E, CoAuthorshipNetwork.get(curryear).getSource(E), CoAuthorshipNetwork.get(curryear).getDest(E));
+					G.addEdge(E, CoAuthorshipNetwork.get(curryear).getEndpoints(E).getFirst(), CoAuthorshipNetwork.get(curryear).getEndpoints(E).getSecond(), EdgeType.DIRECTED);
 				}
 			}
 		}
-		
 		return G;
 	}
 	public static HashMap<Integer, SparseGraph<CitationNode, CitationLink>> runAlgo01(HashMap<Integer, SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink>> CoAuthorshipNetwork, HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork, HashMap <String, AANPaper> AANPapers) throws IOException
@@ -319,8 +317,13 @@ public class AANOperations
 		{
 			SparseGraph<CitationNode, CitationLink> gCitation = E.getValue();
 			SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink> gCoAuthor = AuthorNetworkTill(E.getKey(), CoAuthorshipNetwork);
+			System.out.println(gCoAuthor.toString());
 
-			DijkstraShortestPath<CoAuthorshipNode,CoAuthorshipNode> alg = new DijkstraShortestPath(gCoAuthor);			
+//			System.out.println(gCoAuthor.getVertices().toString());
+//			System.out.println(gCoAuthor.containsVertex(AuthorNodeHashMap.get(Integer.toString(10159))) + "," + gCoAuthor.containsVertex(AuthorNodeHashMap.get(Integer.toString(13467))));
+			
+			
+			DijkstraShortestPath<CoAuthorshipNode,CoAuthorshipNode> alg = new DijkstraShortestPath(gCoAuthor);	
 
 			for (CitationLink C : gCitation.getEdges())
 			{
@@ -337,13 +340,14 @@ public class AANOperations
 				{
 					for (int j = 0; j < AuthorDestination.length; ++j)
 					{
-//						System.out.println(AuthorSource[i] + "," + AuthorDestination[j]);
-//						System.in.read();
 						//For each pair of authors, get their shortest path in the coauthorship network
 						if (!CoAuthorshipDistanceMap.containsKey(AuthorSource[i] + "," + AuthorDestination[j]))
 						{
 							if(AuthorNodeHashMap.containsKey(AuthorSource[i]) && AuthorNodeHashMap.containsKey(AuthorDestination[j]))
 							{
+								System.out.println(AuthorNodeHashMap.get(AuthorSource[i]).toString() + "," + AuthorNodeHashMap.get(AuthorDestination[j]).toString());
+								System.out.println(gCoAuthor.containsVertex(AuthorNodeHashMap.get(AuthorSource[i])) + "," + gCoAuthor.containsVertex(AuthorNodeHashMap.get(AuthorDestination[j])));
+//								System.in.read();
 								List<CoAuthorshipNode> L = alg.getPath(AuthorNodeHashMap.get(AuthorSource[i]),AuthorNodeHashMap.get(AuthorDestination[j]));
 								currLength = L.size();
 								CoAuthorshipDistanceMap.put(AuthorSource[i] + "," + AuthorDestination[j], currLength);
@@ -365,6 +369,27 @@ public class AANOperations
 		}
 		return CitationNetwork;
 	}
+	
+	public static void GraphTest()
+	{
+		SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink> gCoAuthor = new SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink>();
+		
+		CoAuthorshipNode v1 = new CoAuthorshipNode(1);
+		CoAuthorshipNode v2 = new CoAuthorshipNode(2);
+		CoAuthorshipLink e1 = new CoAuthorshipLink("E1");
+		gCoAuthor.addVertex(v1);
+		gCoAuthor.addVertex(v2);
+//		gCoAuthor.addEdge(e1, v1, v2 , EdgeType.UNDIRECTED);
+
+		DijkstraShortestPath<CoAuthorshipNode,CoAuthorshipNode> alg = new DijkstraShortestPath(gCoAuthor);
+		
+//		System.out.println("Edge source and dest: " + gCoAuthor.getEndpoints(e1).getFirst() + "," + gCoAuthor.getEndpoints(e1).getSecond());
+		List<CoAuthorshipNode> L = alg.getPath(v1, v2);
+		System.out.println("Shortest Path: " + L.toString());
+		
+	}
+	
+	
 }
 
 class CoAuthorshipNode

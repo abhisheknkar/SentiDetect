@@ -13,10 +13,13 @@ public class TheMain
 
 		HashMap <String, AANPaper> AANPapers = AANOperations.readAANMetadata();
 		HashMap<Integer, SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink>> CoAuthorshipNetwork = AANOperations.formCoAuthorshipNetwork(AANPapers);
+//		AANOperations.printCoAuthorshipNetwork(CoAuthorshipNetwork, 0);
 		HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork = AANOperations.formCitationNetwork(AANPapers);
 
 		CitationNetwork = AANOperations.runAlgo01(CoAuthorshipNetwork, CitationNetwork, AANPapers);
-	
+
+//		AANOperations.GraphTest();
+		
 //		AANOperations.printCoAuthorshipNetwork(CoAuthorshipNetwork, 0);
 //		AANOperations.printCitationNetwork(CitationNetwork, 0);
 	

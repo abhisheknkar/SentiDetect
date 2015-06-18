@@ -1,0 +1,11 @@
+id = {C08-3004}
+author = {Josan, Gurpreet Singh; Singh Lehal, Gurpreet}
+title = {A Punjabi To Hindi Machine Translation System}
+venue = {COLING - Demos}
+year = {2008}
+
+id = {A00-1002}
+author = {Haji&#x10D;, Jan; Hric, Jan; Kubo&#x148;, Vladislav}
+title = {Machine Translation Of Very Close Languages}
+venue = {Applied Natural Language Processing Conference And Meeting Of The North American Association For Computational Linguistics}
+year = {2000}
