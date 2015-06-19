@@ -308,7 +308,8 @@ public class AANOperations
 	}
 	public static HashMap<Integer, List<Double>> runAlgo01Part1(HashMap<Integer, SparseMultigraph<Integer, CoAuthorshipLink>> CoAuthorshipNetwork, HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork, HashMap <String, AANPaper> AANPapers) throws IOException
 	{
-		File fout = new File("Outputs/CoAuthorshipDistanceMap.tmp");
+		File fout1 = new File("Outputs/CoAuthorshipDistanceMap.tmp");
+		File fout2 = new File("Outputs/YearDiffvsDistanceList.tmp");
 		//Gets distance in the coauthorship vs difference in the years of citation and publication
 		String[] AuthorSource;
 		String[] AuthorDestination;
@@ -316,7 +317,7 @@ public class AANOperations
 		HashMap<String, Integer> AuthorNodeHashMap = getAuthorNodeHashMap();
 
 		HashMap<String,Integer> CoAuthorshipDistanceMap = null;
-		if (fout.exists()) CoAuthorshipDistanceMap = FileOperations.readObject(fout);//new HashMap<String,Integer>(); 
+		if (fout1.exists()) CoAuthorshipDistanceMap = FileOperations.readObject(fout1);//new HashMap<String,Integer>(); 
 		else CoAuthorshipDistanceMap = new HashMap<String,Integer>(); 
 				
 		HashMap<Integer, List<Double>> YearDiffvsDist = new HashMap<Integer, List<Double>>();
@@ -386,38 +387,50 @@ public class AANOperations
 			gCitation = null;
 		}
 		
-		FileOperations.writeObject(CoAuthorshipDistanceMap, fout);
+		FileOperations.writeObject(CoAuthorshipDistanceMap, fout1);
+		FileOperations.writeObject(YearDiffvsDist, fout2);
 		return YearDiffvsDist;
 	}
 
-	public static void runAlgo01Part2(HashMap<Integer, List<Double>> YearDiffvsDistance) throws IOException
+	public static void runAlgo01Part2(HashMap<Integer, List<Double>> YearDiffvsDistance, int toRead) throws IOException
 	{
 		//Get mean, median and plot
-		int infthresh = 100;
+		File fin = new File("Outputs/YearDiffvsDistanceList.tmp");
+		
+		if(toRead == 1) YearDiffvsDistance = FileOperations.readObject(fin);
+		
+		int infthresh = 100, finitecount = 0;
 		double tempmean=0,tempmedian=0;
 		TreeMap<Integer,Double> Means = new TreeMap<Integer,Double>();
 		TreeMap<Integer,Double> Medians = new TreeMap<Integer,Double>();
 		Object[] temp;
-		
+			
 		for(Map.Entry<Integer, List<Double>> E : YearDiffvsDistance.entrySet())
 		{
-//			System.out.println(E.getKey() + "," + E.getValue());
+//			System.out.println(E.toString());
 			temp = E.getValue().toArray();
 			Arrays.sort(temp);
+			tempmean = 0;
+			finitecount = 0;
 			for(int i = 0; i < temp.length; ++i)
 			{
-				tempmean = 0;
-				if((Double) temp[i] < infthresh) tempmean += (Double)temp[i];					
+				if((Double) temp[i] < infthresh) 
+				{
+					tempmean += (Double)temp[i];
+					++finitecount;
+				}
 			}
 
-			if(temp.length > 0) tempmean /= (double)temp.length;
+			if(temp.length > 0) tempmean /= (double)finitecount;
+//			System.out.println(tempmean);
+//			if(temp.length > 0) tempmean /= (double)temp.length;
 			if((temp.length)%2 == 1) tempmedian = (double) temp[(temp.length - 1)/2];
 			else tempmedian = 0.5 * ( (double) (temp[temp.length/2])  + (double) temp[temp.length/2-1]);			
 			
 			Means.put(E.getKey(), tempmean);
 			Medians.put(E.getKey(), tempmedian);			
 		}
-		String Datatype = "1K";
+		String Datatype = "AAN";
 				
 		LineChart_AWT.Plot(Means, "Mean distribution", "Mean distribution - "+Datatype, "Year Difference", "Distance");
 		LineChart_AWT.Plot(Medians, "Median distribution", "Median distribution - "+Datatype, "Year Difference", "Distance");	
