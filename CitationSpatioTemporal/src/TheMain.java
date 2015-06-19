@@ -12,17 +12,17 @@ public class TheMain
 		long startTime = System.currentTimeMillis();
 
 		HashMap <String, AANPaper> AANPapers = AANOperations.readAANMetadata();
-		HashMap<Integer, SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink>> CoAuthorshipNetwork = AANOperations.formCoAuthorshipNetwork(AANPapers);
-//		AANOperations.printCoAuthorshipNetwork(CoAuthorshipNetwork, 0);
+		HashMap<Integer, SparseMultigraph<Integer, CoAuthorshipLink>> CoAuthorshipNetwork = AANOperations.formCoAuthorshipNetwork(AANPapers);
 		HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork = AANOperations.formCitationNetwork(AANPapers);
-
-		CitationNetwork = AANOperations.runAlgo01(CoAuthorshipNetwork, CitationNetwork, AANPapers);
-
-//		AANOperations.GraphTest();
+		HashMap<Integer, List<Integer>> YearDiffvsDistance = AANOperations.runAlgo01Part1(CoAuthorshipNetwork, CitationNetwork, AANPapers);
 		
-//		AANOperations.printCoAuthorshipNetwork(CoAuthorshipNetwork, 0);
+		for(Map.Entry<Integer, List<Integer>> E : YearDiffvsDistance.entrySet())
+		{
+			System.out.println(E.getKey() + "," + E.getValue());
+		}
+		
+//		AANOperations.GraphTest();
 //		AANOperations.printCitationNetwork(CitationNetwork, 0);
-	
 		
 		long endTime   = System.currentTimeMillis();
 		System.out.println("Total time: " + (endTime - startTime) + "ms.");		
