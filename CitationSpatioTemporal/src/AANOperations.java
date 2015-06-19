@@ -430,10 +430,16 @@ public class AANOperations
 			Means.put(E.getKey(), tempmean);
 			Medians.put(E.getKey(), tempmedian);			
 		}
-		String Datatype = "AAN";
-				
-		LineChart_AWT.Plot(Means, "Mean distribution", "Mean distribution - "+Datatype, "Year Difference", "Distance");
-		LineChart_AWT.Plot(Medians, "Median distribution", "Median distribution - "+Datatype, "Year Difference", "Distance");	
+
+		String scope = "AAN";		
+		LineChartClass P1 = new LineChartClass(Means, "Mean distribution - " + scope, "Year Difference", "Distance");
+		P1.plot(); 
+		P1.save(new File("Outputs\\Mean_" + scope + ".jpg"));
+		
+		LineChartClass P2 = new LineChartClass(Medians, "Median distribution - " + scope, "Year Difference", "Distance");
+		P2.plot(); 
+		P2.setYRange(0, 10);
+		P2.save(new File("Outputs\\Median_" + scope + ".jpg"));
 	}
 	
 	public static void GraphTest()
