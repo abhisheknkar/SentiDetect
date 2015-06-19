@@ -19,6 +19,13 @@ public class TheMain
 //		AANOperations.GraphTest();
 //		AANOperations.printCitationNetwork(CitationNetwork, 0);
 		
+		File fin = new File("Outputs/CoAuthorshipDistanceMap.tmp");
+		HashMap<String,Integer> CoAuthorshipDistanceMap = FileOperations.readObject(fin);
+		for (Map.Entry<String, Integer> C : CoAuthorshipDistanceMap.entrySet())
+		{
+			System.out.println(C.getKey() + "---" + Integer.toString(C.getValue()));
+		}
+		
 		long endTime   = System.currentTimeMillis();
 		System.out.println("Total time: " + (endTime - startTime) + "ms.");		
 	}

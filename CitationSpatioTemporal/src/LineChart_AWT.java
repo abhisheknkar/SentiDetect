@@ -14,7 +14,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 public class LineChart_AWT extends ApplicationFrame
 {
-   public LineChart_AWT( String applicationTitle , String chartTitle, String Xtitle, String Ytitle, TreeMap<Integer, Double> T)
+   public LineChart_AWT( String applicationTitle , String chartTitle, String Xtitle, String Ytitle, TreeMap<Integer, Double> T) throws IOException
    {
       super(applicationTitle);
       JFreeChart lineChart = ChartFactory.createLineChart(
@@ -27,6 +27,11 @@ public class LineChart_AWT extends ApplicationFrame
       ChartPanel chartPanel = new ChartPanel( lineChart );
       chartPanel.setPreferredSize( new java.awt.Dimension( 560 , 367 ) );
       setContentPane( chartPanel );
+
+      int width = 640; /* Width of the image */
+      int height = 480; /* Height of the image */ 
+      File LineChart = new File( "Outputs\\" + chartTitle +".jpeg" ); 
+      ChartUtilities.saveChartAsJPEG( LineChart , lineChart , width , height );
    }
 
    private DefaultCategoryDataset createDataset(TreeMap<Integer, Double> T )
@@ -45,23 +50,5 @@ public class LineChart_AWT extends ApplicationFrame
       chart.pack( );
       RefineryUtilities.centerFrameOnScreen( chart );
       chart.setVisible( true );
-
-      int width = 640; /* Width of the image */
-      int height = 480; /* Height of the image */ 
-      File LineChart = new File( chartTitle +".jpeg" ); 
-//      ChartUtilities.saveChartAsJPEG( LineChart , chart , width , height );
-
    }
- /*  
-   public static void main( String[ ] args ) 
-   {
-      LineChart_AWT chart = new LineChart_AWT(
-      "School Vs Years" ,
-      "Numer of Schools vs years");
-
-      chart.pack( );
-      RefineryUtilities.centerFrameOnScreen( chart );
-      chart.setVisible( true );
-   }
-*/
 }

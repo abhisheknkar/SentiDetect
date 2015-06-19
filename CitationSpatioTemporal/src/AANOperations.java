@@ -308,13 +308,20 @@ public class AANOperations
 	}
 	public static HashMap<Integer, List<Double>> runAlgo01Part1(HashMap<Integer, SparseMultigraph<Integer, CoAuthorshipLink>> CoAuthorshipNetwork, HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork, HashMap <String, AANPaper> AANPapers) throws IOException
 	{
+		File fout = new File("Outputs/CoAuthorshipDistanceMap.tmp");
 		//Gets distance in the coauthorship vs difference in the years of citation and publication
 		String[] AuthorSource;
 		String[] AuthorDestination;
 		int PathLength, currLength;
 		HashMap<String, Integer> AuthorNodeHashMap = getAuthorNodeHashMap();
-		HashMap<String,Integer> CoAuthorshipDistanceMap = new HashMap<String,Integer>(); 
+
+		HashMap<String,Integer> CoAuthorshipDistanceMap = null;
+		if (fout.exists()) CoAuthorshipDistanceMap = FileOperations.readObject(fout);//new HashMap<String,Integer>(); 
+		else CoAuthorshipDistanceMap = new HashMap<String,Integer>(); 
+				
 		HashMap<Integer, List<Double>> YearDiffvsDist = new HashMap<Integer, List<Double>>();
+		
+		String AuthorComboKey;
 		
 		int count = 0;
 		
@@ -336,27 +343,31 @@ public class AANOperations
 				
 				PathLength = Integer.MAX_VALUE;
 				currLength = Integer.MAX_VALUE;
-//				if ((count % 1000) == 0)System.out.println(count);
+				if ((count % 1000) == 0)System.out.println(count);
 				++count;
 				for (int i = 0; i < AuthorSource.length; ++i)
 				{
 					for (int j = 0; j < AuthorDestination.length; ++j)
 					{
 						//For each pair of authors, get their shortest path in the coauthorship network
-						if (!CoAuthorshipDistanceMap.containsKey(AuthorSource[i] + "," + AuthorDestination[j]))
+						//Store the paths in a Map
+						AuthorComboKey = AuthorSource[i] + ";" + AuthorDestination[j] + ";" + Integer.toString(gCitation.getEndpoints(C).getFirst().year);
+						
+						if (!CoAuthorshipDistanceMap.containsKey(AuthorComboKey))
 						{
 							//Check if both nodes are present
 							if(AuthorNodeHashMap.containsKey(AuthorSource[i]) && AuthorNodeHashMap.containsKey(AuthorDestination[j]))
 							{
 								List<CoAuthorshipLink> L = alg.getPath(AuthorNodeHashMap.get(AuthorSource[i]),AuthorNodeHashMap.get(AuthorDestination[j]));
 //								System.out.println(L.toString());
-								currLength = L.size();
-								CoAuthorshipDistanceMap.put(AuthorSource[i] + "," + AuthorDestination[j], currLength);
+								if (L.size() > 0) currLength = L.size();
+								else currLength = Integer.MAX_VALUE;
+								CoAuthorshipDistanceMap.put(AuthorComboKey, currLength);
 							}
 						}
 						else 
 						{
-							currLength = CoAuthorshipDistanceMap.get(AuthorSource[i] + "," + AuthorDestination[j]);
+							currLength = CoAuthorshipDistanceMap.get(AuthorComboKey);
 						}
 						
 						if (currLength < PathLength) PathLength = currLength;						
@@ -367,12 +378,15 @@ public class AANOperations
 				if(!YearDiffvsDist.containsKey(C.yeardiff)) YearDiffvsDist.put(C.yeardiff, new ArrayList<Double>());
 				YearDiffvsDist.get(C.yeardiff).add((double)PathLength);
 				
-				CoAuthorshipDistanceMap.put(P.getFirst().ID + "," + P.getSecond().ID, PathLength);
+//				CoAuthorshipDistanceMap.put(P.getFirst().ID + "," + P.getSecond().ID + Integer.toString(gCitation.getEndpoints(C).getFirst().year), PathLength);
+				C.AuthorshipDistance = PathLength;
 			}
 			E.setValue(gCitation);
 			gCoAuthor = null;
 			gCitation = null;
 		}
+		
+		FileOperations.writeObject(CoAuthorshipDistanceMap, fout);
 		return YearDiffvsDist;
 	}
 
@@ -395,17 +409,18 @@ public class AANOperations
 				tempmean = 0;
 				if((Double) temp[i] < infthresh) tempmean += (Double)temp[i];					
 			}
+
 			if(temp.length > 0) tempmean /= (double)temp.length;
 			if((temp.length)%2 == 1) tempmedian = (double) temp[(temp.length - 1)/2];
 			else tempmedian = 0.5 * ( (double) (temp[temp.length/2])  + (double) temp[temp.length/2-1]);			
 			
 			Means.put(E.getKey(), tempmean);
-			Medians.put(E.getKey(), tempmedian);
-			
+			Medians.put(E.getKey(), tempmedian);			
 		}
-		LineChart_AWT.Plot(Means, "Mean distribution", "Mean distribution", "Year Difference", "Distance");
-		LineChart_AWT.Plot(Medians, "Median distribution", "Median distribution", "Year Difference", "Distance");
-	
+		String Datatype = "1K";
+				
+		LineChart_AWT.Plot(Means, "Mean distribution", "Mean distribution - "+Datatype, "Year Difference", "Distance");
+		LineChart_AWT.Plot(Medians, "Median distribution", "Median distribution - "+Datatype, "Year Difference", "Distance");	
 	}
 	
 	public static void GraphTest()
@@ -423,10 +438,8 @@ public class AANOperations
 		
 //		System.out.println("Edge source and dest: " + gCoAuthor.getEndpoints(e1).getFirst() + "," + gCoAuthor.getEndpoints(e1).getSecond());
 		List<CoAuthorshipNode> L = alg.getPath(v1, v2);
-		System.out.println("Shortest Path: " + L.toString());
-		
+		System.out.println("Shortest Path: " + L.toString());	
 	}
-	
 }
 
 class CoAuthorshipNode
