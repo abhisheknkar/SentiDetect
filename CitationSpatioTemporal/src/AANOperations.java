@@ -306,7 +306,7 @@ public class AANOperations
 		}
 		return G;
 	}
-	public static HashMap<Integer, List<Integer>> runAlgo01Part1(HashMap<Integer, SparseMultigraph<Integer, CoAuthorshipLink>> CoAuthorshipNetwork, HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork, HashMap <String, AANPaper> AANPapers) throws IOException
+	public static HashMap<Integer, List<Double>> runAlgo01Part1(HashMap<Integer, SparseMultigraph<Integer, CoAuthorshipLink>> CoAuthorshipNetwork, HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork, HashMap <String, AANPaper> AANPapers) throws IOException
 	{
 		//Gets distance in the coauthorship vs difference in the years of citation and publication
 		String[] AuthorSource;
@@ -314,7 +314,7 @@ public class AANOperations
 		int PathLength, currLength;
 		HashMap<String, Integer> AuthorNodeHashMap = getAuthorNodeHashMap();
 		HashMap<String,Integer> CoAuthorshipDistanceMap = new HashMap<String,Integer>(); 
-		HashMap<Integer, List<Integer>> YearDiffvsDist = new HashMap<Integer, List<Integer>>();
+		HashMap<Integer, List<Double>> YearDiffvsDist = new HashMap<Integer, List<Double>>();
 		
 		int count = 0;
 		
@@ -364,8 +364,8 @@ public class AANOperations
 				}
 				C.AuthorshipDistance = PathLength;
 				
-				if(!YearDiffvsDist.containsKey(C.yeardiff)) YearDiffvsDist.put(C.yeardiff, new ArrayList<Integer>());
-				YearDiffvsDist.get(C.yeardiff).add(PathLength);
+				if(!YearDiffvsDist.containsKey(C.yeardiff)) YearDiffvsDist.put(C.yeardiff, new ArrayList<Double>());
+				YearDiffvsDist.get(C.yeardiff).add((double)PathLength);
 				
 				CoAuthorshipDistanceMap.put(P.getFirst().ID + "," + P.getSecond().ID, PathLength);
 			}
@@ -374,6 +374,38 @@ public class AANOperations
 			gCitation = null;
 		}
 		return YearDiffvsDist;
+	}
+
+	public static void runAlgo01Part2(HashMap<Integer, List<Double>> YearDiffvsDistance) throws IOException
+	{
+		//Get mean, median and plot
+		int infthresh = 100;
+		double tempmean=0,tempmedian=0;
+		TreeMap<Integer,Double> Means = new TreeMap<Integer,Double>();
+		TreeMap<Integer,Double> Medians = new TreeMap<Integer,Double>();
+		Object[] temp;
+		
+		for(Map.Entry<Integer, List<Double>> E : YearDiffvsDistance.entrySet())
+		{
+//			System.out.println(E.getKey() + "," + E.getValue());
+			temp = E.getValue().toArray();
+			Arrays.sort(temp);
+			for(int i = 0; i < temp.length; ++i)
+			{
+				tempmean = 0;
+				if((Double) temp[i] < infthresh) tempmean += (Double)temp[i];					
+			}
+			if(temp.length > 0) tempmean /= (double)temp.length;
+			if((temp.length)%2 == 1) tempmedian = (double) temp[(temp.length - 1)/2];
+			else tempmedian = 0.5 * ( (double) (temp[temp.length/2])  + (double) temp[temp.length/2-1]);			
+			
+			Means.put(E.getKey(), tempmean);
+			Medians.put(E.getKey(), tempmedian);
+			
+		}
+		LineChart_AWT.Plot(Means, "Mean distribution", "Mean distribution", "Year Difference", "Distance");
+		LineChart_AWT.Plot(Medians, "Median distribution", "Median distribution", "Year Difference", "Distance");
+	
 	}
 	
 	public static void GraphTest()
@@ -441,7 +473,7 @@ class CitationNode
 class CitationLink
 {
 	boolean EdgeLabel;
-	public int AuthorshipDistance;
+	public int AuthorshipDistance = Integer.MAX_VALUE;
 	public int yeardiff;
 	public CitationLink(int yeardiff)
 	{		

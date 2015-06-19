@@ -14,13 +14,8 @@ public class TheMain
 		HashMap <String, AANPaper> AANPapers = AANOperations.readAANMetadata();
 		HashMap<Integer, SparseMultigraph<Integer, CoAuthorshipLink>> CoAuthorshipNetwork = AANOperations.formCoAuthorshipNetwork(AANPapers);
 		HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork = AANOperations.formCitationNetwork(AANPapers);
-		HashMap<Integer, List<Integer>> YearDiffvsDistance = AANOperations.runAlgo01Part1(CoAuthorshipNetwork, CitationNetwork, AANPapers);
-		
-		for(Map.Entry<Integer, List<Integer>> E : YearDiffvsDistance.entrySet())
-		{
-			System.out.println(E.getKey() + "," + E.getValue());
-		}
-		
+		HashMap<Integer, List<Double>> YearDiffvsDistance = AANOperations.runAlgo01Part1(CoAuthorshipNetwork, CitationNetwork, AANPapers);
+		AANOperations.runAlgo01Part2(YearDiffvsDistance);
 //		AANOperations.GraphTest();
 //		AANOperations.printCitationNetwork(CitationNetwork, 0);
 		
