@@ -47,8 +47,7 @@ public class AANOperations
 					AANPapers.put(Paper.ID, Paper);
 					count = 0;
 				}
-			}
-			
+			}			
 		}
 
 		if (saveFlag != 0) 
@@ -65,42 +64,6 @@ public class AANOperations
 			if (oos != null) oos.close();
 		}
 		return AANPapers;
-	}
-	
-	public static HashMap <String, AANPaper> readAANObj(File fin) throws IOException
-	{
-		FileInputStream finstream = null;
-		ObjectInputStream objinstream = null;
-		HashMap <String, AANPaper> Papers = null;
-		try
-		{
-			finstream = new FileInputStream(fin);
-			objinstream = new ObjectInputStream(finstream);
-			Papers = (HashMap <String, AANPaper>) objinstream.readObject(); 
-		}
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
-		finally
-		{
-			if (finstream != null)
-			{
-				finstream.close();
-				objinstream.close();
-			}
-		}
-		return Papers;
-	}
-
-	public static void getEarliest(HashMap <String, AANPaper> AANPapers)
-	{
-		int earliest = Integer.MAX_VALUE;
-		for (Map.Entry<String, AANPaper> X: AANPapers.entrySet())
-		{
-			if (X.getValue().year < earliest) earliest = X.getValue().year;			
-		}
-		System.out.println(earliest);
 	}
 	
 	public static HashMap<String, Integer> getAuthorHashMap() throws IOException
@@ -125,36 +88,9 @@ public class AANOperations
 		{
 			if (in!= null) in.close();
 		}
-		
 		return AuthorHashMap;
 	}
-	
-	public static HashMap<Integer, String> getReverseAuthorHashMap() throws IOException
-	{
-		HashMap<Integer, String> AuthorHashMap = new HashMap<Integer, String>();
-		FileInputStream fin = null;
-		BufferedReader in = null;
-		String line;
-		String[] linesplit;
-		try
-		{
-			fin = new FileInputStream("./Datasets/AAN/author_ids.txt");
-			in = new BufferedReader(new InputStreamReader(fin, "UTF-16"));
-			
-			while((line = in.readLine()) != null)
-			{
-				linesplit = line.split("\t");
-				AuthorHashMap.put(Integer.parseInt(linesplit[0]), linesplit[1]);				
-			}
-		}
-		finally
-		{
-			if (in!= null) in.close();
-		}
 		
-		return AuthorHashMap;
-	}
-	
 	public static HashMap<String, Integer> getAuthorNodeHashMap() throws IOException
 	{
 		//Create nodes for authors
@@ -178,7 +114,6 @@ public class AANOperations
 		{
 			if (in!= null) in.close();
 		}
-		
 		return AuthorNodeHashMap;
 	}
 
@@ -188,9 +123,7 @@ public class AANOperations
 		//Returns the yearwise coauthorship edgelist
 		//For each paper in the metadata, for all authors in that paper, form cliques between them
 		//For authors not detected in author list, NO NODES ARE CREATED
-		
 		HashMap<Integer, SparseMultigraph<Integer, CoAuthorshipLink>> CoAuthorshipNetwork = new HashMap<Integer, SparseMultigraph<Integer, CoAuthorshipLink>>();
-		HashMap<String, Integer> AuthorHashMap = getAuthorHashMap();
 		String[] Authors;
 
 		HashMap <String, Integer> AuthorNodeHashMap = getAuthorNodeHashMap();
@@ -216,7 +149,6 @@ public class AANOperations
 				}
 			}
 		}
-		
 		return CoAuthorshipNetwork;
 	}	
 
@@ -254,7 +186,6 @@ public class AANOperations
 					if(!CitationNetwork.containsKey(yearcite)) CitationNetwork.put(yearcite, new SparseGraph<CitationNode, CitationLink>());
 					
 					CitationNetwork.get(yearcite).addEdge(new CitationLink(yearcite-yearpub), CitationNodeHashMap.get(linesplit[0]),CitationNodeHashMap.get(linesplit[1]), EdgeType.DIRECTED);
-
 				}
 			}
 		}
@@ -264,25 +195,7 @@ public class AANOperations
 		}
 		return CitationNetwork;
 	}	
-
-	public static void printCoAuthorshipNetwork(HashMap<Integer, SparseMultigraph<Integer, CoAuthorshipLink>> CoAuthorshipNetwork, int waitforkeypress) throws IOException
-	{
-		for(Map.Entry<Integer, SparseMultigraph<Integer, CoAuthorshipLink>> g : CoAuthorshipNetwork.entrySet())
-		{
-			System.out.println(g.getKey() + " : " + g.getValue().toString());
-			if (waitforkeypress == 1) System.in.read();
-		}
-	}
 	
-	public static void printCitationNetwork(HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork, int waitforkeypress) throws IOException
-	{
-		for(Map.Entry<Integer, SparseGraph<CitationNode, CitationLink>> g : CitationNetwork.entrySet())
-		{
-			System.out.println(g.getKey() + " : " + g.getValue().toString());
-			if (waitforkeypress == 1) System.in.read();
-		}
-	}
-
 	public static SparseMultigraph<Integer, CoAuthorshipLink> AuthorNetworkTill(int year, HashMap<Integer, SparseMultigraph<Integer, CoAuthorshipLink>> CoAuthorshipNetwork) throws IOException
 	{
 		SparseMultigraph<Integer, CoAuthorshipLink> G = new SparseMultigraph<Integer, CoAuthorshipLink>();
@@ -310,6 +223,7 @@ public class AANOperations
 	{
 		File fout1 = new File("Outputs/CoAuthorshipDistanceMap.tmp");
 		File fout2 = new File("Outputs/YearDiffvsDistanceList.tmp");
+		File fout3 = new File("Outputs/CitationNetworkYearWise.tmp");
 		//Gets distance in the coauthorship vs difference in the years of citation and publication
 		String[] AuthorSource;
 		String[] AuthorDestination;
@@ -379,7 +293,6 @@ public class AANOperations
 				if(!YearDiffvsDist.containsKey(C.yeardiff)) YearDiffvsDist.put(C.yeardiff, new ArrayList<Double>());
 				YearDiffvsDist.get(C.yeardiff).add((double)PathLength);
 				
-//				CoAuthorshipDistanceMap.put(P.getFirst().ID + "," + P.getSecond().ID + Integer.toString(gCitation.getEndpoints(C).getFirst().year), PathLength);
 				C.AuthorshipDistance = PathLength;
 			}
 			E.setValue(gCitation);
@@ -389,6 +302,8 @@ public class AANOperations
 		
 		FileOperations.writeObject(CoAuthorshipDistanceMap, fout1);
 		FileOperations.writeObject(YearDiffvsDist, fout2);
+		FileOperations.writeObject(CitationNetwork, fout3);
+		
 		return YearDiffvsDist;
 	}
 
@@ -398,83 +313,113 @@ public class AANOperations
 		File fin = new File("Outputs/YearDiffvsDistanceList.tmp");
 		
 		if(toRead == 1) YearDiffvsDistance = FileOperations.readObject(fin);
+		String scope = "AAN";		
+		String meantitle = "Mean distribution - " + scope;
+		String mediantitle = "Median distribution - " + scope;
+		String meansavepath = "Outputs\\Mean_" + scope + ".jpg";
+		String mediansavepath = "Outputs\\Median_" + scope + ".jpg";
 		
-		int infthresh = 100, finitecount = 0;
-		double tempmean=0,tempmedian=0;
+		getProfileFromRawData(YearDiffvsDistance, meantitle, mediantitle, meansavepath, mediansavepath);
+	}
+
+	public static void getProfileFromRawData(HashMap<Integer, List<Double>> YearDiffvsDistance, String meantitle, String mediantitle, String meansavepath, String mediansavepath) throws IOException
+	{
+		int infthresh = 100;
+		double mean=0,median=0;
 		TreeMap<Integer,Double> Means = new TreeMap<Integer,Double>();
 		TreeMap<Integer,Double> Medians = new TreeMap<Integer,Double>();
-		Object[] temp;
 			
 		for(Map.Entry<Integer, List<Double>> E : YearDiffvsDistance.entrySet())
 		{
-//			System.out.println(E.toString());
-			temp = E.getValue().toArray();
-			Arrays.sort(temp);
-			tempmean = 0;
-			finitecount = 0;
-			for(int i = 0; i < temp.length; ++i)
-			{
-				if((Double) temp[i] < infthresh) 
-				{
-					tempmean += (Double)temp[i];
-					++finitecount;
-				}
-			}
-
-			if(temp.length > 0) tempmean /= (double)finitecount;
-//			System.out.println(tempmean);
-//			if(temp.length > 0) tempmean /= (double)temp.length;
-			if((temp.length)%2 == 1) tempmedian = (double) temp[(temp.length - 1)/2];
-			else tempmedian = 0.5 * ( (double) (temp[temp.length/2])  + (double) temp[temp.length/2-1]);			
+			mean = GeneralOperations.getMeanOfList(E.getValue(), infthresh);
+			median = GeneralOperations.getMedianOfList(E.getValue());
 			
-			Means.put(E.getKey(), tempmean);
-			Medians.put(E.getKey(), tempmedian);			
+			Means.put(E.getKey(), mean);
+			Medians.put(E.getKey(), median);			
 		}
 
-		String scope = "AAN";		
-		LineChartClass P1 = new LineChartClass(Means, "Mean distribution - " + scope, "Year Difference", "Distance");
-		P1.plot(); 
-		P1.save(new File("Outputs\\Mean_" + scope + ".jpg"));
+		LineChartClass P1 = new LineChartClass(Means, meantitle, "Year Difference", "Distance");
+//		P1.plot(); 
+		P1.save(new File(meansavepath));
 		
-		LineChartClass P2 = new LineChartClass(Medians, "Median distribution - " + scope, "Year Difference", "Distance");
-		P2.plot(); 
+		LineChartClass P2 = new LineChartClass(Medians, mediantitle, "Year Difference", "Distance");
+//		P2.plot(); 
 		P2.setYRange(0, 10);
-		P2.save(new File("Outputs\\Median_" + scope + ".jpg"));
+		P2.save(new File(mediansavepath));
 	}
 	
-	public static void GraphTest()
+	public static void getIndividualCitationProfile(int iterations) throws IOException
 	{
-		SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink> gCoAuthor = new SparseMultigraph<CoAuthorshipNode, CoAuthorshipLink>();
+		HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork = FileOperations.readObject(new File("Outputs\\CitationNetworkYearWise.tmp"));
 		
-		CoAuthorshipNode v1 = new CoAuthorshipNode(1);
-		CoAuthorshipNode v2 = new CoAuthorshipNode(2);
-		CoAuthorshipLink e1 = new CoAuthorshipLink("E1");
-		gCoAuthor.addVertex(v1);
-		gCoAuthor.addVertex(v2);
-//		gCoAuthor.addEdge(e1, v1, v2 , EdgeType.UNDIRECTED);
+		HashMap<String, AANPaper> papermap = readAANMetadata();
+		ArrayList<String> paperIDs = new ArrayList<String>(papermap.keySet());
+				
+		int randomIndex;
+		String randomID;
+		String meantitle, mediantitle, meansavepath, mediansavepath, scope = "Individual";
 
-		DijkstraShortestPath<CoAuthorshipNode,CoAuthorshipNode> alg = new DijkstraShortestPath(gCoAuthor);
+		for (int i = 0; i < iterations; ++i)
+		{
+			System.out.println("Iteration number - " + i);
+			HashMap<Integer, List<Double>> YearDiffvsDist = new HashMap<Integer, List<Double>>();		
+			randomIndex = (int) Math.round(Math.random()*paperIDs.size());	//Strange, but works
+			
+			randomID = paperIDs.get(randomIndex);
+
+			for (Map.Entry<Integer, SparseGraph<CitationNode, CitationLink>> entry : CitationNetwork.entrySet())
+			{
+				for(CitationNode n : entry.getValue().getVertices())
+				{
+					if(n.ID.equals(randomID))
+					{
+						for (CitationLink c : entry.getValue().getIncidentEdges(n))
+						{
+							if (!YearDiffvsDist.containsKey(c.yeardiff)) YearDiffvsDist.put(c.yeardiff, new ArrayList<Double>());
+							YearDiffvsDist.get(c.yeardiff).add((double)c.AuthorshipDistance); 
+						}
+					}
+				}
+			}
+/*			for (Map.Entry<Integer, List<Double>> e : YearDiffvsDist.entrySet())
+			{
+				System.out.println(e.getKey() + " - " + e.getValue().toString());
+			}
+*/			
+			meantitle = "Mean distribution - " + scope;
+			mediantitle = "Median distribution - " + scope;
+			meansavepath = "Outputs\\MeanProfiles\\Mean_" + randomID + ".jpg";
+			mediansavepath = "Outputs\\MedianProfiles\\Median_" + randomID + ".jpg";
+
+			getProfileFromRawData(YearDiffvsDist, meantitle, mediantitle, meansavepath, mediansavepath);
+		}
 		
-//		System.out.println("Edge source and dest: " + gCoAuthor.getEndpoints(e1).getFirst() + "," + gCoAuthor.getEndpoints(e1).getSecond());
-		List<CoAuthorshipNode> L = alg.getPath(v1, v2);
-		System.out.println("Shortest Path: " + L.toString());	
 	}
+	
+	public static void getCitationNetworkStatistics() throws IOException
+	{
+		int count1=0, count2=0;
+		HashMap <Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork = FileOperations.readObject(new File("Outputs\\CitationNetworkYearWise.tmp"));
+		for (Map.Entry<Integer, SparseGraph<CitationNode, CitationLink>> E : CitationNetwork.entrySet())
+		{
+			for (CitationLink C : E.getValue().getEdges())
+			{
+				++count2;
+				if (C.AuthorshipDistance < 100)	
+				{
+//					System.out.println(C.toString());
+					++count1;
+				}
+			}
+		}
+		System.out.println(count1 + " out of " + count2 + " edges have finite coauthorship distance.");
+	}
+
+
+
 }
 
-class CoAuthorshipNode
-{
-	int id;
-	public CoAuthorshipNode(int id)
-	{
-		this.id = id;
-	}
-	public String toString()
-	{
-		return "V" + id;
-	}
-}
-
-class CoAuthorshipLink
+class CoAuthorshipLink implements Serializable
 {
 	String EdgeLabel;
 	public CoAuthorshipLink(String EdgeLabel)
@@ -487,7 +432,7 @@ class CoAuthorshipLink
 	}
 }
 
-class CitationNode
+class CitationNode implements Serializable
 {
 	public String ID;
 	public int year;
@@ -502,11 +447,11 @@ class CitationNode
 	}
 }
 
-class CitationLink
+class CitationLink implements Serializable
 {
 	boolean EdgeLabel;
-	public int AuthorshipDistance = Integer.MAX_VALUE;
-	public int yeardiff;
+	public Integer AuthorshipDistance = Integer.MAX_VALUE;
+	public Integer yeardiff;
 	public CitationLink(int yeardiff)
 	{		
 		this.EdgeLabel = true;

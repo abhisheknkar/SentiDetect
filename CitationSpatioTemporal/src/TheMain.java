@@ -14,14 +14,14 @@ public class TheMain
 		HashMap <String, AANPaper> AANPapers = AANOperations.readAANMetadata();
 		HashMap<Integer, SparseMultigraph<Integer, CoAuthorshipLink>> CoAuthorshipNetwork = AANOperations.formCoAuthorshipNetwork(AANPapers);
 		HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork = AANOperations.formCitationNetwork(AANPapers);
-
 		
 		HashMap<Integer, List<Double>> YearDiffvsDistance = null;
-//		HashMap<Integer, List<Double>> YearDiffvsDistance = AANOperations.runAlgo01Part1(CoAuthorshipNetwork, CitationNetwork, AANPapers);
-		AANOperations.runAlgo01Part2(YearDiffvsDistance,1);
-//		AANOperations.GraphTest();
-//		AANOperations.printCitationNetwork(CitationNetwork, 0);
-				
+//		YearDiffvsDistance = AANOperations.runAlgo01Part1(CoAuthorshipNetwork, CitationNetwork, AANPapers);
+//		AANOperations.runAlgo01Part2(YearDiffvsDistance,1);
+
+		AANOperations.getIndividualCitationProfile(100);
+		
+		
 		long endTime   = System.currentTimeMillis();
 		System.out.println("Total time: " + (endTime - startTime) + "ms.");		
 	}
