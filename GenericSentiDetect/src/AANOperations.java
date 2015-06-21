@@ -94,4 +94,14 @@ public class AANOperations
 		return Papers;
 	}
 
+	public static void getEarliest(ArrayList<AANPaper> AANPapers)
+	{
+		int earliest = Integer.MAX_VALUE;
+		for (AANPaper X: AANPapers)
+		{
+			if (X.year < earliest) earliest = X.year;			
+		}
+		System.out.println(earliest);
+	}
+	
 }
