@@ -16,10 +16,10 @@ public class TheMain
 		HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork = AANOperations.formCitationNetwork(AANPapers);
 		
 		HashMap<Integer, List<Double>> YearDiffvsDistance = null;
-//		YearDiffvsDistance = AANOperations.runAlgo01Part1(CoAuthorshipNetwork, CitationNetwork, AANPapers);
-//		AANOperations.runAlgo01Part2(YearDiffvsDistance,1);
+		YearDiffvsDistance = AANOperations.runAlgo01Part1(CoAuthorshipNetwork, CitationNetwork, AANPapers);
+		AANOperations.runAlgo01Part2(YearDiffvsDistance,1);
 
-		AANOperations.getIndividualCitationProfile(100);
+//		AANOperations.getIndividualCitationProfile(100, 25);
 		
 		
 		long endTime   = System.currentTimeMillis();
