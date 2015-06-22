@@ -1,0 +1,1 @@
+Here, the edges with coauthorship distance infinity were ignored in the mean calculations, and considered as infinity in the median calculations. 

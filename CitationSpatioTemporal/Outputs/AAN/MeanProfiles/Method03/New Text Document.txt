@@ -1,0 +1,1 @@
+Computing the graphs only for those papers who are published after a threshold year, 1990.

@@ -1,0 +1,1 @@
+In this method, we set the infinities in the distance measure to the diameter of the network, which is 22.
