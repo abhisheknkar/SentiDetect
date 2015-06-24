@@ -9,7 +9,7 @@ import edu.uci.ics.jung.graph.util.EdgeType;
 import edu.uci.ics.jung.graph.util.Pair;
 
 public class DatasetOperations 
-{
+{	
 	public static HashMap<String, Integer> getAuthorHashMap(HashMap<String, Paper> papers) throws IOException
 	{
 		HashMap<String, Integer> authorhashmap = new HashMap<String, Integer>();
@@ -64,10 +64,11 @@ public class DatasetOperations
 				}
 			}
 		}
+		System.out.println("Yearwise coauthorship network obtained!");
 		return coauthorshipnetwork;
 	}
 	
-	public static CitationNetworkYW formCitationNetworkYW(HashMap <String, Paper> papers) throws IOException
+	public static CitationNetworkYW formCitationNetworkYW(HashMap <String, Paper> papers, String dataset) throws IOException
 	{	
 		/*
 		 * Forms yearwise citation network for the dataset
@@ -84,8 +85,16 @@ public class DatasetOperations
 		{
 			citationnodehashmap.put(paper.getValue().id, new CitationNode(paper.getValue().id, paper.getValue().year));
 		}
-	
-		SparseGraph<String, Integer> citationnetworkall = DatasetReader.readAANCitations();
+		SparseGraph<String, Integer> citationnetworkall = null;
+		switch(dataset)
+		{
+		case ("AAN"):
+			citationnetworkall = DatasetReader.getAANCitations();
+			break;
+		case("DBLP"):
+			citationnetworkall = DatasetReader.getDBLPCitations(papers);
+			break;
+		}
 
 		/*
 		 * Now iterate over citationnetworkall, and for each edge there, 
@@ -108,6 +117,7 @@ public class DatasetOperations
 				citationnetworkYW.network.get(yearcite).network.addEdge(new CitationLink(yearcite-yearpub), citationnodehashmap.get(citercited.getFirst()),citationnodehashmap.get(citercited.getSecond()), EdgeType.DIRECTED);
 			}
 		}
+		System.out.println("Yearwise citation network obtained!");
 		return citationnetworkYW;
 	}	
 
@@ -158,6 +168,7 @@ public class DatasetOperations
 		if (fout1.exists()) coauthorshipdistancemap = FileOperations.readObject(fout1);//new HashMap<String,Integer>(); 
 		else coauthorshipdistancemap = new HashMap<String,Integer>(); 
 						
+		System.out.println("Iterating over edges in yearwise citation network...");
 		for (Map.Entry<Integer, CitationNetwork> E : citationnetworkYW.network.entrySet())
 		{
 			CitationNetwork gCitation = E.getValue();
@@ -177,7 +188,7 @@ public class DatasetOperations
 					
 					PathLength = Integer.MAX_VALUE;
 					currLength = Integer.MAX_VALUE;
-					if ((count % 1000) == 0)System.out.println(count);
+					if ((count % 10) == 0)System.out.println(count + " edges read.");
 					++count;
 					for (int i = 0; i < AuthorSource.length; ++i)
 					{
@@ -220,7 +231,8 @@ public class DatasetOperations
 			gCoAuthor = null;
 			gCitation = null;
 		}
-		
+
+		System.out.println("All edges read!\nStoring outputs and distance maps...");
 		File outputfolder = new File("Outputs/" + Dataset);
 		outputfolder.mkdirs();
 
@@ -238,17 +250,19 @@ public class DatasetOperations
 		TreeMap<Integer, List<Double>> yeardiffVSdist  = FileOperations.readObject(fin);
 		
 		String scope = dataset;		
-		String meantitle = mode + "distribution - " + scope;
+		String meantitle = mode + " distribution - " + scope;
 		String mediantitle = "Median distribution - " + scope;
 		String meansavepath = "Outputs/" + dataset + "/" + mode +"Profiles/Method" + methodid + "/Mean_" + scope + ".jpg";
 		String mediansavepath = "Outputs/" + dataset + "/MedianProfiles/Method" + methodid + "/Median_" + scope + ".jpg";
 		
+		System.out.println("Obtaining summaries...");
 		File fin2 = new File("Outputs/" + dataset + "/" + mode + "Profiles/Method" + methodid);
 		fin2.mkdirs();
 		fin2 = new File("Outputs/" + dataset + "/MedianProfiles/Method" + methodid);
 		fin2.mkdirs();
 		
 		getProfileFromRawData(yeardiffVSdist, meantitle, mediantitle, meansavepath, mediansavepath, infToConsider, defaultpathlength, mode);
+		System.out.println("Summaries saved!");
 	}
 
 	public static void getProfileFromRawData(TreeMap<Integer, List<Double>> yeardiffVSdist, String meantitle, String mediantitle, String meansavepath, String mediansavepath, int infToConsider, int defaultpathlength, String mode) throws IOException

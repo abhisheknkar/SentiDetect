@@ -6,8 +6,8 @@ import edu.uci.ics.jung.graph.SparseMultigraph;
 
 public class TheMainU 
 {
-	private static final String METHODID = "6";
-	private static final String MODE = "Sum";
+	private static final String METHODID = "1";
+	private static final String MODE = "Mean";
 	private static final int ITERATIONS = 5000;
 	private static final int INFTOCONSIDER = 1;
 	private static final int DEFAULTPATHLENGTH = 22;
@@ -20,8 +20,8 @@ public class TheMainU
 	{
 		long startTime = System.currentTimeMillis();
 
-		String dataset = "AAN";
-//		String dataset = "DBLP";
+//		String dataset = "AAN";
+		String dataset = "DBLP";
 
 		HashMap<String, Paper> papers = null;		
 		switch (dataset)
@@ -35,13 +35,40 @@ public class TheMainU
 		}
 
 		//Function calls go here:						
-		DatasetOperations.getIndividualCitationProfile(papers, ITERATIONS, dataset, MODE, CITTHRESH, INFTOCONSIDER, DEFAULTPATHLENGTH, METHODID, EARLIEST, BUCKETSIZE, ALPHA);
+		CoAuthorshipNetworkYW coauthorshipnetworkYW = DatasetOperations.formCoAuthorshipNetworkYW(papers);
+		CitationNetworkYW citationnetworkYW = DatasetOperations.formCitationNetworkYW(papers, dataset);
+		TreeMap<Integer, List<Double>> t = DatasetOperations.getCiterDistanceDataByYearDiff(coauthorshipnetworkYW, citationnetworkYW, papers, EARLIEST, dataset);
+		DatasetOperations.plotCiterDistanceSummaryALL(dataset, METHODID, MODE, INFTOCONSIDER, DEFAULTPATHLENGTH);
 		
 		long endTime   = System.currentTimeMillis();		
 		System.out.println("Total time: " + (endTime - startTime) + "ms.");		
 	}
-}
+/******************************************************************************/
+	
+	
+	
+	
+	public static void printCoAuthorshipNetworkYW(CoAuthorshipNetworkYW coauthorshipnetworkYW)
+	{
+		for (Map.Entry<Integer, CoAuthorshipNetwork> c : coauthorshipnetworkYW.network.entrySet())
+		{
+			System.out.println("Year: " + c.getKey() + ", Network: \n" + c.getValue().network.toString());
+		}
 
+	}
+
+	public static void printCitationNetworkYW(CitationNetworkYW citationnetworkYW)
+	{
+		int edges = 0;
+		for (Map.Entry<Integer, CitationNetwork> c : citationnetworkYW.network.entrySet())
+		{
+			edges += c.getValue().network.getEdgeCount();
+//			System.out.println("Year: " + c.getKey() + ",  Network: \n" + c.getValue().network.toString());
+		}
+		System.out.println(edges);
+	}
+
+}
 
 /*
 		CoAuthorshipNetworkYW coauthorshipnetworkYW = DatasetOperations.formCoAuthorshipNetworkYW(papers);
@@ -50,6 +77,7 @@ public class TheMainU
 		DatasetOperations.plotCiterDistanceSummaryALL(dataset, METHODID, MODE, INFTOCONSIDER, DEFAULTPATHLENGTH);
 		DatasetOperations.getIndividualCitationProfile(papers, ITERATIONS, dataset, MODE, CITTHRESH, INFTOCONSIDER, DEFAULTPATHLENGTH, METHODID, EARLIEST, BUCKETSIZE, ALPHA);
 		System.out.println(DatasetOperations.getDiameter(new File("Outputs/" + dataset + "/CoAuthorshipDistanceMap.tmp")));
+		printCitationNetworkYW(citationnetworkYW);
 		
 		//To print citation network
 		for (Map.Entry<Integer, CitationNetwork> e : citationnetworkYW.network.entrySet())

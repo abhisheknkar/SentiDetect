@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import edu.uci.ics.jung.graph.SparseGraph;
 import edu.uci.ics.jung.graph.util.EdgeType;
@@ -21,7 +22,6 @@ public class DatasetReader
 		int count = 0;
 		String[] Metadata = new String[5];
 		HashMap <String, Paper> papers = new HashMap <String, Paper>();
-	
 		
 		try
 		{
@@ -74,7 +74,7 @@ public class DatasetReader
 		return papers;
 	}
 	
-	public static SparseGraph<String, Integer> readAANCitations() throws IOException
+	public static SparseGraph<String, Integer> getAANCitations() throws IOException
 	{
 		SparseGraph<String, Integer> citationgraph = new SparseGraph<String, Integer>();
 		File fin = null;
@@ -109,6 +109,7 @@ public class DatasetReader
 	
 	public static HashMap<String, Paper> readDBLPMetadata() throws IOException
 	{
+		int edgecount = 0;
 		HashMap<String, Paper> papers = new HashMap<String, Paper>();
 		File fin = null;
 		File fout = null;
@@ -158,16 +159,16 @@ public class DatasetReader
 								case '!': paper.abstractpaper= line.substring(2, line.length());break;
 								case '1': paper.continent = line.substring(2, line.length()).split(",");break;
 								case '%': paper.referenceids.add(line.substring(2, line.length())); break;
-								default: break;
 							}
 						}
-
+//						edgecount += paper.referenceids.size();
 						papers.put(paper.id, paper);
 					}
 					Metadata.clear();				
 				}
 			}
 			System.out.println("DBLP Dataset read!");
+//			System.out.println("Edges in metadata: " + edgecount);
 			
 			if(saveFlag == 1)
 			{
@@ -180,5 +181,22 @@ public class DatasetReader
 		}		
 		return papers;
 	}
+	
+	public static SparseGraph<String, Integer> getDBLPCitations(HashMap<String, Paper> papers) throws IOException
+	{
+		SparseGraph<String, Integer> citationgraph = new SparseGraph<String, Integer>();
+		int count = 0;
+		int edgecount = 0;
+		for (Map.Entry<String, Paper> paper : papers.entrySet())
+		{
+			edgecount += paper.getValue().referenceids.size();
+			for (int i = 0; i < paper.getValue().referenceids.size(); ++i)
+			{
+				citationgraph.addEdge(count++, paper.getValue().id, paper.getValue().referenceids.get(i));
+			}
+		}
+		return citationgraph;
+	}
+
 
 }
