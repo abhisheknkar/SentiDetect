@@ -1,0 +1,137 @@
+<annotatedpaper>
+	<paper title="Context-Enhanced Citation Sentiment Detection" authors="Awais Athar, Simone Teufel" year="2012"> 
+		<section> 
+			<title>Context-Enhanced Citation Sentiment Detection</title> 
+			Awais Athar 
+			University of Cambridge 
+			Computer Laboratory 
+			15 JJ Thomson Avenue 
+			Cambridge, CB3 0FD, U.K. 
+			awais.athar@cl.cam.ac.uk 
+			Simone Teufel 
+			University of Cambridge 
+			Computer Laboratory 
+			15 JJ Thomson Avenue 
+			Cambridge, CB3 0FD, U.K. 
+			simone.teufel@cl.cam.ac.uk</section> 
+		<section> 
+			<title>Abstract</title> 
+			<paragraph> 
+				Sentiment analysis of citations in scientific papers and articles is a new and interesting problem which can open up many exciting new applications in bibliographic search and biblio-metrics. Current work on citation sentiment detection focuses on only the citation sentence. In this paper, we address the problem of context-enhanced citation sentiment detection. We present a new citation sentiment corpus which has been annotated to take the dominant sentiment in the entire citation context into account. We believe that this gold standard is closer to the truth than annotation that looks only at the citation sentence itself. We then explore the effect of context windows of different lengths on the performance of a state-of-the-art citation sentiment detection system when using this context-enhanced gold standard definition.  
+			</paragraph> 
+		</section> 
+		<section imrad="i"> 
+			<title>1 Introduction</title> 
+			<paragraph> 
+				Sentiment analysis of citations in scientific papers and articles is a new and interesting problem. It can open up many exciting new applications in bibliographic search and in bibliometrics, i.e., the automatic evaluation of the influence and impact of individuals and journals via citations.<context>
+                    Automatic <task>detection of citation sentiment</task> 
+                    <kw>can also be used as</kw> a <kw>first step</kw> to <task>scientific summarisation</task> (<cite id="1" function="use" polarity="pos">Abu-Jbara and Radev, 2011</cite>).</context> Alternatively, it can help researchers during search, e.g., by identifying problems with a particular approach, or by helping to recognise un-addressed issues and possible gaps in the current research.  
+			</paragraph> 
+			<paragraph> 
+				However, there is a problem with the expression of sentiment in scientific text. <context>
+                    Conventionally, the writing style in scientific writing 
+                    is meant to be >objective. Any personal bias by authors has to be hedged (<cite id="2" function="ack" polarity="neu">Hyland, 1995</cite>). 
+					Negative sentiment is politically particularly dangerous (<cite id="3" function="ack" polarity="neu">Ziman, 1968</cite>),and some authors have documented the strategy of prefacing the intended criticism by slightly disingenuous praise (<cite id="4" function="ack" polarity="neu">MacRoberts and MacRoberts, 1984</cite>). This makes the problem of identifying such opinions particularly challenging.</context> <context> This non-local expression of sentiment has been observed in other genres as well (<cite id="5" function="ack" polarity="neu">Wilson et al., 2009</cite>; <cite id="6" function="ack" polarity="neu">Polanyi and Zaenen, 2006</cite></context>). Figure 1: Example of anaphora in citations  
+			</paragraph> 
+			<paragraph> 
+				A typical case is illustrated in Figure 1.While the first sentence praises some aspects of the cited paper, the remaining sentences list its shortcomings. It is clear that criticism is the intended sentiment,<context> but <paper>The work of</paper> <cite id="7" function="hed" polarity="neg">Och ci al (2004)</cite> is perhaps <kw>the best-known study</kw> of new features and their impact on translation quality. <kw>However</kw>, ii had a <kw>few shortcomings</kw></context>. 
+				<context>First, ii <kw>used the features for</kw> <method>reranking /i-best lists of translations</method>, <kw>rather than</kw> for <method>decoding or forest reranking</method> (<cite id="8" function="con" polarity="neu">Huang, 2008</cite>)</context>. Second, il attempted to incorporate syntax by applying off-the-shelf part-of-speech taggers and parsers to MT output, a task these tools were never designed for. By contrast, we incorporate features directly into hierarchical and syntax-based decoders. A third difficulty with Och et al.'s study was that ii used MERT, which is not an ideal vehicle for feature exploration because ii is observed not to perform well with large feature sets. Others have in2012 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, pages 597-601, Montréal, Canada, June 3-8, 2012. ©2012 Association for Computational Linguistics if we define our gold standard only by looking at the citation sentence, we lose a significant amount of sentiment hidden in the text. <context>
+					<kw>Given</kw> that <kw>most citations are neutral</kw> (<cite id="9" function="ack" polarity="neu">Spiegel-Rosing, 1977</cite>; <cite id="10" function="ack" polarity="neu">Teufel et al., 2006</cite>), this makes it ever more important to recover what explicit sentiment there is from the context of the citation</context>. 
+					However,<context> the <posfeature>dominant assumption</posfeature> in current <method>citation identification methods</method> (<cite id="11" function="con" polarity="neu">Ritchie et al., 2008</cite>; <cite id="12" function="hed" polarity="neg">Radev et al., 2009</cite>) <kw>is that</kw> the sentiment present in the citation sentence represents the true sentiment of the author towards the cited paper. This is due to the difficulty of determining the relevant context, whereas it is substantially easier to identify the citation sentence. In our example above, <kw>however</kw>, such an approach would <negfeature>lead to the wrong prediction</negfeature> of praise or neutral sentiment.</context>  
+			</paragraph> 
+			<paragraph> 
+				In this paper, we address the problem of context-enhanced citation sentiment detection. We present a new citation sentiment corpus where each citation has been annotated according to the dominant sentiment in the corresponding citation context. We claim that this corpus is closer to the truth than annotation that considers only the citation sentence itself. We show that it increases citation sentiment coverage, particularly for negative sentiment. Using this gold standard, we explore the effect of assuming context windows of different but fixed lengths on the performance of a state-of-the-art citation sentiment detection system where the sentiment of citation is considered in the entire context of the citation and more than one single sentiment can be assigned. Previous approaches neither detect citation sentiment and context simultaneously nor use as large a corpus as we do.  
+			</paragraph> 
+		</section> 
+		<section imrad="m"> 
+			<title>2 Corpus Construction</title> 
+			<paragraph> 
+				<context>
+					<author>We</author> 
+					<kw>chose</kw> the <data>dataset</data> <kw>used by</kw> <cite id="13" function="bas" polarity="pos">Athar (2011)</cite> comprising 310 <paper>papers</paper> taken from the <data>ACL Anthology</data> (<cite id="14" function="bas" polarity="pos">Bird et al., 2008</cite>). The <data>citation summary data</data> 
+					<kw>from</kw> the <data>ACL Anthology Network</data> (<cite id="15" function="bas" polarity="pos">Radev et al., 2009</cite>) <action>was used</action>.</context> This dataset is rather large (8736 citations) and since manual annotation of context for each citation is a time consuming task, a subset of 20 papers were selected corresponding to approximately 20% of the original dataset.  
+			</paragraph> 
+			<paragraph> 
+				http://www.aclweb.org 
+			</paragraph> 
+			<paragraph>
+				<context> 
+					<author>We</author> selected a four-class scheme for annotation. Every sentence that is in a window of 4 sentences of the citation and does not contain any direct or indirect mention of the citation was labelled as being excluded (x). The window length <kw>was motivated by</kw> recent research (<cite id="16" function="bas" polarity="pos">Qazvinian and Radev, 2010</cite>) which shows the best score for a four-sentence boundary when detecting non-explicit citation</context>. The rest of the sentences were marked either positive (p), negative (n) or objective/neutral (o).  
+			</paragraph> 
+			<paragraph> 
+				<context>A total of 1,741 citations were annotated. Although this annotation was performed by the first author only, <author>we</author> <kw>know from</kw> <paper>previous work</paper> that similar styles of annotation can achieve acceptable inter-annotator agreement (<cite id="17" function="bas" polarity="pos">Teufel et al., 2006</cite>).</context> <context>An example annotation for <cite id="18" function="ack" polarity="neu">Smadja (1993)</cite> is given in Figure 2, where the first column shows the line number and the second one shows the class label.</context> Figure 2: Example annotation of a citation context.  
+			</paragraph> 
+			<paragraph>
+				<context> 
+					<kw>To compare</kw> <author>our work</author> <kw>with</kw> <cite id="19" function="con" polarity="neg">Athar (2011)</cite>,we <posfeature>also applied</posfeature> a three-class annotation scheme</context>. 
+In this method of annotation, we merge the citation context into a single sentence. Since the context introduces more than one sentiment per citation,<context> <author>we</author> <action>marked</action> the citation sentiment with the <feature>last sentiment</feature> mentioned in the context window as this is pragmatically most likely to be the real intention (<cite id="20" function="bas" polarity="pos">MacRoberts and MacRoberts, 1984</cite>).</context>
+			</paragraph> 
+			<paragraph> 
+				As is evident from Table 1, including the 4 sentence window around the citation more than doubles the instances of subjective sentiment, and in the case of negative sentiment, this proportion rises to 3. 
+					In light of the overall sparsity of detectable citation sentiment in a paper, and of the envisaged applications, this is a very positive result. <context>The reason for this effect is most likely "sweetened criticism" - authors' strategic behaviour of softening the effect of criticism <kw>among their peers</kw> (<cite id="21" function="ack" polarity="neu">Hornsey et al., 2008</cite>).</context> 
+			</paragraph> 
+		</section> 
+		<section imrad="r"> 
+			<title>3 Experiments and Results</title> 
+			<paragraph>
+				<context>
+					<author>We</author> 
+					<kw>represent</kw> each citation <kw>as a</kw> feature set in a <method>Support Vector Machine (SVM)</method> (<cite id="22" function="bas" polarity="pos">Cortes and Vapnik, 1995</cite>)</context> framework and use n-grams of length 1 to 3 as well as dependency triplets as features. The dependency triplets are constructed by merging the relation, governor and dependent in a single string, for instance, the relation nsubj(failed, method) is represented as nsubj_failed_method . <context><author>This setup</author> has been shown to <kw>produce good results</kw> earlier as well (<cite id="23" function="bas" polarity="pos">Pang et al., 2002</cite>; <cite id="24" function="bas" polarity="pos">Athar, 2011</cite>)</context>.  
+			</paragraph> 
+			<paragraph> 
+				The first set of experiments focuses on simultaneous detection of sentiment and context sentences. For this purpose, we use the four-class annotated corpus described earlier. While the original annotations were performed for a window of length 4, we also experiment with asymmetrical windows of l sentences preceding the citation and r sentences succeeding it. The detailed results are given in Table 2. Table 2: Results for joint context and sentiment detection.  
+			</paragraph> 
+			<paragraph> 
+				Because of the skewed class distribution, we use both the Fmacro and Fmlcro scores with 10-fold cross-validation. <context>The baseline score, shown in bold, <kw>is obtained with</kw> no context window and <kw>is comparable to</kw> the <kw>results reported by</kw> <cite id="25" function="con" polarity="neu">Athar (2011)</cite>
+				</context>. However, we can observe that the F scores decrease as more context is introduced. This may be attributed to the increase in the vocabulary size of the n-grams and a consequent reduction in the discriminating power of the decision boundaries. These results show that the task of jointly detecting sentiment and context is a hard problem.  
+			</paragraph> 
+			<paragraph> 
+				For our second set of experiments, we use the three-class annotation scheme. We merge the text of the sentences in the context windows as well as their dependency triplets to obtain the features. The results are reported in Table 3 with best results in bold.<context> 
+					<kw>Although</kw> these <result>results</result> 
+					<kw>are not better than</kw> the <result>context-less baseline</result>, the reason might be data spar-sity since existing work on citation sentiment analysis uses more data (<cite id="26" function="con" polarity="neu">Athar, 2011</cite>)</context>. <context>
+					<kw>While</kw> <method>different schemes</method> 
+					<kw>have been proposed for</kw> 
+					<task>annotating citations</task> 
+					according to their function (<cite id="27" function="con" polarity="neu">Spiegel-Rosing, 1977</cite>; <cite id="28" function="con" polarity="neu">Nanba and Okumura, 1999</cite>; <cite id="29" function="con" polarity="neu">Garzone and Mercer, 2000</cite>),</context> <context>the only recent work on citation sentiment detection <kw>using a relatively large</kw> <data>corpus</data> is by <cite id="30" function="hed" polarity="neg">Athar (2011)</cite>.
+				<kw>However</kw>, this work <negfeature>does not handle</negfeature> citation context.</context> 
+				<context>
+					<cite id="31" function="use" polarity="neu">Piao et al. (2007)</cite> <kw>proposed</kw> <tool>a system</tool> to attach 
+					sentiment information to the citation links between biomedical papers <kw>by using</kw> existing <data>semantic lexical resources</data>. 
+				</context><context>
+					A <posfeature>common approach</posfeature> for sentiment detection is <kw>to use</kw> a labelled lexicon to score sentences (Hatzivas-siloglou and <cite id="32" function="hed" polarity="neg">McKeown, 1997</cite>; <cite id="33" function="hed" polarity="neg">Turney, 2002</cite>; <cite id="34" function="hed" polarity="neg" >Yu and Hatzivassiloglou, 2003</cite>). <kw>However</kw>, such approaches 
+							have been found to be
+							<kw>highly topic dependent</kw>
+				</context>
+				<context> (<cite id="35" function="ack" polarity="neu">Engstrom, 2004</cite>; <cite id="36" function="ack" polarity="neu">Gamon and Aue, 2005</cite>; <cite id="37" function="ack" polarity="neu">Blitzer et al., 2007</cite>).</context> Table 1: Distribution of classes. Table 3: Results using different context windows.  
+			</paragraph> 
+		</section>
+		<section> 
+			<title>4 Related Work</title> 
+			<paragraph> 
+				Table 2: Results for joint context and sentiment detection. 
+			</paragraph> 
+			<paragraph> 
+				<context>
+				<cite id="38" function="wea" polarity="neg">Teufel et al. (2006)</cite> 
+				<kw>worked on</kw> a 2,829 sentence citation <data>corpus</data> 
+				<kw>using</kw> a 12-class <method>classification scheme</method>. <kw>Although</kw> they used context in their annotation, their focus was on determining the author's reason for citing a given paper.</context> This task differs from citation sentiment, which is in a sense a "lower level" of analysis.  
+			</paragraph> 
+			<paragraph> 
+				<context>
+					For implicit citation extraction, <cite id="39" function="wea" polarity="neg">Kaplan et al. (2009)</cite> 
+					explore co-reference chains for citation extraction using a combination of co-reference resolution techniques. <kw>However</kw>, <data>their corpus</data> <negfeature>consists of only</negfeature> 94 sentences of citations to 4 papers which is likely to be <negfeature>too small to</negfeature> be representative</context>. <context><posfeature>The most relevant</posfeature> <kw>work</kw> <kw>is by</kw> Qazvinian and <cite id="40" function="hed" polarity="neg">Radev (2010)</cite> 
+				who extract only the non-explicit citations for a given paper. They model each sentence as a node in a graph and experiment with various window boundaries to create edges between neighbouring nodes. <kw>However</kw>, their  dataset <kw>consists of only</kw> 10 papers and their annotation scheme  differs from our four-class annotation as they do not deal with any sentiment.</context> 
+			</paragraph> 
+		</section> 
+		<section imrad="d"> 
+			<title>5 Conclusion</title> 
+			<paragraph> 
+				In this paper, we focus on automatic detection of citation sentiment using the citation context. We present a new corpus and show that ignoring the citation context would result in loss of a lot of sentiment, specially criticism towards the cited paper. We also report the results of the state-of-the-art citation sentiment detection systems on this corpus when using this context-enhanced gold standard definition.  
+			</paragraph> 
+			<paragraph> 
+				Future work directions may include improving the detection algorithms by filtering the context sentences more intelligently. For this purpose, <context><kw>existing work on</kw> <method>coreference resolution</method> (<cite id="41" function="use" polarity="pos">Lee et al., 2011</cite>) <kw>may prove to be useful.</kw>
+				</context> Context features may also be used for first filtering citations which have been mentioned only in passing, and then applying context based sentiment classification to the remaining significant citations.  
+			</paragraph> 
+		</section> 
+	</paper> 
+ </annotatedpaper>

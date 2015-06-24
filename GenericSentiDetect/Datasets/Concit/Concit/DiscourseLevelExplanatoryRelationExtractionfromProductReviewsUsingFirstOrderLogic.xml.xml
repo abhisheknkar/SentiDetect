@@ -1,0 +1,469 @@
+<annotatedpaper>
+    <paper title="Discourse Level Explanatory Relation Extraction from Product Reviews Using First-Order Logic" authors="Qi Zhang, Jin Qian, Huan Chen, Jihua Kang, Xuanjing Huang" year=" 2013">
+        <section>
+            <title> Discourse Level Explanatory Relation Extraction from Product Reviews Using First-Order Logic </title>
+            School of Computer Science
+            Fudan University
+            Shanghai, P.R. China
+            {qz, 12110240030, 12210240054, 12210240059, xjhuang}@fudan.edu.cn
+        </section>
+        <section>
+            <title>
+                Abstract
+            </title>
+            Explanatory sentences are employed to clarify reasons, details, facts, and so on. High quality online product reviews usually include not only positive or negative opinions, but also a variety of explanations of why these opinions were given. These explanations can help readers get easily comprehensible information of the discussed products and aspects. Moreover, explanatory relations can also benefit sentiment analysis applications. In this work, we focus on the task of identifying subjective text segments and extracting their corresponding explanations from product reviews in discourse level. We propose a novel joint extraction method using firstorder logic to model rich linguistic features and long distance constraints. Experimental results demonstrate the effectiveness of the proposed method.
+        </section>
+        <section imrad="i">
+            <title>
+                1 Introduction
+            </title>
+            <paragraph>
+                Through analyzing product reviews with high helpfulness ratings assigned by readers, we find that a large number of explanatory sentences are used to clarify the causes, details, or consequences of opinions. According to the statistic based on the dataset we crawled from a popular product review website, more than 56.1% opinion expressions are further explained by other sentences. Since most consumers are not experts, these explanations would bring lots of helpful and easy comprehension information for them. Suggestions about writing a product review also advise authors to include not only whether they like or dislike a product, but also why.
+            </paragraph>
+            <paragraph>
+                For example, let us consider the following snippets extracted from online reviews:
+            </paragraph>
+            <paragraph>
+                Example 1: TVs with lower refresh rates may suffer from motion blur. If you're watching a fast-paced football game, for example, you may notice a bit ofblurring as the players run around the field.
+            </paragraph>
+            <paragraph>
+                Example 2: The LED screen is highly reflective. The reflection of my own face makes it very hard to see the subject I am trying to shoot.
+            </paragraph>
+            <paragraph>
+                The first sentence of example 1 expresses negative opinion about refresh rate, which is one of the most important attributes of TV. The second sentence describes the consequence of it through an example. In example 2, detail descriptions are used to explain the reflection problem of the camera screen.
+            </paragraph>
+            <paragraph>
+                Although, explanations provide valuable information, to the best of our knowledge, there is no existing work that deals with explanation extraction for opinions in discourse level. We think that if explanatory relations can be automatically identified from reviews, sentiment analysis applications may benefit from it.
+                <context>
+                    <kw>Existing</kw> 
+                    <method>opinion mining approaches</method> 
+                    <kw>mainly focus on</kw> 
+                    <concept>subjective text</concept>. <kw>They try to</kw> 
+                    <task>determine the subjectivity and polarity</task> of fragments of documents (e.g. a paragraph, a sentence, a phrase and a word) (<cite id="1" function="use" polarity="neu">Pang et al., 2002</cite>; <cite id="2" function="use" polarity="neu">Riloff et al., 2003</cite>; <cite id="3" function="use" polarity="neu">Takamura et al., 2005</cite>; <cite id="4" function="use" polarity="neu">Mihalcea et al., 2007</cite>; <cite id="5" function="use" polarity="neu">Dasgupta and Ng,</cite> ; <cite id="6" function="use" polarity="neu">Hassan and Radev, 2010</cite>; <cite id="7" function="use" polarity="neu">Meng et al., 2012</cite>; <cite id="8" function="use" polarity="neu">Dragut et al., 2012</cite>). 
+                </context>   
+                <context>    
+                    <feature>Fine-grained </feature> 
+                    <method>methods</method> 
+                    <kw>were also introduced to</kw> 
+                    <task>extract opinion holder</task>, opinion expression, opinion target, and other opinion elements (<cite id="9" function="use" polarity="neu">Kobayashi et al., 2007</cite>; <cite id="10" function="use" polarity="neu">Wu et al</cite>., <cite id="11" function="use" polarity="neu">reviews-guidelines 2011</cite>; <cite id="12" function="use" polarity="neu">Xu et al., 2013</cite>; <cite id="13" function="use" polarity="neu">Yang and Cardie, 2013</cite>).
+                </context>
+                <context>
+                    <kw>Major</kw> 
+                    <feature>research directions and challenges</feature> of sentiment analysis <kw>can also be found in surveys</kw> (<cite id="14" function="ack" polarity="neu">Pang and Lee, 2008</cite>; <cite id="15" function="ack" polarity="neu">Liu, 2012</cite>).
+                </context>
+            </paragraph>
+            <paragraph>
+                In this work, we aim to identify subjective text segments and extract their corresponding explanations from product reviews in discourse level.
+                <context>
+                    <author>We</author> 
+                    <kw>propose to use</kw> 
+                    <method>Markov Logic Networks (ML-N)</method> (<cite id="16" function="bas" polarity="pos">Richardson and Domingos, 2006</cite>) <kw>to</kw> 
+                    <task>learn the joint model for subjective classification</task> and explanatory relation extraction.
+                </context>
+                <context>
+                    <method>MLN</method>
+                    <kw>has been applied in several</kw> 
+                    <task>natural language processing tasks</task> (<cite id="17" function="use" polarity="pos">Singla and Domingos, 2006</cite>; <cite id="18" function="use" polarity="pos">Poon and Domingos, 2008</cite>; <cite id="19" function="use" polarity="pos">Yoshikawa et al., 2009</cite>; <cite id="20" function="use" polarity="pos">Andrzejewski et al., 2011</cite>; <cite id="21" function="use" polarity="pos">Song et al., 2012</cite>) <kw>and</kw> 
+                    <posfeature>demonstrated its advantages</posfeature>. 
+                </context>
+                It can easily incorporate rich linguistic features and global constraints by designing various logic formulas, which can also be viewed as templates or rules. Logic formulas are combined in a probabilistic framework to model soft constraints. Hence, the proposed approach can benefit a lot from this framework.
+            </paragraph>
+            <paragraph>
+                To evaluate the proposed method, we crawled a large number of product reviews and constructed a labeled corpus through Amazon's Mechanical Turk. Two tasks were deployed for labeling the corpus. We compared the proposed method with state-of-the-art methods on the dataset. Experimental results demonstrate that the proposed approach can achieve better performance than state-of-the-art methods.
+            </paragraph>
+            <paragraph>
+                The remaining part of this paper is organized as follows: In Section 2, we define the problem and give some examples to show the challenges of this task. Section 3 describes the proposed MLN based method. Dataset construction, experimental results and analyses are given in Section 4. In Section 5, we present the related work and Section 6 concludes the paper.
+            </paragraph>
+        </section>
+        <section imrad="m">
+            <title>
+                2 Problem Statement
+            </title>
+            <paragraph>
+                <context>
+                    <kw>Motivated by</kw> 
+                    <concept>the argument structure</concept> of discourse relations <kw>used in</kw> 
+                    <data>Penn Discourse Treebank</data>  
+                    <cite id="22" function="bas" polarity="pos">(Rash-mi Prasad and Webber, 2008)</cite>, in this work, <author>we</author> 
+                    <kw>adopt</kw> 
+                    <concept>the clause unit-based definition</concept>. 
+                </context>
+                It means that clauses are treated as the basic units of opinion expressions and explanations. Let d = {c\,c2, ■■■cn} be the clauses of document d. Directed graph G = (V, E) is used to represent the subjectivity of clauses and explanatory relationships between them. In the graph, vertices represent clauses, whose categories are specified by the vertex attributes. Directed edges describe the explanatory relationships between them, of which the heads are explanatory clauses. If clause ca describes a set of facts which clarify the causes, context, situation, or consequences of another clause cb, ca —> cb is used to indicate that clause ca explains cb.
+            </paragraph>
+            <paragraph>
+                Adopting clause unit-based definition is based on the following reasons:
+                <context>
+                    1) clause is normally considered as the smallest grammatical unit which can express a complete proposition (<cite id="23" fuction="ack" polarity="neu">Kroeger, 2005</cite>);
+                </context>
+                2) from analyzing online reviews, we observe that a clause can express a complete opinion about one aspect in most of cases; 
+                <context>
+                    3) in Penn Discourse Treebank, the basic unit of discourse relations (with a few exceptions) is also taken to be a clause  <cite id="24" function="ack" polarity="neu">(Rash-mi Prasad and Webber, 2008</cite>).
+                </context>
+            </paragraph>
+            <paragraph>
+                Figure 1(a) illustrates a sample document. Figure 1(b) is the corresponding output of the given document. In the graph, vertices whose color are black stand for subjective clauses. The other clauses are represented by white vertices. Edges describe the explanatory relationships between them, of which the heads are explanatory clauses.
+            </paragraph>
+            <paragraph>
+                <context>
+                    <kw>Although</kw> 
+                    <task>the explanatory relation extraction task</task> 
+                    <kw>has been studied</kw> from the view of linguistic and discourse representation <kw>by existing</kw> 
+                    <paper>works</paper> (<cite id="25" function="wea" polarity="neg">Carston, 1993</cite>; <cite id="26" function="wea" polarity="neg">Lascarides and Asher, 1993</cite>), <feature>the automatic</feature> 
+                    <task>extraction task</task> 
+                    <negfeature>is still an open question</negfeature>. 
+                </context>
+                the following examples extracting from online reviews:
+            </paragraph>
+            <paragraph>
+                Example 3: It takes great pictures. Color renditions, skin tones, exposure levels are all first rate. From the example, we can observe that the second sentence explains the first one. However, the second sentence itself also expresses opinion on various opinion targets. In other words, both subjective and objective sentences can be used as explanations.
+            </paragraph>
+            <paragraph>
+                Example 4: When we called their service center they made us wait for them the whole day and no one turned up. This level ofservice is simply not acceptable. The first sentence in example 4 explains the second one. Hence, the feature of relative location between two sentences does not always work well in all cases.
+            </paragraph>
+            <paragraph>
+                Example 5: This backpack is great! its very big (cl) I have both the Panasonic LX3 and the Canon S90. (c2) Both cameras are quite different but truly excellent. (c3) The S90 is a true pocket camera. (c4) It is very compact. (c5) The build quality is also top notch. (c6) It feels solid and it is easy to grip. (c7) It is so small and convenient, (c8) you will find that you will always carry it with you. (a) Example Review (b) Directed Graph Representation and fits more than enough stuff. Many sentences, which express explanatory relation, do not contain any connectives (e.g. "because", "the reason is", and so on). Lin et al.(2009) generalized four challenges (include ambiguity, inference, context, and world knowledge) to automated implicit discourse relation recognition. In this task, we also need to address those challenges. Figure 1: Directed graph representation of a sample document.
+            </paragraph>
+            <paragraph>
+                From the these examples, we can observe that extracting explanatory relations from product reviews is a challenging task. Both linguistic and global constraints should be carefully studied.
+            </paragraph>
+        </section>
+        <section imrad="r">
+            <title>
+                3 The Proposed Approach
+            </title>
+            <paragraph>
+                In this section, we present our method for jointly classifying the subjectivity of text segments and extracting explanatory relations. Firstly, we briefly describe the framework of Markov Logic Networks. Then, we introduce the clause extraction method based on the definition described in the Section 2. Finally, we present the first-order logic formulas including local formulas and global formulas used for joint modeling in this work.
+            </paragraph>
+            
+            
+                3.1 Markov Logic Networks
+            
+            <paragraph>
+                A MLN consists of a set of logic formulas that describe first-order knowledge base. Each formula consists of a set of first-order predicates, logical connectors and variables. Different with first-order logic, these hard logic formulas are softened and can be violated with some penalty (the weight of formula) in MLN.
+            </paragraph>
+            <paragraph>
+                We use M to represent a MLN and {(^i,wi)} to represent formula ^i and its weight wi. These weighted formulas define a probability distribution over sets of possible worlds.
+
+                <context>
+                    Let y denote a possible world, the p(y) is defined as follows <cite id="27" function="ack" polarity="neu"> (Richardson and Domingos, 2006): </cite> where each c is a binding of free variable in ^i to constraints; ffi (y) is a binary feature function that returns 1 if the true value is obtained in the ground formula we get by replacing the free variables in ^i with the constants in c under the given possible world y, and 0 otherwise; C^ is all possible bindings of variables to constants, and Z is a normalization constant.
+                </context>
+                
+                
+            </paragraph>
+            <paragraph>
+                
+                <context>
+                    
+                    <method>Many methods</method> 
+                    <kw>have been proposed to</kw> 
+                    <task>learn the weights</task> of MLN <kw>using</kw> 
+                    <feature>both generative and discriminative</feature> 
+                    <method>approaches</method> 
+                    <cite id="28" function="use" polarity="neu">(Richardson and Domingos, 2006)</cite>; <cite id="29" function="use" polarity="neu">(Singla and Domingos, 2006)</cite>).
+                 
+                </context>
+                
+                There are also several MLN learning packages available online such as thebeast, Tuffy, PyMLNs, Alchemy, and so on. http://code.google.com/p/thebeast 3 http://hazy.cs.wisc.edu/hazy/tuffy/ 4 http://www9-old.in.tum.de/people/jain/mlns/ 5 http://alchemy.cs.washington.edu/ Describing the attributes of words
+                
+            </paragraph>
+            
+            
+            
+                3.2 Clause Identification
+            
+            <paragraph>
+                We model the clause boundary identification problem through sequence labeling and use Conditional Random Fields (CRFs) to identify clause boundaries. Words and part-of-speech (POS) tags are used as feature sets. Since we do not allow embedded segments, the performance of our method is promising, which achieves the F1 score of 92.8%. 
+                <context>
+                    <result>The result</result> 
+                    <kw>is comparable with</kw> 
+                    <kw>the best</kw> 
+                    <result>results</result> 
+                    <kw>obtained during</kw> 
+                    <experiment>the CoNLL-2001 campaign</experiment> (<cite id="30" function="con" polarity="neu">Tjong et al., 2001</cite>).
+                </context>
+                
+            </paragraph>
+            
+            
+            
+                3.3 Formulas
+            
+            <paragraph>
+                In this work, we propose to use predicate subj(i) to indicate that the ith clause is subjective and explain(i, j) to indicate that the jth clause explains the ith clause. Both subj and explain are hidden predicates and jointly modeled by MLN. We use local and global formulas to model rich linguistic features and long distance constraints.
+            </paragraph>
+                
+            
+                3.3.1 Local Formulas
+            
+            <paragraph>
+                The local formulas relate one or more observed predicates to exactly one hidden predicate. In this work, we define a list of observed predicates to describe the properties of individual clauses and attributes of relations between two clauses. The observed predicates and descriptions are shown in Table 1. The observed predicates can be categorized into 3 groups: words, clauses, and relations between clauses. We use two lexicons to capture background knowledge of words. Lexical, part-of-speech tag, and dependency relation are used to describe a single clause. We also propose two predicates to model distance between clauses.
+            </paragraph>
+            <paragraph>
+                Table 2 lists the local formulas used in this work. The "+" notation in the formulas indicates that each constant of the logic variable should be weighted separately. For subjective classification and relation extraction, we construct a number of formulas respectively.
+            </paragraph>
+            <paragraph> 
+                For subjective classification, the first two formulas model the influence of lexical and POS tag.It is similar as the bag-of-words model, which is a simplifying representation and has been successfully used for various natural language processing tasks. Since words which provide positive or negative opinions may provide important information for subjectivity classification, we combine predicates of words and lexicon of opinion words. Bigrams are also proved to be useful for textual classification in several NLP tasks. Hence, we also combine predicates about individual word and POS tag to capture this kind of information. Word-level relations are explicitly presented at the dependency trees, we Formulas for subjective classification also construct local formulas based on predicates extracted from dependency trees of clauses. Table 1: Descriptions of observed predicates. Table 2: Descriptions of local formulas.
+            </paragraph>
+            <paragraph>
+                For explanatory relation extraction, we firstly use formulas to capture lexical and syntactic information from both of the clauses. Since distances between clauses are helpful in determining the relation, we incorporate two kinds of distance features with lexical and syntactic predicates. Connective words such as for example, since, explicitly signal the presence of the explanation relation. 
+                <context>
+                    Although some connective words are ambiguous in terms of relation they mark (<cite id="31" function="ack" polarity="neu">Pitler and Nenkova, 2009</cite>), they may still be useful for explanation relation extraction.
+                </context>
+                Hence, we construct local formulas with relation lexicon and other predicates.
+            </paragraph>
+                
+                
+           
+                3.3.2 Global Formulas
+            
+            <paragraph>
+                Local formulas are designed to deal with subjective classification of a single clause or relation determination of a single pair of clauses. Global formulas are designed to handle global constraints of multiple clauses. From the definition of explanatory relation and corpus statistics, we observe the following properties:
+            </paragraph>
+            <paragraph>
+                Property 1: One clause can only serve as the explanation of one subjective clause.
+            </paragraph>
+            <paragraph>
+                Property 2: Explanatory clauses occur immediately before or after their corresponding subjective clauses.
+            </paragraph>
+            <paragraph>
+                Property 3: The positions of explanatory clauses are consecutive.
+            </paragraph>
+            <paragraph>
+                In other words, if clause ck and ck+2 explain clause cj, the clause ck+1 would also be explanatory clause of cj. For property 1, we use the following global formula to make sure that one clause only explains at most one another clause. Based on the property 2 and 3, explanatory clauses are consecutive and immediately before or after their corresponding subjective clauses. We use the following formulas to guarantee the property: Since our aim is to extract explanatory for subjective clauses, we also use the following formulas to make sure that the clauses which are explained are subjective ones.
+            </paragraph>
+                
+            
+
+        
+           
+                4 Experiments
+           
+            
+            
+                4.1 Data Set
+            
+            <paragraph>
+                We crawled a number of reviews about digital cameras from Buzzillions, which is a product review site and contains more than 16 million reviews. We randomly select 100 reviews whose usefulness ratings are 5 on a 5-point scale. They contain 1137 sentences, which are composed by 1665 clauses. Amazon's Mechanical Turk is used to deploy two tasks for labeling the corpus. 694 clauses are labeled subjective and 478 clauses explain other ones. More than 56.1% opinion expressions are explained by their corresponding explanatory sentences.
+            </paragraph>
+            <paragraph>
+                The two projects we deployed on Amazon's Mechanical Turk are: 1) Determine whether a clause contains opinion expressions or not; 2) Determine whether a clause clarifies causes, reasons, or consequences of another given clause. In order to control the labeling quality, we configured parameters of the project to make sure that all the tasks should be judged by at least 20 annotators. Most of the annotators can complete a task within 25 seconds. Figure 2 shows the screenshots of the two projects.
+            </paragraph>
+            <paragraph>
+                Over all, 127 workers participated in the project. About 72% of them submitted more than 5 tasks. Although we listed several examples on the project descriptions, different people may have their own understanding and criteria for those tasks. In order to measure the quality of the labeling task, we use perplexity to evaluate each task. If the perplexity of a task is below 0.51, which means that more than 80% of the workers submitted the same decision, the result of the task will be used as training or testing data. From the statistic of the corpus, we observe that only 6.2% of the clauses' subjectiveness and 15.6% of explanation relations can not be certainly decided. For the first project, we treated those clauses as objective one. And, those clause pairs in the second project were not considered as explanation relations. www.buzzillions.com Taski: Help us determine whether a sentence is subjective or objective. The following sentences are extracted from product reviews. Please help us check whether the following sentences expressing opinion towards some attributes/parts of a product. The battery life is something I come to expect from this line of camera. OSubjective (JObjective I have the camera set to shut off the sensor after about 30 seconds Task2: Help us check whether a sentence is an explanation of the opinion sentence. The opinion sentence (red one) is extracted from product reviews and express opinion towards some attributes/parts of a product. Please help us check whether the following blue sentences describe a set of facts which clarifies the causes, reason, and consequences of the opinion given in the opinion sentence. click "yes" if there is an explanation relation between them, "no" otherwise. I can leave the camera on for better than 8 hours shooting The battery life is something I come to expect from this line of camera and I have the camera set to shut off the sensor after about 30 seconds ()YES ()NO Figure 2: Screenshots of the two tasks on Amazon Mechanical Turk.
+            </paragraph>
+            
+            
+            
+                4.2 Experiments Configurations
+            
+            <paragraph>
+                <context>
+                    <tool>Stanford parser</tool> (<cite id="32" function="bas" polarity="pos">Klein and Manning, 2003</cite>) <kw>is used for</kw> 
+                    <task>extracting features from dependency parse trees</task>.
+                </context>
+                For resolving Markov logic network, we use the toolkit thebeast .
+                The detailed setting of thebeast engine is as follows: The inference algorithm is the MAP inference with a cutting plane approach.
+                For parameter learning, the weights for formulas are updated by an online learning algorithm with MIRA update rule.
+                All the initial weights are set to zeros.
+                The number of iterations is set to 10 epochs.
+            </paragraph>
+            <paragraph>
+                Evaluation metrics used for subjectivity classification and relation extraction throughout the experiments include: Precision, Recall, and F1-score.
+                We randomly select 80% reviews as training set and the others as testing set.
+            </paragraph>
+            <paragraph>
+                Since the dataset is newly created for this task, to compare the performance of the proposed method to other models, we also reimplemented several stateof-the-art methods for comparison.
+            </paragraph>
+            <paragraph>
+                • CRF-Subj: 
+                <context>
+                    <author>We</author> 
+                    <kw>follow</kw> 
+                    <method>the method</method> 
+                    <kw>proposed by</kw> 
+                    <cite id="33" function="bas" polarity="pos">Zhao et al. (2008)</cite>, which regard the subjectivity of all clauses throughout a paragraph as a sequential flow of sentiments and use CRFs to model it. 
+                </context>
+                The feature sets are similar as the local formulas for MLN including words, POS tags, dependency relations, and opinion lexicon.
+            </paragraph>
+            <paragraph>
+                • 
+                <context>
+                    RAE-Subj: <cite id="34" function="ack" polarity="neu">Socher et al. (2011)</cite> proposed to use recursive autoencoders for sentence-level predication of sentiment label distributions. 
+                </context>
+                To compare with it, we also reimplement their method without any hand designed lexicon.
+            </paragraph>
+            <paragraph>
+                <context>
+                    • PDTB-Rel: <kw>For</kw> 
+                    <task>discourse relation extraction</task>, <author>we</author> 
+                    <kw>use </kw> 
+                    <tool>"PDTB-Styled End-to-End Discourse Parser"</tool> (<cite id="35" function="bas" polarity="pos">Lin et al., 2010</cite>) <kw>to</kw> 
+                    <task>extract discourse level relations </task>as baseline. 
+                </context>
+                Since it is a general discourse relations identification algorithms, "Cause", "Pragmatic Cause", "Instantiation", and "Restatement" relation types are treated as explanatory relation in this work.
+            </paragraph>
+            <paragraph>
+                <context>
+                    • SVM-Rel: <author>We</author> 
+                    <kw>also use</kw> 
+                    <tool>LibSVM</tool> (<cite id="36" function="bas" polarity="pos">Chang and Lin, 2011</cite>) <kw>to</kw> 
+                    <task>classify the relations between clauses</task>. 
+                </context>
+                <context>
+                    <kw>Following</kw> 
+                    <method>the configurations</method> 
+                    <kw>reported by</kw>  
+                    <cite id="37" function="bas" polarity="pos">Feng and Hirst (2012)</cite>, <author>we</author> 
+                    <kw>use</kw> 
+                    <method>linear kernel and probability estimation</method> to model it.
+                </context>
+            </paragraph>
+            
+            
+            
+                4.3 Results
+            
+            <paragraph>
+                Table 3 shows the comparisons of the proposed method with the state-of-the-art systems on subjectivity classification and explanatory relation extraction. From the results, we can observe that recursive autoencoders based subjectivity classification method achieves slightly better performance than our method and conditional random fields based method. The performances of the proposed method are similar as CRFs'. We think that the main reason is that only lexical features are used in MLN models for subjective classification. However, conditional random fields consider not only lexical information but also inference of the contexts of sentences. RAE method learns vector space representations for multi-word phrases and uses compositional semantics to understand sentiment. Table 3: Performance comparisons between the proposed method and state-of-the-art methods. "MLN" represents the method proposed in this work.
+            </paragraph>
+            <paragraph>
+                For evaluating the performance of relation extraction, we combine the results of RAE with PDTB-Rel and SVM-Rel. For all the subjective clauses identified by RAE, PDTB-Rel and SVM-Rel are used to extract corresponding explanatory clauses. The results are shown in the last three rows in the Table 3. From the results, we can observe that the proposed joint model achieves best F1 score and precision among all methods. Although the proposed method achieve slightly worse result in processing subjectivity classification. We think that the error propagation is the main reason for worse results of cascaded methods. The relative improvement of MLN over SVM-Rel is more than 33.4%.
+            </paragraph>
+            <paragraph>
+                To show the effectiveness of different observed predicates, we evaluate the performances of the proposed method with different predicate sets. We subtract one observed predicate and its corresponding local formulas from the original sets at a time. The results of both subjectivity classification and relation extraction are shown in Table 4. The first row shows the result of the MLN based method with all observed predicates and local formulas. From the results we can observe that the observed predicates which are not used in the local formulas for subjectivity classification also impact the performance of subjectivity classification. We think that the performance is effected by the global formulas, which combine the procedure of subjectivity classification and relation extraction. Among all predicates, we observe that words and dependency relations play the most important roles. Without word predicate, the F1 score of subjectivity classification and relation extraction significantly drop to 51.2% and 42.9% respectively. For subjectivity classification, subjective lexicon contributes a lot for recall. For relation extraction, the impacts of clause distance and sentence distance are not as significant as the other features.
+            </paragraph> 
+            
+        </section>
+       <section imrad="d">
+        <title>
+            5 Related Work
+        </title>
+        <paragraph>
+            Our work relates to three research areas: sentiment analysis/opinion mining, discourse-level relation extraction, and Markov logic networks. Along with the increasing requirement, subjectivity classification has recently received considerable attention from both the industry and researchers. 
+            <context>
+                <kw>A variety of</kw> 
+                <method>approaches and methods</method> 
+                <kw>have been proposed for</kw> 
+                <task>this task </task>from different aspects. <kw>Among them</kw>, a number of approaches focus on classifying sentiments of text in different levels (e.g. words (Kim sentences (<cite id="38" function="use" polarity="neu">Zhao et al., 2008</cite>), documents (<cite id="39" function="use" polarity="neu">Pang et al., 2002</cite>) and so on.), and detecting the overall polarity of them.
+            </context>
+        </paragraph>
+        <paragraph>
+            
+            Another research direction tries to convert the sentiment analysis task into entity identification and relation extraction.  
+            <context>
+                <cite id="40" function="ack" polarity="neu">Hu and Liu (2004)</cite> proposed to use a set of methods to produce feature-based summary of a large number of customer reviews. 
+            </context>
+            <context>
+                <cite id="41" function="ack" polarity="neu">Kobayashi et al. (2007)</cite> assumed that evaluative opinions could be structured as a frame which is composed by opinion holder, subject, aspect, and evaluation. 
+            </context>
+            They converted the task to two kinds of relation extraction tasks and proposed a machine learning-based method which used both contextual and statistical clues.
+        </paragraph>
+        <paragraph>
+            
+            Analysis of some special types of sentences were also introduced in recent years. 
+            <context>
+                <cite id="42" function="ack" polarity="neu">Jindal and Liu (2006)</cite> studied the problem of identifying comparative sentences.
+            </context>
+
+            They analyzed different types of comparative sentences and proposed learning approaches to identify them. Conditional sentences were studied by Narayanan et al (2009). They analyzed the conditional sentences in both linguistic and computitional perspectives and used learning method to do it. 
+            <author>
+                <kw>They followed</kw> 
+                <method>the feature-based sentiment analysis model</method> (<cite id="43" function="use" polarity="neu">Hu and Liu, 2004</cite>), which also use flat frames to represent evaluations.
+            </author>
+        </paragraph>
+        <paragraph>
+            Since the cross sentences relations are considered in this work, the discourse-level relation extraction methods are also related to ours.  
+            <context>
+                <cite id="44" function="use" polarity="neu">Marcu and Echihabi (2002)</cite> 
+                <kw>proposed to use</kw> 
+                <method>an unsupervised approach</method> 
+                <kw>to</kw> 
+                <task>recognizing discourse relations</task>.
+            </context>
+            <context>
+                <cite id="45" function="use" polarity="neu">Lin et al.(2009)</cite> 
+                <kw>analyzed</kw> 
+                <feature>the impacts</feature> 
+                <kw>of</kw> 
+                <concept>features</concept> extracted from contextual information, constituent parse trees, dependency parse trees, and word pairs. 
+            </context>
+            <context>
+                <cite id="46" function="use" polarity="neu">Asher et al.(2009)</cite> 
+                <kw>studied</kw> 
+                <data>discourse segments</data> containing opinion expressions from the perspective of linguistics.
+            </context>
+            <context>
+                <cite id="47" function="use" polarity="neu">Chen et al. (2010)</cite> 
+                <kw>introduced</kw> 
+                <method>a multi-label model</method> 
+                <kw>to</kw> 
+                <task>detect emotion causes</task>. 
+            
+                <kw>They developed</kw>
+                <data>two sets</data> of linguistic features for this task base on linguistic cues. <cite id="48" function="use" polarity="neu">Zirn et al. (2011)</cite> proposed to use MLN framework to capture the context information in analysing (sub-)sentences.
+            
+            </context>
+        </paragraph>
+        <paragraph>
+            <context>
+                <kw>The most similar</kw> 
+                <paper>work</paper> 
+                <kw>to</kw> 
+                <author>ours</author> 
+                <kw>was proposed by</kw> 
+                <cite id="49" function="con" polarity="neu">Somasundaran et al.(2009)</cite>.
+            </context>
+            They proposed to use iterative classification algorithm to capture discourselevel associations. However different to us, they focused on pairwise relationships between opinion expressions. In this paper, we used MLN framework to capture another different discourse-level relation, which exists between subject clauses or subject clause and objective clause.
+        </paragraph>
+        <paragraph>
+            <context>
+                <cite id="50" function="use" polarity="neu">Richardson and Domingos (2006)</cite> 
+                <kw>proposed</kw> 
+                <method>Markov Logic Networks</method>, <kw>which</kw> 
+                <feature>combines firstorder logic</feature> and probabilistic graphical models.
+            </context>
+            <context>
+                <kw>In recent years</kw>,<method> MLN</method> 
+                <kw>has been adopted for</kw> 
+                <task>several natural language processing</task> tasks and <kw>achieved</kw> 
+                <posfeature>a certain level of success</posfeature> (<cite id="51" function="use" polarity="neu">Singla and Domingos, 2006</cite>; <cite id="52" function="use" polarity="neu">Riedel and Meza-Ruiz, 2008</cite>; <cite id="53" function="use" polarity="neu">Yoshikawa et al., 2009</cite>; <cite id="54" function="use" polarity="neu">Andrzejewski et al., 2011</cite>; <cite id="55" function="use" polarity="neu">Jiang et al., 2012</cite>; <cite id="56" function="use" polarity="neu">Huang et al., 2012</cite>).
+            </context>
+            <context>
+                <cite id="57" function="use" polarity="neu"> Singla and Domingos (2006)</cite> 
+                <kw>modeled</kw> 
+                <concept>the entity resolution problem </concept> 
+                <kw>with</kw> 
+                <method>MLN</method>.
+            </context>
+            They demonstrated the capability of MLN to seamlessly combine a number of previous approaches.
+            <context>
+                <cite id="58" function="use" polarity="neu">Poon and  Domingos (2008)</cite> 
+                <kw>proposed to use</kw>
+                <method>MLN</method> 
+                <kw>for</kw>
+                <task>joint unsupervised coreference resolution</task>. 
+            </context>
+            <context>
+                <cite id="59" function="use" polarity="neu">Yoshikawa et al. (2009)</cite> <kw>proposed to use</kw><method>Markov logic</method> <kw>to incorporate</kw> <feature>both local features</feature> and global constraints that hold between temporal relations.
+            </context>
+            <context>
+            <cite id="60" function="use" polarity="neu">Andrzejewski et al. (2011)</cite> <kw>introduced a </kw> <method>framework</method> <kw>for</kw><task>incorporating general domain knowledge</task>, which is represented by First-Order Logic (FOL) rules, into LDA inference to produce topics shaped by both the data and the rules.
+            </context>
+        </paragraph>
+     
+            <title>
+                6 Conclusions
+            </title>
+            <paragraph>
+                In this paper, we propose to use Markov logic networks to identify subjective text segments and extract their corresponding explanations in discourse level. We use MLN to jointly model subjectivity classification and explanatory relation extraction. Rich linguistic features and global constraints are incorporated by various logic formulas and global formulas. To evaluate the proposed method, we collected a large number of product reviews and constructed a labeled corpus through Amazon's Mechanical Turk. Experimental results demonstrate that the proposed approach achieve better performance than state-of-the-art methods. Table 4: Performance comparisons of different observed predicates
+            </paragraph>
+       
+            <title>
+                7 Acknowledgement
+            </title>
+            <paragraph>
+                The authors wish to thank the anonymous reviewers for their helpful comments and Kang Han for preparing the corpus. This work was partially funded by National Natural Science Foundation of China (61003092, 61073069), Key Projects in the National Science &amp; Technology Pillar Program(2012BAH18B01), National Major Science and Technology Special Project of China (2014ZX03006005), Shanghai Municipal Science and Technology Commission (12511504502) and "Chen Guang" project supported by Shanghai Municipal Education Commission and Shanghai Education Development Foundation(11CG05). 
+            </paragraph>
+        </section>
+    </paper>
+</annotatedpaper>

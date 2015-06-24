@@ -1,0 +1,185 @@
+<annotatedpaper><paper title="Extracting Appraisal Expressions"  
+authors="K Bloom, N Garg, S Argamon" year="2007"> 
+ 
+<section> 
+<title>Extracting Appraisal Expressions</title> 
+<paragraph> 
+Sentiment analysis seeks to characterize opinionated or evaluative aspects of natural language text.We suggest here that appraisal expression extraction should be viewed as a fundamental task in sentiment analysis.An appraisal expression is a textual unit expressing an evaluative stance towards some target.The task is to find and characterize the evaluative attributes of such elements. 
+</paragraph> 
+<paragraph> 
+This paper describes a system for effectively extracting and dis-ambiguating adjectival appraisal expressions in English outputting a generic representation in terms of their evaluative function in the text.Data mining on appraisal expressions gives meaningful and non-obvious insights. 
+</paragraph> 
+</section> 
+<section> 
+<title>1 Introduction </title> 
+<paragraph> 
+Sentiment analysis, which seeks to analyze opinion in natural language text, has grown in interest in recent years. <context><task>Sentiment analysis</task> includes a variety of different problems, <kw>including</kw>: sentiment classification <method>techniques</method> <kw>to</kw> <task>classify reviews</task> as positive or negative, based on bag of words (<cite id="1" function="use" polarity="neu">Pang et al., 2002</cite>) or positive and negative words (<cite id="2" function="use" polarity="neu">Turney, 2002</cite>; <cite id="3" function="use" polarity="neu">Mullen and Collier, 2004</cite>); <task>classifying sentences</task> in a document as either subjective or objective (<cite id="4" function="use" polarity="neu">Riloff and Wiebe, 2003</cite>; <cite id="5" function="use" polarity="neu">Pang and Lee, 2004</cite>); <task>identifying</task> or classifying appraisal targets (<cite id="6" function="use" polarity="neu">Nigam and Hurst, 2004</cite>); identifying the source of an opinion in a text (<cite id="7" function="use" polarity="neu">Choi et al., 2005</cite>), whether the author is expressing the opinion, or whether he is attributing the opinion to someone else; and <task>developing</task> interactive and visual opinion mining methods (<cite id="8" function="use" polarity="neu">Gamon et al., 2005</cite>;<cite id="9" function="use" polarity="neu">Popescu and Etzioni, 2005</cite>).</context> <context>Much of this work has utilized the fundamental concept of 'semantic orientation', (<cite id="10" function="wea" polarity="neg">Turney, 2002</cite>); <kw>however</kw>, <task>sentiment analysis</task> <negfeature>still lacks</negfeature> a <concept>'unified field theory'</concept>. </context>We propose in this paper that a fundamental task underlying many of these formulations is the extraction and analysis of appraisal expressions, defined as those structured textual units which express an evaluation of some object.An appraisal expression has three main components: an attitude (which takes an evaluative stance about an object), a target (the object of the stance), and a source (the person taking the stance) which may be implied.The idea of appraisal extraction is a generalization of problem formulations developed in earlier works. 
+</paragraph> 
+<paragraph> 
+<context><cite id="11" function="ack" polarity="neu">Mullen and Collier's (2004)</cite> notion of classifying appraisal terms using a multidimensional set of attributes is closely tied to the definition of an appraisal expression, which is classified along several dimensions.</context> <context><kw>In previous</kw> <paper>work</paper> (<cite id="12" function="use" polarity="pos">Whitelaw et al., 2005</cite>), <author>we</author> <kw>presented</kw> a related <method>technique of</method> <kw>finding</kw> opinion phrases, using a multidimensional set of attributes and modeling the semantics of modifiers in these phrases.</context> <context>The <kw>use of</kw> multiple <tool>text classifiers</tool> by Wiebe and colleagues (<cite id="13" function="use" polarity="neu">Wilson et al., 2005</cite>; <cite id="14" function="use" polarity="neu">Wiebe et al., 2004</cite>) <kw>for</kw> various kinds of <task>sentiment classification</task> <kw>can also be viewed</kw> as a sentence-level <method>technique</method> <kw>for</kw> analyzing appraisal expressions.</context> <context><cite id="15" function="bas" polarity="pos">Nigam and Hurst's (2004)</cite> <paper>work on</paper> detecting opinions about a certain topic <author>presages our</author> <kw>notion of</kw> connecting attitudes to targets, while <cite id="16" function="bas" polarity="pos">Popescu and Etzioni's (2005)</cite> opinion mining technique <kw>also</kw> <posfeature>fits well</posfeature> <author>into our</author> framework.</context> In this paper we describe a system for extracting adjectival appraisal expressions, based on a hand-built lexicon, a combination of heuristic shallow parsing and dependency parsing, and expectation-maximization word sense disambiguation. Each extracted appraisal expression is represented as a set of feature values in terms of its evaluative function in the text. 
+</paragraph> 
+<paragraph> 
+We have applied this system to two domains of texts: product reviews, and movie reviews.Manual evaluation of the extraction shows our system to work well, as well as giving some directions for improvement.We also show how straightforward data mining can give users very useful information about public opinion. 
+</paragraph> 
+</section> 
+<section> 
+<title> 2 Appraisal Expressions</title> 
+<paragraph> 
+We define an appraisal expression to be an elementary linguistic unit that conveys an attitude of some kind towards some target.An appraisal expression is defined to comprise a source, an attitude, and a target, each represented by various attributes.For example, in 'I found the movie quite monotonous', the speaker (the Source) expresses a negative Attitude ('quite monotonous') towards 'the movie' (the Target).Note that attitudes come in different types; for example, 'monotonous' describes an inherent quality of the Target, while 'loathed' would describe the emotional reaction of the Source.Attitude may be expressed through nouns, verbs, adjectives and metaphors. 
+</paragraph> 
+<paragraph> 
+Extracting all of this information accurately for all of these types of appraisal expressions is a very difficult problem.We therefore restrict ourselves for now to adjectival appraisal expressions that are each contained in a single sentence.Additionally, we focus here only on extracting and analyzing the attitude and the target, but not the source.Even with these restrictions, we obtain interesting results (Sec.7). 
+</paragraph> 
+<subsection> 
+<subtitle>2.1 Appraisal attributes</subtitle> 
+<paragraph> 
+<context><author>Our</author> <method>method</method> <kw>is grounded in</kw> <concept>Appraisal Theory</concept>, <kw>developed by</kw> <cite id="17" function="bas" polarity="pos">Martin and White (2005)</cite>, which analyzes the way opinion is expressed.</context> Following Martin and White, we define:Attitude type is type of appraisal being expressed—one of affect, appreciation, or judgment (Figure 1).Affect refers to an emotional state (e.g., 'happy', 'angry'), and is the most explicitly subjective type of appraisal.The other two types express evaluation of external entities, differentiating between intrinsic appreciation of object properties (e.g., 'slender', 'ugly') and social judgment (e.g., 'heroic', 'idiotic'). 
+</paragraph>
+<paragraph> 
+Orientation is whether the attitude is positiveAttitude Type LAppreciation -Composition -Balance: consistent, discordant, ...LComplexity: elaborate, convoluted, ...-Reaction -Impact: amazing, compelling, dull, ...LQuality: beautiful, elegant, hideous, ...L Valuation: innovative, profound, inferior, ...-Affect: happy, joyful, furious, ...-Judgment -Social Esteem -Capacity: clever, competent, immature, ...-Tenacity: brave, hard-working, foolhardy, ...L Normality: famous, lucky, obscure, ...-Social Sanction -Propriety: generous, virtuous, corrupt, ...-Veracity: honest, sincere, sneaky, ...Figure 1: The Attitude Type taxonomy, with examples of adjectives from the lexicon.('good') or negative ('bad').Force describes the intensity of the appraisal.Force is largely expressed via modifiers such as 'very' (increased force), or 'slightly' (decreased force), but may also be expressed lexically, for example 'greatest' vs.'great' vs.'good'. 
+</paragraph> 
+<paragraph> 
+Polarity of an appraisal is marked if it is scoped in a polarity marker (such as 'not'), or unmarked otherwise.Other attributes of appraisal are affected by negation; e.g., 'not good' also has the opposite orientation from 'good'.Target type is a domain-dependent semantic type for the target.This attribute takes on values from a domain-dependent taxonomy, representing important (and easily extractable) distinctions between targets in the domain. 
+</paragraph> 
+</subsection> 
+<subsection> 
+<subtitle>2.2 Target taxonomies</subtitle> 
+<paragraph> 
+Two domain-dependent target type taxonomies are shown in Figure 2.In both, the primary distinction is between a direct naming of a kind of "Thing" or a deictic/pronominal reference (e.g., "those" or "it"), since the system does not currently rely on corefer-ence resolution.References are further divided into references to the writer/reader ('interactants') and to other people or objects.The Thing subtrees for the two domains differ somewhat. 
+</paragraph>
+<paragraph> 
+In the movie domain, Things such as 'this movie', 'Nicholas Cage', or 'cinematography', are classified into six main categories: movies (the one being reviewed, or another one), peopleMovie Target Type l-Movie Thing (-Any Movie -This Movie -Other Movie -Movie Person -Real Person...-Character -Movie Aspect...-Company -Marketing -Reference -Interactant -First Person -Second Person -Third Person -DeicticProduct Target Type L Product Thing (-Any Product -This Product -Other Product -Product Part Integral -Replaceable -Experience -Company -Marketing -Support -Reference U Interactant First Person Second Person -Other-Third Person DeicticFigure 2: Target taxonomies for movie and product reviews. 
+</paragraph> 
+<paragraph> 
+(whether characters, or real people involved in making the film), aspects of the movie itself (its plot, special effects, etc.), the companies involved in making it, or aspects of marketing the movie (such as trailers).For target Things in product reviews, we replace 'Movie Person' and 'Movie Aspect' by 'Product Part' with two subcategories: 'Integral', for parts of the product itself (e.g., wheels or lenses), and 'Replaceable', for parts or supplies meant to be periodically replaced (e.g., batteries or ink cartridges).The categories of 'Support', for references to aspects of customer support, and 'Experience' for things associated with the experience of using the product (such as 'pictures' or 'resolution', were also added. 
+</paragraph> 
+</subsection> 
+</section> 
+ 
+<section> 
+<title>3 Appraisal Extraction</title> 
+<paragraph> 
+In our system, appraisal extraction runs in several independent stages.First, the appraisal extractor finds appraisal expressions by finding the chunks of text that express attitudes and targets.Then, it links each attitude group found to a target in the text.Finally, it uses a probabilistic model to determine which attitude type should be assigned when attitude chunks were ambiguous. 
+</paragraph> 
+<subsection> 
+<subtitle>3.1 Chunking</subtitle> 
+<paragraph> 
+<context>The <tool>chunker</tool> <kw>is based on</kw> <author>our</author> earlier <paper>work</paper> (<cite id="18" function="bas" polarity="neu">Whitelaw et al., 2005</cite>), <kw>which</kw> <kw>finds</kw> attitude groups and targets <kw>using</kw> a hand-built lexicon (Sec.4).</context> This lexicon contains head adjectives (which specify values for the attributes attitude type, force, polarity, and orientation), and appraisal modifiers (which specify transformations to the four attributes).Some head adjectives are ambiguous, having multiple entries in the lexicon with different attribute values. In all cases, different entries for a given word have different attitude types.<context> If the head adjective is ambiguous, multiple groups are created, to be disam-biguated later. <kw>See</kw> <author>our</author> <kw>previous</kw> <paper>work</paper> (<cite id="19" function="ack" polarity="neu">Whitelaw et al., 2005</cite>) for a discussion of the technique.</context> Target groups are found by matching phrases in the lexicon with corresponding phrases in the text and assigning the target type listed in the lexicon. 
+</paragraph> 
+</subsection> 
+<subsection> 
+<subtitle>3.2 Linking</subtitle> 
+<paragraph> 
+After finding attitude groups and candidate targets, the system links each attitude to a target.Each sentence is parsed to a dependency representation, and a ranked list of linkage specifications is used to look for paths in the dependency tree connecting some word in the source to some word in the target.Such linkage specifications are hand-constructed, and manually assigned priorities, so that when two linkage specifications match, only the highest priority specification is used.For example, the two highest priority linkage specifications are:2. attitude amod ) targetThe first specification selects the subject of a sentence where the appraisal modifies a noun in the predicate, for example 'The Matrix' in 'The Matrix is a good movie'.The second selects the noun modified by an adjective group, for example 'movie' in 'The Matrix is a good movie'. 
+</paragraph> 
+<paragraph> 
+If no linkage is found connecting an attitude to a candidate target, the system goes through the linkage specifications again, trying to find any word in the sentence connected to the appraisal group by a known linkage.The selected word is assigned the generic category of movie thing or product thing (depending on the domain of the text).If no linkage is found at all, the system assigns the default category movie thing or product thing, assuming that there is an appraised thing that couldn't be found using the given linkage specifications. 
+</paragraph> 
+</subsection> 
+<subsection> 
+<subtitle>3.3 Disambiguation</subtitle> 
+<paragraph> 
+After linkages are made, this information is used to disambiguate multiple senses that may be present in a given appraisal expression.Most cases are unambiguous, but in some cases two, or occasionally even three, senses are possible.We bootstrap from the unambiguous cases, using a probabilistic model, to resolve the ambiguities.The attitude type places some grammatical/semantic constraints on the clause. 
+</paragraph>
+<paragraph> 
+Two key constraints are the syntactic relation with the target (which can differentiate affect from the other types of appraisal), and whether the target type has consciousness (which helps differentiate judgment and affect from appreciation).To capture these constraints, we model the probability of a given attitude type being correct, given the target type and the linkage specification used to connect the attitude to the target, as follows.The correct attitude type of an appraisal expression is modeled by a random variable A, the set of all attitude types in the system is denoted by A, and a specific attitude type is denoted by a.As described above, other attributes besides attitude type may also vary between word senses, but attitude type always changes between word senses, so when the system assigns a probability to an attitude type, it is assigning that probability to the whole word sense.We denote the linkage type used in a given appraisal expression by L, the set of all possible linkages as L, and a specific linkage type by l. 
+</paragraph> 
+<paragraph> 
+Note that the first attempt with a linkage specification (to find a chunked target) is considered to be different from the second attempt with the same linkage specification (which attempts to find any word).Failure to find an applicable linkage rule is considered as yet another 'linkage for the probability model.Since our system uses 29 different linkage specifications, there are a total of 59 different possible linkages types. 
+</paragraph> 
+<paragraph> 
+The target type of a given appraisal expression is denoted by T, the set of all target types by T, and a specific target type by t.We consider an expression to have a given target type T = t only if that is its specific target type; if its target type is a descendant of t, then its target type is not t in the model.E denotes the set of all extracted appraisal expressions. 
+</paragraph> 
+<paragraph> 
+The term exp denotes a specific expression.Our goal is to estimate, for each appraisal expression exp in the corpus, the probability of its attitude type being a, given the expression s target type t and linkage type lTo do this, we define a model M of this probability, and then estimate the maximum likelihood model using Expectation-Maximization.We model Pm(A = a\!T = t,L = l) by first applying Bayes theorem:Assuming conditional independence of target type and linkage, this becomes:M 's parameters thus represent the conditional and marginal probabilities on this right-hand-side.Given a set of (possibly ambiguous) appraisal expressions E identified by chunking and linkage detection, we seek the maximum likelihood model M* will be our best estimate of P, given the processed data in a given corpus.The system estimates M* using an implementation of Expectation-Maximization over the entire corpus.The highest-probability attitude type (hence sense) according to M is then chosen for each appraisal expression. 
+</paragraph> 
+</subsection> 
+</section> 
+ 
+<section> 
+<title>4 The Lexicon</title> 
+<paragraph> 
+As noted above, attitude groups were identified via a domain-independent lexicon of appraisal adjectives, adverbs, and adverb modifiers. For the movie domain, appraised things were identified based on a manually constructed lexicon containing generic movie words, as well as automatically constructed lexicons of proper names specific to each movie being reviewed.For each product type considered, we manually constructed a lexicon containing generic product words; we did not find it necessary to construct product-specific lexicons. All of the lexicons used in the paper can be found at http://lingcog.iit.edu/arc/. <context><kw>For</kw> adjectival attitudes, <author>we</author> <kw>used</kw> the <data>lexicon</data> <author>we</author> <kw>developed in</kw> <author>our</author> previous <paper>work</paper> (<cite id="20" function="bas" polarity="pos">Whitelaw et al., 2005</cite>) on appraisal.</context> We reviewed the entire lexicon to determine its accuracy and made numerous improvements. 
+</paragraph> 
+<paragraph> 
+Generic target lexicons were constructed by starting with a small sample of the kind of reviews that the lexicon would apply to. <context><author>We</author> <kw>examined</kw> these manually <kw>to find</kw> generic words referring to appraised things <kw>to serve</kw> as seed terms <kw>for</kw> the lexicon <kw>and used</kw> WordNet (<cite id="21" function="bas" polarity="pos">Miller, 1995</cite>) to suggest additional terms to add to the lexicon.</context> Since movie reviews often refer to the specific contents of the movie under review by proper names (of actors, the director, etc.), we also automatically constructed a specific target lexicon for each movie in the corpus, based on lists of actors, characters, writers, directors, and companies listed for the film at imdb.com.Each such specific lexicon was only used for processing reviews of the movie it was generated for, so the system had no specific knowledge of terms related to other movies during processing. 
+</paragraph> 
+</section> 
+ 
+<section> 
+<title>5 Corpora</title> 
+<paragraph> 
+<context><author>We</author> <kw>evaluated</kw> <kw>our</kw> appraisal <tool>extraction system</tool> <kw>on</kw> two corpora.The first is the standard publicly available <data>collection of</data> movie reviews constructed <kw>by</kw> <cite id="22" function="bas" polarity="pos">Pang and Lee (2004)</cite>.</context> This standard testbed consists of 1000 positive and 1000 negative reviews, taken from the IMDb movie review archives.Reviews with 'neutral' scores (such as three stars out of five) were removed by Pang and Lee, giving a data set with only clearly positive and negative reviews.The average document length in this corpus is 764 words, and 1107 different movies are reviewed. 
+</paragraph> 
+<paragraph> 
+The second corpus is a collection of user product reviews taken from epinions.com supplied in 2004 for research purposes by Amir Ashkenazi of Shopping.Com.The base collection contains reviews for three types of products: baby strollers, digital cameras, and printers.Each review has a numerical rating (1-5); based on this, we labeled positive and negative reviews in the same way as Pang and Lee did for the movie reviews corpus.The products corpus has 15162 documents, averaging 442 words long. 
+</paragraph> 
+<paragraph> 
+This comprises 11769 positive documents, 1420 neutral documents, and 1973 negative documents.There are 905 reviews of strollers, 5778 reviews of ink-jet printers and 8479 reviews of digital cameras, covering 516 individual products.See http://www.cs.cornell.edu/people/pabo /movie-review-data/Each document in each corpus was preprocessed into individual sentences, lower-cased, and tok-enized. <context><author>We</author> <kw>used</kw> an <kw>implementation of</kw> <cite id="23" function="bas" polarity="pos">Brill's (1992)</cite> part-of-speech tagger <kw>to find</kw> adjectives and modifiers; <kw>for</kw> parsing, <author>we</author> <kw>used</kw> the Stanford dependency <tool>parser</tool> (<cite id="24" function="bas" polarity="pos">Klein and Manning, 2003</cite>).</context> 
+</paragraph> 
+</section> 
+ 
+<section> 
+<title>6 Evaluating Extraction</title> 
+<paragraph> 
+We performed two manual evaluations on the system.The first was to evaluate the overall accuracy of the entire system.The second was to specifically evaluate the accuracy of the probabilistic dis-ambiguator. 
+</paragraph> 
+<subsection> 
+<subtitle>6.1 Evaluating Accuracy</subtitle> 
+<paragraph> 
+We evaluated randomly selected appraisal expressions for extraction accuracy on a number of binary measures.This manual evaluation was performed by the first author.We evaluated interrater reliability between this rater and another author on 200 randomly selected appraisal expressions (100 on each corpus).The first rater rated an additional 120 expressions (60 for each corpus), and combined these with his ratings for interrater reliability to compute system accuracy, for a total of 320 expressions (160 for each corpus).The(binary) rating criteria were as follows. 
+</paragraph> 
+<paragraph> 
+Relating to the appraisal group: APP Does the expression express appraisal at all?ARM If so, does the appraisal group have all relevant modifiers?HEM Does the appraisal group include extra modifiers?(Results are shown negated, so that higher numbers are better.)Relating to the target:HT If there is appraisal, is there an identifiable target (even if the system missed it)?FT If there is appraisal, did the system identify some target?(Determined automatically.)RT If so, is it the correct one?Relating to the expression s attribute values (if it expresses appraisal):Att Is the attitude type assigned correct?Ori Is the orientation assigned correct?Pol Is the polarity assigned correct?Tar Is the target type assigned correct?Pre Is the target type the most precise value in the taxonomy for this target?Table 1: System accuracy at evaluated tasks. 
+</paragraph> 
+<paragraph> 
+95% confidence one-proportion z-intervals are reported.Results are given in Table 1, and interrater reliability is given in Table 2.In nearly all cases agreement percentages are above 80%, indicating good inter-rater consensus.Regarding precision, we note that most aspects of extraction seem to work quite well.The area of most concern in the system is precision of target classification. 
+</paragraph> 
+<paragraph> 
+This may be improved with further development of the target lexicons to classify more terms to specific leaves in the target type hierarchy.The other area of concern is the APP test, which encountered difficulties when a word could be used as appraisal in some contexts, but not in others, particularly when an appraisal word appeared as a nominal classifier. 
+</paragraph> 
+</subsection> 
+<subsection> 
+<subtitle>6.2 Evaluating Disambiguation</subtitle> 
+<paragraph> 
+The second experiment evaluated the accuracy of EM in disambiguating the attitude type of appraisal expressions.We evaluated the same number of expressions as used for the overall accuracy experiment (100 used for interrater reliability and accuracy, plus 60 used only for accuracy on each corpus), each having two or more word senses, presenting all of the attitude types possible for each appraisal expression, as well as a 'none of the above' and a 'not appraisal' option, asking the rater to select which one applied to the selected expression in context.Baseline disambiguator accuracy, if the computer were to simply pick randomly from the choices specified in the lexicon is 48% for both corpora.Interrater agreement was 80% for movies and 73% for products (taken over 100 expressions from each corpus.) 
+</paragraph> 
+<paragraph> 
+Considering just those appraisal expressions which the raters decided were appraisal, the dis-ambiguator achieved 58% accuracy on appraisal expressions from the movies corpus and 56% accuracy on the products corpus.Further analysis of the results of the disambiguator shows that most of the errors occur when the target type is the generic category thing which occurs when the target is not in the target lexicon.Performance on words recognized as having more specific target types is better: 68% for movies, and 59% for products.This indicates that specific target type is an important indicator of attitude type. 
+</paragraph> 
+</subsection> 
+</section> 
+ 
+<section> 
+<title>7 Opinion Mining</title> 
+<paragraph> 
+We (briefly) demonstrate the usefulness of appraisal expression extraction by using it for opinion mining.In opinion mining, we find large numbers of reviews and perform data mining to determine which aspects of a product people like or dislike, and in which ways.To do this, we search for association rules describing the appraisal features that can be found in a single appraisal expression. 
+</paragraph> 
+<paragraph> 
+<context><author>We</author> generally <kw>look for</kw> <kw>rules</kw> that contain attitudk type, orientation, thing type, and a product name, when these rules occur more frequently than expected. The <kw>idea is similar to</kw> <cite id="25" function="bas" polarity="pos">Agrawal and Srikant's (1995)</cite> notion of generalized association rules.</context> We treat each appraisal expression as a transaction, with the attributes of attitude type, orientation, polarity, force, and thing type, as well as the document attributes product name, product type, and document classification (based on the number of stars the reviewer gave the product). <context><author>We</author> <kw>use</kw> CLOSET+ (<cite id="26" function="bas" polarity="pos">Wang et al., 2003</cite>) <kw>to find</kw> all of the frequent closed itemsets in the data, with a support greater than or equal to 20 occurrences.Let (b, a\, a2,... an) or (b, A) denote the contents of an itemset, and c ((b, A)) denote the support for this itemset.</context> 
+</paragraph> 
+<paragraph> 
+For a given item b, n(b) denotes its immediate parent its value taxonomy, or 'root' for flat sets.Table 2: Interrater reliability of manual evaluation.95% confidence intervals are reported._Table 3: The most interesting specific rules for products. 
+</paragraph> 
+<paragraph> 
+For each item set, we collect rules {b, A) and compute their interestingness relative to the itemset {n(b), A).Interestingness is defined as follows:Int is the relative probability of finding the child itemset in an appraisal expression, compared to finding it in a parent itemset.Values greater than 1 indicate that the child itemset appears more frequently than we would expect.We applied two simple filters to the output, to help find more meaningful results. 
+</paragraph> 
+<paragraph> 
+Specificity requires that b be a product name, and that attitude type and thing type be sufficiently deep nodes in the hierarchy to describe something specific.(For example, 'product thing' gives no real information about what part of the product is being appraised.)Opposition chooses rules with a different rating than the review as a whole, that is, document classification is the opposite of appraisal orientation.The filter also ensures that thing type is sufficiently specific, as with specificity, and requires that b be a product name.We present the ten most 'interesting' rules from each filter, for the products corpus. 
+</paragraph> 
+<paragraph> 
+Rules from the specificity filter are shown in Table 3 and rules from the opposition filter are shown in Table 4. We consider the meaning of some of these rules. 
+</paragraph> 
+<paragraph> 
+The first specificity rule (1) describes a typical example of users who like the product very well overall.An example sentence that created this rule says 'Not only is it an excellent stroller, because of it's [sic] size it even doubled for us as a portable crib.'The specificity rules for the Agfa ePhoto Smile Digital Camera (2) are an example of the kind of rule we expect to see when bad user experience contributes to bad reviews.The text of the reviews that gave these rules quite clearly convey that users were not happy specifically with the photo quality.In the oppositional rules for the Lexmark Color JetPrinter 1100 (3), we see that users made positive comments about the product overall, while nevertheless giving the product a negative review.Drilling down into the text, we can see some examples of reviews like 'On the surface it looks like a good printer but it has many flaws that cause it to be frustrating.' 
+</paragraph> 
+</section> 
+ 
+<section> 
+<title>8 Conclusions</title> 
+<paragraph> 
+We have presented a new task, appraisal expression extraction, which, we suggest, is a fundamental tasks for sentiment analysis.Shallow parsing based on a set of appraisal lexicons, together with sparse use of syntactic dependencies, can be used to effectively address the subtask of extracting adjectival appraisal expressions.Indeed, straightforward data mining applied to appraisal expressions can yield insights into public opinion as expressed in patterns of evaluative language in a corpus of product reviews.Immediate future work includes extending the approach to include other types of appraisal expressions, such as where an attitude is expressed via a noun or a verb.In this regard, <context><author>we</author> <kw>will be examining</kw> extension of <method>existing methods for</method> automatically building lexicons of positive/negative words (<cite id="27" function="bas" polarity="pos">Turney, 2002; Esuli and Sebastiani, 2005</cite>) <kw>to</kw> the <kw>more complex task of</kw> estimating also attitude type and force.</context> As well, a key problem is the fact that evaluative language is often context-dependent, and so proper interpretation must consider interactions between a given phrase and its larger textual context.Table 4: The most interesting oppositional rules for products. 
+</paragraph> 
+</section> 
+ 
+</paper></annotatedpaper>

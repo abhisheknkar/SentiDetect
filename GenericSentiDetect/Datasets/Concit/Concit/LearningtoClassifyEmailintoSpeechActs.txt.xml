@@ -1,0 +1,191 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!-- was: no XML declaration present -->
+<annotatedpaper>ï»¿<paper title="Learning to Classify Email into â€œSpeech Actsâ€�" authors="William W. Cohen, Vitor R. Carvalho, Tom M. Mitchell" year="2004"> 
+        <section> 
+            <title>Learning to Classify Email into â€œSpeech Actsâ€�</title> 
+            William W. Cohen1 
+            Vitor R. Carvalho2 
+            Tom M. Mitchell1,2 
+            1Center for Automated Learning &amp; Discovery  
+            Carnegie Mellon University  
+            Pittsburgh, PA 15213  
+            2Language Technology Institute  
+            Carnegie Mellon University  
+            Pittsburgh, PA 15213  
+        </section> 
+        <section> 
+            <title>Abstract</title> 
+            <paragraph> 
+                It is often useful to classify email according to the intent of the sender (e.g., "propose a meeting", "deliver information"). We present experimental results in learning to classify email in this fashion, where each class corresponds to a verb-noun pair taken from a predefined ontology describing typical "email speech acts". We demonstrate that, although this categorization problem is quite different from "topical" text classification, certain categories of messages can nonetheless be detected with high precision (above 80%) and reasonable recall (above 50%) using existing text-classification learning methods. This result suggests that useful task-tracking tools could be constructed based on automatic classification into this taxonomy. 
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>1 Introduction</title> 
+            <paragraph>
+                In this paper we discuss using machine learning methods to classify email according to the intent of the sender. In particular, we classify emails according to an ontology of verbs (e.g., propose, commit, deliver) and nouns (e.g., information, meeting, task), which jointly describe the "email speech act" intended by the email sender. 
+            </paragraph> 
+            <paragraph> 
+                A method for accurate classification of email into such categories would have many potential benefits. For instance, it could be used to help an email user track the status of ongoing joint activities. Delegation and coordination of joint tasks is a time-consuming and error-prone activity, and the cost of errors is high: it is not uncommon that commitments are forgotten, deadlines are missed, and opportunities are wasted because of a failure to properly track, delegate, and prioritize sub-tasks. The classification methods we consider methods which could be used to partially automate this sort of activity tracking. A hypothetical example of an email assistant that works along these lines is shown in Figure 1._ Do you have any sample scheduling-related email we could use as data? -Steve shortly. â€¢Sure, I'll put some together ; -Bill Fred, can you collect the msgs : from the CSPACE corpora : : tagged w/ the "meeting" : noun, ASAP? -Bill Yes, I can get to that in the next few days. Is next Monday ok? -Fred Assistant announces: "new email request, priority unknown." Assistant: "should I add this new commitment to your to- Assistant: notices outgoing request, may take action if no answer is received promptly. Assistant: notices incoming commitment. "Should I send Fred a reminder on Monday?" Figure 1 - Dialog with a hypothetical email assistant that automatically detects email speech acts. Dashed boxes indicate outgoing messages. (Messages have been edited for space and anonymity.) 
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>2 Related Work</title> 
+            <paragraph> 
+                <context>
+                    <author>Our</author> <experiment>research</experiment> <kw>builds on earlier</kw> <paper>work</paper> defining il-locutionary points of speech acts (<cite id="1" function="bas" polarity="pos">Searle, 1975</cite>), and relating such speech acts to email and workflow tracking (<cite id="2" function="bas" polarity="pos">Winograd, 1987</cite>, <cite id="3" function="bas" polarity="pos">Flores &amp; Lud-low, 1980</cite>,<cite id="4" function="bas" polarity="pos"> Weigant et al, 2003)</cite>.
+                </context>
+
+                Winograd suggested that research explicating the speech-act based "language-action perspective" on human communication could be used to build more useful tools for coordinating joint activities. The Coordinator (<cite id="5">Winograd, 1987</cite>) was one such system, in which users augmented email messages with additional annotations indicating intent. 
+            </paragraph> 
+            <paragraph> 
+                
+                <context>
+                <kw>While such</kw> <method>systems</method> <posfeature>have been useful</posfeature> in limited contexts, <kw>they have also been</kw> <negfeature>criticized as cumbersome:</negfeature> by forcing users to conform to a particular formal system, they constrain communication and make it less natural (<cite id="6" function="hed" polarity="neg">Schoop, 2001</cite>)
+                </context>
+                ; in short, users often prefer unstructured email interactions (Camino et al. 1998). We note that these difficulties are avoided if messages can be automatically annotated by intent, rather than soliciting a statement of intent from the user. 
+            </paragraph> 
+            <paragraph> 
+                
+                <cite id="7" function="wea" polarity="neg">Murakoshi et al. (1999)</cite> <kw>proposed</kw> <method>an email annotation scheme</method> broadly <kw>similar to</kw> <author>ours</author>, called a "deliberation tree", and an algorithm for constructing deliberation trees automatically, <kw>but their</kw> <method>approach</method> <negfeature>was not quantitatively evaluated</negfeature>.
+
+                The approach is based on recognizing a set of hand-coded linguistic "clues". A limitation of their approach is that these hand-coded linguistic "clues" are language-specific (and in fact limited to Japanese text.) 
+            </paragraph> 
+            <paragraph> 
+                
+                <context>
+                <kw>Prior</kw> <experiment>research</experiment> <kw>on</kw> <field>machine learning for text classification </field> has primarily considered classification of documents by topic (<cite id="8" function="ack" polarity="neu">Lewis, 1992</cite>; <cite id="9" function="ack" polarity="neu">Yang, 1999</cite>), but also has addressed sentiment detection (<cite id="10" function="ack" polarity="neu">Pang et al., 2002</cite>; <cite id="11" function="ack" polarity="neu">Weibe et al., 2001</cite>) and authorship attribution <cite id="12" function="ack" polarity="neu">(e.g., Argamon et al, 2003)</cite>. 
+                </context>
+                
+                There has been some previous use of machine learning to classify email messages <cite id="13">(Cohen 1996;</cite> <cite id="14">Sahami et al., 1998</cite>; <cite id="15">Rennie, 2000</cite>; <cite id="16">Segal &amp; Kephart, 2000</cite>). However, to our knowledge, none of these systems has investigated learning methods for assigning email speech acts. Instead, email is generally classified into folders (i.e., according to topic) or according to whether or not it is "spam". Learning systems have been previously used to automatically detect acts in conversational speech (e.g. <cite id="17">Finke et al., 1998</cite>). 
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>3 An Ontology of Email Acts</title> 
+            <paragraph> 
+                Our ontology of nouns and verbs covering some of the possible speech acts associated with emails is summarized in Figure 2. We assume that a single email message may contain multiple acts, and that each act is described by a verb-noun pair drawn from this ontology (e.g., "deliver data"). The underlined nodes in the figure indicate the nouns and verbs for which we have trained classifiers (as discussed in subsequent sections). 
+            </paragraph> 
+            <paragraph> 
+                To define the noun and verb ontology of Figure 2, we first examined email from several corpora (including our own inboxes) to find regularities, and then performed a more detailed analysis of one corpus. The ontology was further refined in the process of labeling the corpora described below. 
+            </paragraph> 
+            <paragraph> 
+                In refining this ontology, we adopted several principles. First, we believe that it is more important for the ontology to reflect observed linguistic behavior than to reflect any abstract view of the space of possible speech acts. As a consequence, the taxonomy of verbs contains concepts that are atomic linguistically, but combine several illocu-tionary points. (For example, the linguistic unit "let's do lunch" is both directive, as it requests the receiver, and commissive, as it implicitly commits the sender. In our taxonomy this is a single 'propose' act.) Also, acts which are abstractly possible but not observed in our data are not represented (for instance, declarations). Figure 2 - Taxonomy 
+            </paragraph> 
+            <paragraph>  
+                Second, we believe that the taxonomy must reflect common non-linguistic uses of email, such as the use of email as a mechanism to deliver files. We have grouped this with the linguistically similar speech act of delivering information. The verbs in Figure 1 are defined as follows. Other Remind j \ Amend Propose Request Commit Refuse Information Activity Data Opinion Ongoing Single Activity Event Meeting Other â€ž _ Logistics DÃœ" Committee, Dta Other \! Meeting Short Term Task 
+            </paragraph> 
+            <paragraph> 
+                A request asks (or orders) the recipient to perform some activity. A question is also considered a request (for delivery of information). 
+            </paragraph> 
+            <paragraph> 
+                A propose message proposes a joint activity, i.e., asks the recipient to perform some activity and commits the sender as well, provided the recipient agrees to the request. A typical example is an email suggesting a joint meeting. 
+            </paragraph> 
+            <paragraph> 
+                An amend message amends an earlier proposal. Like a proposal, the message involves both a commitment and a request. However, while a proposal is associated with a new task, an amendment is a suggested modification of an already-proposed task. 
+            </paragraph> 
+            <paragraph> 
+                A commit message commits the sender to some future course of action, or confirms the senders' intent to comply with some previously described course of action. 
+            </paragraph> 
+            <paragraph> 
+                A deliver message delivers something, e.g., some information, a PowerPoint presentation, the URL of a website, the answer to a question, a message sent "FYI", or an opinion. 
+            </paragraph> 
+            <paragraph> 
+                The refuse, greet, and remind verbs occurred very infrequently in our data, and hence we did not attempt to learn classifiers for them (in this initial study). The primary reason for restricting ourselves in this way was our expectation that human annotators would be slower and less reliable if given a more complex taxonomy. 
+            </paragraph> 
+            <paragraph> 
+                The nouns in Figure 2 constitute possible objects for the email speech act verbs. The nouns fall into two broad categories. 
+            </paragraph> 
+            <paragraph> 
+                Information nouns are associated with email speech acts described by the verbs Deliver, Remind and Amend, in which the email explicitly contains information. We also associate information nouns with the verb Request, where the email contains instead a description of the needed information (e.g., "Please send your birthdate." versus "My birthdate is The request act is actually for a 'deliver information' activity). Information includes data believed to be fact as well as opinions, and also attached data files. 
+            </paragraph> 
+            <paragraph> 
+                Activity nouns are generally associated with email speech acts described by the verbs Propose, Request, Commit, and Refuse. Activities include meetings, as well as longer term activities such as committee memberships. 
+            </paragraph> 
+            <paragraph> 
+                Notice every email speech act is itself an activity. The &lt;verb&gt;
+                    &lt;noun&gt; node in Figure 1 indicates that any email speech act can also serve as the noun associated with some other email speech act. For example, just as (deliver information) is a legitimate speech act, so is (commit (deliver information)). Automatically constructing such nested speech acts is an interesting and difficult topic; however, in the current paper we consider only the problem of determining toplevel the verb for such compositional speech acts. For instance, for a message containing a (commit (deliver information)) our goal would be to automatically detect the commit verb but not the inner (deliver information) compound noun. 
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>4 Categorization Results</title> 
+            <subsection> 
+                <title>4.1 Corpora</title> 
+                <paragraph> 
+                    Although email is ubiquitous, large and realistic email corpora are rarely available for research purposes. The limited availability is largely due to privacy issues: for instance, in most US academic institutions, a users' email can only be distributed to researchers if all senders of the email also provided explicit written consent. 
+                </paragraph> 
+                <paragraph> 
+                    The email corpora used in our experiments consist of four different email datasets collected from working groups who signed agreements to make their email accessible to researchers. The first three datasets, N01F3, N02F2, and N03F2 are annotated subsets of a larger corpus, the CSpace email corpus, which contains approximately 15,000 email messages collected from a management course at Carnegie Mellon University. In this course, 277 MBA students, organized in approximately 50 teams of four to six members, ran simulated companies in different market scenarios over a 14-week period (Kraut et al.). N02F2, N01F3 and N03F2 are collections of all email messages written by participants from three different teams, and contain 351, 341 and 443 different email messages respectively. 
+                </paragraph> 
+                <paragraph> 
+                    The fourth dataset, the PW CALO corpus, was generated during a four-day exercise conducted at SRI specifically to generate an email corpus. During this time a group of six people assumed different work roles (e.g. project leader, finance manager, researcher, administrative assistant, etc) and performed a number of group activities. There are 222 email messages in this corpus. 
+                </paragraph> 
+                <paragraph> 
+                    These email corpora are all task-related, and associated with a small working group, so it is not surprising that they contain many instances of the email acts described aboveâ€”for instance, the CSpace corpora contain an average of about 1.3 email verbs per message. Informal analysis of other personal inboxes suggests that this sort of email is common for many university users. We believe that negotiation of shared tasks is a central use of email in many work environments. 
+                </paragraph> 
+                <paragraph> 
+                    All messages were preprocessed by removing quoted material, attachments, and non-subject header information. This preprocessing was performed manually, but was limited to operations which can be reliably automated. The most difficult step is removal of quoted material, which we address elsewhere (<cite id="16">Carvalho &amp; Cohen, 2004</cite>). 
+                </paragraph> 
+                <title>4.2 Inter-Annotator Agreement</title> 
+                <paragraph> 
+                    Each message may be annotated with several labels, as it may contain several speech acts. To evaluate inter-annotator agreement, we doublelabeled N03F2 for the verbs Deliver, Commit, Request, Amend, and Propose, and the noun, Meeting, and computed the kappa statistic (Car-letta, 1996) for each of these, defined as where A is the empirical probability of agreement on a category, and R is the probability of agreement for two annotators that label documents at random (with the empirically observed frequency of each label). Hence kappa ranges from -1 to +1. The results in Table 1 show that agreement is good, but not perfect. Table 1 - Inter-Annotator Agreement on N03F2. 
+                </paragraph> 
+                <paragraph> 
+                    We also took doubly-annotated messages which had only a single verb label and constructed the 5-class confusion matrix for the two annotators shown in Table 2. Note kappa values are somewhat higher for the shorter one-act messages. Table 2 - Inter-annotator agreement on documents with only one category. 
+                </paragraph> 
+                <title>4.3 Learnability of Categories</title> 
+                <paragraph> 
+                    Representation of documents. To assess the types of message features that are most important for prediction, we adopted Support Vector Machines (<cite id="17">Joachims, 2001</cite>) as our baseline learning method, and a TFIDF-weighted bag-of-words as a baseline representation for messages. We then conducted a series of experiments with the N03F2 corpus only to explore the effect of different representations._ Table 3 - F1 for different feature sets. 
+                    <paragraph> 
+                    </paragraph> 
+                    We noted that the most discriminating words for most of these categories were common words, not the low-to-intermediate frequency words that are most discriminative in topical classification. This suggested that the TFIDF weighting was inappropriate, but that a bigram representation might be more informative. Experiments showed that adding bigrams to an unweighted bag of words representation slightly improved performance, especially on Deliver. These results are shown in Table 4 on the rows marked "no tfidf" and "bigrams". (The TFIDF-weighted SVM is shown in the row marked "baseline", and the majority classifier in the row marked "default"; all numbers are F1 measures on 10-fold cross-validation. ) Examination of messages suggested other possible improvements. Since much negotiation involves timing, we ran a hand-coded extractor for time and date expressions on the data, and extracted as features the number of time expressions in a message, and the words that occurred near a time (for instance, one such feature is "the word 'before' appears near a time"). These results appear in the row marked "times". Similarly, we ran a part of speech (POS) tagger and added features for words appearing near a pronoun or proper noun ("personPhrases" in the table), and also added POS counts. 
+                    <paragraph> 
+                    </paragraph> 
+                    To derive a final representation for each category, we pooled all features that improved performance over "no tfidf" for that category. We then compared performance of these document representations to the original TFIDF bag of words baseline on the (unexamined) N02F2 and N01F3 corpora. As Table 3 shows, substantial improvement with respect to F1 and kappa was obtained by adding these additional features over the baseline representation. This result contrasts with previous experiments with bigrams for topical text classification (<cite id="18">Scott &amp; Matwin, 1999</cite>) and sentiment detection (<cite id="19">Pang et al., 2002</cite>). The difference is probably that in this task, more informative words are potentially ambiguous: for instance, "will you" and "I will" are correlated with requests and commitments, respectively, but the individual words in these bigrams are less predictive. 
+                    <paragraph> 
+                    </paragraph> 
+                    Learning methods. In another experiment, we fixed the document representation to be unweighted word frequency counts and varied the learning algorithm. In these experiments, we pooled all the data from the four corpora, a total of 9602 features in the 1357 messages, and since the nouns and verbs are not mutually exclusive, we formulated the task as a set of several binary classification problems, one for each verb. 
+                    <paragraph> 
+                    </paragraph> 
+                    The following learners were used from the Based on the MinorThird toolkit (<cite id="20">Cohen, 2004</cite>). VP is an implementation of the voted perceptron algorithm (<cite id="21">Freund &amp; Schapire, 1999</cite>). DT is a simple decision tree learning system, which learns trees of depth at most five, and chooses splits to maximize the function 2LI Wl+Wl_ +J WÂ°W- ) suggested by Schapire and <cite id="22">Singer (1999)</cite> as an appropriate objective for "weak learners". AB is an implementation of the confidence-rated boosting method described by Singer and <cite id="23">Schapire (1999)</cite>, used to boost the DT algorithm 10 times. SVM is a support vector machine with a linear kernel (as used above). Table 4 - Learning on the entire corpus. Table 4 reports the results on the most common verbs, using 5-fold cross-validation to assess accuracy. One surprise was that DT (which we had intended merely as a base learner for AB) works surprisingly well for several verbs, while AB seldom improves much over DT. We conjecture that the bias towards large-margin classifiers that is followed by SVM, AB, and VP (and which has been so successful in topic-oriented text classification) may be less appropriate for this task, perhaps because positive and negative classes are not clearly separated (as suggested by substantial inter-annotator disagreement). Figure 3 - Precision/Recall for Commissive act 
+                    <paragraph> 
+                    </paragraph> 
+                    Further results are shown in Figure 3-5, which provide precision-recall curves for many of these classes. The lowest recall level in these graphs corresponds to the precision of random guessing. These graphs indicate that high-precision predictions can be made for the top-level of the verb hierarchy, as well as verbs Request and Deliver, if one is willing to slightly reduce recall. each case picking the top-performing learner with respect to F1). The results are shown in Table 5. Figure 4 - Precision/Recall for Directive act Figure 5 - Precision/Recall of 3 different classes using AdaBoost 
+                    <paragraph> 
+                    </paragraph> 
+                    Transferability. One important question involves the generality of these classifiers: to what range of corpora can they be accurately applied? Is it possible to train a single set of email-act classifiers that work for many users, or is it necessary to train individual classifiers for each user? To explore this issue we trained a DT classifier for Directive emails on the NF01F3 corpus, and tested it on the NF02F2 corpus; trained the same classifier on NF02F2 and tested it on NF01F3; and also performed a 5-fold cross-validation experiment within each corpus. (NF02F2 and NF01F3 are for disjoint sets of users, but are approximately the same size.) We then performed the same experiment with VP for Deliver verbs and SVM for Commit verbs (in Table 5 - Transferability of classifiers 
+                    <paragraph> 
+                    </paragraph> 
+                    If learned classifiers were highly specific to a particular set of users, one would expect that the diagonal entries of these tables (the ones based on cross-validation within a corpus) would exhibit much better performance than the offdiagonal entries. In fact, no such pattern is shown. For Directive verbs, performance is similar across all table entries, and for Deliver and Commit, it seems to be somewhat better to train on NF01F3 regardless of the test set. 
+                </paragraph> 
+                <title>4.4 Future Directions</title> 
+                <paragraph> 
+                    None of the algorithms or representations discussed above take into account the context of an email message, which intuitively is important in detecting implicit speech acts. A plausible notion of context is simply the preceding message in an email thread. 
+                    <paragraph> 
+                    </paragraph> 
+                    Exploiting this context is non-trivial for several reasons. Detecting threads is difficult; although email headers contain a "reply-to" field, users often use the "reply" mechanism to start what is intuitively a new thread. Also, since email is asynchronous, two or more users may reply simultaneously to a message, leading to a thread structure which is a tree, rather than a sequence. Finally, most sequential learning models assume a single category is assigned to each instanceâ€”e.g., (<cite id="24">Ratnaparkhi, 1999</cite>)â€”whereas our scheme allows multiple categories. 
+                    <paragraph> 
+                    </paragraph>  
+                    Classification of emails according to our verb-noun ontology constitutes a special case of a general family of learning problems we might call factored classification problems, as the classes (email speech acts) are factored into two features (verbs and nouns) which jointly determine this class. A variety of real-world text classification problems can be naturally expressed as factored problems, and from a theoretical viewpoint, the additional structure may allow construction of new, more effective algorithms. 
+                    <paragraph> 
+                    </paragraph> 
+                    For example, the factored classes provide a more elaborate structure for generative probabilistic models, such as those assumed by NaÃ¯ve Bayes. For instance, in learning email acts, one might assume words were drawn from a mixture distribution with one mixture component produces words conditioned on the verb class factor, and a second mixture component generates words conditioned on the noun (see Blei et al (2003) for a related mixture model). Alternatively, models of the dependencies between the different factors (nouns and verbs) might also be used to improve classification accuracy, for instance by building into a classifier the knowledge that some nouns and verbs are incompatible. 
+                    <paragraph> 
+                    </paragraph>The fact that an email can contain multiple email speech acts almost certainly makes learning more difficult: in fact, disagreement between human annotators is generally higher for longer messages.  This problem could be addressed by more detailed annotation: rather than annotating each message with all the acts it contains, human annotators could label smaller message segments (say, sentences or paragraphs). An alternative to more detailed (and expensive) annotation would be to use learning algorithms that implicitly segment a message. As an example, another mixture model formulation might be used, in which each mixture component corresponds to a single verb category. 
+                </paragraph> 
+            </subsection> 
+        </section> 
+        <section> 
+            <title>5 Concluding Remarks</title> 
+            <paragraph> 
+                We have presented an ontology of "email speech acts" that is designed to capture some important properties of a central use of email: negotiating and coordinating joint activities. Unlike previous attempts to combine speech act theory with email (<cite id="25">Winograd, 1987</cite>; <cite id="26">Flores and Ludlow, 1980</cite>), we propose a system which passively observes email and automatically classifies it by intention. This reduces the burden on the users of the system, and avoids sacrificing the flexibility and socially desirable aspects of informal, natural language communication. 
+            </paragraph>
+            <paragraph> 
+                This problem also raises a number of interesting research issues. We showed that entity extraction and part of speech tagging improves classifier performance, but leave open the question of whether other types of linguistic analysis would be useful. Predicting speech acts requires context, which makes classification an inherently sequential task, and the labels assigned to messages have non-trivial structure; we also leave open the question of whether these properties can be effectively exploited. 
+            </paragraph> 
+                
+                
+            <paragraph> 
+                Our experiments show that many categories of messages can be detected, with high precision and moderate recall, using existing text-classification learning methods. This suggests that useful task-tracking tools could be constructed based on automatic classifiersâ€”a potentially important practical application. 
+            </paragraph> 
+        </section>
+    </paper>
+</annotatedpaper>

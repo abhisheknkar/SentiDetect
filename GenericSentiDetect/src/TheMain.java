@@ -22,24 +22,30 @@ public class TheMain {
 
 	public static void doAmjadOperations() throws IOException
 	{
-		ArrayList<AANPaper> AANPapers = new ArrayList<AANPaper>();
+		HashMap<String, Paper> papers = DatasetReader.readAANMetadata();
+		ArrayList<Citation> citations = DatasetReader.readAmjadCitations();
+
+		AmjadFeatures.getFeatures1and2(citations);	
+		AmjadFeatures.getFeature3(citations, papers);	
+//		AmjadFeatures.computeSentenceScore_OpinionFinder(citations, Words);	
+	}	
+}
+
+
 /*
-		ArrayList<AmjadCitation> Citations = new ArrayList<AmjadCitation>();
+		HashMap<String, Paper> papers = DatasetReader.readAANMetadata();
 		ArrayList<OpinionFinderWord> Words = new ArrayList<OpinionFinderWord>();
 		HashMap<String, double[]> SentiWordnetWords = new HashMap <String, double[]>();
-		
-		Citations = AmjadOperations.readDataSet();
+
 		Words = OpinionFinder.readDataset_OpinionFinder();
-*/
+
 		AANPapers = AANOperations.readAANMetadata();
 		AANOperations.getEarliest(AANPapers);
-/*		AmjadFeatures.getRefCountandIsSeparate(Citations);	
+		AmjadFeatures.getRefCountandIsSeparate(Citations);	
 		AmjadFeatures.getSelfCitations(Citations, AANPapers);	
 		AmjadFeatures.computeSentenceScore_OpinionFinder(Citations, Words);	
 
-		SentiWordnetWords = SentiWordnet.readDataset_SentiWordnet();
-		AmjadFeatures.computeSentenceScore_SentiWordnet(Citations, SentiWordnetWords);
-		AmjadFeatures.computeSentenceScore_VaderSentiment(Citations);
+SentiWordnetWords = SentiWordnet.readDataset_SentiWordnet();
+AmjadFeatures.computeSentenceScore_SentiWordnet(Citations, SentiWordnetWords);
+AmjadFeatures.computeSentenceScore_VaderSentiment(Citations);
 */
-	}	
-}

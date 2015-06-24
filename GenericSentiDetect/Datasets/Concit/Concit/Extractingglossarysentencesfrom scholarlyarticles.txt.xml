@@ -1,0 +1,249 @@
+<annotatedpaper><paper title=" Extracting glossary sentences from scholarly articles: A comparative evaluation of pattern bootstrapping and deep analysis" authors=" Melanie Reiplinger, Ulrich Schafer, Magdalena Wolska" year="2012 "> 
+<section> 
+<title> Extracting glossary sentences from scholarly articles: A comparative evaluation of pattern bootstrapping and deep analysis  </title> 
+ 
+Melanie Reiplinger 
+Computational Linguistics, Saarland University, D-66041 Saarbrucken, Germany 
+{mreiplin,magda}@coli.uni-saarland.de 
+Ulrich Schafer 
+DFKI Language Technology Lab, Campus D 3 1, D-66123 Saarbrucken, Germany 
+ulrich.schaefer@dfki.de 
+</section> 
+<section> 
+<title>Abstract</title> 
+<paragraph> 
+The paper reports on a comparative study of two approaches to extracting definitional sentences from a corpus of scholarly discourse: one based on bootstrapping lexico-syntactic patterns and another based on deep analysis.Computational Linguistics was used as the target domain and the ACL Anthology as the corpus.Definitional sentences extracted for a set of well-defined concepts were rated by domain experts.Results show that both methods extract high-quality definition sentences intended for automated glossary construction. 
+</paragraph>
+</section> 
+<section imrad="i"> 
+<title>1 Introduction</title> 
+<paragraph> 
+Specialized glossaries serve two functions: Firstly, they are linguistic resources summarizing the terminological basis of a specialized domain. Secondly, they are knowledge resources, in that they provide definitions of concepts which the terms denote. Glossaries find obvious use as sources of reference. <context>A survey on the use of lexicographical aids in specialized translation showed that glossaries <posfeature>are among the top five</posfeature> resources used (<cite id="1" function="ack" polarity="pos">Durän-Munoz, 2010</cite>).</context> <context><tool>Glossaries</tool> have also been shown to <posfeature>facilitate reception of</posfeature> texts and acquisition of knowledge during study (<cite id="2" function="con" polarity="pos">Weiten et al., 1999</cite>), <kw>while</kw> self-explanation of <method>reasoning by referring to</method> definitions has been shown to<posfeature>promote understanding</posfeature> (<cite id="3" function="con" polarity="pos">Aleven et al., 1999</cite>).</context> From a machine-processing point of view, glossaries may be used as input for domain ontology induction; see, e.g. (<cite id="4">Bozzato et al., 2008</cite>). 
+</paragraph> 
+<paragraph> 
+The process of glossary creation is inherently dependent on expert knowledge of the given domain, its concepts and language.In case of scientific domains, which constantly evolve, glossaries need to be regularly maintained: updated and continually extended.Manual creation of specialized glossaries is therefore costly.As an alternative, fully- and semi-automatic methods of glossary creation have been proposed (see Section 2). 
+</paragraph> 
+<paragraph> 
+This paper compares two approaches to corpus-based extraction of definitional sentences intended to serve as input for a specialized glossary of a scientific domain.The bootstrapping approach acquires lexico-syntactic patterns characteristic of definitions from a corpus of scholarly discourse.The deep approach uses syntactic and semantic processing to build structured representations of sentences based on which 'is-a'-type definitions are extracted.In the present study we used Computational Linguistics (CL) as the target domain of interest and the ACL Anthology as the corpus. 
+</paragraph> 
+<paragraph> 
+Computational Linguistics, as a specialized domain, is rich in technical terminology.As a cross-disciplinary domain at the intersection of linguistics, computer science, artificial intelligence, and mathematics, it is interesting as far as glossary creation is concerned in that its scholarly discourse ranges from descriptive informal to formal, including mathematical notation.Consider the following two descriptions of Probabilistic Context-Free Grammar (PCFG): 
+</paragraph> 
+<paragraph> 
+(1) A PCFG is a CFG in which each production A — a in the grammar's set of productions R is associated with an emission probability P (A — a) that satisfies a normalization constraint and a consistency or tightness constraint [. ..] 
+</paragraph> 
+<paragraph> 
+(2) A PCFG defines the probability of a string of words as the sum of the probabilities of all admissible phrase structure parses (trees) for that string. 
+</paragraph> 
+<paragraph> 
+While (1) is an example of a genus-differentia definition, (2) is a valid description of PCFG which neither has the typical copula structure of an "is-a"-type definition, nor does it contain the level of detail of the former.(2) is, however, well-usable for a glossary.The bootstrapping approach extracts definitions of both types.Thus, at the subsequent glossary creation stage, alternative entries can be used to generate glossaries of different granularity and formal detail; e.g., targeting different user groups. 
+</paragraph> 
+<paragraph> 
+Outline.Section 2 gives an overview of related work.Section 3 presents the corpora and the preprocessing steps.The bootstrapping procedure is summarized in Section 4 and deep analysis in Section 5.Section 6 presents the evaluation methodology and the results.Section 7 presents an outlook. 
+</paragraph> 
+</section> 
+<section imrad="m"> 
+<title>2 Related Work</title> 
+<paragraph> 
+ 
+Most of the existing definition extraction methods - be it targeting definitional question answering or glossary creation - are based on mining part-of-speech (POS) and/or lexical patterns typical of definitional contexts.Patterns are then filtered heuris-tically or using machine learning based on features which refer to the contexts' syntax, lexical content, punctuation, layout, position in discourse, etc. 
+</paragraph> 
+<paragraph> 
+<context>DEFINDER (<cite id="5" function="use" polarity="neu">Muresan and Klavans, 2002</cite>), a rule<tool>-based system</tool>, <kw>mines</kw> definitions <kw>from</kw> online medical <data>articles</data> in lay language by extracting sentences <kw>using</kw> cue-phrases, such as "x is the term for y", "x is defined as y", and punctuation, e.g., hyphens and brackets.</context> The results are analyzed with a statistical parser. <context><cite id="6" function="use" polarity="neu">Fahmi and Bouma (2006)</cite> <kw>train</kw> <tool>supervised learners</tool> <kw>to classify</kw> concept definitions <kw>from</kw> medical pages of the Dutch <data>Wikipedia</data> using the "is a" pattern and apply a lexical filter (stopwords) to the classifier's output.</context> Besides other features, the position of a sentence within a document is used, which, due to the encyclopaedic text character of the corpus, allows to set the baseline precision at above 75% by classifying the first sentences as definitions. <context><cite id="7" function="use" polarity="neu">Westerhout and Monachesi (2008)</cite> <kw>use</kw> a <method>complex set of grammar rules</method> over POS, syntactic chunks, and entire definitory contexts <kw>to extract</kw> definition sentences <kw>from</kw> an eLearning <data>corpus</data>.</context> Machine learning is used to filter out incorrect candidates.<context><cite id="8" function="ack" polarity="neu">Gaudio and Branco (2009)</cite> use only POS information in a supervised-learning approach, pointing out that lexical and syntactic features are domain and language dependent.</context> <context><cite id="9" function="use" polarity="neu">Borg et al. (2009)</cite> <kw>use</kw> <method>genetic programming</method> <kw>to learn rules for</kw> typical linguistic forms of definition sentences <kw>in</kw> an eLearning <data>corpus</data> and genetic algorithms <kw>to assign</kw> weights to the rules.</context> <context><cite id="10" function="ack" polarity="pos">Ve-lardi et al. (2008)</cite> present a <posfeature>fully-automatic end-to-end</posfeature> <method>methodology</method> of glossary creation.</context> First, Term-Extractor acquires domain terminology and Gloss-Extractor searches for definitions on the web using google queries constructed from a set of manually lexical definitional patterns.Then, the search results are filtered using POS and chunk information as well as term distribution properties of the domain of interest.Filtered results are presented to humans for manual validation upon which the system updates the glossary.The entire process is automated. 
+</paragraph> 
+<paragraph> 
+<context><method>Bootstrapping</method> as a <method>method</method> of linguistic pattern induction <kw>was used for</kw> learning hyponymy/is-a relations already in the early 90s <kw>by</kw> <cite id="11" function="use" polarity="pos">Hearst (1992)</cite>.</context> <context>Various <kw>variants of the procedure</kw> - for instance, exploiting POS information, double pattern-anchors, semantic information - <kw>have been</kw> <posfeature>recently proposed</posfeature> (<cite id="12" function="ack" polarity="pos">Etzioni et al., 2005</cite>; <cite id="13" function="ack" polarity="pos">Pantel and Pennacchiotti, 2006</cite>; <cite id="14" function="ack" polarity="pos">Girju et al., 2006</cite>; <cite id="15" function="ack" polarity="pos">Walter, 2008</cite>; <cite id="16" function="ack" polarity="pos">Kozareva et al., 2008</cite>; <cite id="17" function="ack" polarity="pos">Wolska et al., 2011</cite>).</context> The method presented here is most similar to Hearst's, however, we acquire a large set of general patterns over POS tags alone which we subsequently optimize on a small manually annotated corpus subset by lexicalizing the verb classes. 
+</paragraph> 
+</section> 
+<section imrad="m"> 
+<title>3 The Corpora and Preprocesssing</title> 
+<paragraph> 
+The corpora. Three corpora were used in this study.<context> At the initial stage two development <data>corpora</data> <author>were used</author>: a digitalized early draft of the Jurafsky-Martin textbook (<cite id="18" function="bas" polarity="pos">Jurafsky and Martin, 2000</cite>) <kw>and</kw> the WeScience <data>Corpus</data>, a set of <data>Wikipedia articles</data> <kw>in the domain of</kw> Natural Language Processing (<cite id="19" function="bas" polarity="pos">Ytrest0l et al., 2009</cite>).</context> The former served as a source of seed domain terms with definitions, while the latter was used for seed pattern creation. 
+</paragraph> 
+<paragraph> 
+<context><kw>For</kw> <kw>acquisition of</kw> definitional patterns <kw>and pattern refinement</kw> <author>we</author> <kw>used</kw> the ACL <data>Anthology</data>, a digital archive of scientific papers from conferences, workshops, and journals on Computational Linguistics and Language Technology (<cite id="20" function="bas" polarity="pos">Bird et al., 2008</cite>).</context>The corpus consisted of 18,653 papers published between 1965 and 2011, with a total of 66,789,624 tokens and 3,288,073 sentences.This corpus was also used to extract sentences for the evaluation using both extraction methods. 
+</paragraph> 
+<paragraph> 
+Preprocessing. The corpora have been sentence and word-tokenized using regular expression-based sentence boundary detection and tokenization tools. <context>Sentences <kw>have been</kw> part-of-speech <kw>tagged</kw> <kw>using</kw> the TnT <tool>tagger</tool> (<cite id="21" function="use" polarity="neu">Brants, 2000</cite>) <kw>trained on</kw> the Penn Tree-</context> 
+</paragraph> 
+<paragraph> 
+<context>Next, <kw>domain terms</kw> <author>were identified</author> <kw>using</kw> the C-Value <kw>approach</kw> (<cite id="22" function="bas" polarity="pos">Frantzi et al., 1998</cite>).</context> C-Value is a domain-independent method of automatic multiword term recognition that rewards high frequency and high-order n-gram candidates, but penalizes those which frequently occur as sub-strings of another candidate.10,000 top-ranking multi-word token sequences, according to C-Value, were used. 
+</paragraph> 
+<paragraph> 
+Domain terms.The set of domain terms was compiled from the following sub-sets: 1) the 10,000 automatically identified multi-word terms, 2) the set of terms appearing on the margins of the Jurafsky-Martin textbook; the intuition being that these are domain-specific terms which are likely to be defined or explained in the text along which they appear, 3) a set of 5,000 terms obtained by expanding frequent abbreviations and acronyms retrieved from the ACL Anthology corpus using simple pattern matching.The token spans of domain terms have been marked in the corpora as these are used in the course of definition pattern acquisition (Section 4.2).The accuracy of tokenization and tagging was not verified.machine translation language model neural network reference resolution finite(-\! )state automaton hidden markov model speech synthesis semantic role label(l)?ing context(-\! )free grammar ontology generative grammar dynamic programming mutual informationTable 1: Seed domain terms (top) and seed patterns (bottom) used for bootstrapping; T stands for a domain term. 
+</paragraph> 
+</section> 
+<section imrad="m"> 
+<title>4 Bootstrapping Definition Patterns</title> 
+<paragraph> 
+Bootstrapping-based extraction of definitional sentences proceeds in two stages: First, aiming at recall, a large set of lexico-syntactic patterns is acquired: Starting with a small set of seed terms and patterns, term and pattern "pools" are iteratively augmented by searching for matching sentences from the ACL Anthology while acquiring candidates for definition terms and patterns.Second, aiming at precision, general patterns acquired at the first stage are systematically optimized on set of annotated extracted definitions. 
+</paragraph> 
+<subsection> 
+<subtitle>4.1 Seed Terms and Seed Patterns</subtitle> 
+<paragraph> 
+As seed terms to initialize pattern acquisition, we chose terms which are likely to have definitions.Specifically, from the top-ranked multi-word terms, ordered by C-value, we selected those which were also in either the Jurafsky-Martin term list or the list of expanded frequent abbreviations.The resulting 13 seed terms are shown in the top part of Table 1. 
+</paragraph> 
+<paragraph> 
+Seed definition patterns were created by inspecting definitional contexts in the Jurafsky-Martin and WeScience corpora.First, 12 terms from Jurafsky-Martin and WeScience were selected to find domain terms with which they co-occurred in simple "is-a" patterns.Next, the corpora were searched again to find sentences in which the term pairs in "is-a" relation occur.Non-definition sentences were discarded.Finally, based on the resulting definition sentences, 22 seed patterns were constructed by transforming the definition phrasings into regular expressions.A subset of the seed phrases extracted in this way is shown in the bottom part of Table 1. 
+</paragraph> 
+</subsection> 
+<subsection> 
+<subtitle>4.2 Acquiring Patterns</subtitle> 
+<paragraph> 
+ 
+Pattern acquisition proceeds in two stages: First, based on seed sets, candidate defining terms are found and ranked.Then, new patterns are acquired by instantiating existing patterns with pairs of likely co-occurring domain terms, searching for sentences in which the term pairs co-occur, and creating POS-based patterns.These steps are summarized below. 
+</paragraph> 
+<paragraph> 
+Finding definiens candidates.Starting with a set of seed terms and a set of definition phrases, the first stage finds sentences with the seed terms in the T-placeholder position of the seed phrases.For each term, the set of extracted sentences is searched for candidate defining terms (other domain terms in the sentence) to form term-term pairs which, at the second stage, will be used to acquire new patterns. 
+</paragraph> 
+<paragraph> 
+Two situations can occur: a sentence may contain more than one domain term (other than one of the seed terms) or the same domain terms may be found to co-occur with multiple seed terms.Therefore, term-term pairs are ranked. 
+</paragraph> 
+<paragraph> 
+Ranking. Term-term pairs are ranked using four standard measures of association strength: 1) cooccurrence count, 2) pointwise mutual information (PMI), 3) refined PMI; compensates bias toward low-frequency events by multiplying PMI with cooccurrence count (Manning and Schütze, 1999), and 4) <context>mutual dependency (MD); compensates bias toward rare events by subtracting co-occurrence's self-information (entropy) from its PMI (<cite id="23" function="ack" polarity="neu">Thanopoulos et al., 2002</cite>).</context> The measures are calculated based on the corpus for co-occurrences within a 15-word window. 
+</paragraph> 
+<paragraph> 
+Based on experimentation, mutual dependency was found to produce the best results and therefore it was used in ranking definiens candidates in the final evaluation of patterns.The top-k candidates make up the set of defining terms to be used in the pattern acquisition stage.Table 2 shows the top-20 candi-Here and further in the paper, regular expressions are presented in Perl notation.Domain term Candidate defining terms lexical functional phrase structure grammar grammar (LFG) formal system functional unification grammar grammatical representation phrase structure generalized phrase functional unification binding theory syntactic theories functional structure grammar formalism(s) grammars linguistic theor(y\! ies)Table 2: Candidate defining phrases of the term "Lexical Functional Grammar (LFG)".date defining terms for the term "Lexical Functional Grammar", according to mutual dependency. 
+</paragraph> 
+<paragraph> 
+Pattern and domain term acquisition.At the pattern acquisition stage, definition patterns are retrieved by 1) coupling terms with their definiens candidates, 2) extracting sentences that contain the pair within the specified window of words, and finally 3) creating POS-based patterns corresponding to the extracted sentences.All co-occurrences of each term together with each of its defining terms within the fixed window size are extracted from the POS-tagged corpus.At each iteration also new definien-dum and definiens terms are found by applying the new abstracted patterns to the corpus and retrieving the matching domain terms. 
+</paragraph> 
+<paragraph> 
+The newly extracted sentences and terms are filtered (see "Filtering" below).The remaining data constitute new instances for further iterations.The linguistic material between the two terms in the extracted sentences is taken to be an instantiation of a potential definition pattern for which its POS pattern is created as follows: 
+</paragraph> 
+<paragraph> 
+• The defined and defining terms are replaced by placeholders, T and DEF, 
+• All the material outside the T and DEF anchors is removed; i.e. the resulting patterns have the form ... 
+DEF' or 'DEF ... 
+T' 
+• <context>Assuming that the fundamental elements of a definition pattern, are verbs and noun phrases, 
+all tags except verb, noun, modal and the infinitive marker "to" are replaced with by placeholders denoting any string; punctuation is preserved, as it has been observed to be informative in detecting definitions (<cite id="24" function="ack" polarity="neu">Westerhout and Monachesi, 2008</cite>; <cite id="25" function="ack" polarity="neu">Fahmi and Bouma, 2006</cite>)</context>, 
+• Sequences of singular and plural nouns and proper nouns are replaced with noun phrase placeholder, NP ; it is expanded to match complex noun phrases when applying the patterns to extract definition sentences. 
+</paragraph> 
+<paragraph> 
+The new patterns and terms are then fed as input to the acquisition process to extract more sentences and again abstract new patterns. 
+</paragraph> 
+<paragraph> 
+Filtering.In the course of pattern acquisition information on term-pattern co-occurrence frequencies is stored and relative frequencies are calculated: 1) for each term, the percentage of seed patterns it occurs with, and 2) for each pattern, the percentage of seed terms it occurs with.These are used in the bootstrapping cycles to filter out terms which do not occur as part of a sufficient number of patterns (possibly false positive definiendum candidates) and patterns which do not occur with sufficient number of terms (insufficient generalizing behavior). 
+</paragraph> 
+<paragraph> 
+Moreover, the following filtering rules are applied: Abstracted POS-pattern sequences of the form 'T .+ DEF'and 'DEF T' are discarded; the former because it is not informative, the latter because it is rather an indicator of compound nouns than of definitions. <context>From the extracted sentences, those containing negation are filtered out; negation is <negfeature>contra-indicative of definition</negfeature> (<cite id="26" function="" polarity="neg">Pearson, 1996</cite>).</context> For the same reason, auxiliary constructions with "do" and "have" are excluded unless, in case of the latter, "have" is followed by a two past participle tags as in, e.g., "has been/VBN defined/VBN (as)." 
+</paragraph> 
+</subsection> 
+<subsection> 
+<subtitle>4.3 Manual Refinement</subtitle> 
+<paragraph> 
+ 
+While the goal of the bootstrapping stage was to find as many candidate patterns for good definition terms as possible, the purpose of the refinement stage is to aim at precision.Since the automatically extracted patterns consist only of verb and noun phrase tags between the definiendum and its defining term anchors, they are too general.'.+' stands for at least one arbitrary character. 
+</paragraph> 
+<paragraph> 
+In order to create more precise patterns, we tuned the pattern sequences based on a small development sub-corpus of the extracted sentences which we annotated.The development corpus was created by extracting sentences using the most frequent patterns instantiated with the term which occurred with the highest percentage of seed patterns.The term "ontology" appeared with more than 80% of the patterns and was used for this purpose.The sentences were then manually annotated as to whether they are true-positive or false examples of definitions (101 and 163 sentences, respectively). 
+</paragraph> 
+<paragraph> 
+Pattern tuning was done by investigating which verbs are and which are not indicative of definitions based on the positive and negative example sentences.Table 3 shows the frequency distribution of verbs (or verb sequences) in the annotated corpus which occurred more than twice.Abstracting over POS sequences of the sentences containing definition-indicative verbs, we created 13 patterns, extending the automatically found patterns, that yielded 65% precision on the development set, matching 51% of the definition sentences, and reducing noise to 17% non-definitions.Patterns resulting from verb tuning were used in the evaluation.Examples of the tuned patterns are shown below: 
+</paragraph> 
+<paragraph> 
+The first pattern matches our both introductory example definitions of the term "PCFG" (cf.Section 1) with 'T' as a placeholder for the term itself, 'NP' denoting a noun phrase, and 'DEF' one of the term's defining phrases, in the first case, (1), "grammar", in the second case, (2), "probabilities".The examples annotated with matched pattern elements are shown below: [PCFG]t [is]vbz [a]dt [CFG]np [in which each production A — a in the].* [grammar]def 's set of productions R is associated with an emission probability . . .Table 3: Subset of verbs occurring in sentences matched by the most frequently extracted patterns.A [PCFG]t [defines]vbz [the]dt [probability] def of a string of words as the sum of the probabilities of all admissible phrase structure parses (trees) for that string. 
+</paragraph> 
+</subsection> 
+</section> 
+<section imrad="r"> 
+<title>5 Deep Analysis for Definition Extraction</title> 
+<paragraph> 
+<context><kw>An alternative</kw>, <posfeature>largely domain-independent</posfeature> <kw>approach to</kw> the extraction of definition sentences <kw>is based on</kw> the sentence-semantic index generation of the ACL <data>Anthology</data> Searchbench (<cite id="27" function="ack" polarity="pos">Schafer et al., 2011</cite>).</context> 
+</paragraph> 
+<paragraph> 
+Deep syntactic parsing with semantic predicate-argument structure extraction of each of the approx.3.3 million sentences in the 18,653 papers ACL Anthology corpus is used for our experiments.We briefly describe how in this approach we get from the sentence text to the semantic representation. 
+</paragraph> 
+<paragraph> 
+<context>The <task>preprocessing</task> <kw>is shared with</kw> the <method>bootstrapping-based approach for</method> definition sentence extraction, namely <method>PDF-to-text extraction</method>, sentence boundary detection (SBR), and trigrambased POS tagging with TnT (<cite id="28" function="use" polarity="neu">Brants, 2000</cite>).</context> The tagger output is combined with information from a named entity recognizer that in addition delivers hypothetical information on citation expressions. <context>The combined <result>result</result> is delivered <kw>as input to</kw> the deep <tool>parser</tool> PET (<cite id="29" function="use" polarity="neu">Callmeier, 2000</cite>) <kw>running</kw> the open source HPSG <data>grammar</data> (<cite id="30" function="use" polarity="neu">Pollard and Sag, 1994</cite>) grammar for English (ERG; <cite id="31" function="use" polarity="neu">Flickinger (2002)</cite>).</context> 
+</paragraph> 
+<paragraph> 
+<context>The deep <tool>parser</tool> <kw>is made</kw> <posfeature>robust and fast</posfeature> through a <posfeature>careful combination of several techniques</posfeature>; e.g.: (1) chart pruning: directed search during parsing <kw>to increase performance and coverage for</kw> longer sentences (<cite id="32" function="use" polarity="pos">Cramer and Zhang, 2010</cite>); (2) chart mapping: a framework <kw>for integrating preprocessing information from</kw> PoS tagger and named entity recognizer <posfeature>in exactly the way</posfeature> the deep grammar expects it (<cite id="33" function="use" polarity="pos">Adolphs et al., 2008</cite>); (3) a statistical parse <method>ranking model</method> (WeScience; (<cite id="34" function="use" polarity="pos">Flickinger et al., 2010</cite>)).</context> Matching pattern elements in square brackets; tags from the pattern subscripted. 
+</paragraph> 
+<paragraph> 
+<context>The <tool>parser</tool> <kw>outputs</kw> sentence-semantic representation <kw>in the MRS format</kw> (<cite id="35" function="use" polarity="neu">Copestake et al., 2005</cite>) that <kw>is transformed into</kw> a dependency-like variant (<cite id="36" function="use" polarity="neu">Copestake, 2009</cite>).</context> From these DMRS representations, predicate-argument structures are derived.These are indexed with structure (semantic subject, predicate, direct object, indirect object, adjuncts) using a customized Apache Solr server.Matching of arguments is left to Solr's standard analyzer for English with stemming; exact matches are ranked higher than partial matches. 
+</paragraph> 
+<paragraph> 
+The basic semantics extraction algorithm consists of the following steps: 1) calculate the closure for each (D)MRS elementary predication based on the EQ (variable equivalence) relation and group the predicates and entities in each closure respectively; 2) extract the relations of the groups, which results in a graph as a whole; 3) recursively traverse the graph, form one semantic tuple for each predicate, and fill information under its scope, i.e. subject, object, etc.The semantic structure extraction algorithm generates multiple predicate-argument structures for coordinated sentence (sub-)structures in the index.Moreover, explicit negation is recognized and negated sentences are excluded for the task for the same reasons as in the bootstrapping approach above (see Section 4.2, "Filtering"). <context><kw>Further details of</kw> the deep parsing approach are <kw>described in</kw> (<cite id="37" function="ack" polarity="neu">Schafer and Kiefer, 2011</cite>).</context> In the Searchbench online system, the definition extraction can by tested with any domain term T by using statement queries of the form 's:T p:is'. 
+</paragraph> 
+</section> 
+<section imrad="r"> 
+<title>6 Evaluation</title> 
+<paragraph> 
+ 
+For evaluation, we selected 20 terms, shown in Table 4, which can be considered domain terms in the integer linear programming (ILP) conditional random field (CRF) support vector machine (SVM) latent semantic analysis (LSA) combinatory categorial grammar (CCG) lexical-functional grammar (LFG) probabilistic context-free grammar (PCFG) discourse representation theory (DRT) discourse representation structure (DRS) phrase-based machine translation (PSMT;PBSMT) statistical machine translation (SMT) multi-document summarization (MDS) word sense disambiguation (WSD) semantic role labeling (SRL) coreference resolution conditional entropy cosine similarity mutual information (MI) default unification (DU) computational linguistics (CL) domain of computational linguistics.Five general terms, such as 'English text' or 'web page', were also included in the evaluation as a control sample; since general terms of this kind are not likely to be defined in scientific papers in CL, their definition sentences were of low quality (false positives).We do not include them in the summary of the evaluation results for space reasons."Computational linguistics", while certainly a domain term in the domain, is not likely to be defined in the articles in the ACL Anthology, however, the term as such should rather be included in a glossary of computational linguistics, therefore, we included it in the evaluation.PoS tagging, e.g., helps the deep parser to cope with words unknown to the deep lexicon, for which default entries based on the PoS information are generated on the fly.Table 4: Domain-terms used in the rating experimentDue to the lack of a gold-standard glossary definitions in the domain, we performed a rating experiment in which we asked domain experts to judge top-ranked definitional sentences extracted using the two approaches.Below we briefly outline the evaluation setup and the procedure. 
+</paragraph> 
+<subsection> 
+<subtitle>6.1 Evaluation Data</subtitle> 
+<paragraph> 
+ 
+A set of definitional sentences for the 20 domain terms was extracted as follows:Lexico-syntactic patterns (LSP).For the lexico-syntactic patterns approach, sentences extracted by the set of refined patterns (see Section 4.3) were considered for evaluation only if they contained at least one of the term's potential defining phrases as identified by the first stage of the glossary extraction (Section 4.2).Acronyms were allowed as fillers of the domain term placeholders. 
+</paragraph> 
+<paragraph> 
+The candidate evaluation sentences were ranked using single linkage clustering in order to find subsets of similar sentences. tf.idf-based cosine between vectors of lemmatized words was used as a similarity function. <context>As in (<cite id="38" function="ack" polarity="neu">Shen et al., 2006</cite>), the longest sentence was chosen from each of the clusters.</context> Results were ranked by considering the size of the clusters as a measure of how likely it represents a definition.The larger the cluster, the higher it was ranked.Five top-ranked sentences for each of the 20 terms were used for the evaluation. 
+</paragraph> 
+<paragraph> 
+Deep analysis (DA).The only pattern used for deep analysis extraction was 'subject:T predicate: is', with ' is' restricted by the HPSG grammar to be the copula relation and not an auxiliary such as in passive constructions, etc.Five top-ranked sentences - as per the Solr's matching algorithm - extracted with this pattern were used for the evaluation.In total, 200 candidate definition sentences for 20 domain terms were evaluated, 100 per extraction methods.Examples of candidate glossary sentences extracted using both methods, along with their ratings, are shown in the appendix. 
+</paragraph> 
+</subsection> 
+<subsection> 
+<subtitle>6.2 Evaluation Method</subtitle> 
+<paragraph> 
+ 
+Candidate definition sentences were presented to 6 human domain experts by a web interface displaying one sentence at a time in random order.Judges were asked to rate sentences on a 5-point ordinal scale with the following descriptors: 
+</paragraph> 
+<paragraph> 
+5: The passage provides a precise and concise description of the concept4: The passage provides a good description of the concept3: The passage provides useful information about the concept, which could enhance a definitionExample definitions at each scale point selected by the authors were shown for the concept "hidden markov model".Figure 1: Distribution of ratings across the 5 scale points; LSP: lexico-syntactic patterns, DA: deep analysis 
+</paragraph> 
+<paragraph> 
+Method LSP DA Mode ratingsFigure 2: Mode values of ratings per method for the individual domain terms; see Table 42: The passage is not a good enough description of the concept to serve as a definition; for instance, it's too general, unfocused, or a subconcept/superconcept of the target concept is defined instead 1: The passage does not describe the concept at allThe judges participating in the rating experiment were PhD students, postdoctoral researchers, or researchers of comparable expertise, active in the areas of computational linguistics/natural language processing/language technology.One of the raters was one of the authors of this paper.The raters were explicitly instructed to think along the lines of "what they would like to see in a glossary of computational linguistics terms". 
+</paragraph> 
+</subsection> 
+<subsection> 
+<subtitle>6.3 Results</subtitle> 
+<paragraph> 
+ 
+Figure 1 shows the distribution of ratings across the five scale points for the two systems.Around 57% of the LSP ratings and 60% of DA ratings fall within the top three scale-points (positive ratings) and 43% and 40%, respectively, within the bottom two scale-points (low ratings). <context>Krippendorff's ordinal a (<cite id="39" function="wea" polarity="neg">Hayes and Krippendorff, 2007</cite>) was 0.66 (1,000 bootstrapped samples) indicating <negfeature>a modest degree of agreement</negfeature>, at which, <kw>however</kw>, <kw>tentative conclusions can be drawn</kw>.</context> 
+</paragraph> 
+<paragraph> 
+Figure 2 shows the distribution of mode ratings of the individual domain terms used in the evaluation.Definitions of 6 terms extracted using the LSP method were rated most frequently at 4 or 5 as opposed to the majority of ratings at 3 for most terms in case of the DA method.A Wilcoxon signed-rank test was conducted to evaluate whether domain experts favored definitional sentences extracted by one the two methods.The results indicated no significant difference between ratings of definitions extracted using LSP and DA(Z = 0.43, p = 0.68).Now, considering that the ultimate purpose of the sentence extraction is glossary creation, we were also interested in how the top-ranked sentences were rated; that is, assuming we were to create a glossary using only the highest ranked sentences (according to the methods' ranking schemes; see Section 6.1) we wanted to know whether one of the methods proposes rank-1 candidates with higher ratings, independently of the magnitude of the difference.A sign test indicated no statistical difference in ratings of the rank-1 candidates between the two methods.Definition sentences for each domain term were paired by their rank assigned by the extraction methods: rank-1 DA sentence with rank-1 LSP, etc.; see Section 6.1. 
+</paragraph> 
+</subsection> 
+</section> 
+<section imrad="d"> 
+<title>7 Conclusions and Future Work</title> 
+<paragraph> 
+ 
+The results show that both methods have the potential of extracting good quality glossary sentences: the majority of the extracted sentences provide at least useful information about the domain concepts.However, both methods need improvement. 
+</paragraph> 
+<paragraph> 
+The rating experiment suggests that the concept of definition quality in a specialized domain is largely subjective (borderline acceptable agreement overall and a = 0.65 for rank-1 sentences). 
+This calls for a modification of the evaluation methodology and for additional tests of consistency of ratings. 
+The low agreement might be remedied by introducing a blocked design in which groups of judges would evaluate definitions of a small set of concepts with which they are most familiar, rather than a large set of concepts from various CL sub-areas. 
+</paragraph> 
+<paragraph> 
+An analysis of the extracted sentences and their ratings revealed that deep analysis reduces noise in sentence extraction.Bootstrapping, however, yields more candidate sentences with good or very good ratings.While in the present work pattern refinement was based only on verbs, we observed that also the presence and position of (wh-)determiners and prepositions might be informative.Further experiments are needed 1) to find out how much specificity can be allowed without blocking the patterns' productivity and 2) to exploit the complementary strengths of the methods by combining them. 
+</paragraph> 
+<paragraph> 
+Since both approaches use generic linguistic resources and preprocessing (POS-tagging, named-entity extraction, etc.) they can be considered domain-independent.To our knowledge, this is, however, the first work that attempts to identify definitions of Computational Linguistics concepts.Thus, it contributes to evaluating pattern bootstrapping and deep analysis in the context of the definition extraction task in our own domain. 
+</paragraph> 
+</section> 
+<section> 
+<title>Acknowledgments</title> 
+<paragraph> 
+ 
+The C-Value algorithm was implemented by Mi-hai Grigore.We are indebted to our colleagues from the Computational Linguistics department and DFKI in Saarbrücken who kindly agreed to participate in the rating experiment as domain experts.Not included in this paper for space reasons 
+</paragraph> 
+<paragraph> 
+We are also grateful to the reviewers for their feedback.The work described in this paper has been partially funded by the German Federal Ministry of Education and Research, projects TAKE (FKZ 01IW08003) and Deependance (FKZ 01IW11003). 
+</paragraph> 
+</section> 
+<section> 
+<title>Appendix</title> 
+<paragraph> 
+Rated glossary sentences for 'word sense disambiguation (WSD)' and 'mutual information (MI)'.As shown in Figure 2, for WSD, mode ratings of LSP sentences were higher, while for MI it was the other way round. 
+</paragraph> 
+</section> 
+</paper> 
+</annotatedpaper>

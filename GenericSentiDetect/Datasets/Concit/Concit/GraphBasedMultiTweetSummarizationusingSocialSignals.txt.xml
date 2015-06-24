@@ -1,0 +1,242 @@
+<annotatedpaper>
+    <paper title="Graph-Based Multi-Tweet Summarization using Social Signals" authors="LIU XiaoHua,  LI YiTong,  WEI FuRu, ZHOU Ming" year="2012"> 
+        <section> 
+            <title> Graph-Based Multi-Tweet Summarization using Social Signals</title> 
+            LIU XiaoHua 
+            School of Computer Science and Technology, Harbin Institute of Technology, Harbin, 150001, 
+            China 
+            Microsoft Research Asia, Beijing, 100190, China 
+            LI YiTong 
+            School of Electronic and Information Engineering, Beihang University, Beijing, 100191, China 
+            {xiaoliu,v-yitli,fuwei,mingzhou}@microsoft.com 
+            WEI FuRu 
+            Microsoft Research Asia, Beijing, 100190, China 
+            ZHOU Ming 
+            Microsoft Research Asia, Beijing, 100190, China 
+ 
+        </section> 
+        <section> 
+            <title>Abstract</title> 
+            <paragraph> 
+                We study the multi-tweet summarization task, which aims to find representative tweets from a given set of tweets.Multi-tweet summarization allows people to quickly grasp the essential meaning of a large number of tweets.It can also be used as a pre-processing component for information extraction tasks on tweets.The challenge of this task lies in computing a tweet's salience score with little information in a single tweet.We propose a graph-based multi-tweet summarization system that incorporates social network features, which make up for the information shortage in a tweet.Another distinguished feature of our system is that tweet readability and user diversity are considered.We evaluate our system on a manually annotated dataset, and show that our system outperforms the state-of-the-art baseline.We further evaluate our method in a real scenario of summarization of Twitter search results and demonstrate its effectiveness. 
+            </paragraph> 
+        </section> 
+ 
+        <section imrad="i"> 
+            <title>1 Introduction</title> 
+            <paragraph> 
+                Twitter is a microblogging and social networking service with a huge number of users and is continuously growing at a tremendous rate.Tweets, short messages shared through Twitter with less than 140 characters, have become an important repository of real-time information.However, it is often inefficient for people to consume a large number of tweets, owing to the noise prone nature of tweets.We propose the task of multi-tweet summarization to overcome this obstacle: eliminating redundancy and noise while keeping the essential information for a given set of tweets. 
+            </paragraph> 
+            <paragraph> 
+                The first and the second tweet are almost the same; the third tweet is a private conversation, thus not meaningful for the general audience; and the last two talk about similar things.After summarization, the expected outputs are as follows, which keep the main information with noises removed. 
+            </paragraph> 
+            <paragraph> 
+                We advocate that multi-tweet summarization can play a critical role for many tweet related studies, which have attracted increasing research interests in recent days, such as named entity recognition (NER) and sentiment analysis (SA) for tweets.One common issue of these tasks is the scalability challenge, which means they are required to process a huge number of tweets each day.Summarization system is then an ideal pre-processing component in the sense that it helps to reduce the number of tweets for processing without much lose of information. 
+            </paragraph> 
+            <paragraph> 
+                <context>Multi-document summarization has been well studied, and a couple of systems have been developed.<author>We</author> 
+                    <kw>test</kw> 
+                    <tool>LexRank</tool> (<cite id="1" function="wea" polarity="neg">Erkan and Radev, 2004</cite>), a state-of-the-art summarization system and <kw>find a sharp drop of</kw> ROUGE-2, from 0.3894 on news to 0.2871 on tweets</context>.This can be largely attributed to the short and noise prone nature of tweets, which causes a single tweet to be insufficient to provide reliable information to compute its salience score.We develop a graph-based summarization system that aggregates social signals, i.e., re-tweeted times and follower numbers to handle this challenge.More specifically, the translation probability from one tweet to the other depends on both the similarity between the two tweets and the social network features associated with the second tweet.<context>
+                    <kw>This largely differentiates</kw> 
+                    <author>our system</author> 
+                    <kw>from existing studies, such as </kw> the work of <cite id="2" function="wea" polarity="neg">Sharifi et al. (2010)</cite>, <kw>which uses only</kw> tweet-level content features (e.g., keywords) to select representative sentences.http://www.twitter.com</context> Noise in tweets means ill-formed words or sentences in tweets.<context>Besides utilizing social signals, <author>our system</author> has two additional features.Firstly, the readability feature is introduced to the graph model to reduce the chance of tweets hard to read to appear in the summarization.Several factors are considered while computing a tweet's readability, including: 1) The number of out-of-vocabulary (OOV) words; 2) the number of words; and 3) the number of abnormal symbols, e.g., "!,,),(,*".Secondly, while selecting representative tweets <kw>using an alternative of</kw> the <tool>Maximal Marginal Relevance (MMR)</tool> (<cite id="3" function="bas" polarity="pos">Goldstein et al., 1999</cite>) algorithm, our system penalizes tweets which are selected from a same twitter account, to achieve diversity among users. </context>
+            </paragraph> 
+            <paragraph> 
+                We collect 100 sets of tweets, each of which is related to a trending topic.For each set of tweets, we manually select representative tweets as the summarization, forming the gold-standard dataset.<context>
+                    We show that our system <kw>compares favorably to</kw> the LexRank (<cite id="4" function="con" polarity="pos">Erkan and Radev, 2004</cite>) baseline in terms of ROUGE-1 and ROUGE-2</context>.We also show the positive effects of considering social signals, readability and user diversity, respectively.To understand how well our method performs in a real scenario, we apply our system to summarize Twitter search results, and consistently observe an improvement of user's satisfaction of Twitter search in a serials of user studies.It is worth mentioning that our proposed summarization system can be easily adapted to other social contents that are short and noisy but with rich social evidences, e.g., Facebook updates or short messages shared through Facebook. 
+            </paragraph> 
+            <paragraph> 
+                Contributions of this work are summarized as follows.1. We propose a graph-based multi-tweets summarization system that leverages social network features, readability and user diversity for selecting representative tweets.2. We evaluate our system on a human annotated dataset and show our system outperforms the baseline.We conduct extensive user studies and show our system considerably improves user's satisfaction of Twitter search. 
+            </paragraph> 
+            <paragraph> 
+                The rest of this paper is organized as follows.Section 2 introduces related work.Section 3 defines the task.Section 4 describes the baseline.Section 5 details our method and Section 6 evaluates our method.Section 7 demonstrates the application of the proposed method to the Twitter search.Finally, Section 8 concludes with a discussion of future work. 
+            </paragraph> 
+        </section> 
+ 
+        <section imrad="m"> 
+            <title>2 Related Work</title> 
+            <paragraph> 
+                Two categories of research are highly related to our work: multi-document summarization and recent studies of tweets. 
+            </paragraph> 
+           
+                <subtitle>2.1 Multi-document Summarization</subtitle> 
+                <paragraph> 
+                    <context>Abstraction and selection are two strategies employed for multi-document summarization.The former involves information fusion (<cite id="5" function="bas" polarity="pos">Barzilay et al., 1999</cite>; <cite id="6" function="bas" polarity="pos">Xie et al., 2008</cite>), sentence compression (<cite id="7" function="bas" polarity="pos">Knight and Marcu, 2002</cite>), and reformulation (<cite id="8" function="bas" polarity="pos">Barzilay et al., 2001</cite>; <cite id="9" function="bas" polarity="pos">Saggion, 2011</cite>); while the latter requires computing salience scores of some units (e.g., sentences, paragraphs) and extracting those with highest scores with redundancy removed.News-Blaster and <author>our method</author> 
+                        <kw>are examples of</kw> 
+                        <method>abstraction and selection based methods</method>
+                        , respectively</context>.We choose the selection strategy because it is relatively simpler, e.g., not requiring language generation to produce a grammatical and coherent summary, and better suites the scenario of tweet summarization.Note that our method considers each tweet as the unit for summarization, which often cannot provide reliable information to compute the salience.This is one main difference between our system and the existing studies.http://newsblaster.cs.columbia.edu 
+                </paragraph> 
+                <paragraph> 
+                    <context>Existing selection-based <method>methods</method> 
+                        <kw>can be divided into</kw> four categories: cluster based (<cite id="10" function="ack" polarity="neu">Hardy et al., 2002</cite>), centroid based (<cite id="11" function="ack" polarity="neu">Radev, 2004</cite>), graph based (<cite id="12" function="ack" polarity="neu">Erkan and Radev, 2004</cite>; <cite id="13">Mani and Bloedorn, 1999</cite>), and machine learning based (<cite id="14" function="ack" polarity="neu">Neto et al., 2002</cite>)</context>.Cluster-based methods first separate a document set into several groups, each representing a sub-topic.Then representative sentences are selected from each group, and finally those sentences are put together as the summarization of the whole document set.Centroid-based methods compute the center of a document set, and then use the similarity between the sentence and the center as the sentence salience score.
+                        <context>
+                        <method>Graph-based methods</method> construct a graph, where a vertex denotes a sentence and the weight of an edge represents the similarity between the two sentences connected by the edge.Then, <kw>similar to</kw> 
+                        <tool>PageRank</tool> (<cite id="15" function="con" polarity="neu">Page et al., 1998</cite>), a Markov Random Walk is performed on the graph to compute the salience score of every sentence</context>.
+                        Machine learning based methods model the summarization process as a classification problem: Whether or not a sentence should be selected as summary sentences.A proper classifier, e.g., a Naive Bayes classifier, is learnt statistically from the training data.
+                        <context>There are methods between those categories.For example, <cite id="16" function="ack" polarity="neu">Wan and Yang (2008)</cite> consider cluster level information, i.e., the importance of the cluster and the relevance of sentence to the cluster, for computing sentence salience score</context>
+    <context>  <kw>Motivated by</kw> 
+                    <tool>LexRank</tool> (<cite id="17" function="bas" polarity="pos">Erkan and Radev, 2004</cite>), <author>we</author> 
+                    <kw>adopt</kw> graph based <method>methods</method>.Differently, our system incorporates rich social network features and considers readability to compute salience score of every tweet.  </context>
+                </paragraph> 
+                <paragraph> 
+                    <context>Most existing studies focus on formal texts such as news.However, exceptions exist.For instance, <cite id="18" function="ack" polarity="neu">Qazvinian and Radev (2010, 2008)</cite> study the problem of summarizing a scientific paper</context>.They propose a clustering approach where communities in the citation summary's lexical network are formed and sentences are extracted from separate clusters.<context>
+                        <cite id="19" function="con" polarity="neu">Sharifi et al. (2010)</cite> 
+                        use the Phrase Reinforcement algorithm to generate one-line summary for a collection of tweets related to a topic.Though our method is also designed for tweets, <kw>there are several significant differences</kw>
+                    </context>.Firstly, our method does not assume that the input tweets are about a topic.Secondly, our method selects representative tweets by exploiting social network features, readability and keywords.<context>
+                        <kw>In contrast</kw>, <cite id="20" function="con" polarity="neu">Sharifi et al. (2010)</cite> find the most commonly used phrases that encompass the topic phrase.</context> 
+                </paragraph> 
+                <paragraph> 
+                    <context>
+                        <method>The maximal marginal relevance (MMR) measure</method> (<cite id="21" function="use" polarity="pos">Goldstein et al., 1999</cite>) <kw>is widely used in</kw> summarization to simultaneously rewards relevant sentences and penalizes redundant ones by considering a linear combination of two similarity measures</context>.We adopt an alternative implementation of MMR, which greedily selects the next most salient tweet whose similarity to any previously selected tweet is less than a threshold and that the number of tweets from the same account is also below a threshold. 
+                </paragraph> 
+                <subtitle>2.2 Research on Tweets</subtitle> 
+                <paragraph> 
+                    <context>Recently we have witnessed growing research interests in tweets.For example, <cite id="22" function="ack" polarity="neu">Kwak et al. (2010)</cite> first study the topological characteristics of Twitter and its power as a new medium for information sharing; various studies are carried out on how Twitter is used by legislators, particularly by members of the United States Congress (<cite id="23" function="ack" polarity="neu">Golbeck et al., 2010</cite>), by city police departments in large U. S. cities (<cite id="24" function="ack" polarity="neu">Heverin and Zach, 2010</cite>), and by scholars (<cite id="25" function="ack" polarity="neu">Priem and Costello, 2010</cite>); <cite id="26" function="ack" polarity="neu">Jansen et al. (2009)</cite> report research results investigating microblogging as a form of electronic word-of-mouth for sharing consumer opinions concerning brands; Heverin and <cite id="27" function="ack" polarity="neu">Zach (2010)</cite> give insights into why particular events resonate with the population. All the above studies indicate the critical role of tweets as a dynamic information source</context>. 
+                </paragraph> 
+                <paragraph> 
+                    <context>There is another line of studies aiming <kw>to help people to efficiently</kw> 
+                        <action>access tweets</action>.For instance, <cite id="28" function="use" polarity="pos">Finin et al. (2010)</cite> annotate named entities in tweets by exploiting Amazon's Mechanical Turk service and CrowdFlower; <cite id="29" function="use" polarity="pos">Liu et al. (2011)</cite> propose to combine a K-Nearest Neighbors (KNN) classifier with a linear Conditional Random Fields (CRF) model under a semi-supervised learning framework to recognize named entities in tweets; <cite id="30" function="use" polarity="pos">Liu et al. (2010)</cite> conduct a pilot study of Semantic Role Labeling on tweets; <cite id="31" function="use" polarity="pos">Sankaranarayanan et al. (2009)</cite> extract breaking news from tweets to build a news processing system, called Twit-terStand; <cite id="32" function="use" polarity="pos">Duan et al. (2010)</cite> give an empirical study on learning to rank of tweets; <cite id="33" function="use" polarity="pos">Weng et al. (2010)</cite> propose TwitterRank, an extension of the PageRank algorithm to identify influential twitter accounts; O'<cite id="34" function="use" polarity="pos">Connor et al. (2010)</cite> present TweetMotif which groups tweets by frequent significant terms; Inouye and <cite id="35" function="use" polarity="pos">Kalita (2011)</cite> compare several tweet summarization algorithms that use text features like TFIDF to compute the similarity between any two tweet; <cite id="36" function="use" polarity="pos">Sharifi et al. (2010)</cite> exploit the Phrase Reinforcement Algorithm to find the most commonly used phrases that encompass the given topic phrase, based on which salient sentences are selected;</context> 
+                    <context>and most recently, <cite id="37" function="bas" polarity="pos">Efron (2011)</cite> offers a comprehensive introduction to the problems encountered by researchers and developers of Information Retrieval (IR) systems in microblog settings. <author>Our work</author> 
+                        <kw>develops this line of research</kw>, with its focus on summarizing multiple tweets using a novel summarization system which considers social network related information, such as re-tweeted times and follower numbers, and partially addresses some of the research challenges discussed by <cite id="38" function="bas" polarity="pos">Efron (2011)</cite>
+                    </context>. 
+                </paragraph> 
+            
+        </section> 
+ 
+        <section> 
+            <title>3 Task Description</title> 
+            <paragraph> 
+                A tweet is a short text message containing no more than 140 characters.Here is an example: "mycraftingworld: #Win Microsoft Office 2010 Home and Student *2Winners* #Contest from @office and @momtobedby8 #Giveaway http://bit.ly/bCsLOr ends 11/14", where "mycraftingworld" is the name of the user who published this tweet.Words beginning with the "#" character, like ""#Win", "#Contest" and "#Giveaway", are hash tags, usually indicating the topics of the tweet; words starting with "@", like "@office" and "@momtobedby8", represent user names, and "http://bit.ly/bCsLOr" is a shortened link. 
+            </paragraph> 
+            <paragraph> 
+                Given a collection of tweets, our task is to output a subset of no more than M representative tweets that best preserve important information in the original set.The number of input tweets varies from hundreds, e.g., for tweets related to a given query or user, to tens of millions, e.g., for tweets in a given time range. M is a systematic parameter whose value is set according to Formula 1, where a is set to 0.05 and n is the input size.In this study, we limit our attention to English tweets only, though our method is almost language independent.https://www.mturk.com/mtur^ 5 http://crowdflower.com/. An example of tweet summarization is given below.The input collection is:• Finally got Windows 8 on my laptop as a primary OS.Sort of my way of welcoming the new holidays :) • Windows 8 Picture Passwords: Smudging Your Finger for Security interesting alternative... ^ not a replacement :) • Windows 8 will have picture password sign in http://is.gd/JoXYHx. Suppose M = 2, the generated summarization is: 
+            </paragraph> 
+            <paragraph> 
+                From this example, it can be seen that selection based multi-tweet summarization allows users to quickly grasp the essential information conveyed in the input tweets, which are prone to noise and rich in redundancy.This is exactly the main motivations of this study. 
+            </paragraph> 
+        </section> 
+ 
+        <section imrad="r"> 
+            <title>4 The Baseline</title> 
+            <paragraph> 
+                <context>
+                    We choose an adapted LexRank as the baseline, considering that LexRank outperforms both centroid-based methods and other systems participating in Document Understanding Conferences (DUC) in most of the cases, and proves quite insensitive to the noise in the data.Note that the <method>one-line summarization system</method> (<cite id="39" function="con" polarity="neu">Sharifi et al., 2010</cite>), which requires a given topic and focuses on the selection of key phrases most related to the topic, works on a setting <kw>different from</kw> 
+                    <author>ours</author>
+                </context>. 
+            </paragraph> 
+            <paragraph> 
+                In general, LexRank is a graph-based method for computing relative importance of textual units.<context> 
+                    <cite id="40" function="bas" polarity="pos">Erkan and Radev (2004)</cite> use it to compute the sentence importance based on the concept of eigenvector centrality in a graph representation of sentences.They use a connectivity matrix based on intra-sentence cosine similarity as the adjacency matrix of the graph representation of sentences. <author>We</author> 
+                    <kw>adapt</kw> 
+                    <tool>LexRank</tool> 
+                    <task>to compute the importance of tweets</task>
+                </context>. 
+            </paragraph> 
+            <paragraph> 
+                Algorithm 1 shows the framework of the baseline.The input tweets are denoted by ts and the outputted summarization are denoted by ret. 
+            </paragraph> 
+            <paragraph> 
+                We first call the function repr to represent each tweet t into bag-of-words vector f , with the usual TFIDF weighting schema as defined in Formula 2, where tf is the occurrence times of the term in the tweet, N is the total number of the tweets for summarization, d f is the number of tweets that contain that term.To extract words from tweets, some preprocessing is conducted.Firstly, stop words are removed.Stop words are mainly from a set of frequently-used words.We also extract the top 200 most frequent words from about Algorithm 1 Framework of the baseline.Require: A collection of tweets: ts.For example, to summarize Chinese tweets, the main effort involves an additional pre-processing: to run Chinese work breaker to get words. http://www.textrjxer.com/resources/common-english-words.txt. 1: Initialize the set of tweet vectors tsv:tsv = 0.2: for all tweet t e ts do 3: Get a feature vector 1:1 = repr(t).4: Add 1 to tsv:tsv = tsv u {7}.6: Construct the graph:gr = graph(tsv).7: Compute salience scores:sc = scores(gr).8: Select tweets :ret = select(sc, ts).9: return ret.10: million tweets, from which another 54 words are manually selected as stop words.Secondly, tweet metadata (e.g., links, account names and hash tags) is extracted using regular expressions and then normalizedLinks and account names are replaced by LINK and ACCOUNT, respectively, while hash tags are treated as common keywords.Finally, a simple dictionary-lookup based normalization procedure is conducted, using a pre-compiled list including incorrect/correct word pairs, e.g., "loooove"/"love", to correct common ill-formed words. 
+            </paragraph> 
+            <paragraph> 
+                Then we call the function graph to construct a graph, denoted by G = V,E >, where V stands for the set of vertexes and E represents the set of edges.Firstly, a vertex is introduced for each tweet.Secondly, for each tweet pair, if their similarity is non-zero, an unidirectional edge connecting the corresponding vertices is added.The edge weight is defined in Formula 3, where i denotes the ith vertex, corresponding to tweet 1;. We enforce sim(1,1) = 0 to avoid self-transition.Following Formula 3, the transition probability from the ith vertex to the jth vertex can be defined by Formula 5.It is worth noting that p(i, j) is usually not equal to p( j, i) because of the different normalization factor in the denominator.Next we call the function scores to compute the salience score for each tweet according to Formula 6, where si is the salience score of the ith vertex, A is the damping factor, and V is the number of tweets for summarization. 
+            </paragraph> 
+            <paragraph> 
+                We can consider the above process as a Markov chain, which takes tweets as states and the transition matrix T is defined in Formula 7, where E is the identity matrix.Since T is irreducible, it is guaranteed that the salience scores can be obtained by the principal eigenvector of the transition matrix T. 
+            </paragraph> 
+            <paragraph> 
+                For implementation, the initial salience scores of all tweets are set to 1 and the iteration algorithm in Formula 6 is used to compute the new scores.Usually the convergence of the iteration algorithm is achieved when the difference between the scores computed at two successive iterations for any tweet goes below a given threshold 5. 
+            </paragraph> 
+            <paragraph> 
+                Finally, we run the function select, an alternative implementation of the MMR algorithm, to select at most M tweets as the summarization.Whether a tweet is selected as a representative depends on two factors: its salience score and its similarity to the already selected tweets.Specifically, a tweet is chosen if it is the candidate with the greatest salience score and its similarity to any selected tweet is below a threshold e .No matter whether the most salient candidate is chosen or not, it will be removed from the candidate set.This selection process repeats until M tweets are chosen or the candidate set is empty.Details are illustrated in Algorithm 2.Algorithm 2 Representative tweet selection.Require: maximum number of tweets allowed: M. Require: Scored tweets: { (1t, score)}.1: Initialize the set of selected tweets sel:sel = 0.2: Initialize the set of candidates cd : cd = {(1, score)}.4: Select the most salient t:t = argmaxtecd t.score.5: Remove t from cd:cd = cd — {t}.6: if Vs e sel, sim(s.1, T) e then 7: Select t:sel = sel u {t}.9: end while 10: return sel. 
+            </paragraph> 
+        </section> 
+ 
+        <section> 
+            <title>5 Our System</title> 
+            <paragraph> 
+                The baseline has several limitations.Firstly, only terms are used to compute a tweet's salience score.Because a tweet is short and often noisy, the computed importance score is often not reliable.For example, consider the following two tweets:We treat 5 and e as systematic parameters, whose value are experimentally determined on the development dataset.• is Obama planning to spend the 17 days in Hawaii? #vacation# • Obama Christmas shopping for his family, already in Hawaii for vaca 
+            </paragraph> 
+            <paragraph> 
+                They have similar meanings but low cosine similarity, largely caused by the "vaca" in the second tweet, which is actually an abnormal abbreviation of "vacation" in the first tweet.Secondly, tweets are selected only according to their salience scores, despite how hard they can be understood.It has been observed that in the summarization outputted by the baseline, a significant part of tweets are hard to read, which are short, or noisy, e.g., having many OOV words and grammatically incorrect.As an illustrative example, consider the following two tweets.The first one is short and not meaningful while the second one is informally written with low readability.• Rodney Hood, folks, Rodney Hood....• Rodney Hood cold . yeah he going pro in another year or so 
+            </paragraph> 
+            <paragraph> 
+                Thirdly, because user diversity is ignored, too many tweets from the same Twitter account occur in the summarization. 
+            </paragraph> 
+            <paragraph> 
+                Our system try to overcome these limitations by: 1) Incorporating social network features, i.e., re-tweeted times and follower numbers to make the salience score more reliable; 2) introducing the readability feature to make the outputted summarization more readable; and 3) considering user diversity, i.e., dropping a tweet if the number of selected tweets from the same Twitter account goes above a threshold. 
+            </paragraph> 
+            <paragraph> 
+                Accordingly, we make three updates on the framework illustrated in Algorithm 1. First the graph function is modified so that the weight between two tweets is computed according to Formula 8, where a(j) is defined in Formula 9. a(j) incorporates two kinds of evidences:1) Social network features, which says a tweet is more important if it has been re-tweeted more times (retw(j)), or it is published by an account with more followers (foll(j)); and 2) Readability ( readability(j)), which says more readable tweets are more favorable.With the updated graph, the same scoring function scores is called to assign a salience score for each tweet. 
+            </paragraph> 
+            <paragraph> 
+                Secondly, we modify Algorithm 2 to add user diversity into the summarization.We calculate the number of different Twitter accounts of the input tweets, denoted by K, then define a threshold N according to Formula 10, where ß is a systematic parameter with a positive real value.To decide if tweet t should be put into the outputted summarization, we check the number of the selected tweets from t's account.If that number is greater than N, we drop the tweet, otherwise we select it. 
+            </paragraph> 
+            <paragraph> 
+                We use Twitter APIs, i.e., http://twitter.com/#! /[account], to compute the number of followers for a given Twitter account. For example, filling "[account]" with "lxh5147" can check out how many Twitter accounts are following "lxh5147". We estimate how many times a tweet is re-tweeted by analyzing the content of a large collection of reference tweets, which are crawled using Twitter APIs within the same day.For any two tweets, if the first one starts with "RT" followed by the content of the second one, we say the second tweet is re-tweeted by the first one. 
+            </paragraph> 
+            <paragraph> 
+                Readability is the ease in which text can be read and understood.One widely adopted readability is measured according to the Flesch Formula 11, Where: ASL is the average sentence length (number of words divided by number of sentences) and ASW is the average word length in syllables (number of syllables divided by number of words).We enhance this formula by considering two additional factors: 1) The average number of OOV words, i.e., the number of OOV words divided by the total number of words, denoted by AOW; and 2) the average number of abnormal symbols, i.e., the number of abnormal symbols divided by the total number of words, denoted by AAS.We compile a dictionary of 1 million words, and a list of 125 symbols to identify OOV words and abnormal symbols, respectively. 
+            </paragraph> 
+            <paragraph> 
+                The updated measurement is then defined in Formula 12, in which the coefficients (i.e., 10.5 and 9.8) are determined using linear regression.We further normalize the readability using Formula 13, where readability(i) is the readability of the ith tweet computed using Formula 12.In Formula 13, we assume a normal distribution of tweet readability, whose mean and variance are defined in Formula 14 and 15, respectively, where n is the number of the input tweets.readability(i) = Pr(readability  readability(13) 
+            </paragraph> 
+        </section> 
+ 
+        <section> 
+            <title>6 Evaluation</title> 
+            <paragraph> 
+                In this section, we evaluate our system on a manually annotated dataset.We also study the contribution of social signals, readability and user diversity, respectively.To get a copy of the dictionary, please contact the first author. 
+            </paragraph> 
+            
+                <subtitle>6.1 Data Preparation</subtitle> 
+                <paragraph> 
+                    Unlike such multi-document summarization tasks in Document Understanding Conference (DUC), no gold-standard dataset for tweet summarization is available.We manually annotate a dataset (DS) for automatic evaluation of summarization, as described below. 
+                </paragraph> 
+                <paragraph> 
+                    100 English trending topics from March 1st to March 30th 2010 are randomly selected.Some examples are "lady gaga", "Obama", "Denver", "james Cameron", and "ipad".For each trending topic, at most 1,000 English tweets are crawled using Twitter APIs.For each tweet, the information about its re-tweeted times and the number of followers of its account are computed.To facilitate future experiments, for each crawled tweet, stop words are removed and its metadata and keywords are extracted.The readability of each tweet is automatically calculated using Formula 13.Three annotators are involved. 
+                </paragraph> 
+                <paragraph> 
+                    For each topic, they independently select M tweets (computed using Formula 1) from the related tweets, thus forming the gold-standard dataset DS.10 topics are randomly chosen for development and the remainder for testing, denoted by DST.The system parameters, i.e., X, 5, e and ß are experimentally set to the optimal values (0.85, 0.0001, 0.2 and 10), which yield the best performance on the development dataset.For any topic c and any pair of annotated results from two annotators, denoted by Ac and Bc, we compute the inter-agreement with Formula 16.The average inter-agreement (over all topics and all possible pairs) is 0.78. 
+                </paragraph> 
+                <subtitle>6.2 Evaluation Metrics</subtitle> 
+                <paragraph> 
+                    We adopt the widely used ROUGE-N as performance metrics, which is an n-gram recall based statistic that can be computed as follows:Where: R = {r1, r2, •••, rm\! is a set of reference summaries; s is a summary generated automatically by some system; $n(d) is a binary vector representing the n-grams contained in a document d; the ith component ^in(d) is 1 if the ith n-gram is contained in d and 0 otherwise. 
+                </paragraph> 
+                <subtitle>6.3 Results</subtitle> 
+                <paragraph> 
+                    Table 1 reports the ROUGH-1 and ROUGE-2 of the baseline (BS) and our system (SS), with a = 0.05.We observe a significant improvement of ROUGE-1 and ROUGE-2, showing the overall advantages of our system.We vary M, and find our method consistently outperforms the baseline, as showed in Table 2.As a case study, we list the outputs of our system and the baseline, respectively, in Table 3.They are native English speakers. 
+                </paragraph> 
+                <paragraph> 
+                    Social signals, readability and user diversity are added to the baseline, respectively, to study their contributions.The corresponded systems are denoted by BSS, BSR and BSV, respectively.Table 4 shows the results, from which it can be seen that social signals are most helpful, followed by readability and then user diversity.We also combine any two of the three factors, add them to the baseline, and test the updated system.Results are listed in Table 5.The subscript letters S, R and U stand for social network features, readability and user diversity, respectively.We see the combination of S and R outperforms other settings.System Outputted Summarization BS Apple said to be launching two new iPad models in 2012RETWEEET if youu Own A ipod , Ipad , Or iPhone : ) Last chance to get your mits on an iPad 2 thanks to @SKECHERS_UK Ss Apple reportedly to debut two new iPad models next year, more than double battery life 10 year olds have a Blackberry, an iPad, a laptop, and a Facebook.When I was 10, I felt cool with my new markers.Two new iPad versions to unveil in January says sourcesTable 3: Summarization of Our Method and The Baseline(For Topic "iPad"). 
+                </paragraph> 
+            
+        </section> 
+ 
+        <section> 
+            <title>7 Application to Twitter Search</title> 
+            <paragraph> 
+                Twitter search is an increasingly popular service of providing access to tweets.It returns a list of matched tweets for a given query, as illustrated in Figure 1.We observe two problems here.Firstly, there are often similar tweets in the search results.For example, the first and the second tweet in Figure 1 are almost the same.This kind of redundancy is annoying since in general users are more interested in "new" information when reading tweets.Secondly, a large number of tweets in search results, e.g., those about private conversations or those which are fragmented and hard to understand (e.g., the fifth tweet in Figure 1), are not meaningful for the general audience. 
+            </paragraph> 
+            <paragraph> 
+                We apply our multi-tweet summarization system to the results of Twitter search, and build an end-to-end application, as illustrated in Figure 2.By default only representative tweets are displayed, and each of them has a "show similar results" link.Clicking the link will show at most 10 tweets most similar to the corresponded tweet. 
+            </paragraph> 
+            <paragraph> 
+                We conduct user studies to evaluate whether our system is helpful to Twitter search.We first randomly sample 50 queries (DSV) from the trending topics from March 1st to MarchTable 1: Performance of Different Systems.a =0.05.Table 2: Comparison of ROUGE-1 with VariedM.Table 5: Contribution of Social Signals, Readability and User Diversity.\!5== S=3=a=.Figure 1: An example of Twitter search about "Obama". Figure 2: An example of summarization of Twitter search results about "Obama".30th 2010.Then for each query in DSU, results from Twitter search and our system are displayed side by side, and 3 users are asked to choose which is better.For each user, we record how many queries our system is voted to be better.The inter-rater agreementbetween users is also computed.Table 6 shows the results, suggesting that users tend to be more satisfied with our system.The inter-rater agreement is 0.74, indicating that users are more likely to agree with each other.Note that the values in the "Votes for ours" column are computed using Formula 18, where Qu denotes the queries for which the user u 6 {A, B, C} believes our system gives better results than Twitter search, and Q denotes all queries inThey are college students who did not receive any special training as preparation.12 Cohen's kappa coefficient is used as the inter-rater agreement. DSU.Table 6: Comparison between our system and Twitter search.A, B and C denote three annotators, respectively.The inter-rater agreement is 0.74. 
+            </paragraph> 
+        </section> 
+ 
+        <section> 
+            <title>8 Conclusion and Future work</title> 
+            <paragraph> 
+                We study the task of multi-tweet summarization, which selects a given number of representative tweets so as to keep important information while dropping noise and redundancy.One main motivation of this task is to provide a tool to help people efficiently access a large number of tweets, which are short and prone to noise.This is important considering that tweets are one increasing popular repository of fresh information.We advocate that multi-tweet summarization is an important building block for other information extraction tasks on tweets, in the sense that it allows these tasks to focus on important tweets. 
+            </paragraph> 
+            <paragraph> 
+                One main challenge is the lack of information to compute a tweet's salience score.We propose a graph-based system which leverages social network features, readability and user diversity to address this challenge.On a manually annotated gold-standard dataset, we show our system outperforms the state-of-the-art baseline.We apply our system to Twitter search and demonstrate that it improves user's satisfaction to Twitter search. 
+            </paragraph> 
+            <paragraph> 
+                In our experiments, we have observed that users are often more interested in tweets with events or opinions.Therefore, exploiting events and opinions in tweets represents a promising direction to explore in future. 
+            </paragraph> 
+        </section> 
+    </paper>
+</annotatedpaper>

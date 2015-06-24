@@ -1,0 +1,261 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!-- was: no XML declaration present -->
+<annotatedpaper> 
+    <paper title ="Language Technologies for Suicide Prevention in Social Media" author=" 
+ Jose M. Gomez " email="jmgomez@ua.es ">
+        <section>
+            Department of Software and Computing Systems, University of Alicante 
+        </section>
+ 
+  
+        <section>
+            <title> 
+                Abstract 
+            </title>
+            <paragraph>
+                At present, the suicide phenomenon is raising, having a relevant impact on our society. Each year about one million people die as a result of suicidal behavior becoming an economic, social and human problem. On the other hand, the use of Social Media as a means of communication is becoming extremely popular, through which their emotional states and impressions are exchanged. Therefore, it is no surprise that more and more people with depression publish their suicide notes in these communication channels. In this context, Information Technologies and Communications and, more specifically, Language Technologies play an important role in the early detection of the depression, their causes and their terrible consequences. Based on these considerations, it is mandatory to provide societal, environmentally approaches and solutions to tackle these societal challenges. This work pretends to be an exhaustive survey of the different researches in this scope, in order to explain which methodologies, technologies and resources are used in the detection of mental problems by means of the Social Media analysis as well as to re-veal their deficiencies. 
+            </paragraph>
+        
+        </section>
+        <section imrad="i">
+            <title>
+                1  Introduction 
+            </title>
+            <paragraph>
+                <context>
+                    In Europe, suicide has become the leading cause of violent death (<cite id="1" function="ack" polarity="neu">WHO, 2014</cite>).
+                </context>
+                <context>
+                    Each year 804.000 people die in the world as a result of suicidal behaviour and the number of attempts is about 20 times higher (<cite id="2" function="ack" polarity="neu">WHO, 2012</cite>; <cite id="3" function="ack" polarity="neu">WHO, 2014</cite>). 
+                </context>
+                It is estimated that in 2020, about 1.53 million people will die as a result of suicidal acts. Preventing suicide is one of the five areas of priority of the European Pact for Mental Health and Well- Being1, which was launched by the European Commission in 2008. 
+                <context>
+                    Suicide is the third leading cause of violent death among people aged 15 to 44, followed by accidents and homicides <cite id="4" function="ack" polarity="neu">(Holmeset al., 2007)</cite>, and it would be the second reason that would explain the deaths in the group of people aged 15 to 19 years (<cite id="5" function="ack" polarity="neu">WHO, 2014</cite>). 
+                </context>
+                Suicidal behavior can be defined as a complex process that can range from suicidal ideation (communicated through verbal or non-verbal means) to planning of suicide, attempting suicide, and in the worst case, the suicide itself. 
+                <context>
+                    These behaviors are influenced by interacting biological, genetic, psychological, social, environmental and situational factors (<cite id="6" function="ack" polarity="neu">Wasserman et al., 2004</cite>). 
+                </context>
+            </paragraph>
+            <paragraph>
+                <context>
+                    Suicide has also been strong linked to inequity, social exclusion and socio-economic deprivation (<cite id="7"  function="ack" polarity="neu">Berk and Dodd, 2006</cite>). 
+                </context>
+                It is an enormous problem that causing unnecessary human suffering and immeasurable costs for society. According to Josee Van Remoortel, advisor to the European organization Mental Health Europe2 (MHE), the financial crisis is affecting �all areas of life�, not just economies, and its impact on mental health is creating a �deep chasm in our society�.  
+            </paragraph>
+        </section>
+        <section imrad="m">
+            <title>
+                2	Internet and Social Media Penetration  
+            </title>
+            <paragraph>
+                In the other hand, studies reveal that between  
+                ------------- 
+                1http://ec.europa.eu/health/ph_determinants/life_style/mental/docs/pact_en.pdf 
+                2http://www.mhe-sme.org/ 
+                90.1% and 97.8% of young people between 10 and 15 years, access the Internet3; and, around 88.5% of youth, aged 16 to 24 choose social networks as a way to communicate.
+                <context>
+                    Therefore, the use of this type of technology can be up to 90.2%, in the case of students <cite id="8" function="ack" polarity="pos">(Garcia-Rabagó et al., 2010)</cite>. 
+                </context>
+                Forums, chats, social networks, blogs, micro-blogs or e-mails are virtual spaces where Internet users can interact freely and even fantasize, using anonymous identities.
+                <context>
+                    This implies that people with suicidal tendencies, tend to express their thoughts, desires and intentions in pro-suicide forums and share with other people, feelings and intentions  <cite id="9" function="ack" polarity="neu">(Moreno Gea and Blanco Sanchez, 2012</cite>).  
+                </context>
+            </paragraph>
+            <paragraph>
+                <context>
+                    They also warn their suicidal intentions through the Web in real time, be-fore and while committing the act (<cite id="10" function="ack" polarity="neu">Sarno, 2008</cite>).
+                </context>
+                <context>
+                    The study conducted in (<cite id="11" function="ack" polarity="neu">Mingote et al., 2004</cite>) also proves that the younger are one of the population segments where prevention is particularly necessary, finding that 20% of suicides occur among adolescents and young adults. 
+                </context>
+            </paragraph>
+       
+            <title>
+                3  Suicide Prevention in Social Media 
+            </title>
+            <paragraph>
+                It is important to raise awareness on that most self-inflicted deaths are potentially preventable. 
+                <context>
+                    <kw>Well-known studies</kw> concerning research on suicide (<cite id="12" function="ack" polarity="pos">Owen et al., 2012</cite>; <cite id="13" function="ack" polarity="neu">Isometsa, 2001</cite>; <cite id="14" function="ack" polarity="neu">Cantor, 2000</cite>; <cite id="15" function="ack" polarity="neu">Rudestam, 1971</cite>) show that a high number of people who decide to end with their lives. 
+                </context>
+                Through suicide had no prior contact with mental health services, but had communicated their suicidal plans or thoughts directly or indirectly through different means to members of their family, friends, colleagues or through their social networks. Improve the staff skills in early recognition of suicide warning signs, is an essential issue to prevent suicidal mortality. 
+                <context>
+                    There is an increasing tendency (<cite id="16" function="ack" polarity="neu">Ruder et al., 2011</cite>) where suicide notes are posted on the social media (e.g., Facebook, Twitter), where Internet users (and not necessarily teenagers) announce their suicidal thoughts before committing suicide.
+                </context>
+                This poses new challenges for human language technologies since, traditional existing automatic tools are not able to process the new language employed in the social media (abbreviations, slang, smiles and, more generally, a low unstructured and highly informal language). 
+            </paragraph>
+            <paragraph>
+                <context>
+                    The Internet, and specifically the Web 2.0, is an important source of information for learning about suicidal behaviors (<cite id="17" function="ack" polarity="neu">Dunlop et al., 2011</cite>). 
+                </context>
+                <context>
+                    The way individuals respond to help request from people at high risk of suicide or interact with them can lead to the fact that the potential suicidal may recon-sider his/her final decision, or, on the contrary, encourage and accelerate the process of ending with his/her life (<cite id="18" function="ack" polarity="neu">Wasserman et al., 2004</cite>). </context>
+            </paragraph>
+            <paragraph>
+                <context>
+                    During the recent years, some popular social networks, such as Facebook have become the most important means of social communication, with nearly 1,230 million of registered users world-wide4, 70% of whom are young people who make frequent use of this type of media, through which the emotional states and impressions are exchanged (<cite id="19" function="ack" polarity="neu">Dunlop et al., 2011</cite>; <cite id="20" function="ack" polarity="neu">Lenhart et al., 2010</cite>).
+                </context>
+                <context>
+                    These social networks are also a way to find comfort and welfare and its usage promotes contact and positive support among young people, especially among those with mental disorders (<cite id="21" function="ack" polarity="neu">Ellison et al., 2007</cite>). 
+                </context>
+                
+                In addition, the Web offers possibilities for early detection on suicidal behaviors and it may constitute a cost-effective means of intervention based on a first step care approach. Their use may be of help for identifying pro-suicide messages, detecting group pat-terns, analyzing exposure to the warning signs and intervening in a personalized manner with people at risk who are willing to accept professional help. In order to raise awareness of the ways people could get help when showing a suicidal behavior, Facebook and the Samaritans5 association developed a joint initiative consisting in adding a new feature to Facebook, where anyone worried about a friend could fill out a form, detailing   
+                4http://investor.fb.com/releasedetail. 
+                3http://ec.europa.eu/eurostat/product?	cfm?ReleaseID=821954  
+                code=isoc_pibi_use&amp;mode=view	5http://www.samaritans.org/ 
+  
+                related to suicide prevention. With the development of Web 2.0 new forms of communication arise that allow to interactively disseminate information through forums, blogs, micro-blogs, mobile apps, etc. These technologies provide new opportunities to define and develop suicide prevention strategies. The use of e-health technologies has many beneficial applications for society. Every day millions of people access the Web to find, provide and share information about opinions, feelings and even plans and intentions. Recognizing suicidal warning signs will be the first necessary step to help and offer support to these people. 
+                <context>
+                   
+                    A study that examines the warning signs of suicide on the Internet (<cite id="22" function="ack" polarity="neu">Mandrusiak et al., 2006</cite>) found that the searches with the terms �warning signals� and �suicide� produced approximately 183,000 outcomes. 
+                </context>
+                Warning signs could be categorized in terms of cognitive content, behavioral, situational or other indicators concerning psychological characteristics or interpersonal problems. They could identify suicidal groups that need urgent intervention. Internet searches for suicide may pro-vide a faster way of monitoring possible trends in suicide. 
+            </paragraph>
+            <paragraph>
+                <context>
+                    Some clinical studies observed that de-pressed patients frequently speech slow, uniform, monotonous and with a low voice (<cite id="23" function="ack" polarity="neu">Kuny and Stassen, 1993</cite>) or to have psychomotor symptoms and this is reflected in the speech (<cite id="24" function="ack" polarity="neu">Sobin and Sackeim, 1997</cite>). 
+                </context>
+                <context>
+                    Moreover, emotions and mood can influence the speaking behavior of a person and the characteristics of the sound in speech (<cite id="25" function="ack" polarity="neu">Kuny and Stassen, 1993</cite>; <cite id="26" function="ack" polarity="neu">Bachorowski and Owren, 1995</cite>; <cite id="27" function="ack" polarity="neu">Sobin and Alpert, 1999</cite>; <cite id="28" function="ack" polarity="neu">Scherer, 2003</cite>; <cite id="29" function="ack" polarity="neu">Goudbeek and Scherer, 2010</cite>).
+                </context>
+
+                The speech of depressed patients is characterized by a longer pause duration, that is, an increased amount of time between speech utterances as well as by a reduced variability in mean vocal pitch (<cite id="30">Lamers et al., 2014</cite>). For these reasons, the acoustic speech features can be used to build models and algorithms for automated depression detection in clinical scenarios. 
+            </paragraph>
+            <paragraph>
+                But these acoustic features are not the only ones that can be used,
+                <context>
+                    Internet usage itself <cite id="31" function="ack" polarity="neu">(Katikala-pudi et al., 2012)</cite>, social networking behaviors (<cite id="32" function="ack" polarity="neu">Moreno et al., 2011</cite>; <cite id="33" function="ack" polarity="neu">Choudhury et al., 2012</cite>) or location sharing (<cite id="34" function="ack" polarity="neu">Park et al., 2013</cite>) can vary as a function of being depressed. 
+                </context>
+                <context>
+                    (<cite id="35" function="ack" polarity="neu">Quercia et al., 2012</cite>) found correlations between sentiment and levels of popularity, influence and general well-being using the network relations among users and (O�<cite id="36" function="ack" polarity="neu">Connor et al., 2010</cite>) used a measure of public opinion.
+                </context>
+                <context>
+                    <method>All these methods</method> 
+                    <kw>can be applied to</kw> 
+                    <task>analyze emotion in suicide notes</task> (<cite id="37" function="use" polarity="neu">Liakata et al., 2012</cite>). 
+                </context>
+            </paragraph>
+        </section>
+        <section imrad="r">
+            
+            <title>
+                5	Human Language Technologies and Suicide Prevention  
+            </title>
+            <paragraph>
+                In order to resolve this social issue, Language Technologies (LT) could help with the early identification of �suicide warning signs� that will be useful to detect individuals with suicidal ideation, as well as virtual environments where pro-suicide information is being shared or suicidal attempts are being encouraged. 
+                <context>
+                    In particular, <tool>LT</tool> 
+                    <kw>can analyze</kw> 
+                    <data>language structures</data> and their meaning (<cite id="38" function="use" polarity="neu">Navigli, 2009</cite>) on different textual genres. 
+                </context>
+                <context>
+                    <kw>Tasks such as</kw> 
+                    <task>information retrieval</task> (<cite id="39" function="use" polarity="neu">Salton and McGill, 1986</cite>), <task>information extraction</task> (<cite id="40" function="use" polarity="neu">Cowie and Lehnert, 1996</cite>),<task> text classification and clustering</task> (<cite id="41" function="use" polarity="neu">Sebastiani, 2002</cite>), or<task> sentiment analysis</task> (<cite id="42" function="use" polarity="neu">Pang and Lee, 2008</cite>) <kw>are basic pillars</kw> of these technologies
+                </context>
+
+                that allow the construction of more complex automatic processes for discovering knowledge from oral and/or written text. 
+            </paragraph>
+            <paragraph>
+                <context>
+                    Recent research in LT has been proved great potential in the area of healthcare. 
+                    
+                    <kw>From the development of</kw>
+                    <tool>applications</tool> 
+                    <kw>to</kw> 
+                    <task>assist medical practitioners in the access</task> 
+                    <kw>and</kw> 
+                    <task>management of information about patients</task>, e.g. (<cite id="43" function="use" polarity="neu">Iakovidis and Smailis, 2012</cite>; <cite id="44" function="use" polarity="neu">Vest, 2012</cite>), to the creation of computer programs to support and/or facilitate reading comprehension for language-impaired children during communication (<cite id="45" function="use" polarity="neu">Dietz et al., 2011</cite>; <cite id="46" function="use" polarity="neu">Wang and Paul, 2011</cite>).
+                </context>
+                So far, and to the best of our knowledge, very little effort has been made to apply LT for the benefit of suicide prevention. 
+            </paragraph>
+            <paragraph>
+                <context>
+                    The linguistic analysis of suicide notes has a long history and already started as early as 1956 with the work of (<cite id="47" function="ack" polarity="neu">Shneidman and Farberow, 1956</cite>), followed by several others (<cite id="48" function="ack" polarity="neu">Osgood and Walker, 1959</cite>; <cite id="49" function="ack" polarity="neu">Gleser et al., 1961</cite>; <cite id="50" function="ack" polarity="neu">Edelman and Renshaw, 1982</cite>). 
+                </context>
+                
+                The basis of most of this re-search was a corpus of 66 suicides notes, half genuine and half simulated, collected by Schneidman and the task was to identify those textual features which could differentiate between genuine and fake notes.
+                <context>
+                    <kw>Whereas the earlier </kw> 
+                    <paper>work</paper> 
+                    <kw>mostly focused on</kw> 
+                    <task>the manual analysis and detection of these differentiating features</task>, e.g. by relying on techniques from discourse analysis (<cite id="51" function="use" polarity="neu">Shneidman and Farberow, 1956</cite>) or by focusing on shallow text characteristics such as the usage of modals and auxiliaries (<cite id="52" function="use" polarity="neu">Osgood and Walker, 1959</cite>), the choice of verbs and adverbs (<cite id="53" function="use" polarity="neu">Gleser et al., 1961</cite>), etc. 
+
+                </context>                
+                We can observe a recent tendency to also rely on automatic corpus analysis techniques for the automatic detection of suicide messages. 
+                <context>
+                    (<cite id="54" function="ack" polarity="neu">Shapero, 2011</cite>), for example, studied two corpora of suicide notes in an attempt to define the typical suicide note.
+                </context>
+
+                For doing so, she automatically calculated word usage and semantic concepts in the notes. 
+                <context>
+                    (<cite id="55" function="ack" polarity="neu">Pennebaker and Chung, 2011</cite>) used the frequency of verbal elements in a narrative that express a certain mood or sentiment which show that there is also ample evidence that text mining techniques based on the frequency of certain terms can be applied to narratives from patients in order to monitor changes in mood.
+                </context>
+                <context>
+                    As far as we know, (<cite id="56" function="use" polarity="neu">Pestian et al., 2010</cite>) <kw>were the first to</kw> 
+                    <experiment>experiment</experiment> 
+                    <kw>with the</kw>
+                    <method>use machine learning techniques</method> for the automatic classification of suicide notes. 
+                </context>
+                
+                In experiments on the earlier described data set of 66 notes, they investigated whether a machine learning system was able to classify suicide notes with a higher accuracy than mental health professionals. They showed that the best machine learners were indeed able to outperform the human experts.
+                <context>
+                    More recent studies confirm this fact (<cite id="57" function="ack" polarity="neu">Janssen et al., 2013</cite>), underlining once again the added value of automated speech analysis. 
+                </context>
+                <context>
+                    (<cite id="58" function="use" polarity="neu">Howes et al., 2014</cite>) <kw>present an initial investigation</kw> 
+                    <kw>into the application of</kw> 
+                    <method>computational linguistic techniques</method>, such as topic and sentiment modelling, to online therapy for depression and anxiety <kw>using</kw> 
+                    <method>Latent Dirich-let Allocation</method> (<cite id="59" function="use" polarity="neu">Blei et al., 2003</cite>).
+                </context>
+                However, <kw>early works tried to</kw> 
+                <task>detect specific emotions such as anger</task>, surprise, fear, etc. <kw>using</kw> 
+                <data>dictionary-based</data> 
+                <kw>or</kw> 
+                <method>machine-learning-based approaches </method>( <cite id="60" function="use" polarity="neu">Chuang and Wu, 2004</cite>; <cite id="61" function="use" polarity="neu">Seol et al., 2008</cite>) and more recently (<cite id="62" function="use" polarity="neu">Purver and Battersby, 2012</cite>; <cite id="63" function="use" polarity="neu">Choudhury et al., 2012</cite>; <cite id="64" function="use" polarity="neu"> Neuman et al., 2012</cite>; <cite id="65" function="use" polarity="neu">Howes et al., 2014</cite>). 
+            </paragraph>
+            <paragraph>
+                Although interesting research was conducted on the Schneidman data set, the focus should not be on distinguishing between genuine and elicited suicide notes. Instead, it is of key importance to determine what exactly makes a note a real suicide note, independently of the features of the elicited notes or the distinguishing characteristics between both types of notes. 
+                <context>
+                    <kw>Such a</kw> 
+                    <data>suicide note corpus</data> of positive-only data, annotated with fine-grained emotions, <kw>was released in</kw> the framework of the 2011 i2b2 <experiment>Natural Language Processing Challenge</experiment> (<cite id="66" function="use" polarity="neu">Pestian et al., 2012</cite>) on emotion classification in suicide notes.
+                </context>
+                Although the scope of the challenge (differentiating between emotions in positive-only data) was different, it led to the creation of a permanently available resource facilitating future research in emotion detection in suicide notes. The corpus contains the notes writ-ten by 1319 people, before they committed suicide. The notes were collected between 1950 and 2011. Spelling and grammar errors were kept in the data. All notes were anonymized by replacing all names with other values and by randomly shifting dates within the same year. The data set of the challenge consisted of a training set of 600 suicide notes, and a test set of 300 notes. The challenge itself revealed that not only shallow lexical, but also semantic features contributed to classification performance. However, many challenges remain to be investigated: the sensitivity of the current systems to spelling and other errors -especially in online data-, the lack of deep understanding of the data through the use of mainly shallow features, etc. The release of this data set has made it possible to accurately detect and differentiate between different emotions, which might be indicative of suicidal behavior. 
+            </paragraph>
+            <paragraph>
+                <context>
+                    <kw>For</kw> 
+                    <task>the automatic detection and classification of emotions</task> in suicidal content, <author>we</author> 
+                    <kw>can rely on the recent advances</kw> in the domain of LT (<cite id="67" function="use" polarity="neu">Jurafsky and Martin, 2008</cite>) and machine learning (<cite id="68" function="use" polarity="neu">Mitchell, 1997</cite>).
+                </context>
+                Whereas the international LT research community until recently mainly focused on the �factual� aspects of content analysis, we can observe an additional growing interest in the analysis of attitude and affect in textual sources, especially in online content such as blogs, tweets, social network data, etc. The extraction of affective contents does not only imply the detection of opinions, evaluations, beliefs and speculations in text (topics which have a high application potential in customer intelligence applications and the like), but also the identification of certain emo-tions. For example, how do people express their intent to commit suicide? The use of machine learning techniques and sentiment analysis techniques for the automatic analysis of suicide notes is not new.
+                <context>
+                    (<cite id="69" function="ack" polarity="neu">Huang et al., 2007</cite>), for example, experimented with lexicon-based sentiment analysis for the automatic detection of suicidal blogs. 
+                </context> 
+                <context>
+                <cite id="70" function="ack" polarity="neu">(Pes-tian et al., 2010)</cite> combined shallow text characteristics, such as part-of-speech information, readability scores and parse information with the machine learning software as available in the Weka package. 
+                </context>
+            </paragraph>
+            <paragraph>
+                <context>
+                Until we know, <posfeature>the most complete</posfeature> <paper>research</paper> <kw>about</kw> <field>suicide prevention in the social networks</field>, specifically Facebook, <kw>is the work of</kw> (<cite id="71" function="use" polarity="pos">Schwartz et al., 2014</cite>).
+                </context>
+                However, instead of trying to detect suicide notes or to differentiate people with or without mental disorders, they measure the changes across time of the degree of depression. 
+            </paragraph>
+        </section>
+        <section imrad="d">
+            <title>
+                6  Conclusions 
+            </title>
+            <paragraph>
+                The magnitude of the suicide in the EU member states and the rest of the world make suicide prevention not exclusively a problem of Mental Health. This is a problem that must be addressed from a multidisciplinary perspective, involving different areas. Internet Technologies and Communication and, more specifically, the Hu-man Language Technologies can help to resolve part of these problems through the early detection of suicidal thoughts and/or behavior expressed through the Social Media. The words and the way people use to communicate in their blogs, social networks, etc. provide information about the psychological state and personality of individuals. The processing and analysis of natural language texts shared via Internet helps record and detect changes in cognitive and emotional state of the people. Unfortunately, although there are avail-able resources and tools for sentiment analysis and opinion mining, even in the field of the depression detection and using different approaches and features, there is neither system nor platform that deal with the full process of suicide prevention. 
+            </paragraph>
+        
+        
+            <title>
+                Acknowledgements 
+            </title>
+ 
+            This research work has been partially funded by the Spanish Government and the European Com-mission through the project, ATTOS (TIN2012-38536-C03- 03), LEGOLANG (TIN2012-31224), SAM (FP7- 611312) and FIRST (FP7-287607). </section>
+    </paper>
+</annotatedpaper>

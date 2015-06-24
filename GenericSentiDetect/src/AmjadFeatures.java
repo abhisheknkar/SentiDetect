@@ -12,74 +12,62 @@ import edu.stanford.nlp.util.CoreMap;
 //All members are static functions
 public class AmjadFeatures 
 {
-	public static void getRefCountandIsSeparate(ArrayList<AmjadCitation> Citations)
+	private final String[] PronounList = {"i", "me", "my", "mine", "we", "us", "we", "our", "ours",
+			"he", "she", "it", "they", "him", "her", "them","his", "her", "its", "their", "theirs"}; 
+	public static void getFeatures1and2(ArrayList<Citation> citations)
 	{
-		//Handles the first two features
+		/*
+		 * Number of references and if the target reference is separate from the rest
+		 * Handles the first two features
+		 */
 		int count, delta;
-		for (AmjadCitation Citation : Citations)
+		for (Citation citation : citations)
 		{
 			count = 0;
-			Citation.Features[1] = 1;
+			citation.Features[1] = 1;
 			for(int i = 0; i < 4; ++i)
 			{
-				if(Citation.SentenceScore[i] == 1)
+				if(citation.SentenceScore[i] == 1)
 				{
-					delta = findNoOfOccurrences(Citation.Sentence[i], "REF>") / 2;
-					if (delta > 1)
+					delta = findNoOfOccurrences(citation.Sentence[i], "REF>") / 2;
+					if ((i == 1) && (delta > 1))
 					{
-						Citation.Features[1] = 0;
+						citation.Features[1] = 0;
 					}
 					count += delta;
 				}
 			}
 //			System.out.println(count);
-			Citation.Features[0] = count;
+			citation.Features[0] = count;
 		}
 	}
 
-	public static void getSelfCitations(ArrayList<AmjadCitation> Citations, ArrayList<AANPaper> Papers)
+	public static void getFeature3(ArrayList<Citation> citations, HashMap<String, Paper> papers)
 	{
-		String[] CiterAuthors = null;
-		String[] CitedAuthors = null;
-		ArrayList<String> CommonAuthorsList = new ArrayList<String>();
+		/*
+		 * Get the self citations
+		 * Get the citer and the cited papers' authors, find intersection
+		 */
+		String[] citerauthors = null;
+		String[] citedauthors = null;
+		String[] commonauthors = null;
 		
-		int CiterFound=0, CitedFound=0;
-		for (AmjadCitation Citation : Citations)
+		for (Citation citation : citations)
 		{
-			for (AANPaper Paper : Papers)
-			{
-				if (CitedFound == 0)
-					if (Paper.ID.equals(Citation.Cited))
-					{
-						CitedFound = 1;
-						CitedAuthors = Paper.Authors;
-					}
-				if (CiterFound == 0)
-					if (Paper.ID.equals(Citation.Citer))
-					{
-						CiterFound = 1;
-						CiterAuthors = Paper.Authors;
-					}
-			}
+			if (!(papers.containsKey(citation.Citer) && papers.containsKey(citation.Cited))) continue;
+			citerauthors = papers.get(citation.Citer).authors;
+			citedauthors = papers.get(citation.Cited).authors;
+			
 			//Get intersection
-			for (int i = 0; i < CitedAuthors.length; ++i)
+			Set<String> s1 = new HashSet<String>(Arrays.asList(citerauthors));
+			Set<String> s2 = new HashSet<String>(Arrays.asList(citedauthors));
+			s1.retainAll(s2);				
+			
+			if (s1.size() > 0)
 			{
-				//Create ArrayList of Cited Authors
-				if (Arrays.asList(CiterAuthors).contains(CitedAuthors[i]))
-				{
-					CommonAuthorsList.add(CitedAuthors[i]);
-				}
-			}	
-			if (CommonAuthorsList.size() > 0)
-			{
-				Citation.Features[2] = 1;
-				for (String CommonAuthor : CommonAuthorsList)
-				{						
-					System.out.println(CommonAuthor);
-				}
-
-				CommonAuthorsList.clear();
+				citation.Features[2] = 1;
 			}
+			s1 = null; s2 = null;
 		}
 }
 	
@@ -97,18 +85,18 @@ public class AmjadFeatures
 				lastIndex+=findStr.length();
 			}
 		}
-//		System.out.println(count);	//		for (AmjadCitation Citation : Citations)
+//		System.out.println(count);	//		for (Citation Citation : citations)
 		return count;
 	}
 
-	public static void computeSentenceScore_OpinionFinder(ArrayList<AmjadCitation> Citations, ArrayList<OpinionFinderWord> Words)
+	public static void computeSentenceScore_OpinionFinder(ArrayList<Citation> citations, ArrayList<OpinionFinderWord> Words)
 	{
 		String Sentence;
 		int PolarityThreshold = 1;
 		int DisplayIndividualScores = 0;
 		int NoPrintFlag = 1;
 		
-		for (AmjadCitation Citation : Citations)
+		for (Citation Citation : citations)
 		{
 			for (int i = 0; i < 4; ++i)
 			{
@@ -123,14 +111,14 @@ public class AmjadFeatures
 		}		
 	}
 
-	public static void computeSentenceScore_SentiWordnet(ArrayList<AmjadCitation> Citations, HashMap<String, double[]> SentiWordnetWords)
+	public static void computeSentenceScore_SentiWordnet(ArrayList<Citation> citations, HashMap<String, double[]> SentiWordnetWords)
 	{
 		String Sentence;
 		int PolarityThreshold = 1;
 		int DisplayIndividualScores = 0;
 		int NoPrintFlag = 1;
 		
-		for (AmjadCitation Citation : Citations)
+		for (Citation Citation : citations)
 		{
 			for (int i = 0; i < 4; ++i)
 			{
@@ -145,7 +133,7 @@ public class AmjadFeatures
 		}		
 	}
 
-	public static void computeSentenceScore_StanfordNLP(ArrayList<AmjadCitation> Citations)
+	public static void computeSentenceScore_StanfordNLP(ArrayList<Citation> citations)
 	{
         String[] sentimentText = { "Very Negative","Negative", "Neutral", "Positive", "Very Positive"};
         
@@ -153,7 +141,7 @@ public class AmjadFeatures
         
 		String Sentence;
 		int DisplayScore = 1;
-		for (AmjadCitation Citation : Citations)
+		for (Citation Citation : citations)
 		{
 			Properties props = new Properties();
 	        props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
@@ -181,13 +169,13 @@ public class AmjadFeatures
 
 	}
 	
-	public static void computeSentenceScore_VaderSentiment(ArrayList<AmjadCitation> Citations) throws IOException
+	public static void computeSentenceScore_VaderSentiment(ArrayList<Citation> citations) throws IOException
 	{
 		String Sentence;
 		int DisplayScore = 0;
 		String s;
 		int count = 0;
-		for (AmjadCitation Citation : Citations)
+		for (Citation Citation : citations)
 		{
 			for (int i = 0; i < 4; ++i)
 			{

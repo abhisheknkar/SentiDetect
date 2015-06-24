@@ -1,51 +1,40 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
+import java.io.*;
+import java.util.ArrayList;
 
 public class FileOperations {
-	public  void readFile1(File fin, File fout) throws IOException	
+	public static <E> void writeObject(E Obj, File fout) throws IOException
 	{
-		FileInputStream in = null;
-		FileOutputStream out = null;		
+		FileOutputStream foutStream = new FileOutputStream(fout);
+		ObjectOutputStream oos = new ObjectOutputStream(foutStream);
+		oos.writeObject(Obj);		
+	}
+
+	
+	public static <E> E readObject(File fin) throws IOException
+	{
+		FileInputStream finstream = null;
+		ObjectInputStream objinstream = null;
+		E object = null;
 		try
 		{
-			in = new FileInputStream(fin);
-			out = new FileOutputStream(fout);
-			int c;
-			while((c=in.read())!= -1)
-			{
-				out.write(c);
-			}
+			finstream = new FileInputStream(fin);
+			objinstream = new ObjectInputStream(finstream);
+			object = (E) objinstream.readObject(); 
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
 		}
 		finally
 		{
-			if(in!=null) in.close();
-			if (out != null) out.close();
-		}	
-	}
-
-	public  void readFile2(File fin, File fout) throws IOException	
-	{
-		BufferedReader in = null;
-		BufferedWriter out = null;
-
-		in = new BufferedReader(new FileReader(fin));
-		out = new BufferedWriter(new FileWriter(fout));
-		
-		String line = null;
-		
-		while((line = in.readLine()) != null)
-		{
-			out.write(line);
-			out.newLine();
+			if (finstream != null)
+			{
+				finstream.close();
+				objinstream.close();
+			}
 		}
-	}	
+		return object;
+	}
 	
-
+	
 }

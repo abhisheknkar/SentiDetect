@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!-- was: no XML declaration present -->
+<annotatedpaper>
+    <paper title=" Identifying Claimed Knowledge Updates in Biomedical Research Articles" authors="Ã�gnes SÃ¡ndor  and Anita de Waard " year=" 2012"> 
+        <section> 
+            <title> Identifying Claimed Knowledge Updates in Biomedical Research Articles  </title> 
+            Ã�gnes SÃ¡ndor   
+            Xerox Research Centre Europe Elsevier Labs, USA 
+            Anita de Waard  
+            Agnes.Sandor@xrce.xerox.com A.Dewaard@elsevier.com 
+        </section> 
+        <section> 
+            <title>Abstract</title> 
+            <paragraph> 
+                Identifying Claimed Knowledge Updates in Biomedical Research Articles. Key knowledge components of biological research papers are conveyed by structurally and rhetorically salient sentences that summarize the main findings of a particular experiment.In this article we define such sentences as Claimed Knowledge Updates (CKUs), and propose using them in text mining tasks.We provide evidence that CKUs convey the most important new factual information, and thus demonstrate that rhetorical salience is a systematic discourse structure indicator in biology articles along with structural salience.We assume that CKUs can be detected automatically with state-of-the-art text analysis tools, and suggest some applications for presenting CKUs in knowledge bases and scientific browsing interfaces. 
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>1 Introduction</title> 
+            <paragraph> 
+ 
+                Biomedical research articles describe newly discovered biological findings, and in doing so, update the readers' knowledge on a particular topic. These two functions of research articles -describing reality and updating knowledge in a field - mobilize different forms of linguistic expression: on the one hand, in order to describe pieces of reality, the authors refer to biological objects and relationships among them, and on the other hand, they shape the way in which new knowledge is inserted into existing accumulated knowledge, through argumentation, discourse and rhetorical structure.<context>The designers of text mining systems are increasingly aware of the importance of integrating both aspects into annotation schemes, and thus <concept>models of argumentation</concept>, discourse and rhetorical structure <kw>are becoming integrated with</kw> 
+                    <concept>models of biological reality</concept> in modern annotation systems, <kw>such as described in</kw> 
+                    <cite id="1" function="ack" polarity="neu">Liakata et al. (2010)</cite>, <cite id="2" function="ack" polarity="neu">Nawaz et al. (2010)</cite>, <cite id="3" function="ack" polarity="neu">Wilbur et al. (2006)</cite>, SÃ¢ndor (2007), <cite id="4" function="ack" polarity="neu">Teufel (1999)</cite> and <cite id="5" function="ack" polarity="neu">Collier (2006)</cite>. </context>
+            </paragraph> 
+            <paragraph> 
+                <context> 
+                    <concept>Models of biological knowledge</concept> are commonly mapped to well-defined linguistic elements like named entities (mostly noun phrases), relationships between the entities (mostly predicates), and these <kw>are reliably detected with</kw> 
+                    <kw>state-of-the-art</kw> 
+                    <tool>text-mining tools</tool> (e.g., <cite id="6" function="use" polarity="pos">Nawaz et al. 2010</cite>)</context>.But the detection of argumentation, discourse and rhetorical structures, and the association of linguistic expressions with these elements, is far less straightforward.The great number of proposed approaches already makes it clear that it is difficult to provide easily applicable and generally accepted annotation guidelines, which can easily be implemented in a web-based environment.An ideal discourse annotation system would be straightforward to use, and it would not require any learning - in the same way that using hyperlinks is a straightforward way to create references.Such an annotation model should also provide a substantial improvement to users who want to find relevant new knowledge. 
+            </paragraph> 
+            <paragraph> 
+                Here, we propose a simple discourse annotation model to detect the main new knowledge claims in biology research papers.We also propose some suggestions for the implementation of the automatic detection of this model. 
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>2 Claimed Knowledge Updates</title> 
+            <paragraph> 
+ 
+                Biomedical articles contain a great number of biological propositions, but not all of them are equally relevant: some are central claims, while others merely support the findings; some are factual, while others are merely hypothesized.The authors often summarize their main findings in the title, section titles and caption titles.In addition to these - structurally defined - summaries, the authors also formulate their main findings in rhetorically salient sentences.This rhetorical salience is conveyed via metadiscourse, by which the authors explicitly attribute the findings to themselves, and state that they are based on the current empirical work, such as: "Our results demonstrate", "In the present study we identified".We will call biological propositions summarized in such structurally or rhetorically salient sentences Claimed Knowledge Updates (CKU). 
+            </paragraph> 
+            <paragraph> 
+                We hypothesize that a listing of the CKUs in a paper constitutes new main knowledge provided in that paper, and thus we propose that their detection may play an important role in text mining.We define CKUs as follows:1.A CKU expresses a verbal or nominal proposition about biological entities.2.A CKU is a new proposition.3.The authors present the CKU as factual.4.A CKU is derived from the experimental work described in the article.5.The ownership of the proposition is attributed to the author(s) of the article.6.4) and 5) are either explicitly expressed or are implicitly conveyed by a structural position as title, section or caption title. 
+            </paragraph> 
+            <paragraph> 
+                <context>As an <kw>example</kw>, Table 1 <action>contains</action> some <data>CKUs from an article</data> on Spinal Muscular Atrophy (<cite id="7" function="ack" polarity="neu">Akten et al., 2011</cite>).The metadiscourse indicating CKUs is given in bold</context>. 
+            </paragraph> 
+            <paragraph> 
+                In studying this paper, we found a striking regularity in the appearance of CKUs throughout the article: the Abstract, the Introduction, the Results and the Discussion sections are repeat the same CKUs, as follows:â€¢ in the Abstract they appear as a list of findings;â€¢ in the Introduction, they are inserted within the context of previous knowledge;â€¢ in the Results section, they are explained within the context of the authors' work, and thus provide empirical evidence;and finally,â€¢ in the Discussion, they are presented in the perspective of the advances in the research domain. 
+            </paragraph> 
+            <paragraph> 
+                In other words, the four predefined structural units of research articles give an indicator of the underlying CKU organization.This regularity shows that rhetorical salience is systematically related to structural organization, and thus that the placement of the CKUs in the text can be a marker for discourse structure in biological research articles. 
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>3 Automatic detection of CKUs</title> 
+            <paragraph> 
+ 
+                According to our definition, a CKU is a factual proposition referring to a bio-event, and its discourse function is updating knowledge: its source is the author of the current article, and its basis is the experimental findings of the current representation article, and its basis is the experimental findings of the current article.The discourse function is indicated either by the proposition's structural position within the article or by metadiscourse.Table 1.Sentences and CKUs from Akten etal.We suggest detecting CKUs in three steps, combining state-of-the art document processing tools:1. identifying structural discourse markers;2. identifying rhetorical discourse markers,3. extracting factual bio-events. 
+            </paragraph> 
+            <paragraph> 
+                <context>Structural indicators, i.e. the title, section titles or figure captions, are detected through markup in a straightforward way, if the article is encoded in a structured document format (e.g., XML).If this is not the case, <tool>a special conversion tool</tool> 
+                    <kw>should be applied</kw>, <kw>as described in</kw> e.g.  <cite id="8" function="use" polarity="pos">DÃ©jean and Meunier (2007)</cite> 
+                    <kw>to</kw> 
+                    <action>convert</action> unstructured documents to structured documents. </context>
+            </paragraph> 
+            <paragraph> 
+                Metadiscourse indicators, which convey both that the source of the new knowledge is attributed to the author(s) and that it is factual, such as "here we demonstrate", "our results identify", etc. could be detected by local pattern-matching rules in the majority of cases, since the authors often use highly recurring forms to express them.However, in some cases the expressions are somewhat more complex, and thus do not match local patterns.In order to ensure better performance, which is important due to the relevance and relatively small number of the claims to detect, we could apply the concept-matching methodology as described in SÃ¢ndor (2007), which takes syntactic dependencies into account.This methodology consists of identifying specific kinds of metadiscourse as the realizations of patterns of concepts, which are present as semantic features in syntactically connected words and expressions. 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    <action>To detect</action> 
+                    <concept>CKUs</concept>, <author>we</author> 
+                    <kw>assume</kw> that these are indicated minimally by two <concept>co-occurring concepts</concept>: a first concept, which we call DEICTIC, and which conveys reference to the current work (here, we, our, these), and a second concept, which is a subclass of what we call MENTALOPERATION (identify, demonstrate, find, etc.).This specific subclass <kw>is</kw> a list of verbs and their nominalizations that belong to the category of <concept>"certainty verbs"</concept> 
+                    <kw>in</kw>  
+                    <cite id="9" function="bas" polarity="pos">Thomas and Hawes (1994)</cite>
+                </context>.<context>
+                    <concept>This minimal pattern</concept> 
+                    <kw>detects</kw> 
+                    <data>expressions like</data> "we identify" or "our finding".In expressions like "these results indicate" or "our data demonstrate", the DEICTIC concept is linked to the certainty verb in an indirect way, since it is the modifier of the subject of the certainty verb. 
+                    This subject refers to the "base" factor of the bio-event (i.e. the indication comes from "results", and the demonstration from "data", see  <cite id="10" function="use" polarity="neu">De Waard and Pander Maat (2009)</cite>)</context>, and thus it is also part of the metadiscourse.Its relevant semantic feature is called SCOPE in the concept-matching systems.In summary, CKU-specific metadiscourse is covered by the pattern DEICTIC + SCOPE + MENTAL OPERATION, where the "+" sign indicates a syntactic relationship.Table 2.The same bio-event repeated in the different sections of the paper, a citation, and itsConsider the three sentences containing CKUs in Table 1.The metadiscourse is in bold:(1) Here we used mass spectrometry to identify HuD as a novel neuronal SMN-interacting partner.(2) Our analysis of known HuD-associated mRNAs in neurons identified cpg15 mRNA as a highly abundant mRNA in HuDIPs compared with other known targets of HuD, such as GAP43 and Tau.(3) Together with our co-IP data, these results indicate that SMN associates with HuDin motor neurons, and that these two proteins colocalize in granules within motor neuron axons. 
+            </paragraph> 
+            <paragraph> 
+                While (3) follows a straightforward local pattern, in sentences (1) and (2) the relationship between "we" and "identify" and "our analysis" and "identify" needs deep syntactic analysis.This analysis is carried out by the Xerox Incremental Parser (XIP) (AÃ¯t et al. 2000), on top of which we have implemented concept-matching rules for detecting metadiscourse indicating CKUs. 
+            </paragraph> 
+            <paragraph> 
+                We developed a simple concept-matching grammar based on the rules described above, and assessed the results of the automatic detection of the rhetorical indicators of CKUs in two papers.With respect to our manual annotation of CKUs the coverage is 81% and 80% and the precision is 62% and 51% respectively. 
+            </paragraph> 
+            <paragraph> 
+                Once the metadiscourse is detected, another module should be applied for detecting bio-events, i.e. factual propositions that involve biological entities.<context>
+                    <method>This step</method> 
+                    <kw>can be executed by</kw> 
+                    <tool>a state-of-the-art biological parser</tool> that detects factual bioevents, <kw>like the one by</kw> 
+                    <cite id="11" function="use" polarity="pos">Nawaz et al. (2010)</cite>.Subsequent integration of factual bio-event extraction should improve the precision, because the metadiscourse by itself does not guarantee the factuality of the bio-events, as in the following sentence:(4) Our findings provide further support for the hypothesis that SMN can associate with multiple RBPs to regulate axonal mRNA levels in neurons, and that the different SMN-RBP complexes may be defined by their mRNA contents. </context>
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>4 Validation: are CKUs indeed the main claims?</title> 
+            <paragraph> 
+ 
+                To test whether CKUs represent indeed the main claims of biology papers we carried out the following checks:1.First, we asked a domain specialist both to validate the CKUs as main claims, and select them in two of full-text papers.2.Second, we analyzed how a source paper is cited in other papers, and investigated whether the descriptions given in the referring texts correspond to the CKUs in the cited papers.We discuss these forms of validation in turn. 
+            </paragraph>
+            <subtitle>4.1 Validation by domain specialists</subtitle> 
+            <paragraph> 
+ 
+                We carried out the validation in two steps.In the first step we manually highlighted the CKUs in two papers according to the definition given in section 2, above, and asked a biologist to select the sentences that were relevant claims of the article.In this step all the CKUs have been validated.This indicates that if biologists are provided with a list of CKUs annotated by non-specialists based on discourse indicators, they do get access to relevant claims of the articles. 
+            </paragraph> 
+            <paragraph> 
+                In the second step we asked the biologist to highlight the sentences that conform to the 6 points of our definition of CKUs.In the first article she selected 26 sentences, out of which only 12 sentences were conform to the definition of CKUs.The article contains 4 further CKUs, which the biologist did not select.Out of the 14 sentences that were highlighted by the biologist and that did not satisfy the definition of CKUs, 5 do not satisfy one important criterion of CKUs, that of factuality.The remaining 9 sentences were factual, but did not explicitly attribute the proposition to the authors of the article, i.e. did not contain metadiscourse that characterizes CKUs.In the second article the biologist selected 48 sentences, out of which 24 were indeed CKUs, and there is no more CKU is the article.Similarly to the first article, 3 out of the remaining sentences were not factual and 21 did not contain metadiscourse. 
+            </paragraph> 
+            <paragraph> 
+                This experiment leads us to three interesting observations:1.A list of CKUs is meaningful for the biologist, however, CKUs do not provide an exhaustive and well-definable list of main claims.2.The definition of the CKUs is difficult to apply for a biologist who is not trained in rhetorical analysis.3.The notion of a "main claim" is not straightforward to define formally. 
+            </paragraph> 
+
+            <subtitle>4.2 Citing sentences collection</subtitle> 
+            <paragraph> 
+ 
+                <context>
+                    <paper>Work on</paper> 
+                    <task>citation-based summarization</task> (e.g. <cite id="12" function="ack" polarity="neu">Kaplan et al., 2009</cite>, <cite id="13" function="ack" polarity="neu">Jbara and Radev, 2011</cite>, <cite id="14" function="ack" polarity="neu">Nakov et al., 2004</cite>) <kw>focuses on</kw> 
+                    <task>creating 'a summation of</task> multiple scholars' viewpoints [...] using its set of citation sentences'.<kw>If we accept</kw> 
+                    <concept>the premise of this work</concept>, which is that a collection of citation sentences offer a good overview of the cited papers, <kw>then</kw> 
+                    <posfeature>CKUs should be well-represented</posfeature> in the collection of cited sentences</context>.<context>As a second check, <author>we</author> 
+                    <kw>identified</kw> 
+                    <data>a collection of 20 citations of a full-text paper</data> (<cite id="15" function="ack" polarity="neu">Voorhoeve et al., 2006</cite>) and compared the citing sentences to the CKUs detected in this paper.We found that in all cases the citing sentences could be linked back to the CKUs (and indeed offer a good summary of the cited paper)</context>. 
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>5 Discussion</title> 
+            <paragraph> 
+ 
+
+                <subtitle>5.1 Related work</subtitle> 
+            </paragraph>
+            <paragraph> 
+ 
+                <cite id="16">De Waard and Pander Maat (2012)</cite> 
+                <kw>propose</kw> 
+                <method>a model for</method> 
+                <task>epistemic classification</task> of bio-events that consists of three parts: epistemic value (from factual through various degrees of certainty until lack of knowledge); base (grounding for the knowledge: reasoning, data or unidentified); source (author, named external source, implicit, attribution to the author, nameless external source, no source of knowledge).Each bio-event is characterized by a combination of the three factors.CKUs represent a special case in this system: their epistemic value is factual, their base is data derived from the work described in the article, and their source is the author.<kw>Whereas</kw> 
+                <paper>De Waard and Pander Maat</paper> 
+                <kw>do not differentiate among</kw> 
+                <concept>the various combinations of the factors</concept>, <author>we</author> 
+                <kw>propose</kw> to handle this unique combination on its own right, since it fulfills a special discourse function in the article, which facilitates access to the main claims.Each of the three factors that characterize CKUs is taken into account in various text-mining systems, however, to our knowledge, no other system defines a discourse function in terms of these three factors.<cite id="17">Nawaz et al. (2010)</cite> detect factual bio-events, but they do not detect authorship and base.The same holds for the annotation guidelines developed by and <cite id="18">Wilbur et al. (2006)</cite>.<cite id="19">Teufel (2000)</cite> considers authorship but does not consider factuality and base.<cite id="20">Blake (2010)</cite> differentiates among several kinds of base and considers only factual bio-events, but does not consider authorship. 
+            </paragraph> 
+            <paragraph> 
+                Jaime-SisÃ¶ (2011) makes the same observation as we do: the authors summarize and repeat the main findings in every section of the articles.She attributes this phenomenon to the authors' adaptation to electronic publishing, where there is the possibility to navigate in the text.Repetition facilitates this navigation.Based on interviews with researchers and the analysis of 20 biology articles, she concludes that summarizing sentences that repeat the main findings in each section of biology articles are crucial both in writing and reading practices: "Aware of the scientists' reading practices, both editors and writers contribute to ensure that, whatever section of the text is scanned, and regardless of the reasons of approaching the article, the reader obtains the most newsworthy information, as if each of the sections could stand alone."(p. 87) "Noteworthy information" is mostly expressed by CKUs, although Jaime-SisÃ¶ does not provide a rhetorically based definition of summarizing sentences. 
+            </paragraph> 
+
+            <subtitle>5.2 Proposed applications</subtitle> 
+            <paragraph> 
+ 
+                We argue that the detection of Claimed Knowledge Updates constitutes a relevant goal for text-mining.CKUs are systematically signaled either by their position within the paper or by specific rhetorical discourse markers.This demonstrates that they constitute a systematic discourse organizing factor of articles.Moreover, CKUs can be detected by integrating state-of-the-art tools. 
+            </paragraph> 
+            <paragraph> 
+                The detection of new factual knowledge could be useful in several tasks, such as summarization, information extraction, updating ontologies and knowledge bases, etc. 
+            </paragraph> 
+            <paragraph> 
+                In particular, we wish to propose two use cases: first, the identification of CKUs could improve the output of automated knowledge bases that rely on text mining.Several text mining systems aim to provide multi-dimensional characterizations of bioevents, both academic systems such asMEDIEand iHoP, and commercial systems such as Ariadneand BEL.In none of these systems, however, are the various bio-events detected differentiated according to their role in updating knowledge.Showing only the CKUs, and not all the claims, would greatly enhance the efficiency and use of these automated knowledge bases.For example, the output of the query 'LATS2' as a subject in MEDIE returned the following sentences:1.LATS2 is a member of the LATS tumor suppressor family.2.The differences in the expression levels of the LATS2, S100A2 and hTERT genes in different types of NSCLC are significant.3.LATS2 is a new member of the LATS tumour suppressor family.4.Among the growing list of putative Mdm2-regulated proteins are several proteins playing a key role in the control of cell proliferation such as pRb, E2F1/DP1, Numb, Smads, Lats2 or IGF-1R.5.In addition, modulation of novel target genes such as LATS2 and GREB1 were identified to be mediated by Nrf2.6.Here, we show that LATS proteins (mammalian orthologs of Warts) interact directly with YAP in mammalian cells and that ectopic expression of LATS1, but not LATS2, effectively suppresses the YAP phenotypes7.The tumor suppressor genes NEO1 and LATS2, and the estrogen receptor gene ESR1, all have binding sites for p53 and hsa-mir372/373. 
+            </paragraph> 
+            <paragraph> 
+                It is clear - even without studying the textual context - that not all of these sentences refer to a new finding pertaining to LATS2, which is what the user would like to see, and what a CKU parser would provide. 
+            </paragraph> 
+            <paragraph> 
+                A second possible application of CKU detection could be the presentation of CKUs as metadata in biomedical publications, to aid the navigation within and among collections of biology articles.This is illustrated in a mock-up (Figure), which extends the PNAS publication scheme with an additional column presenting CKUs.The column in the middle is a part of the standard PNAS layout, and it points to the past, i.e. to existing articles that the current article draws on.But the third new column on the right extracts CKUs put forward in the current article.According to where the CKUs are, the readers can learn what type of arguments they could find to support them in the text to the left: in the introduction - background knowledge; in the results - experiments; in the discussion - various other links and implications; in the Figures - the illustration of the experiments. http://www.nactem.ac.uk/medie/ 2 http://www.ihop-net.org/UniPub/iHOP/ 3 http://www.ariadnegenomics.com/ 4 http://www.openbel.org 
+            </paragraph> 
+            <paragraph> 
+                To support both of these applications, CKUs could be marked up by the authors of the article during authoring or submission, making use of tools that identify CKUs.The systematic annotation of CKUs by the authors could provide them with a structural template against which they could check the article's coherence, and act in a role similar to a Structured Digital Abstract, proposed by <cite id="20">Gerstein et al. (2007)</cite>, as a 'computer-readable summary of pertinent facts'.These CKUs could then be added directly to a bio-event representation framework, where biological entities, interaction types, locations, etc. are structurally marked for easy information extraction.In this way, the user can easily track the grounding of a specific bio-event in past work, present experiments and future possibilities- and eventually, do better science.Figure Mockup of presenting CKUs in publications 
+            </paragraph> 
+
+        </section> 
+        <section> 
+            <title>Acknowledgements</title> 
+            <paragraph> 
+                We are indebted and deeply grateful to Prof. Maryanne Martone from the University of San Diego for her generous help in annotating the CKUs in our texts, and to our anonymous reviewers for helping us improve this paper. 
+            </paragraph> 
+        </section>
+    </paper>
+</annotatedpaper>

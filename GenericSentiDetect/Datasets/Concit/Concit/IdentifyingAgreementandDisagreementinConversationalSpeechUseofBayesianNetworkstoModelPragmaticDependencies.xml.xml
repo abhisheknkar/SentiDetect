@@ -1,0 +1,353 @@
+<annotatedpaper>
+    <paper title=  "Identifying Agreement and Disagreement in Conversational Speech: Use of Bayesian Networks to Model Pragmatic Dependencies" authors=" Galley, Michel, McKeown, Kathleen, Hirschberg, Julia and Shriberg, Elizabeth" year="2004">
+        <section>
+            Galley, Michel
+            McKeown, Kathleen
+            Hirschberg, Julia
+            Shriberg, Elizabeth
+            (Columbia University, New York NY)
+            (Columbia University, New York NY)
+            (Columbia University, New York NY)
+            (SRI International, Menlo Park CA)
+        </section>
+        <section>
+            <title>
+                Abstract
+            </title>
+            <paragraph>
+                We describe a statistical approach for modeling agreements and disagreements in conversational interaction. Our approach first identifies adjacency pairs using maximum entropy ranking based on a set of lexical, durational, and structural features that look both forward and backward in the discourse. We then classify utterances as agreement or disagreement using these adjacency pairs and features that represent various pragmatic influences of previous agreement or disagreement on the current utterance. Our approach achieves 86.9% accuracy, a 4.9% increase over previous work.
+            </paragraph>
+        </section>
+        <section imrad="i">
+            <title>
+                1 Introduction
+            </title>
+            <paragraph>
+                One of the main features of meetings is the occurrence of agreement and disagreement among participants. Often meetings include long stretches of controversial discussion before some consensus decision is reached. Our ultimate goal is automated summarization of multi-participant meetings and we hypothesize that the ability to automatically identify agreement and disagreement between participants will help us in the summarization task. For example, a summary might resemble minutes of meetings with major decisions reached (consensus) along with highlighted points of the pros and cons for each decision. In this paper, we present a method to automatically classify utterances as agreement, disagreement, or neither.
+            </paragraph>
+            <paragraph>
+                <context>
+                    Previous work in automatic identification of agreement/disagreement (<cite id="1" function="ack" polarity="neu">Hillard et al., 2003</cite>) demonstrates that this is a feasible task when various textual, durational, and acoustic features are available. 
+                </context>
+                
+                We build on their approach and show that we can get an improvement in accuracy when contextual information is taken into account. Our approach first identifies adjacency pairs using maximum entropy ranking based on a set oflexical, dura-tional and structural features that look both forward and backward in the discourse. This allows us to acquire, and subsequently process, knowledge about who speaks to whom. We hypothesize that pragmatic features that center around previous agreement between speakers in the dialog will influence the determination of agreement/disagreement. For example, if a speaker disagrees with another person once in the conversation, is he more likely to disagree with him again? We model context using Bayesian networks that allows capturing of these pragmatic dependencies.
+                <context>
+                    <author>Our</author>
+                    <concept>accuracy</concept> 
+                    <kw>for</kw> 
+                    <task>classifying agreements and disagreements</task> 
+                    <kw>is</kw> 
+                    <posfeature>86.9%, which is a 4.9% improvement</posfeature> 
+                    <kw>over</kw> (<cite id="2" function="con" polarity="neg">Hillard et al., 2003</cite>).
+                </context>
+            </paragraph>
+            <paragraph>
+                In the following sections, we begin by describing the annotated corpus that we used for our experiments. We then turn to our work on identifying adjacency pairs. In the section on identification of agreement/disagreement, we describe the contextual features that we model and the implementation of the classifier. We close with a discussion of future work.
+            </paragraph>
+        </section>
+        <section imrad="m">
+            <title>
+                2 Corpus
+            </title>
+            <paragraph>
+                <context>
+                    The ICSI Meeting corpus (<cite id="3" function="ack" polarity="neu">Janin et al., 2003</cite>) is a collection of 75 meetings collected at the International Computer Science Institute (ICSI), one among the growing number of corpora of human-to-human multi-party conversations. 
+                </context>
+                These are naturally occurring, regular weekly meetings of various ICSI research teams. Meetings in general run just under an hour each; they have an average of6.5 participants.
+            </paragraph>
+            <paragraph>
+                These meetings have been labeled with adjacency pairs (AP), which provide information about speaker interaction. They reflect the structure of conversations as paired utterances such as question-answer and offer-acceptance, and their labeling is used in our work to determine who are the addressees in agreements and disagreements. <context>
+                    The annotation of the corpus with adjacency pairs is described in (<cite id="4" function="ack" polarity="neu">Shriberg et al., 2004</cite>; <cite id="5" function="ack" polarity="neu">Dhillon et al., 2004</cite>).
+                </context>
+            </paragraph>
+            <paragraph>
+                Seven of those meetings were segmented into spurts, defined as periods of speech that have no pauses greater than . 5 second, and each spurt was labeled with one of the four categories: agreement, disagreement, backchannel, and other. We used spurt segmentation as our unit ofanalysis instead of sentence segmentation, because our ultimate goal is to build a system that can be fully automated, and in that respect, spurt segmentation is easy to obtain. Backchannels (e.g. "uhhuh" and "okay") were treated as a separate category, since they are generally used by listeners to indicate they are following along, while not necessarily indicating agreement.
+
+                The proportion of classes is the following: 11.9% are agreements, 6.8% are disagreements, 23.2% are backchannels, and 58.1% are others. 
+                <context>
+                    Inter-labeler reliability estimated on 500 spurts with 2 labelers was considered quite acceptable, since the kappa coefficient was . 63 (<cite id="6" function="ack" polarity="neu">Cohen, 1960</cite>).
+                </context>
+            </paragraph>
+  
+            <title>
+                3 Adjacency Pairs 
+            </title>
+            
+            
+                3.1 Overview
+            
+            <paragraph>
+                <context>
+                    Adjacency pairs (AP) are considered fundamental units of conversational organization (<cite id="7" function="ack" polarity="neu">Schegloff and Sacks, 1973</cite>).
+                </context>
+
+                Their identification is central to our problem, since we need to know the identity of addressees in agreements and disagreements, and adjacency pairs provide a means of acquiring this knowledge. An adjacency pair is said to consist of two parts (later referred to as A and B) that are ordered, adjacent, and produced by different speakers. The first part makes the second one immediately relevant, as a question does with an answer, or an offer does with an acceptance.
+                <context>
+                    Extensive work in conversational analysis uses a less restrictive definition of adjacency pair that does not impose any actual adjacency requirement; this requirement is problematic in many respects (<cite id="8" function="ack" polarity="neu">Levinson, 1983</cite>).
+                </context>
+
+                Even when APs are not directly adjacent, the same constraints between pairs and mechanisms for selecting the next speaker remain in place (e.g. the case of embedded question and answer pairs). This relaxation on a strict adjacency requirement is particularly important in interactions of multiple speakers since other speakers have more opportunities to insert utterances between the two elements of the AP construction (e.g. interrupted, abandoned or ignored utterances; backchannels; APs with multiple second elements, e.g. a question followed by answers of multiple speakers).
+            </paragraph>
+            <paragraph>
+                Information provided by adjacency pairs can be used to identify the target of an agreeing or disagreeing utterance. 
+                <context>
+                    <author>We</author> 
+                    <kw>define the problem</kw> of AP '<kw>Part of these</kw> 
+                    <data>annotated meetings</data> 
+                    <kw>were provided by</kw> the authors of (<cite id="9" function="bas" polarity="neu">Hillard et al., 2003</cite>). 
+                </context>
+                The percentage of APs labeled in our data that have noncontiguous parts is about 21%. identification as follows: given the second element (B) of an adjacency pair, determine who is the speaker of the first element (A). A quite effective baseline algorithm is to select as speaker of utterance A the most recent speaker before the occurrence of utterance B. This strategy selects the right speaker in 79.8% of the cases in the 50 meetings that were annotated with adjacency pairs. The next subsection describes the machine learning framework used to significantly outperform this already quite effective baseline algorithm.
+            </paragraph>
+            
+            
+            
+                3.2 Maximum Entropy Ranking
+            
+            <paragraph>
+                <context>
+                    We view the problem as an instance of statistical ranking, a <method>general machine learning paradigm</method>
+                    <kw>used for example in</kw> 
+                    <task>statistical parsing</task> (<cite id="10" function="use" polarity="neu">Collins, 2000</cite>) and <task>question answering</task> (<cite id="11" function="use" polarity="neu">Ravichandran et al., 2003</cite>).
+                </context>
+
+                The problem is to select, given a set of N possible candidates (in our case, potential A speakers), the one candidate that maximizes a given conditional probability distribution.
+            </paragraph>
+            <paragraph>
+                <context>
+                    <author> We</author> 
+                    <kw>use</kw> 
+                    <method>maximum entropy modeling</method> (<cite id="12" function="bas" polarity="pos">Berger et al., 1996</cite>) <kw>to</kw> 
+                    <task>directly model the conditional probability</task> , where each in is an observation associated with the corresponding speaker . 
+                </context>
+                is represented here by only one variable for notational ease, but it possibly represents several lexical, durational, structural, and acoustic observations. Given J feature functions /j(d, s,) and model parameters , the probability of the maximum entropy model is defined as: The only role of the denominator is to ensure that is a proper probability distribution. It is defined as: N , J . To find the most probable speaker of part A, we use the following decision rule: Note that we have also attempted to model the problem as a binary classification problem where Structural features: The approach is generally called re-ranking in cases where candidates are assigned an initial rank beforehand. • number of speakers taking the floor between A andB • number of spurts between A and B • number of spurts of speaker B between A and B do A and B overlap? Durational features: <context> duration ofA if they do overlap:• if A and B do not overlap: time separating A and duration of overlap seconds of overlap with any other speaker speech rate in A Lexical features: number of words in A number of content words in A ratio of words of A (respectively B) 
+               
+                    that are also in B (respectively A) ratio of content words of A (respectively B) that are also in B (respectively A) number of -grams present both in A and B (we built 3 features for n ranging from 2 to 4) number of instances at any position of A of each cue word listed in (<cite id="13" function="ack" polarity="neu">Hirschberg and Litman, 1994</cite>) each speaker is either classified as speaker A or not,
+                </context>
+
+                but we abandoned that approach, since it gives much worse performance. • first and last word of A • does A contain the first/last name of speaker B? 
+                <context>
+                    This finding is consistent with previous work (<cite id="14" function="ack" polarity="neu">Ravichandran et al., 2003</cite>) that compares maximum entropy classification and re-ranking on a question answering task.
+                </context>
+            </paragraph>
+            
+            
+          
+                3.3 Features
+            
+            <paragraph>
+                We will now describe the features used to train the maximum entropy model mentioned previously. To rank all speakers (aside from the B speaker) and to determine how likely each one is to be the A speaker of the adjacency pair involving speaker B, we use four categories of features: structural, durational, lexical, and dialog act (DA) information. For the remainder of this section, we will interchangeably use A to designate either the potential A speaker or the most recent utterance of that speaker, assuming the distinction is generally unambiguous. We use B to designate either the B speaker or the current spurt for which we need to identify a corresponding A part.
+            </paragraph>
+            <paragraph>
+                The feature sets are listed in Table 1. Structural features encode some helpful information regarding ordering and overlap of spurts.
+            </paragraph>
+            <paragraph>
+                Note that with only the first feature listed in the table, the maximum entropy ranker matches exactly the performance of the baseline algorithm (79.8% accuracy). Regarding lexical features, we used a count-based feature selection algorithm to remove many first-word and last-word features that occur infrequently and that are typically uninformative for the task at hand. Remaining features essentially contained function words, in particular sentence-initial indicators of questions ("where", "when", and so on). Note that all features in Table 1 are "backward-looking", in the sense that they result from an analysis of context preceding B. For many of them, we built equivalent "forward-looking" features that pertain to the closest utterance of the potential speaker A that follows part B. The motivation for extracting these features is that speaker A is generally expected to react if he or she is addressed, and thus, to take the floor soon after B is produced.
+            </paragraph>
+            
+           
+                3.4 Results
+            
+            <paragraph>
+                We used the labeled adjacency pairs of 50 meetings and selected 80% of the pairs for training.
+                <context>
+                    <kw>To train the</kw> 
+                    <method>maximum entropy ranking model</method>,<author> we</author> 
+                    <kw>used</kw> 
+                    <method>the generalized iterative scaling algorithm</method> (<cite id="15" function="bas" polarity="pos">Darroch and Ratcliff, 1972</cite>) as implemented in YASMET. 
+                </context>
+                We build features for both the entire speaker turn of A and the most recent spurt of A. http://www.isi.edu/~och/YASMET.html Table 1. Speaker ranking features Table 2. Speaker ranking accuracy
+            </paragraph>
+            <paragraph>
+                <context>
+                    <data>Table 2</data> 
+                    <kw>summarizes</kw> 
+                    <feature>the accuracy</feature> 
+                    <kw>of</kw> 
+                    <author>our</author> 
+                    <tool>statistical ranker</tool> on the test data with different feature sets: the performance is 89.39% when using all feature sets, and reaches 90.2% <kw>after</kw> applying Gaussian smoothing and <kw>using</kw> 
+                    <method>incremental feature selection</method> 
+                    <kw>as described in</kw> (<cite id="16" function="bas" polarity="pos">Berger et al., 1996</cite>) and implemented in the yasmetFS package. 
+                </context>
+                
+                
+                Note that restricting ourselves to only backward looking features decreases the performance significantly, as we can see in Table 2. We also wanted to determine ifinformation about dialog acts (DA) helps the ranking task. If we hypothesize that only a limited set of paired DAs (e.g. offer-accept, question-answer, and apology-downplay) can be realized as adjacency pairs, then knowing the DA category of the B part and of all potential A parts should help in finding the most meaningful dialog act tag among all potential A parts; for example, the question-accept pair is admittedly more likely to correspond to an AP than e.g. backchannel-accept. We used the DA annotation that we also had available, and used the DA tag sequence of part A and B as a feature. http://www.isi.edu/~ravichan/YASMET.html
+            </paragraph>
+            <paragraph>
+                When we add the DA feature set, the accuracy reaches 91.34%, which is only slightly better than our 90.20% accuracy, which indicates that lexical, durational, and structural features capture most of the informativeness provided by DAs. This improved accuracy with DA information should of course not be considered as the actual accuracy of our system, since DA information is difficult to acquire automatically (<cite id="17">Stolcke et al., 2000</cite>).
+            </paragraph>
+        </section>
+        <section imrad="r">
+            <title>
+                4 Agreements and Disagreements
+            </title>
+            
+            
+                4.1 Overview
+            
+            This section focusses on the use of contextual information, in particular the influence of previous agreements and disagreements and detected adjacency pairs, to improve the classification of agreements and disagreements. We first define the classification problem, then describe non-contextual features, provide some empirical evidence justifying our choice of contextual features, and finally evaluate the classifier.
+            
+            
+            
+                4.2 Agreement/Disagreement Classification
+            
+            <paragraph>
+                We need to first introduce some notational conventions and define the classification problem with the agreement/disagreement tagset. In our classification problem, each spurt Cj among the L spurts of a meeting must be assigned a tag {Agree Disagree Backchannel, Other} . To specify the speaker of the spurt (e.g. speaker B), the notation will sometimes be augmented to incorporate speaker information, as with , and to designate the addressee of B (e.g. listener A), we will use the notation . For example, cf~~*A = AGREE simply means that B agrees with A in the spurt of index . This notation makes it obvious that we do not necessarily assume that agreements and disagreements are reflexive relations. We define: The annotation of DA is particularly fine-grained with a choice of many optional tags that can be associated with each DA. To deal with this problem, we used various scaled-down versions of the original tagset. pred (cf as the tag of the most recent spurt before that is produced by Y and addresses X. This definition will help our multi-party analyses of agreement and disagreement behaviors.
+            </paragraph>
+            
+            
+            
+                4.3 Local Features
+            
+            <paragraph>
+                <context>
+                    <kw>Many of the local</kw> 
+                    <feature>features </feature> 
+                    <kw>described</kw> in this subsection <kw>are similar in spirit to</kw> the ones used in the previous work of (<cite id="18" function="con" polarity="neu">Hillard et al., 2003</cite>).
+                </context>
+                We did not use acoustic features, since the main purpose of the current work is to explore the use of contextual information.
+            </paragraph>
+            <paragraph>
+                <context>
+                    Table 3 lists the features that were found most helpful at identifying agreements and disagreements. Regarding lexical features, we selected a list of lexical items we believed are instrumental in the expression of agreements and disagreements: agreement markers, e.g. "yes" and "right", as listed in (<cite id="19" function="ack" polarity="neu">Cohen, 2002</cite>), general cue phrases, e.g. "but" and "alright" (<cite id="20" function="ack" polarity="neu">Hirschberg and Litman, 1994</cite>), and adjectives with positive or negative polarity (Hatzi-vassiloglou and <cite id="21" function="ack" polarity="neu">McKeown, 1997</cite>).
+                </context>
+                <context>
+                    We incorporated a set of durational features that were described in the literature as good predictors of agreements: utterance length distinguishes agreement from disagreement, the latter tending to be longer since the speaker elaborates more on the reasons and circumstances of her disagreement than for an agreement (<cite id="22" function="ack" polarity="neu">Cohen, 2002</cite>).
+                </context>
+
+                Duration is also a good predictor of backchannels, since they tend to be quite short. 
+                <context>
+                    Finally, a fair amount of silence and filled pauses is sometimes an indicator of disagreement, since it is a dispreferred response in most social contexts and can be associated with hesitation (<cite id="23" function="ack" polarity="neu">Pomerantz, 1984</cite>).
+                </context>
+            </paragraph>
+            
+            
+            
+                4.4 Contextual Features: An Empirical Study
+            
+            <paragraph>
+                We first performed several empirical analyses in order to determine to what extent contextual information helps in discriminating between agreement and disagreement. 
+                <context>
+                    By integrating the interpretation of the pragmatic function of an utterance into a wider context, we aim to detect cases of mismatch between a correct pragmatic interpretation and the surface form of the utterance, e.g. the case of weak or "empty" agreement, which has some properties of downright agreement (lexical items of positive polarity), but which is commonly considered to be a disagreement (<cite id="24" function="ack" polarity="neu">Pomerantz, 1984</cite>).
+                </context>
+            </paragraph>
+            <paragraph>
+                While the actual classification problem incorporates four classes, the Backchannel class is ig- Structural features: is the previous/next spurt of the same speaker? is the previous/next spurt involving the same B speaker? Durational features: duration of the spurt seconds of overlap with any other speaker seconds of silence during the spurt speech rate in the spurt Lexical features: 
+                <context>
+                    • number of words in the spurt • number of content words in the spurt perplexity of the spurt with respect to four language models, one for each class • first and last word of the spurt number of instances of adjectives with positive polarity (<cite id="25" function="ack" polarity="neu">Hatzivassiloglou and McKeown, 1997</cite>) idem, with adjectives of negative polarity number of instances in the spurt of each cue phrase and agreement/disagreement token listed in (<cite id="26" function="ack" polarity="neu">Hirschberg and Litman, 1994</cite>; <cite id="27" function="ack" polarity="neu">Cohen, 2002</cite>) 
+                </context>
+                Table 3. Local features for agreement and disagreement classification nored here to make the empirical study easier to interpret. We assume in that study that accurate AP labeling is available, but for the purpose of building and testing a classifier, we use only automatically extracted adjacency pair information. We tested the validity of four pragmatic assumptions:
+            </paragraph>
+            <paragraph>
+                1. previous tag dependency: a tag is influenced by its predecessor 2. same-interactants previous tag dependency: a tag cf~~*A is influenced by , the most recent tag of the same speaker addressing the same listener; for example, it might be reasonable to assume that if speaker B disagrees with A, B is likely to disagree with A in his or her next speech addressing A. 3. reflexivity: a tag cf~~* A is influenced by ; the assumption is that is influenced by the polarity (agreement or disagreement) of what A said last to B. 4. transitivity: assuming there is a speaker for which exists, then a tag cf~~*A is influenced by and ; an example of such an influence is a case where speaker X first agrees with A, then speaker B disagrees with , from which one could possibly conclude that is actually in disagreement with .
+            </paragraph>
+            <paragraph>
+                Table 4 presents the results of our empirical evaluation of the first three assumptions. For comparison, the distribution of classes is the following: 18.8% are agreements, 10.6% disagreements, and 70.6% other. The dependencies empirically evaluated in the two last columns are non-local; they create dependencies between spurts separated by an arbitrarily long time span. Such long range dependencies are often undesirable, since the influence of one spurt on the other is often weak or too difficult to capture with our model. Hence, we made a Markov assumption by limiting context to an arbitrarily chosen value . In this analysis subsection and for all classification results presented thereafter, we used a value of .
+            </paragraph>
+            <paragraph> The table yields some interesting results, showing quite significant variations in class distribution when it is conditioned on various types of contextual information. We can see for example, that the proportion ofagreements and disagreements (respectively 18.8% and 10.6%) changes to 13.9% and 20.9% respectively when we restrict the counts to spurts that are preceded by a Disagree. Similarly, that distribution changes to 21.3% and 7.3% when the previous tag is an Agree. The variable is even more noticeable between probabilities and p(cf^A\preds^4(ef ~^A)). In 26.1% of the cases where a given speaker B disagrees with A, he or she will continue to disagree in the next exchange involving the same speaker and the same listener. Similarly with the same probability distribution, a tendency to agree is confirmed in 25% of the cases. The results in the last column are quite different from the two preceding ones. While agreements in response to agreements (p(Agree\!Agree) = . 175) are slightly less probable than agreements without conditioning on any previous tag (p (Agree) = ), the probability of an agreement produced in response to a disagreement is quite high (with 23.4%), even higher than the proportion of agreements in the entire data (18.8%). This last result would arguably be quite different with more quarrelsome meeting participants.
+            </paragraph>
+            <paragraph>
+                Table 5 represents results concerning the fourth pragmatic assumption. While none of the results characterize any strong conditioning of by and , we can nevertheless notice some interesting phenomena. For example, there is a tendency for agreements to be transitive, i.e. ifX agrees with A and B agrees with X within a limited segment of speech, then agreement between B and A is confirmed in 22. 5% of the cases, while the probability of the agreement class is only 18.8%. The only slightly surprising result appears in the last column of the table, from which we cannot conclude that disagreement with a disagreement is equivalent to agreement. This might be explained by the fact that these sequences of agreement and disagreement do not necessarily concern the same propositional content.
+            </paragraph>
+            <paragraph>
+                The probability distributions presented here are admittedly dependent on the meeting genre and particularly speaker personalities. Nonetheless, we believe this model can as well be used to capture salient interactional patterns specific to meetings with different social dynamics.
+            </paragraph>
+            <paragraph>
+                We will next discuss our choice of a statistical model to classify sequence data that can deal with non-local label dependencies, such as the ones tested in our empirical study.
+            </paragraph>
+            
+            
+            
+                4.5 Sequence Classification with Maximum Entropy Models
+            
+            <paragraph>
+                Extensive research has targeted the problem of labeling sequence information to solve a variety of problems in natural language processing. Hidden Markov models (HMM) are widely used and considerably well understood models for sequence labeling. Their drawback is that, as most generative models, they are generally computed to maximize the joint likelihood of the training data. In order to define a probability distribution over the sequences of observation and labels, it is necessary to enumerate all possible sequences ofobservations. 
+                <context>
+                    Such enumeration is generally prohibitive when the model incorporates many interacting features and long-range dependencies (the reader can find a discussion of the problem in (<cite id="28" function="ack" polarity="neu">McCallum et al., 2000</cite>)).
+                </context>
+            </paragraph>
+            <paragraph>
+                Conditional models address these concerns. 
+                <context>
+                    <method> Conditional Markov models (CMM)</method> (<cite id="29" function="use" polarity="pos">Ratnaparkhi, 1996</cite>; <cite id="30">Klein and Manning, 2002</cite>) <kw>have been successfully used in</kw> 
+                    <task>sequence labeling tasks</task> incorporating rich feature sets.
+                </context>
+                In a left-to-right CMM as shown in Figure 1(a), the probability of a sequence of L tags c = (ci,cl) is decomposed as: is the vector of observations and each is the index of a spurt. The probability distribution associated with each state of the Markov chain only depends on the preceding tag and the local observation . However, in order to incorporate more than one label dependency and, in particular, to take into account the four pragmatic Figure 1. (a) Left-to-right CMM. (b) More complex Bayesian network. Assuming for example that and , there is then a direct dependency between and , and the probability model becomes. This is a simplifying example; in practice, each label is dependenton a fixed number of other labels. contextual dependencies discussed in the previous subsection, we must augment the structure of our model to obtain a more general one. Such a model is shown in Figure 1(b), a Bayesian network model that is well-understood and that has precisely defined semantics.
+            </paragraph>
+            <paragraph>
+                To this Bayesian network representation, we apply maximum entropy modeling to define a probability distribution at each node ( ) dependent on the observation variable dj and the five contextual tags used in the four pragmatic dependencies. For no-tational simplicity, the contextual tags representing these pragmatic dependencies are represented here as a vector ( , , and so on). Given J feature functions fj(p,di,Ci) (both local and contextual, like previous tag features) and model parameters , the probability of the model is defined as: Again, the only role of the denominator is to ensure that sums to 1, and need not be computed when searching for the most probable tags. Note that in our case, the structure of the Bayesian network is known and need not be inferred, since AP identification is performed before the actual agreement and disagreement classification. Since tag sequences are known during training, the inference of a model for sequence labels is no more difficult than inferring a model in a non-sequential case.
+            </paragraph>
+            <paragraph>
+                <context>
+                    <author> We</author> 
+                    <task>compute</task> 
+                    <concept>the most probable sequence</concept> by performing a left-to-right decoding using a beam search. <method>The algorithm</method> 
+                    <kw>is exactly the same as</kw> the one described in (<cite id="31" function="bas" polarity="pos">Ratnaparkhi, 1996</cite>) to find the most probable part-of-speech sequence.
+                </context>
+                We used a large beam of size iV=100, which is not computationally prohibitive, since the tagset contains only four ele- The transitivity dependency is conditioned on two tags, while all others on only one. These fi ve contextual tags are defaulted to Other when dependency spans exceed the threshold of . Table 4. Contextual dependencies (previous tag, same-interactants previous tag, and reflexivity) Table 5. Contextual dependencies (transitivity) ments. Note however that this algorithm can lead to search errors.
+                <context>
+                    <kw>An alternative would be to use</kw> 
+                    <kw>a variant of</kw> 
+                    <method>the Viterbi algorithm</method>, <posfeature>which was successfully used in</posfeature> (<cite id="32" function="use" polarity="neu">McCallum et al., 2000</cite>) to decode the most probable sequence in a CMM.
+                </context>
+            </paragraph>
+            
+            
+            
+                4.6 Results
+            
+            <paragraph>
+                We had 8135 spurts available for training and testing, and performed two sets of experiments to evaluate the performance of our system. The tools used to perform the training are the same as those described in section 3.4. 
+                <context>
+                    In the first set of experiments, <author>we</author> 
+                    <kw>reproduced</kw> 
+                    <experiment>the experimental setting</experiment> 
+                    <kw>of </kw>(<cite id="33" function="bas" polarity="pos">Hillard et al., 2003</cite>), a three-way classification (Backchannel and Other are merged) using hand-labeled data of a single meeting as a test set and the remaining data as training material; for this experiment, <author>we</author>
+                    <kw>used the same</kw> 
+                    <data>training set</data> 
+                    <kw>as</kw> (<cite id="34" function="bas" polarity="pos">Hillard et al., 2003</cite>). 
+                </context>
+                Performance is reported in Table 6. In the second set of experiments, we aimed at reducing the expected variance of our experimental results and performed N-fold cross-validation in a four-way classification task, at each step retaining the hand-labeled data of a meeting for testing and the rest of the data for training. Table 7 summarizes the performance of our classifier with the different feature sets in this classification task, distinguishing the case where the four label-dependency pragmatic features are available during decoding from the case where they are not.
+            </paragraph>
+            <paragraph>
+                <context>
+                    First, <kw>the analysis of our results shows that</kw> with <author>our</author> 
+                    <data>three local feature sets only</data>,<author> we</author> 
+                    <posfeature>obtain substantially better</posfeature> 
+                    <result> results</result> 
+                    <kw>than</kw> (<cite id="35" function="con" polarity="neg">Hillard et al., 2003</cite>).
+                </context>
+                This Table 7. 4-way classification accuracy might be due to some additional features the latter work didn't exploit (e.g. structural features and adjective polarity), and to the fact that the learning algorithm used in our experiments might be more accurate than decision trees in the given task. 
+                <context>
+                    Second, the table corroborates the findings of (<cite id="36" function="ack" polarity="neu">Hillard et al., 2003</cite>) that lexical information make the most helpful local features. 
+                </context>
+                Finally, we observe that by incorporating label-dependency features representing pragmatic influences, we further improve the performance (about 1% in Table 7). This seems to indicate that modeling label dependencies in our classification problem is useful.
+            </paragraph>
+            
+        </section>
+        <section imrad="d">
+            <title>
+                5 Conclusion
+            </title>
+            <paragraph>
+                We have shown how identification of adjacency pairs can help in designing features representing pragmatic dependencies between agreement and disagreement labels. These features are shown to be informative and to help the classification task, yielding a substantial improvement (1.3% to reach a 86.9% accuracy in three-way classification).
+            </paragraph>
+            <paragraph>
+                We also believe that the present work may be useful in other computational pragmatic research focusing on multi-party dialogs, such as dialog act (DA) classification. 
+                <context>
+                Most previous work in that area is limited to interaction between two speakers (e.g. Switchboard, (<cite id="37" function="ack" polarity="neu">Stolcke et al., 2000</cite>)).
+                </context>
+                When more than two speakers are involved, the question of who is the addressee of an utterance is crucial, since it generally determines what DAs are relevant after the addressee's last utterance. So, knowledge about adjacency pairs is likely to help DA classification.
+            </paragraph>
+            <paragraph>
+                In future work, we plan to extend our inference process to treat speaker ranking (i.e. AP identification) and agreement/disagreement classification as a single, joint inference problem. Contextual information about agreements and disagreements can also provide useful cues regarding who is the addressee of a given utterance. We also plan to incorporate acoustic features to increase the robustness of our procedure in the case where only speech recognition output is available.
+            </paragraph>
+      
+            <title>
+                Acknowledgments
+            </title>
+            <paragraph>
+                We are grateful to Mari Ostendorf and Dustin Hillard for providing us with their agreement and disagreement labeled data. This material is based on research supported by the National Science Foundation under Grant No. IIS-012196. Any opinions, findings and conclusions or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the National Science Foundation. 
+            </paragraph>
+        </section>
+    </paper>
+</annotatedpaper>

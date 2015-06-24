@@ -1,0 +1,272 @@
+<annotatedpaper>﻿<paper title=" Identifying Sources of Opinions with Conditional Random Fields and Extraction Patterns" authors="Yejin Choi and Claire Cardie and Ellen Riloff and Siddharth Patwardhan  " year=" 2005"> 
+        <section> 
+            <title> Identifying Sources of Opinions with Conditional Random Fields and Extraction Patterns </title> 
+            Yejin Choi and Claire Cardie 
+            Department of Computer Science 
+            Cornell University 
+            Ithaca, NY 14853 
+            {ychoi,cardie}@cs.cornell.edu 
+ 
+            Ellen Riloff and Siddharth Patwardhan 
+            School of Computing 
+            University of Utah 
+            Salt Lake City, UT 84112 
+            {riloff,sidd}@cs.utah.edu 
+ 
+        </section> 
+        <section> 
+            <title>Abstract</title> 
+            <paragraph> 
+                Identifying Sources of Opinions with Conditional Random Fields and Extraction PatternsRecent systems have been developed for sentiment classification, opinion recognition, and opinion analysis (e.g., detecting polarity and strength).We pursue another aspect of opinion analysis: identifying the sources of opinions, emotions, and sentiments.
+                <context>
+                    <author>We</author> 
+                    <kw>view this problem as</kw> 
+                    <task>an information extraction task</task> 
+                    <kw>and adopt</kw> 
+                    <method>a hybrid approach</method> 
+                    <kw>that combines</kw> 
+                    <method>Conditional Random Fields</method> (<cite id="1" function="bas" polarity="pos">Lafferty et al., 2001</cite>) <kw>and</kw> a variation of <method>AutoSlog</method> (<cite id="2" function="bas" polarity="pos">Riloff, 1996</cite>a).
+                </context>
+                While CRFs model source identification as a sequence tagging task, AutoSlog learns extraction patterns.Our results show that the combination of these two methods performs better than either one alone.The resulting system identifies opinion sources with 79.3% precision and 59.5% recall using a head noun matching measure, and 81.2% precision and 60.6% recall using an overlap measure. 
+            </paragraph> 
+        </section> 
+        <section imrad="i"> 
+            <title>1 Introduction</title> 
+            <paragraph> 
+ 
+                In recent years, there has been a great deal of interest in methods for automatically identifying opinions, emotions, and sentiments in text.
+                <context>
+                    <experiment>Much of this research</experiment> 
+                    <kw>explores</kw> 
+                    <task>sentiment classification</task>, a text categorization task in which the goal is to classify a document as having positive or negative polarity  <cite id="3" function="ack" polarity="neu">(e.g., Das and Chen (2001)</cite>, <cite id="4" function="ack" polarity="neu">Pang et al. (2002)</cite>, <cite id="5" function="ack" polarity="neu">Turney (2002)</cite>, <cite id="6" function="ack" polarity="neu">Dave et al. (2003)</cite>,  <cite id="7" function="ack" polarity="neu">Pang and Lee (2004)</cite>).
+                </context>
+                <context>
+                    <experiment>Other research</experiment> efforts <task>analyze opinion expressions</task> at the sentence level or below to recognize opinions, their polarity, and their strength (e.g., <cite id="8" function="ack" polarity="neu">Dave et al. (2003)</cite>,  <cite id="9" function="ack" polarity="neu"> Pang andLee (2004)</cite>, <cite id="10" function="ack" polarity="neu">Wilson et al. (2004)</cite>,  <cite id="11" function="ack" polarity="neu"> Yu and Hatzivassiloglou (2003)</cite>, Wiebe and <cite id="12" function="ack" polarity="neu">Riloff (2005)</cite>).
+                </context>
+                <context>
+                    <kw>Many applications</kw> 
+                    <kw>could benefit from</kw> 
+                    <tool>these opinion analyzers</tool>, <kw>including</kw> 
+                    <task>product reputation tracking</task> (e.g., <cite id="13" function="use" polarity="neu">Morinaga et al. (2002)</cite>, <cite id="14" function="use" polarity="neu">Yi et al. (2003)</cite>), <task>opinion-oriented summarization</task> (e.g., <cite id="15" function="use" polarity="neu">Cardie et al. (2004)</cite>), and <task>question answering</task> (e.g., <cite id="16" function="use" polarity="neu">Bethard et al. (2004)</cite>,  <cite id="17" function="use" polarity="neu">Yu and Hatzivassiloglou (2003)</cite>). 
+                </context>
+            </paragraph> 
+            <paragraph> 
+                We focus here on another aspect of opinion analysis: automatically identifying the sources of the opinions.Identifying opinion sources will be especially critical for opinion-oriented question-answering systems (e.g., systems that answer questions of the form "How does [X] feel about [Y]?") and opinion-oriented summarization systems, both of which need to distinguish the opinions of one source from those of another. 
+            </paragraph> 
+            <paragraph> 
+                The goal of our research is to identify direct and indirect sources of opinions, emotions, sentiments, and other private states that are expressed in text.To illustrate the nature of this problem, consider the examples below:SI : Taiwan-born voters favoring independence...'
+                <context>
+                    <kw>In related work</kw>, <author>we</author> 
+                    <kw>investigate</kw> 
+                    <method>methods</method> 
+                    <kw>to</kw> 
+                    <task>identify the opinion expressions</task>  
+                    <cite id="18" function="bas" polarity="pos">(e.g., Riloff and Wiebe (2003)</cite>,  <cite id="19" function="bas" polarity="pos" >Wiebe and Riloff (2005)</cite>, <cite id="20" function="bas" polarity="pos">Wilson et al. (2005)</cite>) and the nesting structure of sources  <cite id="21" function="bas" polarity="pos">(e.g., Breck and Cardie (2004)</cite>).
+                </context>
+                The target of each opinion, i.e., what the opinion is directed towards, is currently being annotated manually for our corpus.S2: According to the report, the human rights record in China is horrendous.S3: International officers believe that the EU will prevail.S4: International officers said US officials want the EU to prevail. 
+            </paragraph> 
+            <paragraph> 
+                In S1, the phrase "Taiwan-born voters" is the direct (i.e., first-hand) source of the "favoring" sentiment.In S2, "the report" is the direct source of the opinion about China's human rights record.In 53, "International officers" are the direct source of an opinion regarding the EU.The same phrase in 54, however, denotes an indirect (i.e., second-hand, third-hand, etc.) source of an opinion whose direct source is "US officials". 
+            </paragraph> 
+            <paragraph> 
+                In this paper, we view source identification as an information extraction task and tackle the problem using sequence tagging and pattern matching techniques simultaneously.Using syntactic, semantic, and orthographic lexical features, dependency parse features, and opinion recognition features, we train a linear-chain Conditional Random Field (CRF) (Laf-ferty et al., 2001) to identify opinion sources.In addition, we employ features based on automatically learned extraction patterns and perform feature induction on the CRF model. 
+            </paragraph> 
+            <paragraph> 
+                
+                <context>
+                    <author>We</author> 
+                    <action>evaluate</action> 
+                    <author>our</author> 
+                    <method>hybrid approach</method> 
+                    <kw>using</kw> 
+                    <data>the NRRC corpus</data> (<cite id="22" function="bas" polarity="pos">Wiebe et al., 2005</cite>), which is manually annotated with direct and indirect opinion source information.
+                </context>
+                Experimental results show that the CRF model performs well, and that both the extraction patterns and feature induction produce performance gains.The resulting system identifies opinion sources with 79.3% precision and 59.5% recall using a head noun matching measure, and 81.2% precision and 60.6% recall using an overlap measure. 
+            </paragraph> 
+        </section> 
+        <section imrad="m"> 
+            <title>2 The Big Picture</title> 
+            <paragraph> 
+                <context>
+                    The goal of information extraction (IE) systems is to extract information about events, including the participants of the events.This task goes beyond Named Entity recognition (e.g., <cite id="23" function="ack" polarity="neu">Bikel et al. (1997)</cite>)
+                </context>
+
+                because it requires the recognition of role relationships.For example, an IE system that extracts information about corporate acquisitions must distinguish between the company that is doing the acquiring and the company that is being acquired.Similarly, an IE system that extracts information about terrorism must distinguish between the person who is the perpetrator and the person who is the victim.We hypothesized that IE techniques would be well-suited for source identification because an opinion statement can be viewed as a kind of speech event with the source as the agent. 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                <author>We</author> <kw>investigate</kw> <kw>two very different</kw> <method>learning-based methods</method> from information extraction for the problem of opinion source identification: graphical models and extraction pattern learning. In particular, <author>we </author> <kw>consider</kw> <method>Conditional Random Fields</method> (<cite id="24" function="bas" polarity="pos" >Lafferty et al., 2001</cite>) and a variation of <method>AutoSlog</method> (<cite id="25" function="bas" polarity="pos">Riloff, 1996</cite>a).
+                </context>
+                <context>
+                <method>CRFs</method> <kw>have been used successfully</kw> <kw>for</kw> <task>Named Entity recognition</task>  <cite id="26" function="use" polarity="pos">(e.g., McCallum and Li (2003)</cite>, <cite id="27" function="use" polarity="pos"> Sarawagi and Cohen (2004)</cite>), and AutoSlog has performed well on information extraction tasks in several domains (<cite id="28">Riloff, 1996</cite>a).
+                </context>
+                While CRFs treat source identification as a sequence tagging task, AutoSlog views the problem as a pattern-matching task, acquiring symbolic patterns that rely on both the syntax and lexical semantics of a sentence.We hypothesized that a combination of the two techniques would perform better than either one alone. 
+            </paragraph> 
+            <paragraph> 
+                Section 3 describes the CRF approach to identifying opinion sources and the features that the system uses.Section 4 then presents a new variation of AutoSlog, AutoSlog-SE, which generates IE patterns to extract sources.Section 5 describes the hybrid system: we encode the IE patterns as additional features in the CRF model.Finally, Section 6 presents our experimental results and error analysis. 
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>3 Semantic Tagging via Conditional Random Fields</title> 
+            <paragraph> 
+ 
+                We defined the problem of opinion source identification as a sequence tagging task via CRFs as follows.Given a sequence of tokens, we need to generate a sequence of tags, or labels, V — ViV2... Vn. We define the set of possible label values as 'S', "I" , '-', where 'S' is the first token (or Start) of a source, 'T' is a non-initial token (i.e., a conTinuation) of a source, and '-' is a token that is not part of any source. 
+            </paragraph> 
+            <paragraph> 
+                A detailed description of CRFs can be found in This is equivalent to the IOB tagging scheme used in syntactic chunkers (<cite id="29">Ramshaw and Marcus, 1995</cite>).<cite id="30">Lafferty et al. (2001)</cite>.For our sequence tagging problem, we create a linear-chain CRF based on an undirected graph G — (V, E), where V is the set of random variables Y — {Y\!1  i  n}, one for each of n tokens in an input sentence; and E — {(Y,_i, Y)\!1 i  n} is the set of n — 1 edges forming a linear chain.For each sentence x, we define a non-negative clique potential exp(X f=1 Afc fk (yi_i ,yi, x)) for each edge, and exP(EK=i A*,fk(Vi,x)) for each node, where fk(...) is a binary feature indicator function, Ak is a weight assigned for each feature function, and K and Kare the number of features defined for edges and nodes respectively. Following <cite id="31">Lafferty et al. (2001)</cite>, the conditional probability of a sequence of labels y given a sequence of tokens X is:where Zx is a normalization constant for each x.Given the training data D, a set of sentences paired with their correct ST- source label sequences, the parameters of the model are trained to maximize the conditional log-likelihood II(x y)eD P(v\!x).For inference, given a sentence x in the test data, the tagging sequence y is given by argmaxy, P (y'\!x). 
+            </paragraph> 
+            <subsection> 
+                <subtitle>3.1 Features</subtitle> 
+                <paragraph> 
+ 
+                    To develop features, we considered three properties of opinion sources.First, the sources ofopinions are mostly noun phrases.Second, the source phrases should be semantic entities that can bear or express opinions.Third, the source phrases should be directly related to an opinion expression.When considering only the first and second criteria, this task reduces to named entity recognition.Because of the third condition, however, the task requires the recognition of opinion expressions and a more sophisticated encoding of sentence structure to capture relationships between source phrases and opinion expressions. 
+                </paragraph> 
+                <paragraph> 
+                    With these properties in mind, we define the following features for each token/word xi in an input sentence.For pedagogical reasons, we will describe some of the features as being multi-valued or categorical features.In practice, however, all features are binarized for the CRF model. 
+                </paragraph> 
+                <paragraph> 
+                    Capitalization features We use two boolean features to represent the capitalization of a word:all-capital, initial-capital. 
+                </paragraph> 
+                <paragraph> 
+                    Part-of-speech features Based on the lexical categories produced by GATE (<cite id="32">Cunningham et al., 2002</cite>), each token xi is classified into one of a set of coarse part-of-speech tags: noun, verb, adverb, wh-word, determiner, punctuation, etc.We do the same for neighboring words in a [—2, +2] window in order to assist noun phrase segmentation. 
+                </paragraph> 
+                <paragraph> 
+                    Opinion lexicon features For each token xi, we include a binary feature that indicates whether or not the word is in our opinion lexicon — a set of words that indicate the presence of an opinion.We do the same for neighboring words in a [—1, +1] window.Additionally, we include for xi a feature that indicates the opinion subclass associated with xi, if available from the lexicon.(e.g., "bless" is classified as "moderately subjective" according to the lexicon, while "accuse" and "berate" are classified more specifically as "judgments".)The lexicon is initially populated with approximately 500 opinion words from (<cite id="33">Wiebe et al., 2002</cite>), and then augmented with opinion words identified in the training data.The training data contains manually produced phrase-level annotations for all expressions of opinions, emotions, etc. (<cite id="34">Wiebe et al., 2005</cite>).We collected all content words that occurred in the training set such that at least 50% of their occurrences were in opinion annotations. 
+                </paragraph> 
+                <paragraph> 
+                    Dependency tree features For each token xi, we create features based on the parse tree produced by the <cite id="35">Collins (1999)</cite> dependency parser.The purpose of the features is to (1) encode structural information, and (2) indicate whether xi is involved in any grammatical relations with an opinion word.Two pre-processing steps are required before features can be constructed:Some words are drawn from <cite id="36">Levin (1993)</cite>; others are from Framenet lemmas (Baker et al. 1998) associated with communication verbs. 
+                </paragraph> 
+                <paragraph> 
+                    1.Syntactic chunking.We traverse the dependency tree using breadth-first search to identify and group syntactically related nodes, producing a flatter, more concise tree.Each syntactic "chunk" is also assigned a grammatical role (e.g., subject, object, verb modifier, time,location, of-pp, by-pp) based on its constituents.Possessives (e.g., "Clinton's idea") and the phrase "according to X" are handled as special cases in the chunking process. 
+                </paragraph> 
+                <paragraph> 
+                    2.Opinion word propagation.Although the opinion lexicon contains only content words and no multi-word phrases, actual opinions often comprise an entire phrase, e.g., "is really willing" or "in my opinion".As a result, we mark as an opinion the entire chunk that contains an opinion word.This allows each token in the chunk to act as an opinion word for feature encoding. 
+                </paragraph> 
+                <paragraph> 
+                    After syntactic chunking and opinion word propagation, we create the following dependency tree features for each token xi:• the grammatical role of its chunk • the grammatical role of xi_ 1 's chunk • whether the parent chunk includes an opinion word • whether xi's chunk is in an argument position with respect to the parent chunk • whether xi represents a constituent boundary 
+                </paragraph> 
+                <paragraph> 
+                    Semantic class features We use 7 binary features to encode the semantic class of each word xi: authority, government, human, media, organization_or_company, properJiame, and other.The other class captures 13 semantic classes that cannot be sources, such as vehicle and time . 
+                </paragraph> 
+                <paragraph> 
+                    Semantic class information is derived from named entity and semantic class labels assigned to xi by the Sundance shallow parser (<cite id="37">Riloff, 2004</cite>).Sundance uses named entity recognition rules to label noun phrases as belonging to named entity classes, and assigns semantic tags to individual words based on a semantic dictionary.Table 1 shows the hierarchy that Sundance uses for semantic classes associated with opinion sources. Sundance is also used to recognize and instantiate the source extraction patterns AUTHORITY LOCATION PROPER NAME — GOVERNMENT COUNTRY — MEDIA -PLANET — ORGANIZATION L PROV\!NCELHUMAN NATIONALITY — PERSON DESC PERSON NAME Figure 1: The semantic hierarchy for opinion sources that are learned by AutoSlog-SE, which is described in the next section. 
+                </paragraph> 
+            </subsection> 
+        </section> 
+        <section> 
+            <title>4 Semantic Tagging via Extraction Patterns</title> 
+            <paragraph> 
+ 
+                We also learn patterns to extract opinion sources using a statistical adaptation of the AutoSlog IE learning algorithm.AutoSlog (<cite id="38">Riloff, 1996</cite>a) is a supervised extraction pattern learner that takes a training corpus of texts and their associated answer keys as input.A set of heuristics looks at the context surrounding each answer and proposes a lexico-syntactic pattern to extract that answer from the text. 
+            </paragraph> 
+            <paragraph> 
+                The heuristics are not perfect, however, so the resulting set of patterns needs to be manually reviewed by a person. 
+            </paragraph> 
+            <paragraph> 
+                In order to build a fully automatic system that does not depend on manual review, we combined AutoSlog's heuristics with statistics from the annotated training data to create a fully automatic supervised learner.We will refer to this learner as AutoSlog-SE (Statistically Enhanced variation of AutoSlog).AutoSlog-SE's learning process has three steps: 
+            </paragraph> 
+            <paragraph> 
+                Step 1: AutoSlog's heuristics are applied to every noun phrase (NP) in the training corpus. This generates a set of extraction patterns that, collectively, can extract every NP in the training corpus. 
+            </paragraph> 
+            <paragraph> 
+                Step 2: The learned patterns are augmented with selectional restrictions that semantically constrain the types of noun phrases that are legitimate extractions for opinion sources.We used the semantic classes shown in Figure 1 as se-lectional restrictions. 
+            </paragraph> 
+            <paragraph> 
+                Step 3: The patterns are applied to the training corpus and statistics are gathered about their extractions.We count the number of extractions that match annotations in the corpus (correct extractions) and the number of extractions that do not match annotations (incorrect extractions).These counts are then used to estimate the probability that the pattern will extract an opinion source in new texts: correct sources i correct sources + incorrect sources 
+            </paragraph> 
+            <paragraph> 
+                This learning process generates a set ofextraction patterns coupled with probabilities.In the next section, we explain how these extraction patterns are represented as features in the CRF model. 
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>5 Extraction Pattern Features for the CRF</title> 
+            <paragraph> 
+ 
+                The extraction patterns provide two kinds of information.SourcePatt indicates whether a word activates any source extraction pattern. For example, the word "complained" activates the pattern "&lt;subj&gt; complained" because it anchors the expression.SourceExtr indicates whether a word is extracted by any source pattern.For example, in the sentence "President Jacques Chirac frequently complained about France's economy", the words "President", "Jacques", and "Chirac" would all be extracted by the " &lt;subj&gt; complained" pattern. 
+            </paragraph> 
+            <paragraph> 
+                Each extraction pattern has frequency and probability values produced by AutoSlog-SE, hence we create four IE pattern-based features for each token xi: SourcePatt-Freq, SourceExtr-Freq, SourcePatt-Prob, and SourceExtr-Prob, where the frequency values are divided into three ranges: {0, 1, 2+} and the probability values are divided into five ranges of equal size. 
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>6 Experiments</title> 
+            <paragraph> 
+ 
+                We used the Multi-Perspective Question Answering (MPQA) corpus for our experiments.This corpus consists of 535 documents that have been manually annotated with opinion-related information including direct and indirect sources.We used 135 documents as a tuning set for model development and feature engineering, and used the remaining 400 documents for evaluation, performing 10-fold cross validation.These texts are English language versions of articles that come from many countries and cover many topics.The MPQA corpus can be freely obtained at http://nrrc.mitre.org/NRRC/publications.htm . 
+            </paragraph> 
+            <paragraph> 
+                We evaluate performance using 3 measures: overlap match (OL), head match (HM), and exact match (EM).OL is a lenient measure that considers an extraction to be correct if it overlaps with any of the annotated words.HM is a more conservative measure that considers an extraction to be correct if its head matches the head of the annotated source.We report these somewhat loose measures because the annota-tors vary in where they place the exact boundaries of a source.EM is the strictest measure that requires an exact match between the extracted words and the annotated words.We use three evaluation metrics: recall, precision, and F-measure with recall and precision equally weighted. 
+            </paragraph> 
+            <subsection> 
+                <subtitle>6.1 Baselines</subtitle> 
+                <paragraph> 
+ 
+                    We developed three baseline systems to assess the difficulty of our task.Baseline-1 labels as sources all phrases that belong to the semantic categories authority, government, human, media, organization_or_company, properJiame.Table 1 shows that the precision is poor, suggesting that the third condition described in Section 3.1 (opinion recognition) does play an important role in source identification.The recall is much higher but still limited due to sources that fall outside of the semantic categories or are not recognized as belonging to these categories.Baseline-2 labels a noun phrase as a source if any of the following are true: (1) the NP is the subject of a verb phrase containing an opinion word, (2) the NP follows "according to", (3) the NP contains a possessive and is preceded by an opinion word, or (4) the NP follows "by" and attaches to an opinion word. Baseline-2's heuristics are designed to address the first and the third conditions in Section 3.1.Table 1 shows that Baseline-2 is substantially better than Baseline-1.Baseline-3 labels a noun phrase as a source if it satisfies both Baseline-1 and Baseline-2's conditions (this should satisfy all three conditions described in Section 3.1).As shown in Table 1, the precision of this approach is the best of the three baselines, but the recall is the lowest.This data was obtained from the Foreign Broadcast Information Service (FBIS), a U.S. government agency. 
+                </paragraph> 
+            </subsection> 
+            <subsection> 
+                <subtitle>6.2 Extraction Pattern Experiment</subtitle> 
+                <paragraph> 
+ 
+                    We evaluated the performance of the learned extraction patterns on the source identification task.The learned patterns were applied to the test data and the extracted sources were scored against the manual annotations.Table 1 shows that the extraction patterns produced lower recall than the baselines, but with considerably higher precision.These results show that the extraction patterns alone can identify nearly half of the opinion sources with good accuracy.These results were obtained using the patterns that had a probability > .50 and frequency > 1. 
+                </paragraph> 
+            </subsection> 
+            <subsection> 
+                <subtitle>6.3 CRF Experiments</subtitle> 
+                <paragraph> 
+ 
+                    We developed our CRF model using the MALLET code from <cite id="39">McCallum (2002)</cite>.For training, we used a Gaussian prior of 0.25, selected based on the tuning data.We evaluate the CRF using the basic features from Section 3, both with and without the IE pattern features from Section 5.Table 1 shows that the CRF with basic features outperforms all of the baselines as well as the extraction patterns, achieving an F-measure of 66.3 using the OL measure, 65.0 using the HM measure, and 59.2 using the EM measure.Adding the IE pattern features further increases performance, boosting recall by about 3 points for all of the measures and slightly increasing precision as well. 
+                </paragraph> 
+                <paragraph> 
+                    CRF with feature induction.One limitation of log-linear function models like CRFs is that they cannot form a decision boundary from conjunctions of existing features, unless conjunctions are explicitly given as part of the feature vector.For the task of identifying opinion sources, we observed that the model could benefit from conjunctive features.For instance, instead of using two separate features, human and parent-chunk-includes-opinion-expression, the conjunction of the two is more informative. 
+                </paragraph> 
+                <paragraph> 
+                    For this reason, we applied the CRF feature induction approach introduced by <cite id="40">McCallum (2003)</cite>.As shown in Table 1, where CRF-FI stands for the CRF model with feature induction, we see consistent improvements by automatically generating conjunctive features.The final system, which combines the basic features, the IE pattern features, and feature induction achieves an F-measure of69.4 (recall=60.6%, precision=81.2%) for the OL measure, an F-measure of 68.0 (recall=59.5%, preci-sion=79.3%) for the HM measure, and an F-measure of 62.0 (recall=54.1%, precision=72.7%) for the EM measure. 
+                </paragraph> 
+            </subsection> 
+            <subsection> 
+                <subtitle>6.4 Error Analysis</subtitle> 
+                <paragraph> 
+ 
+                    An analysis of the errors indicated some common mistakes:• Some errors resulted from error propagation in Table l: Source identification performance table our subsystems.Errors from the sentence boundary detector in GATE (<cite id="41">Cunningham et al., 2002</cite>) were especially problematic because they caused the Collins parser to fail, resulting in no dependency tree information.• Some errors were due to complex and unusual sentence structure, which our rather simple feature encoding for CRF could not capture well.• Some errors were due to the limited coverage of the opinion lexicon.We failed to recognize some cases when idiomatic or vague expressions were used to express opinions. 
+                </paragraph> 
+                <paragraph> 
+                    Below are some examples of errors that we found interesting.Doubly underlined phrases indicate incorrectly extracted sources (either false positives or false negatives).Opinion words are singly underlined.False positives:(1) Actually, these three countries do have one common denominator, i.e., that their values and policies do not agree with those of the United States and none of them are on good terms with the United States.(2) Perhaps this is why Fidel Castro has not spoken out against what might go on in Guantanamo. 
+                </paragraph> 
+                <paragraph> 
+                    In (1), "their values and policies" seems like a reasonable phrase to extract, but the annotation does not mark this as a source, perhaps because it is somewhat abstract.In (2), "spoken out" is negated, which means that the verb phrase does not bear an opinion, but our system failed to recognize the negation.False negatives:(3) And for this reason, too, they have a moral duty to speak out, as Swedish Foreign Minister Anna Lindh, among others, did yesterday.(4) In particular, Iran and Iraq are at loggerheads with each other to this day. 
+                </paragraph> 
+                <paragraph> 
+                    Example (3) involves a complex sentence structure that our system could not deal with.(4) involves an uncommon opinion expression that our system did not recognize. 
+                </paragraph> 
+            </subsection> 
+        </section> 
+        <section> 
+            <title>7 Related Work</title> 
+            <paragraph> 
+ 
+                To our knowledge, our research is the first to automatically identify opinion sources using the MPQA opinion annotation scheme.The most closely related work on opinion analysis is <cite id="42">Bethard et al. (2004)</cite>, who use machine learning techniques to identify propositional opinions and their holders (sources).However, their work is more limited in scope than ours in several ways.Their work only addresses propositional opinions, which are "localized in the propositional argument" of certain verbs such as "believe" or "realize".In contrast, our work aims to find sources for all opinions, emotions, and sentiments, including those that are not related to a verb at all.Furthermore, Berthard et al.'s task definition only requires the identification of direct sources, while our task requires the identification of both direct and indirect sources.Bethard et al. evaluate their system on manually annotated FrameNet (<cite id="43">Baker et al., 1998</cite>) and Prop-Bank (<cite id="44">Palmer et al., 2005</cite>) sentences and achieve 48% recall with 57% precision. 
+            </paragraph> 
+            <paragraph> 
+                Our IE pattern learner can be viewed as a cross between AutoSlog (<cite id="45">Riloff, 1996</cite>a) and AutoSlog-TS (<cite id="46">Riloff, 1996</cite>b).AutoSlog is a supervised learner that requires annotated training data but does not compute statistics.AutoSlog-TS is a weakly supervised learner that does not require annotated data but generates coarse statistics that measure each pattern s correlation with relevant and irrelevant documents.Consequently, the patterns learned by both AutoSlog and AutoSlog-TS need to be manually reviewed by a person to achieve good accuracy.In contrast, our IE learner, AutoSlog-SE, computes statistics directly from the annotated training data, creating a fully automatic variation of AutoSlog. 
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>8 Conclusion</title> 
+            <paragraph> 
+ 
+                We have described a hybrid approach to the problem of extracting sources of opinions in text.We cast this problem as an information extraction task, using both CRFs and extraction patterns.Our research is the first to identify both direct and indirect sources for all types of opinions, emotions, and sentiments. 
+            </paragraph> 
+            <paragraph> 
+                Directions for future work include trying to increase recall by identifying relationships between opinions and sources that cross sentence boundaries, and relationships between multiple opinion expressions by the same source.For example, the fact that a coreferring noun phrase was marked as a source in one sentence could be a useful clue for extracting the source from another sentence.The probability or the strength of an opinion expression may also play a useful role in encouraging or suppressing source extraction. 
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>9 Acknowledgments</title> 
+            <paragraph> 
+ 
+                We thank the reviewers for their many helpful comments, and the Cornell NLP group for their advice and suggestions for improvement.This work was supported by the Advanced Research and Development Activity (ARDA), by NSF Grants IIS-0208028 and IIS-0208985, and by the Xerox Foundation. 
+            </paragraph> 
+        </section> 
+    </paper>
+</annotatedpaper>

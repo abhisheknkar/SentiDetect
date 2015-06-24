@@ -10,40 +10,12 @@ import java.util.ArrayList;
 
 
 public class AmjadOperations {
-	public static ArrayList<AmjadCitation> readDataSet() throws IOException
-	{		
-		File fin = new File("./Datasets/Amjad/annotated_sentences.txt");
-		File fout = new File("./Outputs/AmjadCitationList.tmp");
-		int saveFlag = 0;
-		
-		BufferedReader in = null;
-		in = new BufferedReader(new FileReader(fin));
-		
-		String line = null;
-		String[] temp1 = null;
-		
-		ArrayList<AmjadCitation> Citations = new ArrayList<AmjadCitation>();
-		
-		while((line = in.readLine()) != null)
-		{
-			temp1 = line.split("\t");			
-			Citations.add(new AmjadCitation(temp1));			
-		}
-		
-		if (saveFlag != 0) 
-		{
-			FileOutputStream foutStream = new FileOutputStream(fout);
-			ObjectOutputStream oos = new ObjectOutputStream(foutStream);
-			oos.writeObject(Citations);		
-		}
-		return Citations;
-	}
 
-	public static void getPolarityDistribution(ArrayList<AmjadCitation> Citations) throws IOException
+	public static void getPolarityDistribution(ArrayList<Citation> Citations) throws IOException
 	{
 		int[] PolarityStats = new int[4];
 		
-		for (AmjadCitation iter : Citations ) 
+		for (Citation iter : Citations ) 
 		{	
 			if (iter.PolarityIndex > 0 && iter.PolarityIndex <= 3) 
 				++PolarityStats[iter.PolarityIndex-1];
@@ -58,16 +30,16 @@ public class AmjadOperations {
 		System.out.println("Invalid Sentences: " + PolarityStats[3] + " (" + 100*PolarityStats[3]/TotalSentences + "%)"); 
 	}
 	
-	public static ArrayList<AmjadCitation> readAmjadObj(File fin) throws IOException
+	public static ArrayList<Citation> readAmjadObj(File fin) throws IOException
 	{
 		FileInputStream finstream = null;
 		ObjectInputStream objinstream = null;
-		ArrayList<AmjadCitation> Citations = null;
+		ArrayList<Citation> Citations = null;
 		try
 		{
 			finstream = new FileInputStream(fin);
 			objinstream = new ObjectInputStream(finstream);
-			Citations = (ArrayList<AmjadCitation>) objinstream.readObject(); 
+			Citations = (ArrayList<Citation>) objinstream.readObject(); 
 		}
 		catch (Exception e) 
 		{

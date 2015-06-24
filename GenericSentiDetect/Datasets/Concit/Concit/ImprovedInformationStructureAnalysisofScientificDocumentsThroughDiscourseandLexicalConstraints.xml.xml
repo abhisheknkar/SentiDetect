@@ -1,0 +1,307 @@
+<annotatedpaper>
+    <paper title= "Improved Information Structure Analysis of Scientific Documents Through Discourse and Lexical Constraints" authors= "Yufan Guo, Roi Reichart, Anna Korhonen" year="2013">
+        <section>
+            Yufan Guo
+            University of Cambridge, UK
+            yg244@cam.ac.uk
+            Roi Reichart
+            University of Cambridge, UK
+            rr439@cam.ac.uk
+            Anna Korhonen
+            University of Cambridge, UK
+            alk23@cam.ac.uk
+        </section>
+        <section>
+            <title>
+                Abstract
+            </title>
+            Inferring the information structure of scientific documents is useful for many downstream applications. Existing feature-based machine learning approaches to this task require substantial training data and suffer from limited performance. Our idea is to guide feature-based models with declarative domain knowledge encoded as posterior distribution constraints. We explore a rich set of discourse and lexical constraints which we incorporate through the Generalized Expectation (GE) criterion. Our constrained model improves the performance of existing fully and lightly supervised models. Even a fully unsupervised version of this model outperforms lightly supervised feature-based models, showing that our approach can be useful even when no labeled data is available.
+        </section>
+        <section imrad="i">
+            <title>
+                1 Introduction
+            </title>
+            <paragraph>
+                Techniques that enable automatic analysis of the information structure of scientific articles can help scientists identify information of interest in the growing volume of scientific literature. 
+                <context>
+                    For example, <task>classification of sentences according to argumentative zones (AZ)</task> - <kw>an</kw> 
+                    <method>information structure scheme</method> 
+                    <kw>that is applicable across scientific domains</kw> (<cite id="1" function="use" polarity="neu">Teufel et al., 2009</cite>) - <kw>can</kw> 
+                    <task>support information retrieval, information</task> 
+                    <task>extraction and summarization</task> (<cite id="2" function="use" polarity="neu">Teufel and Moens, 2002</cite>; <cite id="3" function="use" polarity="neu">Tbahriti et al., 2006</cite>; <cite id="4" function="use" polarity="neu">Ruch et al., 2007</cite>; <cite id="5" function="use" polarity="neu">Liakata et al., 2012</cite>; <cite id="6" function="use" polarity="neu">Contractor et al., 2012</cite>).
+                
+                </context>
+                
+            </paragraph>
+            <paragraph>
+                <context>
+                    <kw> Previous work on</kw> 
+                    <task>sentence-based classification of scientific literature</task> according to categories of information structure <kw>has mostly used</kw> 
+                    <method>feature-based machine learning</method>, <kw>such as</kw> 
+                    <method>Support Vector Machines (SVM)</method> 
+                    <kw>and</kw>
+                    <method>Conditional Random Fields (CRF) </method>(e.g. (<cite id="7" function="wea" polarity="neg">Teufel and Moens, 2002</cite>; <cite id="8" function="wea" polarity="neg">Lin et al., 2006</cite>; Hiro-hata et al., 2008; <cite id="9" function="wea" polarity="neg">Shatkay et al., 2008</cite>; <cite id="10" function="wea" polarity="neg">Guo et al., 2010</cite>; <cite id="11" function="wea" polarity="neg">Liakata et al., 2012</cite>)).<kw> Unfortunately</kw>, <kw>the performance of these methods</kw> 
+                    <negfeature>is rather limited</negfeature>, <kw>as indicated e.g. by</kw> the relatively low numbers reported by <cite id="12" funcntion="ack" polarity="neg">Liakata et al. (2012)</cite> 
+                
+                </context>
+                in biochemistry and chemistry with per-class F-scores ranging from . 18 to . 76.
+            </paragraph>
+            <paragraph>
+                We propose a novel approach to this task in which traditional feature-based models are augmented with explicit declarative expert and domain knowledge, and apply it to sentence-based AZ. We explore two sources of declarative knowledge for our task - discourse and lexical. One way to utilize discourse knowledge is to guide the model predictions by encoding a desired predicted class (i.e. information category) distribution in a given position in the document. Consider, for example, sentence (1) from the first paragraph of the Discussion section in a paper:
+            </paragraph>
+            <paragraph>
+                (1) In time, this will prove to be most suitable for detailed analysis of the role of these hormones in mammary cancer development.
+            </paragraph>
+            <paragraph>
+                Although the future tense and cue phrases such as "in time" can indicate that authors are discussing future work (i.e. the "Future work" class in the AZ scheme), in this case they refer to their own contribution (i.e. the "Conclusion" class in AZ). As most authors discuss their own contribution in the beginning of the Discussion section and future directions in the end, encoding the desired class distribution as a function of the position in this section can guide the model to the right decision.
+            </paragraph>
+            <paragraph>
+                Likewise, lexical knowledge can guide the model through predicted class distributions for sentences that contain specific vocabulary. Consider, for example, sentence (2):
+            </paragraph>
+            <paragraph>
+                (2) The values calculated for lungs include the presumed DNA adduct of BA and might thus be slightly overestimated.
+            </paragraph>
+            <paragraph>
+                The verb "calculated" usually indicates the "Method" class, but, when accompanied by the modal verb "might", it is more likely to imply that authors are interpreting their own results (i.e. the "Conclusion" class in AZ). This can be explicitly encoded in the model through a target distribution for sentences containing certain modal verbs.
+            </paragraph>
+            <paragraph>
+                <context>
+                    Recent work has shown that explicit declaration of domain and expert knowledge can be highly useful for structured NLP tasks such as parsing, POS tagging and information extraction (<cite id="13" function="ack" polarity="neu">Chang et al., 2010</cite>). 
+                </context>
+                
+                These works have encoded expert knowledge through constraints, with different frameworks differing in the type of constraints and the inference and learning algorithms used.
+                <context>
+                    <author> We</author> 
+                    <kw>build on</kw> 
+                    <method>the Generalized Expectation (GE) framework</method> (<cite id="14" function="bas" polarity="neu">Mann and McCallum, 2007</cite>) which encodes expert knowledge through a preference (i.e. soft) constraints for parameter settings for which the predicted label distribution matches a target distribution.
+                </context>
+            </paragraph>
+            <paragraph>
+                In order to integrate domain knowledge with a features-based model, we develop a simple taxonomy of constraints (i.e. desired class distributions) and employ a top-down classification algorithm on top of a Maximum Entropy Model augmented with GE constraints. This algorithm enables us to break the multi-class prediction into a pipeline of consecutive, simpler predictions which can be better assisted by the encoded knowledge.
+            </paragraph>
+            <paragraph>
+                <context>
+                    <author>We</author> 
+                    <kw>experiment in</kw> 
+                    <field>the biological domain</field>
+                    <kw>with the</kw> 
+                    <method>eight-category AZ scheme</method> (Table 1) adapted from (<cite id="15" function="bas" polarity="neu">Mizuta et al., 2006</cite>) <kw>and described in</kw> (<cite id="16" function="bas" polarity="neu">Contractor et al., 2012</cite>). 
+                </context>
+                The results show that our constrained model substantially outperforms a baseline unconstrained Maximum Entropy Model.
+                <context>
+                    While this type of constrained models have previously improved the feature-based model performance mostly in the weakly supervised and domain adaptation scenarios (e.g. (<cite id="17" function="ack" polarity="neu">Mann and McCallum, 2007</cite>; <cite id="18" function="ack" polarity="neu">Mann and Mc-Callum, 2008</cite>; <cite id="19" function="ack" polarity="neu">Ganchev et al., 2010</cite>)),
+                </context>
+
+                we demonstrate substantial gains both when the Maximum En- Table 1: The AZ categories included in the categorization scheme of this paper. Definition Background (BKG) the background of the study Problem (PROB) the research problem Method (METH) the methods used Result (RES) the results achieved Conclusion (CON) the authors' conclusions Connection (CN) work consistent with the current work Difference (DIFF) work inconsistent with the current work Future work (FUT) the potential future direction of the research tropy Model is fully trained and when its training data is sparse. This demonstrates the importance of expert knowledge for our task and supports our modeling decision that combines feature-based methods with domain knowledge encoded via constraints.
+            </paragraph>
+        </section>
+        <section imrad="m">
+            <title>
+                2 Previous work
+            </title>
+            <paragraph>
+                Information structure analysis The information structure of scientific documents (e.g. journal articles, abstracts, essays) can be analyzed in terms of patterns of topics, functions or relations observed in multi-sentence scientific text. 
+                <context>
+                    <method>Computational approaches</method> 
+                    <kw>have mainly focused on</kw> 
+                    <task>analysis based on argumentative zones</task> (<cite id="20" function="use" polarity="neu">Teufel and Moens, 2002</cite>; <cite id="21" unction="use" polarity="neu">Mizuta et al., 2006</cite>; <cite id="22" function="use" polarity="neu">Hachey and Grover, 2006</cite>; <cite id="23" function="use" polarity="neu">Teufel et al., 2009</cite>), discourse structure (<cite id="24" function="use" polarity="neu">Burstein et al., 2003</cite>; <cite id="25" function="use" polarity="neu">Webber et al., 2011</cite>), qualitative dimensions (<cite id="26" function="use" polarity="neu">Shatkay et al., 2008</cite>), scientific claims (<cite id="27" function="use" polarity="neu">Blake, 2009</cite>), scientific concepts (<cite id="28" function="use" polarity="neu">Liakata et al., 2010</cite>) and information status (<cite id="29" function="use" polarity="neu">Markert et al., 2012</cite>).
+                </context>
+            </paragraph>
+            <paragraph>
+                <context>
+                    <kw>Most existing</kw>
+                    <method>methods</method>
+                    <kw> for</kw> 
+                    <task>analyzing scientific text</task> according to information structure <kw>use</kw> 
+                    <method>full supervision</method> in the form of thousands of manually annotated sentences (<cite id="30" function="use" polarity="neu">Teufel and Moens, 2002</cite>; <cite id="31" function="use" polarity="neu">Burstein et al., 2003</cite>; <cite id="32" function="use" polarity="neu">Mizuta et al., 2006</cite>; <cite id="33" function="use" polarity="neu">Shatkay et al., 2008</cite>; <cite id="34" function="use" polarity="neu">Guo et al., 2010</cite>; <cite id="35" function="use" polarity="neu">Liakata et al., 2012</cite>; <cite id="36" function="use" polarity="neu">Markert et al., 2012</cite>).
+                </context>
+                <context>
+                    Because manual annotation is prohibitively expensive, <method>approaches</method> 
+                    <kw>based on</kw> 
+                    <method>light supervision</method> 
+                    <kw>are now emerging</kw> for the task, including those based on active learning and self-training (<cite id="37" function="wea" polarity="neg">Guo et al., 2011</cite>) and unsupervised methods (<cite id="38" function="wea" polarity="neg">Varga et al., 2012</cite>; <cite id="39" function="wea" polarity="neg">Reichart and Korhonen, 2012</cite>). <kw>Unfortunately,</kw> 
+                    <kw>these approaches</kw> 
+                    <negfeature>do not reach the performance level of</negfeature> 
+                    <method>fully supervised models</method>, let alone exceed it. 
+                </context>
+                Our novel method addresses this problem.
+            </paragraph>
+            <paragraph>
+                <context>
+                    Declarative knowledge and constraints Previous work has shown that incorporating declarative constraints into feature-based machine learning models works well in many NLP tasks (<cite id="40" function="ack" polarity="neu">Chang et al., 2007</cite>; <cite id="41" function="ack" polarity="neu">Mann and McCallum, 2008</cite>; <cite id="42" function="ack" polarity="neu">Druck et al., 2008</cite>; <cite id="43" function="ack" polarity="neu">Bellare et al., 2009</cite>; <cite id="44" function="ack" polarity="neu">Ganchev et al., 2010</cite>). 
+                </context>
+                
+                Such constraints can be used in a semi-supervised or unsupervised fashion. 
+                <context>
+                    For example, (<cite id="45" function="ack" polarity="neu">Mann and Mc-Callum, 2008</cite>) shows that using CRF in conjunction with auxiliary constraints on unlabeled data significantly outperforms traditional CRF in information extraction, and (<cite id="46" function="ack" polarity="neu">Druck et al., 2008</cite>) shows that using declarative constraints alone for unsupervised learning achieves good results in text classification. 
+                </context>
+                We show that declarative constraints can be highly useful for the identification of information structure of scientific documents. In contrast with most previous works, we show that such constraints can improve the performance of a fully supervised model. The constraints are particularly helpful for identifying low-frequency information categories, but still yield high performance on high-frequency categories.
+            </paragraph>
+     
+            <title>
+                3 Maximum-Entropy Estimation and Generalized Expectation (GE)
+            </title>
+            <paragraph>
+                In this section we describe the Generalized Expectation method for declarative knowledge encoding.
+            </paragraph>
+            <paragraph>
+                <context>
+                    <concept> Maximum Entropy (ME)</concept> The idea of Generalized Expectation (<cite id="47" function="use" polarity="neu">Dudik, 2007</cite>; Mann and McCal-lum, 2008; <cite id="48" function="use" polarity="neu">Druck et al., 2008</cite>) <kw>stems from</kw> 
+                    <concept>the principle of maximum entropyc</concept> (<cite id="49" function="use" polarity="neu">Jaynes, 1957</cite>; <cite id="50" function="use" polarity="neu">Pietra and Pietra, 1993</cite>)
+                </context>
+                which raises the following constrained optimization problem: where p(-) is the empirical distribution, p( ) is a probability distribution in the model and H(•) is the corresponding information entropy, f (•) is a collection of feature functions, and Ep[f (•)] and Ep[f (•)] are the expectations of f with respect to p( ) and p(). An example of p( ) could be a conditional probability distribution p(y\x), and H(•) could be a conditional entropy H(y\x). The optimal p(y\x) will take on an exponential form:
+            </paragraph>
+            <paragraph>
+                where A is the Lagrange multipliers in the corresponding unconstrained objective function, and Z\ is the partition function. 
+                <context>
+                    The dual problem becomes maximizing the conditional log-likelihood of labeled data L (<cite id="51" function="ack" polarity="neu">Berger et al., 1996</cite>):
+                </context>
+            </paragraph>
+            <paragraph>
+                which is usually known as a Log-linear or Maximum Entropy Model (MaxEnt). ME with Generalized Expectation The objective function and the constraints on expectations in (1) can be generalized to:
+            </paragraph>
+            <paragraph>
+                <context>
+                    where D(p\ \\p0) is the divergence from p\ to a base distribution p0, and g() is a constraint/penalty function that takes empirical evidence Ep(x>y) [f (x, y)] as a reference point (<cite id="52" function="ack" polarity="neu">Pietra and Pietra, 1993</cite>; <cite id="53" function="ack" polarity="neu" >Chen et al., 2000</cite>; <cite id="54" function="ack" polarity="neu">Dudik, 2007</cite>). 
+                </context>
+                Note that a special case of this is MaxEnt where po is set to be a uniform distribution, D( ) to be the KL divergence, and g( ) to be an equality constraint. The constraint g( ) can be set in a relaxed manner:
+            </paragraph>
+            <paragraph>
+                
+                <context>
+                    Such a model can be further extended to include expert knowledge or auxiliary constraints on unla-beled data U (<cite id="55" function="ack" polarity="neu">Mann and McCallum, 2008</cite>; <cite id="56" function="ack" polarity="neu">Druck et al., 2008</cite>; <cite id="57" function="ack" polarity="neu">Bellare et al., 2009</cite>):
+                </context>
+            </paragraph>
+            <paragraph>
+                where f *(•) is a collection of auxiliary feature functions on U, ) is a constraint function that takes expert/declarative knowledge Ep*(y\!x) [f *(x, y)] as a reference point, and 7 is the weight of the auxiliary GE term. which is the logarithm of a Gaussian distribution centered at the reference values with a diagonal co-variance matrix (<cite id="58" function="ack" polarity="neu">Pietra and Pietra, 1993</cite>), and the dual problem will become a regularized MaxEnt with a Gaussian prior (pk = 0, parameters:
+            </paragraph>
+            <paragraph>
+                <context>
+                    The auxiliary constraint ) can take on many forms and the one we used in this work is an Lpenalty function (<cite id="59" function="ack" polarity="neu">Dudik, 2007</cite>).
+                </context>
+                <context>
+                    <author>We</author> 
+                    <kw>trained the model with</kw> 
+                    <method>L-BFGS</method> (<cite id="60" function="bas" polarity="neu">Nocedal, 1980</cite>) in supervised, semi-supervised and unsupervised fashions on labeled and/or unlabeled data, <kw>using the</kw> 
+                    <tool>Mallet software</tool> (<cite id="61" function="bas" polarity="neu">McCallum, 2002</cite>).
+                
+                </context>
+                
+            </paragraph>
+       
+            <title>
+                4 Incorporating Expert Knowledge into GE constraints
+            </title>
+            <paragraph>
+                We defined the auxiliary feature functions - the expert knowledge on unlabeled data as: where l(Xk,yk)(x,y) is an indicator function, and p*(yk \xk ) is a conditional probability specified in the form of by experts. In particular, we took as the reference point when calculating
+            </paragraph>
+            <paragraph>
+                We defined two types of constraints: those based on discourse properties such as the location of a sentence in a particular section or paragraph, and those based on lexical properties such as citations, references to tables and figures, word lists, tenses, and so on. Note that the word lists actually contain both lexical and semantic information.
+            </paragraph>
+            <paragraph>
+                To make an efficient use of the declarative knowledge we build a taxonomy of information structure categories centered around the distinction between categories that describe the authors' own work and those that describe other work (see Section 5). In practice, our model labels every sentence with an AZ category augmented by one of the two categories, own or other. 
+                <context>
+                    In evaluation <author>we</author> <kw>consider only</kw> the <data>standard AZ categories</data> <kw>which are part of</kw> <method>the annotation scheme</method> of (<cite id="62" function="bas" polarity="neu">Contractor et al., 2012</cite>).
+                </context>
+                Table 2: Discourse and lexical constraints for identifying information categories at different levels of the information structure taxonomy. (a) OWN / OTHER Table 3: The lexical sets used as properties in the constraints.
+            </paragraph>
+            <paragraph>
+                The constraints in Table 2(a) refer to the top level of this taxonomy: distinction between the authors' own work and the work of others, and the constraints in Tables 2(b)-(c) refer to the bottom level of the taxonomy: distinction between AZ categories related to the authors' own work (Table 2(b)) and other's work (Table 2(c)).
+            </paragraph>
+            <paragraph>
+                The first and second columns in each table refer to the y and x variables in Equation (8), respectively. The functions Target(), Forward( ) and Backward() refer to the property value for the target, next and preceding sentence, respectively. If their value is 1 then the property holds for the respective sentence, if it is 0, the property does not hold. In some cases the value of such functions can be greater than 1, meaning that the property appears multiple times in the sentence. Terms of the form {w\w~{wj}} refer to any word/bi-grams that have the same sense as Wj, where the actual word set we use with every example word in Table 2 is described in Table 3.
+            </paragraph>
+            <paragraph>
+                For example, take constraints (1) and (4) in Table 2(a). The former is a standard discourse constraint that refers to the probability that the target sentence describes the authors' own work given that it appears in the last of the ten parts in the paragraph. The latter is a standard lexical constraint that refers to the probability that a sentence presents other people's work given that it contains any words in {we, our, presentstudy} and that it doesn't contain any words Figure 1: The constraint taxonomy for top-down modeling. in {previous, previously, recent, recently}. Our constraint set further includes constraints that combine both types of information. For example, constraint (12) in Table 2(b) refers to the probability that a sentence discusses future work given that it appears in the last of the ten parts of the section (discourse) and that it contains at least one word in {will, future, further, need, remain} (lexical).
+            </paragraph>
+       
+            <title>
+                5 Top-Down Model
+            </title>
+            <paragraph>
+                An interesting property of our task and domain is that the available expert knowledge does not directly support the distinctions between AZ categories, but it does provide valuable indirect guidance. For example, the number of citations in a sentence is only useful for separating the authors' work from other people's work, but not for further fine grained distinctions between zone categories. Moreover, those constraints that are useful for making fine grained distinctions between AZ categories are usually useful only for a particular subset of the categories only. For example, all the constraints in Table 2(b) are conditioned on the assumption that the sentence describes the authors' own work.
+            </paragraph>
+            <paragraph>
+                To make the best use of the domain knowledge, we developed a simple constraint taxonomy, and apply a top-down classification approach which utilizes it. The taxonomy is presented in Figure 1. For classification we trained three MaxEnt models augmented with GE constraints: one for distinguishing between OWN and OTHER, one for distinguishing between the AZ categories under the own auxiliary category and one for distinguishing between the AZ categories under the OTHER auxiliary category. At test time we first apply the first classifier and based on its prediction we apply either the classifier that distinguishes between own categories or the one that distinguishes between other categories. For the training of this model, each training data AZ category is mapped to its respective auxiliary class.
+            </paragraph>
+     
+            <title>
+                6 Experiments
+            </title>
+            <paragraph>
+                <context>
+                Data <author>We</author> <kw>used</kw> <data>the full paper corpus</data> <kw>used by</kw> <cite id="63" function="bas" polarity="neu">Contractor et al. (2012)</cite> which contains 8171 sentences from 50 biomedical journal articles. 
+                </context>
+                <context>
+                <data>The corpus</data> <kw>is annotated according to</kw><method>the AZ scheme </method> <kw>described in</kw> Table 1. AZ describes the logical structure, scientific argumentation and intellectual attribution of a scientific paper. <kw>It was originally introduced by</kw>  <cite id="64" function="use" polarity="neu">Teufel and Moens (2002)</cite> <kw>and applied to</kw><data>computational linguistics papers</data>, <kw>and later adapted to</kw> other domains such as <field>biology</field> (<cite id="65" function="use" polarity="neu">Mizuta et al., 2006</cite>) - which we used in this work - <kw>and</kw><field>chemistry</field> (<cite id="66" function="use" polarity="neu"> Teufel et al., 2009</cite>).
+                </context>
+            </paragraph>
+            <paragraph>
+                Table 4 shows the AZ class distribution in full articles as well as in individual sections. Since section names vary across scientific articles, we grouped similar sections before calculating the statistics (e.g. Discussion and Conclusions sections were grouped under Discussion). we can see that although there is a major category in each section (e.g. con in Discussion), up to 36.5% of the sentences in each section still belong to other categories.
+            </paragraph>
+            <paragraph>
+                Features we extracted the following features from each sentence and used them in the feature-based classifiers: (1) Discourse features: location in the article/section/paragraph. For this feature each text batch was divided to ten equal size parts and the corresponding feature value identifies the relevant part; 
+                <context>
+                (2) Lexical features: <data>number of citations</data> and references to tables and figures (0,1, or more), word, bi-gram, verb, and verb class (<kw>obtained by</kw> <method>spectral clustering</method> (<cite id="67" function="bas" polarity="neu">Sun and Korhonen, 2009</cite>)); 
+                </context>
+                (3) Syntactic features: tense and voice (PoS tags of main and auxiliary verbs), grammatical relation, subject and object. The lexical and the syntactic features were extracted for the represented sentence as well as for its surrounding sentences. 
+                <context>
+                <author>We</author> <kw>used</kw> the <tool>CyC POS tagger</tool> <kw>and</kw> <tool>parser</tool> (<cite id="68" function="bas" polarity="neu">Curran et al., 2007</cite>) for extracting the lexical and the syntactic features.
+                </context>
+                Note that all the information encoded into our constraints is also encoded in the features and is thus available to the feature-based model. This enables us to properly evaluate the impact of our modeling decision which augments a feature-based model with constraints.
+            </paragraph>
+            <paragraph>
+                Baselines We compared our model against four baselines, two with full supervision: Support Vector Machines (SVM) and Maximum Entropy Models (MaxEnt), and two with light supervision: 
+                <context>
+                Trans- Table 4: <concept>Class distribution</concept> (shown in percentages) in articles and their individual sections in the AZ-annotated corpus. ductive SVM (TSVM) <kw>and</kw> <method>semi-supervised Max-Ent</method> <kw>based on</kw> <method>Entropy Regularization (ER)</method> (<cite id="69" function="bas" polarity="neu">Vapnik, 1998</cite>; <cite id="70">Jiao et al., 2006</cite>).
+                </context>
+                <context>
+                <method>SVM and MaxEnt</method> <kw>have proved</kw> <posfeature>successful</posfeature> <kw>in</kw> <task>information structure analysis</task> (e.g. (<cite id="71" function="hed" polarity="neg">Merity et al., 2009</cite>; <cite id="72" function="hed" polarity="neg">Guo et al., 2011</cite>)) <kw>but</kw>, to the best of our knowledge, <method>their semi-supervised versions</method> <negfeature>have not been used </negfeature> for AZ of full articles.
+                </context>
+            </paragraph>
+            <paragraph>
+                Parameter tuning The boundaries of the reference probabilities (ak and bk in Equation (8)) were defined and optimized on the development data which consists of one third of the corpus. We considered six types of boundaries: Fairly High for 1, High for [0.9,1), Medium High for [0.5,0.9), Medium Low for [0.1,0.5), Low for [0,0.1), and Fairly Low for 0.
+            </paragraph>
+            <paragraph>
+                Evaluation We evaluated the precision, recall and F-score for each category, using a standard ten-fold cross-validation scheme. The models were tested on each of the ten folds and trained on the rest of them, and the results were averaged across the ten folds.
+            </paragraph>
+        </section>
+        <section imrad="r">
+            <title>
+                7 Results
+            </title>
+            <paragraph>
+                We report results at two levels of granularity. We first provide detailed results for the Discussion section which should be, as is clearly evident from Table 4, the most difficult section for AZ prediction as only 63.5% of its sentences take its most dominant class (con). As we show below, this is also where our constrained model is most effective. We then show the advantages of our model for other sections.
+            </paragraph>
+            <paragraph>
+                Results for the Discussion section To get a bet- Table 6: Discussion section performance of MaxEnt, MaxEnt+GE and a MaxEnt+GE model that does not include our top-down classification scheme. Results are presented for different amounts of labeled training data. The MaxEnt+GE (Top-down) model outperforms the MaxEnt in 44 out of 48 cases, and MaxEnt+GE (Flat) in 39 out of 48 cases._ Figure 2: Performance of the MaxEnt and MaxEnt+GE models on the Introduction (left), Methods (middle) and Results (right) sections. The MaxEnt+GE model is superior. □ MaxEnt MaxEnt+GE □ MaxEnt MaxEnt+GE □ MaxEnt MaxEnt+GE Table 7: Discussion section performance of the MaxEnt, Max-Ent+GE and unsupervised GE models when the former two are trained with 150 labeled sentences. Unsupervised GE outperforms the standard MaxEnt model for all categories except for con - the major category of trie section. The result pattern for the other sections are very similar. Table 8: Analysis of the impact of the different constraint types for the lightly supervised and the fully supervised cases. Results are presented for the Discussion section. Using only the lexical constraints is generally preferable in the fully supervised case. Combining the different constraint types is preferable for the lightly supervised case. d. ter understanding of the nature of the challenge we face, Table 5 shows the F-scores of fully- and semi-supervised SVM and MaxEnt on the Discussion section. The dominant zone category con, which accounts for 63.5% of the section sentences, has the highest F-scores for all methods and scenarios. Most of the methods also identify the second and the third most frequent zones bkg and cn, but with relatively lower F-scores. Other low-frequency categories can hardly be identified by any of the methods regardless of the amount of labeled data available for training. Note that the compared models perform quite similarly. We therefore use the MaxEnt model, which is most naturally augmented with GE constraints, as the baseline unconstrained model.
+            </paragraph>
+            <paragraph>
+                When adding the GE constraints we observe a substantial performance gain, in both the fully and the lightly supervised cases, especially for the low-frequency categories. Table 6 presents the F-scores of MaxEnt with and without GE constraints ("MaxEnt+GE (Top-down)" and "MaxEnt") in the light and full supervision scenarios. Incorporating GE into MaxEnt results in a substantial F-score improvement for all AZ categories except for the major category con for which the performance is kept very similar. In total, MaxEnt+GE (Top-down) is BKG PROB METH RE better in 44 out of the 48 cases presented in the table. Importantly, the constrained model provides substantial improvements for both the relatively high-frequency classes (bkg and cn which together label 30.2% of the sentences) and for the low-frequency classes (which together label 6.4% of the sentences).
+            </paragraph>
+            <paragraph>
+                The table also clearly demonstrates the impact of our tree-based top-down classification scheme, by comparing the Top-down version of MaxEnt+GE to the standard "Flat" version. In 39 out of 48 cases, the Top-down model performs better. In some cases, especially for high-frequency categories and when the amount of training data increases, unconstrained MaxEnt even outperforms the flat Max-Ent+GE model. The results presented in the rest of the paper for the MaxEnt+GE model therefore refer to its Top-down version.
+            </paragraph>
+            <paragraph>
+                All sections We next turn to the performance of our model on the three other sections. Our experiments show that augmenting the MaxEnt model with domain knowledge constraints improves performance for all the categories (either low or high frequency), except the major section category, and keep the performance for the latter on the same level. Figure 2 demonstrates this pattern for the lightly supervised case with 150 training sentences but the same pattern applies to all other amounts of training data, including the fully supervised case. Naturally, we cannot demonstrate all these cases due to space limitations. The result patterns are very similar to those presented above for the Discussion section.
+            </paragraph>
+            <paragraph> 
+                Unsupervised GE We next explore the quality of the domain knowledge constraints when used in isolation from a feature-based model. The objective function of this model is identical to Equation (6) except that the first (likelihood) term is omitted. Our experiments reveal that this unsupervised GE model outperforms standard MaxEnt for all the categories except the major category of the section, when up to 150 training sentences are used. Table 7 demonstrates this for the Discussion section. This pattern holds for the other scientific article sections. Even when more than 150 labeled sentences are used, the unsupervised model better detects the low frequency categories (i.e. those that label less than 10% of the sentences) for all sections. These results provide strong evidence for the usefulness of our constraints even when they are used with no labeled data.
+            </paragraph>
+            <paragraph>
+                Model component analysis We finally analyze the impact of the different types of constraints on the performance of our model. Table 8 presents the Discussion section performance of the constrained model with only one or the full set of constraints. Interestingly, when the feature-based model is fully trained the application of the lexical constraints alone results in a very similar performance to the application of the full set of lexical and discourse constraints. It is only in the lightly supervised case where the full set of constraints is required and results in the best performing model.
+            </paragraph>
+        </section>
+        <section imrad="d">
+            <title>
+                8 Conclusions and Future Work
+            </title>
+            <paragraph>
+                We have explored the application of posterior discourse and lexical constraints for the analysis of the information structure of scientific documents. Our results are strong. Our constrained model outperforms standard feature-based models by a large margin in both the fully and the lightly supervised cases. Even an unsupervised model based on these constraints provides substantial gains over feature-based models for most AZ categories.
+            </paragraph>
+            <paragraph>
+                We provide a detailed analysis of the results which reveals a number of interesting properties of our model which may be useful for future research. First, the constrained model significantly outperforms its unconstrained counterpart for low-medium frequency categories while keeping the performance on the major section category very similar to that of the baseline model. Improved modeling of the major category is one direction for future research. Second, our full constraint set is most beneficial in the lightly supervised case while the lexical constraints alone yield equally good performance in the fully supervised case. This calls for better understanding of the role of discourse constraints for our task as well as for the design of additional constraints that can enhance the model performance either in combination with the existing constraints or when separately applied to the task. Finally, we demonstrated that our top-down tree classification scheme provides a substantial portion of our model's impact. A clear direction for future research is the design of more fine-grained constraint taxonomies which can enable efficient usage of other constraint types and can result in further improvements in performance.
+            </paragraph>
+        </section>
+    </paper>
+</annotatedpaper>

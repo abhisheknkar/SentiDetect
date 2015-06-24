@@ -1,0 +1,416 @@
+<annotatedpaper>
+    <paper title="A discourse-driven content model for summarising scientific articles evaluated in a complex question answering task" authors="Maria Liakata, Simon Dobnik, Shyamasree Saha, Colin Batchelor, Dietrich Rebholz-Schuhmann " year="2013"> 
+        <section> 
+            <title>A discourse-driven content model for summarising scientific articles evaluated in a complex question answering task</title> 
+            Maria Liakata 
+            University of Warwick/ 
+            EMBL-EBI, UK 
+            M.Liakata@warwick.ac.uk 
+            Simon Dobnik 
+            University of Gothenburg, Sweden 
+            simon.dobnik@gu.se 
+            Shyamasree Saha 
+            EMBL-EBI, UK 
+            saha@ebi.ac.uk 
+            Colin Batchelor 
+            Royal Society of Chemistry, UK 
+            batchelorc@rsc.org 
+            Dietrich Rebholz-Schuhmann 
+            University of Zurich, Switzerland/ 
+            EMBL-EBI, UK 
+            rebholz@ebi.ac.uk 
+        </section> 
+        <section> 
+            <title>Abstract</title> 
+            <paragraph> 
+                We present a method which exploits automatically generated scientific discourse annotations to create a content model for the summarisation of scientific articles. Full papers are first automatically annotated using the CoreSC scheme, which captures 11 content-based concepts such as Hypothesis, Result, Conclusion etc at the sentence level. A content model which follows the sequence of CoreSC categories observed in abstracts is used to provide the skeleton of the summary, making a distinction between dependent and independent categories. Summary creation is also guided by the distribution of CoreSC categories found in the full articles, in order to adequately represent the article content. Finally, we demonstrate the usefulness of the summaries by evaluating them in a complex question answering task. Results are very encouraging as summaries of papers from automatically obtained CoreSCs enable experts to answer 66% of complex content-related questions designed on the basis of paper abstracts. The questions were answered with a precision of 75%, where the upper bound for human summaries (abstracts) was 95%. 
+            </paragraph> 
+        </section> 
+        <section imrad="i"> 
+            <title>1 Introduction</title> 
+            <paragraph>
+                 
+                <context>
+                    The publication boom of the last few years, especially in the life sciences, has highlighted the need to facilitate automatic access to the information content of articles. Researchers, curators, reviewers all need to process a continuously expanding flow of articles whether the purpose is to follow the state of the art, curate large knowledge bases or have a good working knowledge of their own and related disciplines to assess progress in research. While <kw>a lot of effort </kw>
+                    <kw>has concentrated</kw> on <task>information extraction</task> of particular types of entities and relations from the scientific literature (<cite id="1" function="ack" polarity="neu">Cohen and Hersh, 2005</cite>; Kim 2011), with a view to support scientists in obtaining relevant information from scientific articles and abstracts, less work has focussed on automatically combining such information in the form of a cohesive summary which preserves the context. <person>Researchers</person> 
+                    <kw>rely</kw> to a great extent <kw>on </kw> 
+                    <data>author-written abstracts</data>, <kw>but the latter suffer from</kw> a number of <kw>problems</kw>; they are less structured, vary significantly in terms of length, are often not self-contained and have been written independently of the main document (<cite id="2" function="ack" polarity="neu">Teufel, 2010</cite>, p.83).                                    
+                </context>           
+            </paragraph> 
+            <paragraph> 
+                identify argumentative zones within scientific articles and use them to create use-targeted extractive summaries. Argumentative zones are annotations which designate the type of knowledge claim and rhetorical status for a sentence and how these relate to the communicative function of the entire paper. A selection of various combinations of argumentative zones are chosen for the use-targeted extractive summaries (rhetorical extracts), each of which fulfills a different role. For instance, purpose-oriented extracts less than 10 sentences long are generated containing a predetermined number of AIM, SOLUTION and BACKGROUND zones. As the emphasis of this approach was the identification of the argumentative zones, less attention was given to the sentence selection criteria for the extractive summaries. 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    <data>The sentences</data> 
+                    <action>chosen</action> for the rhetorical extracts <kw>were</kw> either <data>all sentences</data> of a particular category (in the case of rare categories) (<cite id="3" function="bas" polarity="pos">Teufel and Moens, 2002</cite>), <action>selected</action> 
+                    <kw>according to</kw> a <tool>classifier</tool> trained on a relevance gold standard (<cite id="4" function="bas" polarity="pos">Teufel and Moens, 2002</cite>), <kw>manually or randomly</kw> 
+                    <action>selected</action> (<cite id="5" function="bas" polarity="pos">Teufel, 2010</cite>, p.60). 
+                    
+                </context>
+               
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    <kw> More recently</kw> 
+                    <cite id="6" function="ack" polarity="neu">Contractor et al. (2012)</cite> 
+                    <action>have used</action> 
+                    <kw>automatically annotated argumentative zones</kw> (<cite id="7" function="use" polarity="pos">Guo et al., 2011</cite>) to guide the creation of extractive summaries of scientific articles. Here argumentative zones are used as features for the summariser, along with verbs, tf-idf values and sentence location. They use a standard approach to summarisation, with a binary classification recognising candidate sentences which are then fed into a clustering mechanism. Extracts can be created to summarise the entire paper or focus on specific user-specified aspects. The number of sentences to include in the summary is pre-specified (either directly or using a compression ratio). 
+                </context>
+              
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    Our approach also makes use of the scientific discourse for summarisation purposes. We use the scientific discourse to create a content model for extractive summarisation, with a focus on representing the content of the full paper, while keeping the cohesion of the narrative. <kw>We</kw> first <task>automatically annotate</task> the <data>articles</data>  
+                    <kw>with a</kw> 
+                    <method>scheme</method> which captures fine-grained aspects of the content and conceptual structure of the papers, <kw>namely the</kw> 
+                    <method>Core Scientific Concepts (CoreSC) scheme</method> (<cite id="8" function="bas" polarity="pos">Liakata et al., 2010; Li-akata et al., 2012)</cite>. The <method>CoreSC scheme</method>  
+                    <kw>is</kw> "<kw>uniquely suited to  </kw>  
+                    <feature>recovering common types</feature> of scientific arguments about hypotheses, explanations, and evidence" (<cite id="9" function="ack" polarity="pos">White et al., 2011</cite>), <kw>which are not readily identifiable</kw> 
+                    <kw>by other</kw> 
+                    <method>annotation schemes</method>. Also, <kw>when compared to</kw> 
+                    <method>argumentative zoning </method>and <kw>more specifically </kw>its extension for chemistry papers, <method>AZ-II </method>(<cite id="10" function="ack" polarity="pos">Teufel et al., 2009</cite>), <kw>it was shown</kw> 
+                    <action>to provide</action> a <kw>greater level of detail</kw> in terms of categories denoting objectives, methods and outcomes whereas AZ-II focusses on the attribution of knowledge claims and the relation with previous work (<cite id="11" function="con" polarity="pos">Liakata et al., 2010</cite>).
+                    
+                </context>
+                
+            </paragraph> 
+            <paragraph> 
+                We then use the distribution of CoreSC categories observed in abstracts to create a content model which provides a skeleton for extractive summaries. The reasoning behind this is to try to preserve cohesion within the summaries and we hypothesise that the sequence of CoreSC categories is a good proxy for cohesion (see section 3.1). In creating the summary, instantiating the content model, we identify independent categories and dependent categories, and we argue that in order to preserve the cohesion of the text the independent categories should be determined first (see section 3.2). We also preserve in the summary the distribution ofCoreSC categories found in the corresponding full paper. 
+            </paragraph> 
+            <paragraph> 
+                Finally, we evaluate the extractive summaries in a complex real world question-answering task, in which we assess the usefulness of the summaries as well as to what extent the generated CoreSC summaries represent the content of the original article. Experts are presented with different types of summaries and are asked to answer article-specific questions on the basis of the summaries (see section 4.1). Our results show that automatically generated CoreSC summaries can answer 66% of complex questions with 75% precision, outperforming a baseline of microsoft autosummarise summaries (See section 4.2). 
+            </paragraph> 
+            <paragraph> 
+                We have also peformed an intrinsic evaluation of the summaries using ROUGE and automatic measures for summary informativeness, such as the Jensen-Shannon divergence, yielding positive results (See section 4.2). However, as such measures have not yet reached maturity and are harder to interpret, we consider the user-based evaluation to be a more reliable measure of summary quality. 
+            </paragraph> 
+            <paragraph> 
+                Code for generating the summaries can be obtained by contacting the first author and/or visiting http://www.sapientaproject.com/software. 
+            </paragraph> 
+        </section> 
+        <section imrad="m"> 
+            <title>2 Related work</title> 
+            <paragraph> 
+                <context>
+                    The Core Scientific Concepts (CoreSC) Scheme: The CoreSC scheme consists of three layers; the first layer corresponds to eleven concepts (Background (BAC), Hypothesis (HYP), Motivation (MOT), Goal (MOD), Experiment (EXP), Observation (OBS), Result (RES) and Conclusion (CON)); <concept>the second layer</concept> 
+                    <action>corresponds to</action>  
+                    <concept>properties of the concepts</concept> (e.g. New/Old) and <concept>the third layer</concept> 
+                    <action>provides</action> 
+                    <concept>identifiers</concept> which link instances of the same category. <cite id="12" function="ack" polarity="neu" >Liakata et al. (2010)</cite> 
+                    <action>created</action> a <data>corpus</data> of 265 full scientific articles from chemistry and biochemistry annotated with this scheme <kw>and</kw> 
+                    <action>trained</action> 
+                    <tool>classifiers</tool> using SVMs and CRFs in (<cite id="13" function="ack" polarity="neu">Liakata et al., 2012</cite>), with an accuracy of >51% across the 11 concepts. Their data and CoreSC classification system are available online and can provide a good benchmark for comparison. ; <cite id="14" fucntion="ack" polarity="pos">Louis &amp; Nenkova (2012)</cite> 
+                    <kw>have successfully</kw> 
+                    <action>used</action> the <data>CoreSC corpus</data> for evaluating syntax-based coherence models, which indicates the strong connection between coherence and discourse structure. Summarisation for scientiic articles: <kw>A lot of the work</kw> on <action>summarising</action> 
+                    <data>scientific articles</data> has focussed on citation-based summaries. ; <cite id="15" function="ack" polarity="pos">Qazvinian &amp; Radev (2008)</cite> 
+                    <action>use</action> sentences from papers citing the article to be summarised. Sentences are clustered together creating a topic, with the combination ofclus-ters forming a citation summary network. Qazvinian &amp; <cite id="16" function="ack" polarity="neu">Radev (2010)</cite>, (<cite id="17" function="ack" polarity="pos">Qazvinian et al., 2010</cite>) <kw>also</kw> 
+                    <action>make use</action> of <data>citation sentences</data> in other scientific papers to summarize the contributions of a paper. The drawback of citation summaries is that a paper must be already cited, so this type of summary will not be useful to a paper reviewer. Also, citations of articles will have been influenced by other citations rather than the paper itself. 
+                    
+                </context>
+               
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    Document models for summarisation: <author>Our</author> 
+                    <data>content model</data> 
+                    <kw>has some similarities with</kw> 
+                    <concept>content modelling using global sentence ordering</concept> 
+                    <cite id="18" function="bas" polarity="pos">(Barzilay and Lee, 2004) </cite> unsupervised methods are used to create HMM topic sequence models for newswire text articles. Topics are assigned to texts according to the content model and extracts of fixed length are created by selecting the topics most likely to occur in summaries. While we use supervised methods to annotate papers with a fixed set of topics (CoreSCs) in scientific papers, our summary content model for extracts shares similar principles such as global ordering of sentences and non-recurrence. However, their evaluation involved newspaper articles and extracts which are a lot shorter (15 and 6 sentences, respectively). 
+                    
+                </context>
+                
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    <kw>It is not clear</kw> whether <method>unsupervised topic modelling</method> such as (<cite id="19" function="hed" polarity="neg">Chen et al., 2009</cite>) <kw>can be</kw> 
+                    <action>applied</action> to <paper>scientific articles</paper> (over 100 sentences long), which by nature include repetition of topics. <kw>It would be interesting</kw> 
+                    <action>to make comparisons</action> with summaries <action>using</action> 
+                    <concept>content models</concept> learnt from our data automatically, <kw>following a similar approach to</kw> (<cite id="20" function="use" polarity="pos">Sauper et al., 2010</cite>) which learns a content model jointly with a particular supervised task in web-based documents. 
+                    
+                </context>
+                
+            </paragraph> 
+         
+         
+            <title>3 Extractive Summarisation using</title> 
+            <paragraph> 
+                In this section we describe how we use CoreSC discourse categories annotated at the sentence level to create extractive summaries of full papers, which we subsequently evaluate in a question answering task in section 4. 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    To generate summaries we follow classic text extraction techniques while making use of a document content model based on CoreSCs. <author>Our</author> aim is for the content model to <task>reflect both the distribution of CoreSCs</task> in the <paper>paper</paper> 
+                    <kw>as well as</kw> the <concept>discourse model of human summaries</concept>, as the latter is indicated by the generic ordering of CoreSC categories in abstracts <kw>encountered in a corpus</kw> of 265 annotated full papers (<cite id="21" function="use" polarity="neu" >Liakata and Soldatova, 2009</cite>; <cite id="22" function="use" polarity="neu">Liakata et al., 2012</cite>). While we do not consider abstracts to be adequate summaries, we at least consider them to be coherent summaries, which is why the content model reflects the distribution of CoreSCs in the abstracts.      
+                </context>
+               
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    To create our summaries, <author>we</author> 
+                    <action>employed</action> 
+                    <data>automatically generated CoreSC annotations</data>, <kw>which are the output</kw> 
+                    <kw>of</kw> the <tool>classifiers</tool> described in (<cite id="23" function="bas" polarity="pos">Liakata et al., 2012</cite>). These classifiers assign CoreSC categories to sentences on the basis of features local to a sentence, such as significant n-grams, verbs and word triples, as well as global features such as the position of the sentence within the document and within a paragraph and section headers. The following subsections give details about the creation of extractive summaries from CoreSC categories. 
+                    
+                </context>
+                
+            </paragraph> 
+            <subsection> 
+                <subtitle>3.1 A content model for CoreSC extractive summaries</subtitle> 
+                <paragraph> 
+                    <context>
+                        <task>Building an extractive summary</task> 
+                        <action>using</action> a <method>computational model of document structure</method> 
+                        <kw>is an idea</kw>   
+                        <kw>shared by many previous approaches</kw>, whether the model is hand-crafted, based on rhetorical elements  <cite id="24" function="use" polarity="pos">(McKe-own, 1985;Teufel and Moens, 2002</cite>) or rhetorical relations (<cite id="25" function="use" polarity="pos">Marcu, 1998</cite>b; <cite id="26" function="use" polarity="pos">Marcu, 1998</cite>a) or whether it is a content model, learnt automatically from text as in (<cite id="27" function="use" polarity="pos">Barzilay and Lee, 2004</cite>), focussing on the local content or a combination of the local content and global structure (<cite id="28" function="use" polarity="pos">Sauper et al., 2010</cite>). 
+                        
+                    </context>
+                   
+                </paragraph> 
+                <paragraph> 
+                    <context>
+                        <author>Our</author> 
+                        <method>document content model</method> 
+                        <kw>is primarily based</kw> 
+                        <concept>on the global discourse</concept> of the article as provided by the type and number of CoreSC categories. <kw>However</kw>, <kw>unlike</kw> (<cite id="29" function="con" polarity="neu">Teufel and Moens, 2002</cite>), who take a fixed number of AZ categories of specific type to create rhetorical extracts, the number of categories used from each CoreSC category depends on their distribution in the original article. Any and all types of CoreSC category could potentially appear in a summary, as our summaries are meant to be representative of the entire content of the paper. Also, the ordering of the categories in the summary is learnt to reflect the ordering of categories observed in abstracts of papers from the same domain. 
+                        
+                    </context>
+                    
+                </paragraph> 
+                <paragraph> 
+                    <context>
+                        Our model also caters for local discourse dependencies. For example, <task>the selection of a particular 'Method' sentence</task> for inclusion in the summary <kw>should influence</kw> 
+                        <task>the choice of 'Experiment' sentences</task>, which refers to particular experimental procedures performed. <kw>This is not an issue of concern</kw> to (<cite id="30" function="ack" polarity="neu">Teufel and Moens, 2002</cite>), <kw>but relates to </kw>the notion of NUCLEUS and SATELLITE clauses, which form the foundation of Rhetorical Structure Theory (<cite id="31" function="bas" polarity="pos">Mann and Thompson, 1998</cite>), <kw>and guides the summarisation paradigm of</kw> (<cite id="32" function="bas" polarity="pos">Marcu, 1998</cite>a; <cite id="33" function="ack" polarity="pos">Marcu, 1998</cite>b). However, the difference here is that we define a-priori certain categories to be independent (have the property of playing the role of nucleus in the discourse) and specify their relation with particular types of dependent categories. Thus, nuclearity becomes a property of the CoreSC category, which is indirectly inherited by the sentence.                        
+                    </context>                  
+                </paragraph> 
+                <paragraph> 
+                    Therefore, when creating the CoreSC content model for summaries we addressed the following issues: (i) summary length; (ii) number of sentences from each CoreSC, (iii) the ordering in which sentences from each CoreSC category should appear and (iv) the extraction of sentences according to independent and dependent categories. 
+                </paragraph> 
+                <paragraph> 
+                    Summary length: <kw>While</kw> 
+                    <paper>the literature</paper> (<cite id="34" function="ack" polarity="neu" >Teufel, 2010</cite>, p.45) s<action>suggests </action>that <theory>20-30% of the original document is required</theory> for an adequately informative summary, (<cite id="35" function="ack" polarity="neu">Teufel, 2010</cite>, p.55) <kw>assumes</kw> 
+                    <kw>this is too long</kw> for scientific papers. For this reason and to allow better comparison between papers of varying lengths, we fixed our summary length to 20 sentences. This is reasonable considering we have 11 CoreSCs, any and all of which can appear in both abstracts and full papers. 
+                </paragraph> 
+                <paragraph> 
+                    Number of sentences from each category: To reflect the content of the paper, the distribution of the CoreSC categories in the extract follows the distribution of CoreSCs in the full paper. For each CoreSC we determine the number of sentences to be selected (n(selected(C))) by multiplying the ratio of that category in the paper by 20. A difficulty arises if the ratio of a particular concept in the paper is very low (&lt; 0.05) in which case we prefer to include one sentence. If a particular concept is not at all present in the paper, the number of selected sentences for that category will be 0. 
+                </paragraph> 
+                <paragraph> 
+                    <context>  
+                        Ordering of CoreSC categories in the summary: <kw>According to</kw> a <experiment>study of empirical summaries  </experiment> (<cite id="36" function="use" polarity="neu">Liddy, 1991</cite>),<data> sentences</data> of a particular textual type <action>appear</action> 
+                        <kw>in a particular order</kw>. Since paper abstracts were the closest approximation of human summaries available to us, CoreSC category transitions found in abstracts have been adopted in our content model for extracts. The transitions were derived semi-empirically. First, we extracted initial, medium and final bi-grams of categories from paper abstracts together with transition probabilities.                                             
+                    </context>
+                    
+                </paragraph> 
+                <paragraph> 
+                    <context>
+                        Using this information we manually constructed transitions of the CoreSC categories that best fit the observed frequencies and our own intuitions. This gave us the following sequence: MOT > (HYP) > OBJ > GOA > BAC > MOD > MET > EXP > OBS > (HYP) > RES > CON. HYP appears twice in the sequence as annotators had distinguished two types of hypotheses, global hypotheses (stated together with other objectives) and hypotheses about particular observations. The model provides an amalgamated representation of CoreSC concepts in abstracts. <kw>Interestingly</kw>, <author>our</author> 
+                        <method>semi-empirically derived model</method> 
+                        <kw>closely follows</kw> 
+                        <method>the content model for abstracts</method> 
+                        <kw>described in</kw> (<cite id="37" function="bas" polarity="pos">Liddy, 1991</cite>). It would be interesting to see how this compares to a Markov model of CoreSC categories learnt from the annotated abstracts. 
+                        
+                    </context>
+                    
+                </paragraph> 
+            </subsection> 
+            <subsection> 
+                <subtitle>3.2 Sentence extraction based on independent and dependent categories</subtitle> 
+                <paragraph> 
+                    <context>
+                        Sentence extraction involves selecting the most relevant sentences to include in a summary. Typically, this entails ranking the sentences according to some measure of salience and selecting the top n-best sentences. <kw>For example</kw>, <data>a sentence</data> 
+                        <kw>will be represented</kw> 
+                        <kw>by a number of features</kw> associated with it, <kw>such as </kw> whether it contains certain high frequency words or cue phrases, its location in the document, location in a paragraph (<cite id="38" function="ack" polarity="neu">Brandow et al., 1995</cite>; <cite id="39" function="ack" polarity="neu">Ku-piec et al., 1995)</cite>. Other methods include clustering based on sentence similarity and choosing the centroids (<cite id="40" function="ack" polarity="neu">Erkan and Radev, 2004</cite>) or choosing the best connected sentences (<cite id="41" function="ack" polarity="neu">Mihalcea and Tarau, 2004</cite>). 
+                        
+                    </context>
+                   
+                </paragraph> 
+                <paragraph> 
+                    <context>
+                        When sentences are classified according to CoreSC categories features such as the ones described above for text extraction are taken into account. <cite id="42" function="ack" polarity="neu">Liakata et al. (2012)</cite> 
+                        <action>report</action> 
+                        <kw>that the most salient</kw> 
+                        <data>features for classifying</data> CoreSC categories <kw>are overall</kw> 
+                        <concept>n-grams</concept>, verbs and direct objects whereas other features such as the location of the sentence, the neighbouring section headings and whether a sentence contains citations play an important role for some of the categories. Thus, classification into CoreSC categories already provides a selection bias for sentence extraction.                      
+                    </context>                    
+                </paragraph> 
+                <paragraph> 
+                    As explained in section 3.1, the number of CoreSC categories in the summaries is determined according to their distribution in the paper and the order of the categories is specified in the content model. Salience for sentence extraction in this case is determined by the need to select the most representative sentences for a category. There isn't much point, for example, in identifying that we need to include a Method sentence (MET) and that this should be followed by an Experiment sentence (EXP), if we are not sure that those are indeed the categories of the sentences we are about to select. 
+                </paragraph> 
+                
+                <paragraph> 
+                    <context>
+                        <author> We</author> therefore <task>rank sentences</task> 
+                        <kw>according to</kw> the <concept>classifier confidence score </concept>(probability) <kw>with which they were</kw> 
+                        <action>assigned</action> a CoreSC category in (<cite id="43" function="bas" polarity="pos">Liakata et al., 2012</cite>).
+                        
+                    </context>
+                    <context>
+                        The intuition behind this is that sentences with high classifier confidence will be less noisy, high precision cases and more representative of a particular category. <kw>Indeed</kw>, (<cite id="44" function="ack" polarity="neu">Liakata et al., 2012</cite>) <action>report</action> 
+                        <concept>statistical significance</concept> for the correlation between high classifier confidence and agreement between manual and automatic classification 
+                        
+                    </context>
+                     
+                </paragraph> 
+                <paragraph> 
+                    However, as mentioned in section 3.1, there is inter-dependence between sentences in the text, which is in turn inherited by the categories assigned to them. For example, the highest ranking MET sentence will be related to an Experiment (EXP) or Background (BAC) sentence, which may not be the ones with the highest confidence score in their category. 
+                </paragraph> 
+                <paragraph> 
+                    <context>
+                        In order to preserve discourse cohesion it is important to select related sentences from different categories. We resolve this by distinguising the CoreSCs into independent categories, which by definition are expected to show nucleus behaviour, and dependent categories. We also specify the relation between independent and dependent categories. <concept>The independent categories</concept> 
+                        <kw>include</kw> the <concept>categories</concept> 
+                        <kw>with the</kw> 
+                        <feature>lowest percentage</feature> of <data>sentences</data> in <paper>scientific articles</paper> 
+                        <kw>as reported in</kw> (<cite id="45" function="ack" polarity="neu">Liakata et al., 2012</cite>), namely: Motivation (MOT) (1%), Goal (GOA)(1%), Hypothesis (HYP)(2%), Object (OBJ)(3%), Model (MOD)(9%), Conclusion (CON)(9%) and Method (MET)(11%). Categories whose sentence selection semantically depends on the former are Experiment (EXP)(10%), Background (BAC)(19%), Result (RES)(21%) and Observation (OBS)(14%). The independent categories also have higher precision than recall, in contrast to the dependent categories. While MET and EXP are almost equally represented in the CoreSC corpus, EXP by definition provides the detailed steps of an experimental method and thus it is semantically dependent on some MET category. More specifically, the dependencies are considered to be as follows: EXP, BAC depend on MET, RES depends on CON and OBS depends on RES (OBS is double-dependent).  
+                        
+                    </context>
+                    
+                </paragraph> 
+                <paragraph> 
+                    <context>
+                        
+                    </context>
+                    The mechanism to select sentences for inclusion in the summary, which considers category dependencies, proceeds as follows: • For an independent category CatI, order sentences by decreasing order of confidence score. <concept>The confidence score</concept> 
+                    <kw>is the</kw> 
+                    <concept>average confidence score</concept> 
+                    <kw>of the</kw> 
+                    <tool>SVM and CRF classifiers</tool> 
+                    <kw>reported in</kw> (<cite id="46" function="bas" polarity="pos">Liakata et al., 2012</cite>) for a sentence. • For a dependent category Cat, for which we need n sentences, given the selected sentences m from the corresponding independent category CatI we do the following: • If m = 0, then treat Cat as independent category for this case. • Otherwise, for each selected sentence tj in CatI, calculate its proximity score to every sentence Cj of the dependent category Cat. Proximity is defined as 1 — Distance where Distance is an absolute difference in sentence ids between cj and tj normalised by the maximum absolute distance found between all Cj and tj pairs. • The classifier prediction score for each Cj is multiplied by the Proximity(cj,tj) score and the sentences are re-ranked according to the new scores, where only the n highest ranking cjs are kept. The last two steps result in an m x n matrix. • If m = 1 , then the choice for the n sentences for Cat is straightforward. • Otherwise, we pick the n highest ranking cjs, proceeding row-wise. Thus, the highest ranking cjs for the highest ranking independent sentences tj are given priority and any cj is chosen at most once. 
+                </paragraph> 
+                <paragraph> 
+                    Once the sentence ids are selected for each independent and each dependent category we plug them into the content model. Sentence order is preserved within each CoreSC category. For example, if two Result sentences are selected, the order in which they appear in the paper will be preserved in the summary. 
+                </paragraph> 
+            </subsection> 
+     
+        
+            <title>4 Summary evaluation via question answering</title> 
+            <subsection> 
+                <subtitle>4.1 Task Description and experimental setup</subtitle> 
+                <paragraph> 
+                    <context>
+                        We evaluate the extractive CoreSC summaries in terms of how well they enable 12 chemistry ex-perts/evaluators (with at least a Masters degree in chemistry) to answer complex questions about the papers. <author>Our</author> 
+                        <data>test corpus</data> consists of 28 papers held out from the ART/CoreSC corpus, roughly 1/9, <kw>which were</kw> 
+                        <action>annotated</action> automatically <kw>with the</kw> 
+                        <tool>SVM and CRF classifiers </tool> 
+                        <action>described in</action> (<cite id="47" function="bas" polarity="pos">Liakata et al., 2012</cite>) trained on the remaining 8/9 of the corpus. For each of the 28 papers in the test corpus, we generated CoreSC summaries automatically using the method described in section 3. We compare the performance of the experts on a question answering (Q-A) task when given the CoreSC summaries and two other types of summary, amounting to a total of three experimental conditions (A,B,C). The other two types of summary are the original paper abstracts (summaries A), in the absence of human summaries, and summaries generated by Microsoft Office Word 2007 AutoSummarize (summaries B). 
+                    </context>
+                   
+                </paragraph> 
+                <paragraph> 
+                    <context>
+                        <tool>Microsoft Office Word 2007 AutoSummarize (MA)</tool> 
+                        <kw>is a widely available</kw> commercial system <kw>with reportedly good results</kw> (<cite id="48" function="use" polarity="pos">Garcia-Hernandez et al., 2009</cite>) <kw>and performance equivalent to</kw> 
+                        <tool>TextRank</tool>  
+                        <cite id="49" function="use" polarity="pos">(Mi-halcea and Tarau, 2004</cite>). MA works by assigning a score to each word in a sentence depending on its frequency in the document and sentences are ranked and extracted according to the combination ofscores of the words they contain. MA therefore follows classic lexicalised text extraction techniques, is domain independent and is completely agnostic of the discourse. For the latter reason, we considered MA to be a suitable baseline the comparison with which would illustrate the effect of using CoreSC categories on the summary and the merits of having a discourse based model for summarisation. 
+                        
+                    </context>
+                   
+                </paragraph> 
+                <paragraph> 
+                    Neither the paper title nor section headings were available to any of the summarising systems as our extractive system does not make direct use of them and we were not sure how they would influence MA. 
+                </paragraph> 
+                <paragraph> 
+                    To ensure that each evaluator considered only one type of summary per paper, so as to avoid bias from previous stimuli, and to make sure all experts were exposed to all papers and all types of summary, the 12 experts were assigned to four groups (G1-G4) and were allocated 28 summaries each according to the Latin Square design in Table 
+                </paragraph> 
+                <paragraph> 
+                    <context>
+                        <experiment>The experimental setup</experiment> 
+                        <kw>follows the paradigm of</kw> (<cite id="50" function="bas" polarity="pos">Teufel, 2001</cite>). 
+                    </context>
+                    <context>
+                        <kw>However</kw>, <kw>while </kw>  (<cite id="51" function="con" polarity="neu">Teufel, 2001</cite>) <action>developed</action> a <task>Q-A task </task> to evaluate summaries showing the contribution of a scientific article in relation to previous work, <kw>the purpose of the</kw> 
+                        <task>Q-A task</task> at hand <kw>is to show </kw> 
+                        <kw>the usefulness of the</kw> 
+                        <data>extracted summaries</data> in answering questions on the paper, and how they compare to a discourse-agnostic baseline. <kw>In the case of</kw> (<cite id="52" function="con" polarity="neu">Teufel, 2001</cite>) <task>the task</task> 
+                        <kw>consists of a</kw> 
+                        <method> fixed set of five questions</method>, the same for all articles tuned particularly to the relation of current and previous work. <kw>By contrast</kw>, <kw>the current</kw> 
+                        <task>Q-A task</task> 
+                        <kw>aims to show</kw> 
+                        <feature>how well the summaries represent</feature> the content of the entire paper, which means that questions are individual to each paper and required domain knowledge to create.                       
+                    </context>                 
+                </paragraph> 
+                <paragraph> 
+                    Each of the 12 experts answered three content-based questions per summary, where the questions were individual to each paper. An example of the questions and the corresponding answers for a given paper can be found below. • Q: What do DNJ imino sugars inhibit the action of? A: They inhibit glycosidases and ceramide glucosyl-transferases. • Q: What methods do the authors use to study the conformation of N-benzyl-DNJ? A: They use resonant two-photon ionization (R2PI), ultraviolet-ultraviolet (UV-UV) hole burning, and infrared (IR) ion-dip spectroscopies in conjunction with electronic structure theory calculations. • Q: What is the conformation of the exocyclic hydrox-ymethyl group? A: The exocyclic hydroxymethyl group is axial to the piperidine ring (gauche- to the ring nitrogen). 
+                </paragraph> 
+                <paragraph> 
+                    As one can see, the questions are complex wh-questions and correspond to answers with multiple components. Questions were complex, to minimise the likelihood of correct random answers. They were designed by a senior chemistry expert with knowledge of linguistics, so that they could be answered based on the abstracts (A). For this purpose, the senior expert chose abstracts that were at least three sentences long. Ideally, the questions and answers should have been set on the basis of the entire paper, but this was not possible given our timeframe for the experiment. The underlying assumption is that a good summary should cover most ofthe main points of the paper. One of the merits of setting the questions on the basis of the abstracts was that the answers to be identified were deemed sufficiently important to be expressed in the humanly created abstract. However, automatic summaries created in the way proposed here could potentially answer questions beyond the scope of the abstract and in cases of very short abstracts be much more informative. 
+                </paragraph> 
+                <paragraph> 
+                    Experts were told that summaries were automatically generated with no details about different types of summary; it is assumed that none of them is completely familiar with the work mentioned in the 28 papers. 
+                </paragraph> 
+                <paragraph> 
+                    On average, it took experts less than 10 minutes to read a summary and answer the three content-based questions. 
+                </paragraph> 
+            </subsection> 
+           
+        </section>
+        <section imrad="r">
+            <subtitle>4.2 Results and Discussion</subtitle> 
+            <paragraph> 
+                We compared each evaluator's answers obtained after reading a summary against the model answers set by the senior expert, the author of the questions, based on the abstract (A) of the corresponding paper. If an evaluator's answer is identical to a model answer, then this counts as "matched". 
+            </paragraph> 
+                
+            <paragraph> 
+                For instance in example 4.1.1 above, "axial to the piperidine ring", "gauche- to the ring nitrogen" and "The OH6 group is axial (Gauche) to the ring nitrogen" were all considered correct, fully matched answers to the question "What is the conformation of the exocyclic hydroxymethyl group?". In the case of the second question in the same example all of the following were considered correct and fully matched: "Resonant two-photon ionization (R2PI), UV/UV hole-burn, and IR ion-dip spectroscopies in conjunction with electronic structure theory calculations", "R2PI UV/UV hole-burn IR ion-dip e- structure theory calculations" and "a combination of resonant two-photon ionization (R2PI), UV/UV hole-burn, and IR ion-dip spectroscopies in conjunction with electronic structure theory calculations". 
+            </paragraph> 
+            <paragraph> 
+                If the answer requires listing more than one item (as is the case with questions one and two of example 4.1.1), all of the items have to be matched. Partially matched answers are counted as "partially matched". Non-matching answers can be of two types. If an un-matched answer coincided with the answer the senior expert would have given after reading that particular summary, then it was marked as "un-matched:justified": Such answers were correct given the particular summary, but are not necessarily correct with respect to the paper and do not count as alternative answers. If the answer was un-matched and also unjustified given the content of the summary, then it was marked as "un-matched:unjustified" . These are cases of evalua-tor error. Similarly, cases where the evaluator gave "N/A" as an answer were marked as "justified" or "unjustified" according to whether the senior expert could find the answer in the summary or not. The results from marking answers are shown in Table 2. 
+            </paragraph> 
+            <paragraph> 
+                We report Precision, Recall and F-score (P-R-F) for answering questions given each type of summary (Table 3). To calculate these we define TP as matched answers, FN as N/A:justified and FP everything else (partially matched + un-matched:justified + un-matched:unjustified + N/A:unjustified). Here, the standard definition of recall (TP/(TP+FN)) demonstrates how many questions can be answered using the summary (summary coverage) and Precision (TP/(TP+FP)) how well the questions are answered (summary clarity). 
+            </paragraph> 
+            <paragraph> 
+                We consider the F-measure to be an overall indicator of the summary usefulness. Micro-averaging is obtained by adding all answers from all papers to calculate TP, FN and FP whereas macro-averaging calculates P-R-F first per paper and then averages over all papers. 
+            </paragraph> 
+            <paragraph> 
+                The rankings remain consistent regardless of the averaging method. Condition A (abstracts) shows perfect Recall (the evaluators are able to answer all the questions) whereas Precision is affected by unjustified failed matches (Table 2). The perfect recall is hardly surprising as the questions are designed on the basis of the abstract but provides a sanity check for the experiment. The precision sets an upper bound for precision with automatic summaries. Summaries of condition C provide answers to more questions (Recall) and with greater accuracy (Precision) than summaries B. When macro-averaging, the Recall score of summaries C is tied with that for summaries B but Precision is 6% higher. 
+            </paragraph> 
+            <paragraph> 
+                To verify the statistical significance for the difference in precision and recall for summaries B and C respectively, we performed Monte Carlo sampling 10000 times, for the populations of answers for summaries B and C. During each iteration of sampling, precision and recall were calculated, creating populations of 10000 recalls and 10000 precisions propagated to be representative of the original population of answers. A t-test performed on the population of precision and the population of recalls showed statistical significance at 95% in both cases, with summaries C having a precision of 5% higher and a recall of 1.4-1.6% higher than summaries B (see Table 4). Therefore, we can say that CoreSC summaries C are overall better for answering questions than summaries B. 
+            </paragraph> 
+            <paragraph> 
+                The difference in precision between summaries B and C shows the advantage of having a content model: summaries C are significantly clearer. We had also expected CoreSC summaries to have a much higher coverage than summaries B, and therefore significantly higher recall. However, this difference was less pronounced perhaps because au-tosummarize favours shorter sentences, which are more likely to be found in the abstracts. We expect that a refinement in the sentence selection criterion, which would also take sentence length into account, will help to showcase further the benefits of using a CoreSC-based content model. 
+            </paragraph> 
+            <paragraph> 
+                Analysis using ROUGE showed that while summaries C had a slightly higher ROUGE-1 measure than summaries B (0.75 vs 0.73), with respect to abstracts, ROUGE-L was the same for the two (0.70). 
+            </paragraph> 
+            <paragraph> 
+                  
+                <context>
+                    In table 5
+                    <author>we</author> also <action>report</action> 
+                    <result>measurements on summary informativeness </result>   
+                    <kw>based on</kw> 
+                    <concept>divergence</concept> (Kull-back Leibler (KL) divergence and Jensen Shannon (JS) divergence), <kw>as in</kw> (<cite id="53" function="bas" polarity="pos">Louis and Nenkova, 2013</cite>). KL divergence is asymmetric and reflects the average number of bits wasted by coding samples of a distribution P using another distribution Q. JS divergence is an information-theoretic measure, reflecting the average distance of the KL divergence between summary and input (the full paper in our case) from the mean vocabulary distributions. 
+                </context>
+                <context>
+                    <kw>Compared to other</kw> 
+                    <concept>measures</concept>, <concept>JS divergence</concept> 
+                    <kw>has been found to</kw> 
+                    <action>produce</action> 
+                    <kw>the best predictions of</kw> 
+                    <concept>summary quality</concept> (<cite id="54" function="ack" polarity="pos">Louis and Nenkova, 2013</cite>). In practice, what JS divergence tells us is how 'different'/divergent the summary is from the original paper. Low divergence scores are indicative of greater overlap between the summaries and the original paper and are considered positive in terms of the summary information content.                       
+                </context>                    
+            </paragraph> 
+            <paragraph> 
+                B: Autosummarize, C: CoreSC, random: random summaries each 20 sentences long for each paper. KLI-S: Average Kullback Leibler divergence between input and summary. KLS-I: Kullback Leibler divergence between summary and input, since KL divergence is not symmetric. UnJSD: Jensen Shannon divergence between input and summary. No smoothing. SJSD: A version with smoothing. 
+            </paragraph> 
+            <paragraph> 
+                One can see the that CoreSC summaries have consistently lower divergence (both KL and JS) than microsoft autosummarise summaries and random summaries of the same length. This is a positive outcome but since such automatic measures of summary quality have not yet reached maturity and are harder to interpret, we consider the manual evaluation a more reliable indicator of summary informa-tiveness and usefulness. Note that it is not appropriate to use divergence to assess the abstracts as this measure is influenced by the length of a text, which varies dramatically in the case of abstracts. 
+            </paragraph> 
+        </section>
+   
+        <section imrad="d"> 
+            
+            <title>5 Conclusions and future work</title> 
+            <paragraph> 
+                We have shown how a content model based on the scientific discourse as annotated by the CoreSC scheme can be used to produce extractive summaries. These summaries can be generated as alternatives to abstracts. Since they preserve the distribution of CoreSCs in the paper and are not produced independently of it, as is the case with many abstracts, they are potentially more representative of abstracts than the full article. We have tested the usefulness CoreSC based summaries in answering complex questions relating to the content of scientific papers. Extracts from automated CoreSCs are informative, outperform microsoft autosummarise summaries, in both intrinsic and extrinsic evaluation, and enable experts to answer 66% of complex questions with a precision of 75%. 
+            </paragraph> 
+            <paragraph> 
+                In the future we would like to experiment further with refining the sentence selection method so as to consider criteria for local cohesion, such as lexical chains. We would also like to perform comparisons with automatically induced content models and check their viability for scientific articles. We also would like to perform a human based evaluation of coherence and explore the full potential of these summaries as alternatives to author-written abstracts. This work constitutes a very important step in producing automatic summaries of scientific papers and enabling experts to extract information from the papers, a major requirement for resource curation, which is dependent on constant reviewing of the literature.  
+            </paragraph> 
+       
+            <title>Acknowledgements</title> 
+            <paragraph> 
+                This work has been funded by an Early Career Leverhulme Trust Fellowship to Dr Liakata and by EMBL-EBI, UK. The authors would like to thank Annie Louis, Yufan Guo, Simone Teufel, Stephen Clark and the anonymous reviewers for their valuable comments. We would also like to thank Mo Abrahams for the python version of the summarisation code and the cafe summary toolkit. 
+            </paragraph> 
+        </section> 
+    </paper>
+</annotatedpaper>

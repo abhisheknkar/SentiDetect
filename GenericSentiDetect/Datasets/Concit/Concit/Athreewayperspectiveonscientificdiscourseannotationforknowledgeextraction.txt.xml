@@ -1,0 +1,389 @@
+<annotatedpaper>
+    <paper title="A three-way perspective on scientific discourse annotation for knowledge extraction" authors="Maria Liakata, Paul Thompson, Anita de Waard, Henk Pander Maat, Sophia Ananiadou, Raheel Nawaz " year="2012"> 
+        <section> 
+            <title>A three-way perspective on scientific discourse annotation for knowledge extraction</title> 
+            Maria Liakata 
+            Aberystwyth University,UK/ 
+            liakata@ebi.ac.uk 
+            Paul Thompson 
+            University of Manchester, UK 
+            paul.thompson@manchester. 
+            ac.uk 
+            Anita de Waard 
+            Elsevier Labs, USA/ 
+            UiL.OTS, Universiteit Utrecht,NL 
+            a.dewaard@elsevier.com 
+            Raheel Nawaz 
+            University of 
+            Manchester, UK 
+            raheel.nawaz@cs.man. 
+            ac.uk 
+            Henk Pander Maat 
+            UiL.OTS, Universiteit Utrecht,NL 
+            h.l.w.pandermaat@uu.nl 
+            Sophia Ananiadou 
+            University of Manchester, UK 
+            sophia.ananiadou@manchester. 
+            ac.uk 
+        </section> 
+        <section> 
+            <title>Abstract</title> 
+            <paragraph> 
+                This paper presents a three-way perspective on the annotation of discourse in scientific literature.We use three different schemes, each of which focusses on different aspects of discourse in scientific articles, to annotate a corpus of three full-text papers, and compare the results.One scheme seeks to identify the core components of scientific investigations at the sentence level, a second annotates metaknowledge pertaining to bio-events and a third considers how epistemic knowledge is conveyed at the clause level.We present our analysis of the comparison, and a discussion of the contributions of each scheme. 
+            </paragraph> 
+        </section> 
+        <section imrad="i"> 
+            <title>1 Introduction</title> 
+            <paragraph> 
+                <context>
+                    The literature boom in the life sciences over the past few years has sparked increasing interest into <tool>text mining tools</tool>, which <kw>facilitate</kw> the <task>automatic extraction</task> of useful knowledge from text (<cite id="1" function="use" polarity="neu">Ananiadou et al., 2006</cite>; <cite id="2" function="use" polarity="neu">Ananiadou &amp; McNaught, 2006</cite>; <cite id="3" function="use" polarity="neu">Zweigenbaum et al., 2007</cite>; <cite id="4" function="use" polarity="neu">Cohen &amp; Hunter, 2008</cite>).
+                </context>
+                <context>
+                    <kw>Most  of these</kw> 
+                    <tool>tools</tool>  have focussed on entity recognition and relation extraction and with few exceptions, e.g., (<cite id="5" function="wea" polarity="neg">Hyland, 1996</cite>; <cite id="6" function="wea" polarity="neg">Light et al., 2004</cite>; Sandor, 2007; <cite id="7" function="wea" polarity="neg" >Vincze et al., 2008</cite>), <kw>do not take</kw> into account the <concept>discourse context</concept> of the knowledge extracted. However, failure to take this context into account results in the loss of information vital for the correct interpretation of extracted knowledge,
+ 
+                </context> 
+
+                e.g. the scope of the relations, or the level of certainty with which they are expressed.A particular piece of knowledge may represent, e.g., an accepted fact, hypothesis, results of an experiment, analysis based on experimental results, factual or speculative statements etc. Furthermore, this knowledge may represent the author's current work, or work reported elsewhere.The ability to recognise different discourse elements automatically provides crucial information for the correct interpretation of extracted knowledge, allowing scientific claims to be linked to experimental evidence, or newly reported experimental knowledge to be isolated.
+                <context>                              
+                    The importance of categorising such knowledge becomes more pronounced as analysis moves from abstracts to full papers, where the content is richer and linguistic constructions are more complex (<cite id="8" function="ack" polarity="neu">Cohen et al., 2010</cite>).Analysis of full papers is extremely important, since less than 8% of scientific claims occur in abstracts (<cite id="9" function="ack" polarity="neu">Blake, 2010</cite>). 
+                </context>                                                  
+            </paragraph> 
+            <paragraph> 
+                Various different schemes for annotating discourse elements in scientific texts have been proposed.The schemes vary along several axes, including perspective, motivation, complexity and the granularity of the units of text to which the scheme is applied.Faced with such variety, it is important to be able to select the best scheme(s) for the purpose at hand.Answers to questions such as the following can help in the selection process: 
+            </paragraph> 
+            <paragraph> 
+                1.What are the relative merits of the different schemes?2.What are the similarities and differences between schemes?3.Can annotation according to multiple schemes provide enhanced information?4.Is there any advantage in merging annotation schemes or is it better to allow complementary and different dimensions of scientific discourse annotation?As a starting point to addressing such questions, we provide a comparison of three different schemes for the annotation of discourse elements within scientific papers.Each scheme has a different perspective and motivation:, one is content-driven, seeking to identify the main components of a scientific investigation, another is driven by the need to describe events of biomedical relevance and the third focusses on how epistemic knowledge is conveyed in discourse.These different viewpoints mean that the schemes vary in both the type and complexity of the discourse elements identified, as well as the types of units to which the annotation is applied, i.e. complete sentences, segments of sentences, or specific relations/events occurring within these sentences.To facilitate the comparison, we have annotated three full papers according to each of the schemes.The analysis resulting from this three-way annotation considers mappings between schemes, their relative merits, and how the information annotated by the different schemes can complement each other to provide enriched details about knowledge extracted from the texts.In the following sections, we firstly provide a description of the three schemes, and then explain how they have been used in our corpus annotation.Finally we discuss the results from the comparison, and the features of each scheme. 
+            </paragraph> 
+            <paragraph> 
+                As a starting point to addressing such questions, we provide a comparison of three different schemes for the annotation of discourse elements within scientific papers.Each scheme has a different perspective and motivation:, one is content-driven, seeking to identify the main components of a scientific investigation, another is driven by the need to describe events of biomedical relevance and the third focusses on how epistemic knowledge is conveyed in discourse. 
+            </paragraph> 
+            <paragraph> 
+                These different viewpoints mean that the schemes vary in both the type and complexity of the discourse elements identified, as well as the types of units to which the annotation is applied, i.e. complete sentences, segments of sentences, or specific relations/events occurring within these sentences.To facilitate the comparison, we have annotated three full papers according to each of the schemes.The analysis resulting from this three-way annotation considers mappings between schemes, their relative merits, and how the information annotated by the different schemes can complement each other to provide enriched details about knowledge extracted from the texts. 
+            </paragraph> 
+            <paragraph> 
+                In the following sections, we firstly provide a description of the three schemes, and then explain how they have been used in our corpus annotation.Finally we discuss the results from the comparison, and the features of each scheme. 
+            </paragraph> 
+        </section> 
+        <section imrad="m"> 
+            <title>2 Sentence annotation: CoreSC scheme</title> 
+            <paragraph> 
+                The reasoning behind this scheme is that a paper is the human-readable representation of a scientific investigation.Therefore, the goal of the annotation is to retrieve the content model of scientific investigations as reflected within scientific discourse.The hypothesis is that there is a set of core scientific concepts (CoreSC), which constitute the key components of a scientific investigation. 
+                <context>
+                    <data>CoreSCs</data> 
+                    <kw>consist of</kw> 
+                    <concept>11 concepts </concept>originating <kw>from the</kw> 
+                    <data>CISP</data> (Core Information about Scientific Papers) meta-data (<cite id="10" function="bas" polarity="pos">Soldatova &amp; Liakata, 2007</cite>), <kw>Which are</kw> a <kw>subset of</kw> classes from the <data>EXPO ontology</data> for the description of scientific experiments (<cite id="11" function="bas" polarity="pos">Soldatova &amp; King, 2006</cite>).
+                </context>              
+                The CoreSCs are: Motivation, Goal, Object, Background, Hypothesis, Method, Model, Experiment, Observation, Result and Conclusion.                                            
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    The CoreSC scheme (<cite id="12" function="ack" polarity="neu">Liakata et al., 2010</cite>; <cite id="13" function="ack" polarity="neu">Liakata et al., 2012</cite>) implements the above-mentioned concepts as a 3-layered sentence-based annotation scheme.                
+                </context>
+                This means that each sentence in a document is assigned one of the 11 CoreSC concepts.The scheme also considers a layer designated to properties of the concepts (e.g.New Method vs Old Method) as well as identifiers which link instances of the same concept across sentences.A short definition of CoreSC categories and their properties can be found in Table 1. 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    The <method>CoreSC scheme</method> is accompanied by 47-page annotation guidelines, and <kw>has been used</kw> by 16 domain experts <kw>to</kw> 
+                    <task>annotate a corpus</task> of 265 full papers from physical chemistry &amp; biochemistry (<cite id="14" function="use" polarity="neu">Liakata &amp; Soldatova, 2009</cite>; <cite id="15" function="use" polarity="neu">Liakata et al., 2010</cite>).                 
+                </context>
+                
+                <context>
+                    This corpus consists of 40,000 sentences, containing over 1 million words and was developed in three phases (for details see <cite id="16" function="ack" polarity="neu">Liakata et al. (2012)</cite>).               
+                </context>               
+                <context>
+                    <concept>Inter-annotator</concept> agreement between experts <action>was measured</action> 
+                    <kw>in terms of </kw>  
+                    <concept>Cohen's kappa</concept> (<cite id="17" function="bas" polarity="pos">Cohen, 1960</cite>)
+                </context>
+
+                on 41 papers and ranged between 0.5 and 0.7.Machine learning classifiers have been trained on the CoreSC corpus, achieving > 51% accuracy across the eleven categories.
+                <context>
+                    The most accurately predicted category is Experiment, the category describing experimental methods (<cite id="18" function="ack" polarity="neu">Liakata et al., 2012</cite>).
+                </context>
+                <context>
+                    <tool>Classifiers</tool> 
+                    <action>trained</action> on 1000 Biology abstracts <kw>annotated with</kw> 
+                    <tool>CoreSC</tool> 
+                    <action>have obtained </action>  an <concept>accuracy</concept> of <kw>over 80%</kw>   (<cite id="19" function="ack" polarity="pos">Guo et al., 2010.</cite>)                    
+                </context> 
+                <context>               
+                    <data>Models</data> 
+                    <action>trained</action> on the CoreSC corpus papers <kw>have been used to</kw> 
+                    <action>create</action> 
+                    <concept>automatic summaries</concept> of the papers, which have been evaluated in a question answering task (<cite id="20" function="bas" polarity="pos">Liakata et al., 2012</cite>
+                </context>
+                    
+                Lastly, the CoreSC scheme was used to annotate 50 papers from Pubmed Central pertaining to Cancer Risk Assessment.A web tool (SAPIENTA) allows users to annotate their full papers with Core Scientific concepts, and can be combined with manual annotation.A UIMA framework implementation of this code for large-scale annotation of CoreSC concepts is in progress                                             
+            </paragraph> 
+        
+            <title>3 Event annotation: Meta-knowledge for bio-events</title> 
+            <paragraph> 
+                The motivation for this annotation scheme is to allow the training of more sophisticated event-http : //www. sapientaproj ect. com/software http://uima.apache.org/based information extraction systems. 
+                <context>                                                                                                                            
+                    <kw>In contrast to</kw> the <method>sentence-based scheme</method> described in section 2, this 
+                    <method>scheme </method> 
+                    <action>is applied </action> at the level of events (<cite id="21" function="con" polarity="neu">Ananiadou et al., 2010</cite>), of which there may be several within a single sentence. 
+                </context>
+            </paragraph> 
+ 
+            <subsection> 
+                <subtitle>3.1 Bio-Events</subtitle> 
+                <paragraph> 
+                    Events are template-like, structured representations of pieces of knowledge contained within sentences. 
+                </paragraph> 
+                <paragraph> 
+                    Events are template-like, structured representations of pieces of knowledge contained within sentences.Normally, events are "anchored" to a trigger (typically a verb or noun) around which the knowledge expressed is organised.Each event has one of more participants, which describe different aspects of the event.Participants can correspond to entities or other events, and are often labelled with semantic roles, e.g., CAUSE, THEME, LOCATION, etc.The work described here focusses specifically on bio-events, which are complex structured relations representing finegrained relations between bio-entities and their modifiers.Figure 1 provides some examples of bio-events.
+                    <context>
+                        Event extraction systems (Björne et al., 2009; <cite id="22" function="ack" polarity="neu">Miwa et al., 2010</cite>; <cite id="23" function="ack" polarity="neu">Miwa et al., 2012</cite>; <cite id="24" function="ack" polarity="neu">Quirk et al., 2011</cite>) are typically trained on text corpora, in which events and their participants have been manually annotated by domain experts.
+                    </context>
+                    <context>
+                        Research into bio-event extraction has been boosted by the two recent shared tasks at BioNLP 2009/2011 (<cite id="25" function="ack" polarity="neu">Kim et al., 2011</cite>; Pyysalo et al., In Press).
+                    </context>
+                    <context>
+                        Several gold standard event annotated corpora exist; examples include the GENIA Event Corpus (<cite id="26" function="ack" polarity="neu">Kim et al., 2008</cite>), GREC (<cite id="27" function="ack" polarity="neu">Thompson et al., 2009</cite>) and Biolnfer (<cite id="28" function="ack" polarity="neu">Pyysalo et al., 2007</cite>), in addition to the corpora produced for the shared tasks.Fmure 1.Bio-Event Reoresentation                   
+                    </context>                  
+                </paragraph> 
+            </subsection> 
+ 
+            <subsection> 
+                <subtitle>3.2 Meta-knowledge Annotation</subtitle> 
+                <paragraph> 
+                    <context>
+                         Until recently, the only attempts to recognise information relating to the correct interpretation of events were restricted to sparse details regarding negation and speculation (<cite id="29" function="ack" polarity="neu">Kim et al., 2011</cite>). 
+                    </context>
+                   
+                </paragraph> 
+                <paragraph> 
+                    <context>
+                             <kw>In order to</kw> <task>address this problem</task>, a <method>multidimensional annotation scheme</method> especially tailored to bio-events <kw>was developed</kw> (<cite id="30" function="use" polarity="neu">Nawaz et al., 2010</cite>; <cite id="31" function="use" polarity="neu">Thompson et al., 2011</cite>).
+                    </context>
+                              The scheme identifies and categorises several different types of contextual details regarding events (termed meta-knowledge), including discourse information.Different types of meta-knowledge are encoded through five distinct dimensions (Figure 2).The advantage of using multiple dimensions is that the interplay between the assigned values in each dimension can reveal both subtle and substantial differences in the types of meta-knowledge expressed. 
+                        
+                   
+              
+                </paragraph> 
+                <paragraph> 
+                    In the majority of cases, meta-knowledge is expressed through the presence of particular "clue" words or phrases, although other features can also come into play, such as the tense of the event trigger, or the relative position within the text. 
+                </paragraph> 
+                <paragraph> 
+                    ParticipantsBio-EventClass / TypeKnowledge TypeHyper-DimensionsFigure 2: Meta-knowledge annotation 
+                </paragraph> 
+                <paragraph> 
+                    The annotation task consists of assigning an appropriate value from a fixed set for each dimension, as well as marking the textual evidence for this assignment.The five meta-knowledge dimensions and their values are as follows: 
+                </paragraph> 
+                <paragraph> 
+                    Knowledge Type (KT): Captures the general information content of the event.Each event is classified as one of: Investigation (enquiries and examinations, etc.), Observation (direct experimental observations), Analysis (inferences, interpretations and conjectures, etc.), Fact (known facts), Method (methods) or Other (general events that provide incomplete information or do not fit into any other category). 
+                </paragraph> 
+                <paragraph> 
+                    Certainty Level (CL): Encodes the confidence or certainty level ascribed to the event in the given text.The epistemic scale is partitioned into three distinct levels: L3 (no expression of uncertainty), L2 (high confidence or slight speculation) and L1 (low confidence or considerable speculation). 
+                </paragraph> 
+                <paragraph> 
+                    Polarity: Identifies negated events.Negation is defined as the absence or non-existence of an entity or a process. 
+                </paragraph> 
+                <paragraph> 
+                    Manner: Captures information about the rate, level, strength or intensity of the event, using three values: High, Low, or Neutral (no indication of rate/intensity). 
+                </paragraph> 
+                <paragraph> 
+                    Source: Encodes the source of the knowledge being expressed by the event as Current (the current study) or Other (any other source) 
+                </paragraph> 
+                <paragraph> 
+                    Of these five dimensions, only KT, CL and Source were considered during the comparison with the other two schemes, since they are directly related to discourse analysis. 
+                </paragraph> 
+                <paragraph>
+                    <context>
+                        The <data>GENIA event corpus</data>, consisting of 1000 abstracts with 36,115 events (<cite id="32" function="bas" polarity="pos">Kim et al., 2008</cite>) <kw>has been annotated</kw> with meta-knowledge by 2 annotators, <kw>supported by</kw> <method>64-page annotation guidelines</method> (<cite id="33" function="bas" polarity="pos" >Thompson et al., 2011</cite>).
+                        
+                    </context>   
+                                 
+                    <context>
+                        Inter-annotator agreement rates ranged between 0.840.93 (Cohen's Kappa).<experiment>Research</experiment> <kw>has been carried out</kw> <kw>into the</kw> <task>automatic assignment of Manner values to events</task> <cite id="34" function="bas" polarity="pos">(Nawaz et al., In Press)</cite>. <kw>In addition</kw>, the <tool>EventMine-MK service</tool> <cite id="35" function="bas" polarity="pos">(Miwa et al., In Press)</cite>, <kw>based on</kw> <tool>EventMine</tool> (<cite id="36" function="bas" polarity="pos">Miwa et al., 2010</cite>) facilitates automatic extraction of biomedical events with meta-knowledge assigned.
+                        
+                    </context>              
+The performance of EventMine-MK in assigning different meta-knowledge values to events ranges between 57% and 87% (macro-averaged F-Score) on the BioNLP'09 Shared Task corpus (Kim et al, 2011).
+                    <context>
+                        <tool>EventMine-MK</tool> <kw>is available</kw> <kw>as a component of</kw> the <tool>U-Compare interoperable text mining system</tool> (<cite id="37" function="use" polarity="neu">Kano et al., 2011</cite>).                     
+                    </context>
+                     
+                    
+                </paragraph> 
+            </subsection> 
+        
+            <title>4 Clause annotation: epistemic knowledge</title> 
+            <paragraph> 
+                The third scheme we consider uses a Discourse Segment Type classification of segments at, roughly, a clause level, i.e., each segment has a main verb.This means that the level of granularity of argumentational elements in this scheme lies between the other two schemes, i.e. it is usually more granular than CoreSC, but sometimes less granular than the event-based scheme. 
+            </paragraph> 
+            <paragraph> 
+                http://www.nactem.ac.uk/meta-knowledge/http://www.nactem.ac.uk/ucompare/ 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                     The segment annotation scheme identifies a taxonomy of discourse segment types that seem to be exclusive and useful  <cite id="38" function="ack" polarity="neu">(de Waard &amp; Pander Maat, 2009</cite>).Three classes of segment types are defined: 
+                </context>
+               
+            </paragraph> 
+            <paragraph> 
+                - Basic segment types: segments referring directly to the topic of study - see Table 2.- 'Other'-segment types: segments referring to conceptual or experimental work in other research papers than the current one- Regulatory segment types: 'regulatory' clauses that control and introduce other segments. 
+            </paragraph> 
+            <paragraph> 
+                A list of segment types is presented in Table 2; further details, including a list of all segment types and correlations with verb tense can be found in de work is to identify linguistic features that characterise these discourse segment types, according to three aspects: 
+            </paragraph> 
+            <paragraph> 
+                - Verb tense, aspect, mood and voice - Semantic verb class - Epistemic modality markers 
+            </paragraph> 
+            <paragraph> 
+                So far, 6 full-text papers (comprising about 2300 segments) have been manually annotated with segment types and correlated with the above features.
+                <context>
+                    A first automated validation was promising  <cite id="39" function="ack" polarity="neu">(de Waard,Buitelaar and Eigener, 2009</cite>).The need for parsing at a clause level is especially prominent in biological text, since specific semantic roles are played by particular clause types.
+                    
+                </context> 
+                We give four examples of typical clause constructions that play a specific rhetorical role: firstly, reporting clauses are often sentence-initial 'that' matrix clauses (1a): 
+            </paragraph> 
+            <paragraph> 
+                1. a. This suggests that 1. b. miR-372 and miR-373 caused the observed selective growth advantage. 
+            </paragraph> 
+            <paragraph> 
+                Secondly, descriptions confirming certain accepted characteristics of biological entities are often given as nonrestrictive relative clauses (2b): 
+            </paragraph> 
+            <paragraph> 
+                2. a. We also generated BJ/ET cells expressing the RASV12-ERTAM chimera gene,2. b. which is only active when tamoxifen is added 
+            </paragraph> 
+            <paragraph> 
+                Thirdly, a subordinate gerund clause is often used to describe a method (3a), with a main (finite) clause describing a result (3b) and fourthly, experimental goals are often given as a (mostly sentence-initial) clause with a to-infinitive (4a) often preceding a past-tense methods clause (4b). 
+            </paragraph> 
+            <paragraph> 
+                3. a. Using fluorescence microscopy and luciferase assays,b. we observed potent and specific miRNA activity expressed from each miR-Vec (Figure S2).4. a. To identify miRNAs that can interfere with this process4. b. we transduced BJ/ET fibroblasts with miR-Lib 
+            </paragraph> 
+            <paragraph> 
+                However, the lack of simple robust clause parsers has prevented the automated identification of semantic roles at the clause level.Therefore, this scheme has so far only been manually implemented.Despite being less widely implemented than the other two schemes, we believe that the segment scheme offers some useful pointers for linguistic features that can identify particular rhetorical classes in the text, and secondly, offers an interesting perspective on the fact that in biological text, several rhetorical moves are made within a single sentence. 
+            </paragraph> 
+        
+            <title>5 Data and methods</title> 
+            <paragraph> 
+                
+                <context>
+                   <data>Three papers</data> <kw>already annotated</kw> <kw>according to</kw> the <method>GENIA event annotation scheme</method> (<cite id="40" function="bas" polarity="pos">Kim et al., 2008</cite>), 
+                </context>               
+                were further annotated according to the three annotation schemes described above.We obtained all corresponding CoreSCs, events and segments per sentence.Each sentence has a single CoreSC annotation and one or more segment annotations (depending on the number of clauses).Event annotations in a sentence may range from zero to multiple, according to whether any relevant biomedical events are described in the sentence. 
+            </paragraph> 
+            <paragraph> 
+                Events within a sentence are mapped to segments by identifying which segment contains the trigger for a particular event.The three metaknowledge dimensions for events considered in this comparison, i.e., KT, CL and Source, result in 16 different combinations of values encountered in the three papers.The numbers for CoreSC and Segment labels encountered were 12 and 22, respectively.Confusion matrices were obtained for each paper and for each pair of annotation schemes.Note that, as bio-events are largely unconcerned with describing methodology, the Methods sections of these papers do not contain event annotation or meta-knowledge annotation.The pairwise confusion matrices from each paper were combined, resulting in three matrices (Tables 3, 4 and 5), which describe the associations between the annotation schemes in the three papers examined.We have highlighted the highest frequencies per row and where appropriate also the highest values per column.The use of two different colours aims to facilitate readability. 
+            </paragraph> 
+        </section> 
+ 
+        <section imrad="r"> 
+            <title> 6 Results and Discussion</title> 
+            <paragraph> 
+                We present the results from analysing the pairwise confusion matrices for the three schemes and discuss the merits of each scheme. 
+            </paragraph> 
+            <subsection> 
+                <subtitle>6.1 Event Meta-knowledge v. CoreSC</subtitle> 
+                <paragraph> 
+                    In Tables 3 (and 5), the meta-knowledge categories combine KT, CL and Source ((O)ther) values.Table 3 shows some straightforward and expected mappings, e.g.,Method (Met,L3) events are almost always found within CoreSC Experiment or Method sentences, whilst Investigation events (Inv,L3) occur most frequently within CoreSC Goal or Motivation sentences. 
+                </paragraph> 
+                <paragraph> 
+                    For other categories, information from the two schemes can complement each other in different ways.For example, KT and Source information about events can help to distinguish different types of information within CoreSC Background sentences (top left corner of Table 3).Such information mainly corresponds to facts, observations from previous studies, or analyses of information.Conversely, information from the CoreSC scheme can help to further classify the interpretation of events.For example, events with an analytical interpretation (Ana,L1,L2,L3) may occur as background information to a study (Bac), as hypotheses (Hyp), as part of observations (Obs), when reporting the results of the current study (Res) or when making concluding remarks about the study (Con).CoreSCs can also help to further refine events relating to outcomes (Obs,L3) according to whether they pertain to (Obs)ervations, (Res)ults or (Con)clusions. 
+                </paragraph> 
+                <paragraph> 
+                    CoreSC Conclusion, Result and Observation sentences contain mainly Observation events concerned with the current study.However, such sentences often also include an analytical part, with varying levels of certainty, which event information can help to isolate.The CL annotated for events is also useful in helping to determine the confidence with which information is stated in CoreSC Conclusion and Hypothesis sentences. 
+                </paragraph> 
+                <paragraph> 
+                    Due to the nature of bio-event annotation, only a small number of events correspond to methods.Thus, CoreSC provides a more detailed characterisation of method-related sentences, i.e., Experiment, Method_New, Model and Object. 
+                </paragraph> 
+            </subsection> 
+ 
+            <subsection> 
+                <subtitle>6.2 Discourse Segments v. CoreSC</subtitle> 
+                <paragraph> 
+                    In most cases, there seems to be natural mapping between the two schemes (See Table 4).CoreSC Observation maps to Result, CoreSC Method and Experiment map to Method, CoreSC Hypothesis maps to Hypothesis, CoreSC Goal maps to Goal,CoreSC Conclusion maps to Implication and Hypothesis, CoreSC Result maps to Implication and Result, and Problem is equivalent to CoreSC Motivation.The bulk of CoreSC Background maps to Fact and Other-Implication, but the "Other" Segment categories provide a substantial refinement of the CoreSC Background category. 
+                </paragraph> 
+                <paragraph> 
+                    On the other hand, CoreSC refines Method, Result and Implication segments.CoreSC Result may include both Fact and Method clauses, which can be captured by the Segment scheme, since annotation is performed at the clause level.CoreSC Conclusion maps to both Implication and Hypothesis segments, suggesting that there may be differences in the certainty levels of these conclusions.This is supported by preliminary classification experiments (paper in progress). 
+                </paragraph> 
+            </subsection> 
+ 
+            <subsection> 
+                <subtitle>6.3 Discourse Segments v.</subtitle> 
+                <paragraph> 
+                    Some straightforward mappings exist between segment and event meta-knowledge categories (Table 5).For example, Investigation events (Inv, L3) are generally found within Goal and Problem segments; Method events (Met,L3) are normally found within Method segments, Observation events (Obs,L3) are found mainly within Result, Fact and Implication segments and (Ana,L1,L2) events correspond mainly to Hypotheses and Implications. 
+                </paragraph> 
+                <paragraph> 
+                    Whilst these are similar findings to the comparison between event meta-knowledge and CoreSCs, the variance of the distribution is often smaller when mapping from Events to Segments.This is to be expected - the information encoded by many events has the scope of roughly a clause, which corresponds closely to the scope of discourse segments.This could permit cleaner one-to-one mappings between categories.Hypothesis and Implication segments mainly contain (Ana)lysis events.The differing certainty levels of events can help to refine information about the statements made within these segments.Likewise, these segment types could help to refine the nature of the analysis described by the event. 
+                </paragraph> 
+                <paragraph> 
+                    Similarly to the CoreSC scheme, the results suggest that Result segments could be refined by the meta-knowledge scheme to distinguish between results emerging from direct experimental observations, and those obtained through analysis of experimental observations.Another interesting result is that Fact segments can contain Fact, (Ana)lysis or (Obs)ervation events.This may suggest that Fact segments are actually a rather general category, containing a range of different information.Few events occur within the Regulatory segments, as these mainly introduce content-bearing segments. 
+                </paragraph> 
+                <paragraph> 
+                    The majority of Method segments and a significant number of the Result segments do not correspond to events, as none of the methods sections have been annotated with event information, for reasons explained previously. 
+                </paragraph> 
+            </subsection> 
+        
+            <title>7 Related Work</title> 
+            <paragraph> 
+                <context>
+                  <kw>A number</kw> of <method>schemes</method> <kw>for</kw> <task>annotating scientific discourse elements</task> at the sentence level <kw>have been proposed</kw>.Certain schemes have been aimed at abstracts, e.g., (<cite id="41" function="use" polarity="neu">McKnight &amp; Srinivasan, 2003</cite>; <cite id="42" function="use" polarity="neu">Ruch et al., 2007</cite>; <cite id="43" function="use" polarity="neu">Hirohata et al., 2008</cite>; Björne et al., 2009). 
+                </context>
+                
+                
+                <context>
+ <paper>The work of</paper> <cite id="44" function="use" polarity="neu">Hirohata et al. (2009)</cite>  <kw>has been integrated with</kw> the <tool>MEDIE service</tool> (<cite id="45" function="use" polarity="neu">Miyao et al., 2006</cite>), 
+ 
+                </context>
+ 
+ allowing the user to query facts using conclusions, results, etc.
+                <context>
+                <kw>For</kw> <data>full papers </data>, <kw>the most notable work</kw>  <kw>has focussed on</kw> <method>argumentative zoning (AZ)</method> (<cite id="46" function="use" polarity="pos">Teufel et al., 1999</cite>; <cite id="47" function="use" polarity="pos">Teufel &amp; Moens, 2002</cite>; <cite id="48" function="use" polarity="pos">Teufel et al., 2009</cite>; <cite id="49" function="use" polarity="pos">Teufel, 2010</cite>).
+                </context>
+                An important aspect of AZ involves capturing the attribution of knowledge claims and citation function, and the scheme has been tested on information extraction and summarisation tasks with Computational Linguistics papers.
+                <context>
+                    <concept>AZ</concept> <kw>was modified for</kw> <task>the annotation</task> <kw>of</kw> biology papers by <cite id="50" function="bas" polarity="pos">Mizuta et al. (2005)</cite> in order to facilitate information extraction, and more recently <cite id="51" function="bas" polarity="pos">Teufel et al. (2009)</cite> extended the AZ scheme to better accommodate the life sciences and chemistry in particular, producing AZ-II. 
+                </context>
+                
+            </paragraph> 
+            <paragraph> 
+                
+                <context>
+                <task>Scientific discourse annotation</task> <kw>has also targeted</kw> <action>the retrieval</action> <kw>of</kw> <concept>speculative text</concept> to help improve curation.For a recent overview see de  <cite id="52" function="use" polarity="neu">Waard and Pander Maat (2012)</cite>.
+                </context>
+                <context>
+                <concept>Modality and negation</concept> in text <kw>have also been the focus</kw> <kw>of</kw> <paper>recent workshops</paper> <cite id="53" function="use" polarity="neu">(Farkas et al (2010), Morante </cite>&amp; <cite id="54" function="use" polarity="neu">Sporleder (2012)</cite>).
+                </context>
+                <context>
+                     Finally, <cite id="55">Shatkay et al (2008)</cite> define a multidimensional scheme, which combines several of the above-mentioned aspects. 
+                </context>
+               
+            </paragraph> 
+            <paragraph> 
+                Recent work has compared schemes to discover mappings and relative merits.
+                <context>
+                <cite id="56" function="ack" polarity="neu">Liakata et al. (2010)</cite> <kw>compared</kw> <method>AZ-II</method> <kw>and</kw> <method>CoreSC</method> on 36 papers annotated with both schemes and found that CoreSC provides finer granularity in distinguishing content categories (e.g. methods, goals and outcomes) while the strength of AZ-II lies in detecting the attribution of knowledge claims and identifying the different functions of background 
+                </context>
+                <context>
+                    <cite id="57" function="ack" polarity="neu">Guo et al. (2010)</cite> compared three schemes for the identification of discourse structure in scientific abstracts from cancer research assessment articles. 
+                </context>
+              <context>              
+                  <paper>The work</paper> <kw>showed a</kw> <kw>subsumption relation between</kw> the scheme of <cite id="58" function="con" polarity="neu">Hirohata et al. (2008)</cite>, <kw>a cut-down version of</kw> the scheme proposed by <cite id="59" function="con" polarity="neu">Teufel et al. (2009)</cite> and CoreSC (1st layer), from general to specific. 
+              </context>
+            </paragraph> 
+        </section> 
+ 
+        <section imrad="d"> 
+            <title>8 Conclusion</title> 
+            <paragraph> 
+                We have compared three different schemes, each taking a different perspective to the annotation of scientific discourse.The comparison shows that the three schemes are complementary, with different strengths and points of focus.CoreSC offers a fine-grained characterisation of methods, outcomes and objectives.It has been used to annotate a collection of 265 full papers, and subsequently CoreSC recognition has been fully automated, creating the online SAPIENTA tool. 
+            </paragraph> 
+            <paragraph> 
+                The discourse segment annotation scheme can help to provide a finer-grained characterisation of background work, and could also help to split multi-clause CoreSC sentences into appropriate segments.Recognition of event meta-knowledge has been fully automated in the U-Compare framework, and the KT values of the scheme can help to provide a finer-grained analysis of certain segment and sentence types.The CL dimension also allows confidence values to be ascribed to the Conclusion, Result, Implication and Hypothesis categories of the other two schemes 
+            </paragraph> 
+            <paragraph> 
+                Future work will focus on annotating texts with several discourse perspectives to investigate the advantages of the schemes.Ideally we would like to propose a unified approach for scientific discourse annotation, but recognize that choices such as the unit of annotation are often task-oriented, and that users should be able to mix and match discourse segments as required.This said, the analysis in this paper paves the way for potential harmonisation, revealing points of union and intersection between the schemes. 
+            </paragraph> 
+     
+            <title>Acknowledgements</title> 
+            <paragraph> 
+                This work has been supported through funding for Maria Liakata by JISC, the Leverhulme Trust and EBI-EMBL.It has also been supported by the BBSRC through grant number BB/G013160/1UK (Automated Biological Event Extraction from the Literature for Drug Discovery), the MetaNet4U project (ICT PSP Programme, Grant Agreement: No. 270893) and the JISC-funded ISHER project. 
+            </paragraph> 
+        </section> 
+    </paper>
+</annotatedpaper>

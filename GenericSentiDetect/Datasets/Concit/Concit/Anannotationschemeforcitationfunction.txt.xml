@@ -1,0 +1,349 @@
+<annotatedpaper>
+  <paper title="An annotation scheme for citation function" authors="Simone Teufel, Advaith Siddharthan, Dan Tidhar" year="2006"> 
+        <section> 
+            <title>An annotation scheme for citation function</title> 
+            Natural Language and Information Processing Group 
+            Computer Laboratory 
+            Cambridge University, CB3 0FD, UK 
+            { Simone.Teufel,Advaith.Siddharthan,Dan.Tidhar}@cl.cam.ac.uk 
+        </section> 
+         <section> 
+            <title>Abstract</title> 
+            <paragraph> 
+                We study the interplay of the discourse structure of a scientific argument with formal citations. 
+            </paragraph> 
+            <paragraph> 
+                One subproblem of this is to classify academic citations in scientific articles according to their rhetorical function, e.g., as a rival approach, as a part of the solution, or as a flawed approach that justifies the current research. 
+            </paragraph> 
+            <paragraph> 
+                Here, we introduce our annotation scheme with 12 categories, and present an agreement study. 
+            </paragraph> 
+			
+        </section> 
+        <section imrad="i"> 
+            <title>1 Scientific writing, discourse structure and citations</title> 
+            <paragraph> 
+                In recent years, there has been increasing interest in applying natural language processing technologies to scientific literature. 
+                The overwhelmingly large number of papers published in fields like biology, genetics and chemistry each year means that researchers need tools for information access (extraction, retrieval, summarization, question answering etc). 
+               <context> There is also <kw>increased interest</kw> in <method>automatic citation indexing</method>, e.g., the <kw>highly successful</kw> 
+               search tools <tool>Google Scholar</tool> and <tool>CiteSeer</tool> (<cite id="1" function="use" polarity="pos">Giles et al., 1998</cite>). </context>
+                This general interest in improving access to scientific articles fits well with research on discourse structure, as knowledge about the overall structure and goal of papers can guide better information access. 
+            </paragraph> 
+            <paragraph> 
+                <context><cite id="2" function="wea" polarity="neg">Shum (1998)</cite> 
+                <action>argues</action> that experienced researchers are often interested in relations between articles. 
+                They need to know if a certain article criticises another and what the criticism is, or if the current work is based on that prior work. 
+                This type of information is <kw>hard to come</kw> by with current search technology. 
+                <kw>Neither</kw> the <data>author's abstract</data>, <kw>nor</kw> 
+                <method>raw citation</method> counts <kw>help users</kw> in assessing the relation between articles. </context>
+                And even though CiteSeer shows a text snippet around the physical location for searchers to peruse, there is no guarantee that the text snippet provides enough information for the searcher to infer the relation. 
+                <context>In fact, <kw>studies</kw> from  
+                <author>our</author> 
+                <data>annotated corpus </data>(<cite id="3" function="bas" polarity="neu">Teufel, 1999</cite>), <action>show </action> that 69% of the 600 sentences stating contrast with other work and 21% of the 246 sentences stating research continuation with other work <result>do not contain the corresponding citation</result>
+                </context>; the citation is found in preceding 
+                His notion of similarity seems to agree with our intuitions in many cases, but it is not clear how it can be used directly to construct word classes and corresponding models of association. 
+                Following Pereira et al, we measure word similarity by the relative entropy or Kulbach-Leibler (KL) distance, bet ween the corresponding conditional distributions. 
+                CiteSeer automatically citation-indexes all scientific articles reached by a web-crawler, making them available to searchers via authors or keywords in the title. 
+                Figure 1: A rhetorical citation map 
+                sentences (i.e., the sentence expressing the contrast or continuation would be outside the CiteSeer snippet). 
+                We present here an approach which uses the classification of citations to help provide relational information across papers. 
+            </paragraph> 
+            <paragraph> 
+                <context>Citations play a central role in the process of writing a paper. 
+                <cite id="4" function="ack" polarity="neu">Swales (1990)</cite> 
+                <kw>argues </kw>that <task>scientific writing</task> 
+                <kw>follows</kw> a <concept>general rhetorical argumentation structure</concept>: researchers must justify that their paper makes a contribution to the knowledge in their discipline.</context>
+                <context> Several <method>argumentation steps</method> are <kw>required to make</kw> this <task>justification work</task>, e.g., the statement of their specific goal in the paper (<cite id="5" function="use" polarity="neu">Myers, 1992</cite>)</context>. Importantly, the authors also must relate their current work to previous research, and acknowledge previous knowledge claims; this is done with a formal citation, and with language connecting the citation to the argument, e.g., statements of usage of other people's approaches (often near textual segments in the paper where these approaches are described), and statements of contrast with them (particularly in the discussion or related work sections). 
+                We argue that the automatic recognition of citation function is interesting for two reasons: a) it serves to build better citation indexers and b) in the long run, it will help constrain interpretations of the overall argumentative structure of a scientific paper. 
+            </paragraph> 
+            <paragraph> 
+                Being able to interpret the rhetorical status of a citation at a glance would add considerable value to citation indexes, as shown in Fig. 1. <context>Here <kw>differences</kw> and <kw>similarities</kw> are shown  
+                <kw>between</kw> the example <paper>paper</paper> (<cite id="6" function="con" polarity="neu">Pereira et al., 1993</cite>) and
+                the <paper> papers </paper> it cites, as well as the papers that cite it</context>. Contrastive links are shown in grey - links to rival papers and papers the current paper contrasts itself to. Continuative links are shown in black - links to papers that are taken as starting point of the current research, or as part of the methodology of the current paper. The most important textual sentence about each citation could be extracted and displayed. For instance, <context>we
+                <action>see</action> which <feature>aspect</feature> of 
+                <cite id="7" function="ack" polarity="neu">Hindle Pereira et al(1990)</cite> the paper criticises, and in which way Pereira et al.'s work was used by
+                <cite id="8" function="ack" polarity="neu">Dagan et al. (1994)</cite>
+                </context>. 
+            </paragraph> 
+            <paragraph> 
+                We present an annotation scheme for citations, based on empirical work in content citation analysis, which fits into this general framework of scientific argument structure. 
+                It consists of 12 categories, which allow us to mark the relationships of the current paper with the cited work. 
+                Each citation is labelled with exactly one category. 
+                The following top-level four-way distinction applies: 
+            </paragraph> 
+            <paragraph> 
+                Weakness: Authors point out a weakness in cited work 
+                Contrast: Authors make contrast/comparison with cited work (4 categories) 
+                Positive: Authors agree with/make use of/show compatibility or similarity with cited work (6 categories), and 
+                Neutral: Function of citation is either neutral, or weakly signalled, or different from the three functions stated above. 
+            </paragraph> 
+            <paragraph> 
+                We first turn to the point of how to classify citation function in a robust way. 
+                Later in this paper, we will report results for a human annotation experiment with three annotators. 
+            </paragraph> 
+        </section> 
+ 
+        <section imrad="m"> 
+            <title>2 Annotation schemes for citations</title> 
+            <paragraph> 
+                In the field of library sciences (more specifically, the field of Content Citation Analysis), the use of information from citations above and beyond simple <context>citation counting has received 
+                considerable attention. <method>Biblio-metric measures</method> 
+                <action>assesses</action> the quality of a <data>researcher's output</data>, in a purely quantitative manner, by counting how many papers cite a given paper (<cite id="9" function="use" polarity="neu">White, 2004</cite>; <cite id="10" function="use" polarity="neu">Luukkonen, 1992</cite>) or by more sophisticated <action>measures</action> like the <method>h-index</method> (<cite id="11" function="use" polarity="neu">Hirsch, 2005</cite>)</context>. But not all citations are alike.<context> Researchers in content citation analysis have long <action>stated</action> that the <method>classification of motivations</method> is a <kw>central element</kw> in <action>understanding</action> the <kw>relevance</kw> of the <paper>paper</paper> in the field. <cite id="12" function="use" polarity="neu">Bonzi (1982)</cite>, <kw>for example</kw>, <action>points out</action> that negational citations, while pointing to the <kw>fact</kw> that a given work has been noticed in a field, do not mean that that work is received well, and <cite id="13" function="use" polarity="neu">Ziman (1968)</cite> 
+                <action>states</action> that many citations are <action>done</action>
+                </context> out of "politeness" (towards powerful rival approaches), "policy" (by name-dropping and argument by authority) or "piety" (towards one s friends, collaborators and superiors). Researchers also often follow the custom of citing some particular early, basic paper, which gives the foundation of their current subject ("paying homage to pioneers").<context> Many 
+                    <method>classification schemes</method> for citation functions have been <action>developed</action> (<cite id="14" function="use" polarity="neu">Weinstock, 1971</cite>; <cite id="15" function="use" polarity="neu">Swales, 1990</cite>; <cite id="16" function="use" polarity="neu">Oppenheim and Renn, 1978</cite>; <cite id="17" function="use" polarity="neu">Frost, 1979</cite>; Chu-bin and <cite id="18" function="use" polarity="neu">Moitra, 1975</cite>), inter alia. <kw>Based on such annotation schemes</kw> and hand-analyzed data, different influences on citation behaviour can be determined</context>, but <context>
+                    annotation in this field is usually done manually on small samples of text by the author, and not confirmed by reliability studies. As one of the <kw>earliest</kw> such <experiment>studies</experiment>, Moravcsik and <cite id="19" function="use" polarity="pos">Murugesan (1975)</cite> divide citations in running text into four dimensions: <method>conceptual or operational use</method> (i.e., use of theory vs. use of technical method); <method>evolutionary or juxtapositional</method> (i.e., own work is based on the cited work vs. own work is an alternative to it); <method>organic or perfunctory</method> (i.e., work is crucially needed for understanding of citing article or just a general acknowledgement); and finally <method>confirmative vs. negational </method>(i.e., is the correctness of the findings disputed?). </context>
+                They found, for example, that 40% of the citations were perfunctory, which casts further doubt on the citation-counting approach. 
+                Figure 2: Spiegel-Rusing's (1977) Categories for Citation Motivations 
+            </paragraph> 
+            <paragraph> 
+                <context> Other content citation analysis <experiment>research</experiment> which is <posfeature>relevant to our work</posfeature> concentrates on relating textual spans to authors descriptions of other work. For example, in <cite id="20" function="hed" polarity="neg"> O Connor s (1982)</cite> experiment, citing statements (one or more sentences referring to other researchers work) were identified manually. The <negfeature>main problem</negfeature></context> encountered in that work is the fact that many instances of citation context are linguistically unmarked. Our data confirms this: articles often contain large segments, particularly in the central parts, which describe other people s research in a fairly neutral way. We would thus expect many citations to be neutral (i.e., not to carry any function relating to the argumentation per se). 
+            </paragraph> 
+            <paragraph> 
+                <context>Many of the distinctions typically made in content citation analysis 
+                    <negfeature>are immaterial</negfeature> to the task considered here as they <negfeature>are too sociologically orientated</negfeature> , and can thus be <kw>difficult</kw> to operationalise without deep knowledge of the field and its participants (<cite id="21" function="wea" polarity="neg">Swales, 1986</cite>)</context>. <context>In particular,citations for general reference (background material, homage to pioneers) are not part of our analytic interest here, and so are citations "in passing", which are only marginally related to the argumentation of the overall paper (<cite id="22" function="ack" polarity="neu">Ziman, 1968</cite>)</context>. 
+            </paragraph> 
+            <paragraph> 
+                <context><cite id="23" function="con" polarity="pos"> Spiegel-Rusing's (1977)</cite> scheme (Fig. 2) is an example of a <concept>scheme</concept> which <kw>is easier to</kw> operationalise <kw>than most</kw> 
+                        </context>. In her scheme, more than one category can apply to a citation; for instance positive and negative evaluation (category 9 and 10) can be cross-classified with other categories. Out of 2309 citations examined, 80% substantiated statements (category 8), 6% discussed history or state of the art of the research area (category 1) and 5% cited comparative data (category 5). 
+            </paragraph> 
+            <paragraph> 
+                Our scheme (given in Fig. 3) is an adaptation of the scheme in Fig. 2, which we arrived at after an analysis of a corpus of scientific articles in computational linguistics. <author>We</author> tried to <action>redefine</action> the categories such that they should be <kw>reasonably reliably</kw> annotatable; at the same time, they should be informative for the application we have in mind. A third criterion is that they should have some (theoretical) relation to the particular discourse structure we <kw>work with</kw> (<cite id="24" function="bas" polarity="pos">Teufel, 1999</cite>). 
+            </paragraph> 
+            <paragraph> 
+                <context><author>Our</author> 
+                <data>categories</data> 
+                <kw>are as follows</kw>: One category (Weak) is reserved for weakness of previous research, if it is addressed  by  the authors (cf. <cite id="25" function="bas" polarity="neu" >Spiegel-Rusing</cite>'s categories 10, 12, possibly 13).  The next three <data>categories </data> 
+                describe comparisons or contrasts between own and other work (cf. <cite id="26" function="bas" polarity="neu">Spiegel-Rusing</cite>'s category </context> 5). The difference between them concerns whether the comparison is between methods/goals (CoCoGM) or results (CoCoR0). 
+                These two categories are for comparisons without explicit value judgements. 
+                We use a different category (CoCo-) when the authors claim their approach is better than the cited work. 
+            </paragraph> 
+            <paragraph> 
+                Our interest in differences and similarities between approaches stems from one possible application we have in mind (the rhetorical citation search tool). 
+                We do not only consider differences stated between the current work and other work, but we also mark citations if they are explicitly compared and contrasted with other work (not the current paper). 
+                This is expressed in category CoCoXY. 
+                It is a category not typically considered in the literature, but it is related to the other con-trastive categories, and useful to us because we think it can be exploited for search of differences and rival approaches. 
+            </paragraph> 
+            <paragraph> 
+                The next set of categories we propose concerns positive sentiment expressed towards a citation, or a statement that the other work is actively used in the current work (which is the ultimate praise). 
+                Like Spiegel-Riising, we are interested in use of data and methods (her categories 4, 5, 6, 7), but we cluster different usages together and instead differentiate unchanged use (PUse) from use with adaptations (PModi). 
+                Work which is stated as the explicit starting point or intellectual ancestry is marked with our category PBas (her category 2). 
+                If a claim in the literature is used to strengthen the authors argument, this is expressed in her category 8, and vice versa, category 11. 
+                We collapse these two in our category PSup. 
+                We use two categories she does not have definitions for, namely similarity of (aspect of) approach to other approach (PSim), and motivation of approach used or problem addressed (PMot). 
+                We found evidence for prototypical use of these citation functions in our texts. 
+                However, we found little evidence for her categories 12 or 13 (disproval or new interpretation of claims in cited literature), and we decided against a "state-of-the-art" category (her category 1), which would have been in conflict with our PMot definition in many cases. 
+            </paragraph> 
+            <paragraph> 
+                Our fourteenth category, Neut, bundles truly neutral descriptions of other researchers approaches with all those cases where the textual evidence for a citation function was not enough to warrant annotation of that category, and all other functions for which our scheme did not provide a specific category. 
+                As stated above, we do in fact expect many of our citations to be neutral. 
+                Figure 3: Our annotation scheme for citation function 
+            </paragraph> 
+            <paragraph> 
+                Citation function is hard to annotate because it in principle requires interpretation of author intentions (what could the author s intention have been in choosing a certain citation?). 
+                Typical results of earlier citation function studies are that the sociological aspect of citing is notto be underestimated. 
+                One ofourmostfun-damental ideas for annotation is to only mark explicitly signalled citation functions. 
+                Our guidelines explicitly state that a general linguistic phrase such as "better" or "used by us" must be present, in order to increase objectivity in finding citation function. 
+                Annotators are encouraged to point to textual evidence they have for assigning a particular function (and are asked to type the source of this evidence into the annotation tool for each citation). 
+                Categories are defined in terms of certain objective types of statements (e.g., there are 7 cases for PMot). 
+                Annotators can use general text interpretation principles when assigning the categories, but are not allowed to use in-depth knowledge of the field or of the authors. 
+            </paragraph> 
+            <paragraph> 
+                <context>There are other problematic aspects of the annotation. Some concern the fact that authors do not always state their purpose clearly. <kw>For instance</kw>, several earlier studies found that negational citations are rare (<cite id="27" function="ack" polarity="neu">Moravcsik and Murugesan, 1975</cite>; <cite id="28" function="ack" polarity="neu">Spiegel-Rusing, 1977</cite>)</context>;<context> <cite id="29" function="bas" polarity="neu"> MacRoberts and MacRoberts (1984)</cite> 
+                argue that the reason for this is that they are potentially politically dangerous, and that the authors go through lengths to diffuse the impact of negative references, hiding a negative point behind insincere praise, or diffusing the thrust of criticism with perfunctory remarks. 
+
+                In <author>our</author> data <action>we found</action> 
+                <result>ample evidence</result> of this effect</context>, illustrated by the following example: 
+            </paragraph> 
+            <paragraph> 
+               <context> <data>Hidden Markov Models (HMMs) </data> 
+               <cite id="30" function="hed" polarity="neg">(Huang et al. 1990)</cite> offer a <posfeature>powerful statistical approach</posfeature> to this  problem, <kw>though</kw> it is <negfeature>unclear</negfeature> how they could be used to recognise the units of interest to phonologists</context>. (9410022, S-24) 
+            </paragraph> 
+            <paragraph> 
+                It is also sometimes extremely hard to distinguish usage of a method from statements of similarity between a method and the own method. This happens in cases where authors do not want to admit they are using somebody else s method: 
+            </paragraph> 
+            <paragraph> 
+                <context>The same test <kw>was used</kw> in Abney and Light Unification of indices proceeds in the same manner as unification of all other typed feature structures <cite id="31" function="use" polarity="neu">(Carpenter 1992).  </cite> </context>
+            </paragraph> 
+            <paragraph> 
+                In this case, our annotators had to choose between categories PSim and PUse. 
+            </paragraph> 
+            <paragraph> 
+                It can also be hard to distinguish between continuation of somebody s research (i.e., taking somebody s research as starting point, as intellectual ancestry, i.e. PBas) and simply using it (PUse). 
+                In principle, one would hope that annotation of all usage/positive categories (starting with P), if clustered together, should result in higher agreement (as they are similar, and as the resulting scheme has fewer distinctions). 
+                We would expect this to be the case in general, but as always, cases exist where a conflict between a contrast (CoCo) and a change to a method (PModi) occur: 
+                In all corpus examples, numbers in brackets correspond to the official Cmp Jg archive number, "S-" numbers to sentence numbers according to our preprocessing. 
+            </paragraph> 
+            <paragraph> 
+                In contrast to McCarthy, Kay and Kiraz, 
+            </paragraph> 
+            <paragraph> 
+                The markable units in our scheme are a) all full citations (as recognized by our automatic citation processor on our corpus), and b) all names of authors of cited papers anywhere in running text outside of a formal citation context (i.e., without date). 
+                Our citation processor recognizes these latter names after parsing the citation list an marks them up. 
+                This is unusual in comparison to other citation indexers, but we believe these names function as important referents comparable in importance to formal citations. 
+                <context>In principle, one could go even further as there are many other linguistic expressions by which the authors could refer to other people s work: pronouns, abbreviations <kw>such as </kw> 
+                <cite id="32" function="ack" polarity="neu">Mueller and Sag (1990)</cite>, henceforth M &amp; S", and names of approaches or theories which are associated with particular authors</context>. 
+                If we could mark all of these up automatically (which is not technically possible), annotation would become less difficult to decide, but technical difficulty prevent us from recognizing these other cases automatically. 
+                As a result, in these contexts it is impossible to annotate citation function directly on the referent, which sometimes causes problems. 
+                Because this means that annotators have to consider non-local context, one markable may have different competing contexts with different potential citation functions, and problems about which context is "stronger" may occur. 
+                We have rules that context is to be constrained to the paragraph boundary, but for some categories paper-wide information is required (e.g., for PMot, we need to know that a praised approach is used by the authors, information which may not be local in the paragraph). 
+            </paragraph> 
+            <paragraph> 
+                Appendix A gives unambiguous example cases where the citation function can be decided on the basis of the sentence alone, but Fig. 
+                4 shows a more typical example where more context is required to interpret the function. 
+                The evaluation of the citation Hindle (1990) is contrastive; the evaluative statement is found 4 sentences after the sentence containing the citation 3 . 
+                It consists of a positive statement (agreement with authors view), followed by a weakness, underlined, which is the chosen category. 
+                This is marked on the nearest markable (Hindle, 3 sentences after the citation). 
+            </paragraph> 
+            <paragraph> 
+                In Fig. 
+                4, markables are shown in boxes, evaluative statements underlined, and referents in bold face. 
+            </paragraph> 
+            <paragraph> 
+                S-5 \! Hindle (1990) /Neut proposed dealing with the sparseness problem by estimating the likelihood of unseen events from that of "similar" events that have been seen. 
+            </paragraph> 
+            <paragraph> 
+                S-6 For instance, one may estimate the likelihood of a particular direct object for a verb from the likelihoods of that direct object for similar verbs. 
+            </paragraph> 
+            <paragraph> 
+                S-7 This requires a reasonable definition of verb similarity and a similarity estimation method. 
+                Hindle/Weak if we have strong statistical evidence that they tend to participate in the same events. 
+            </paragraph> 
+            <paragraph> 
+                S-9 His notion of similarity seems to agree with our intuitions in many cases, but it is not clear how it can be used directly to construct word classes and correspond- ing models of association. 
+            </paragraph> 
+            <paragraph> 
+                Figure 4: Annotation example: influence of context 
+            </paragraph> 
+            <paragraph> 
+                A naive view on this annotation scheme could consider the first two sets of categories in our scheme as "negative" and the third set of categories "positive". 
+                There is indeed a sentiment aspect to the interpretation of citations, due to the fact that authors need to make a point in their paper and thus have a stance towards their citations. 
+                But this is not the whole story: many of our "positive" categories are more concerned with different ways in which the cited work is useful to the current work (which aspect of it is used, e.g., just a definition or the entire solution?), and many of the con-trastive statements have no negative connotation at all and simply state a (value-free) difference between approaches. 
+                However, if one looks at the distribution of positive and negative adjectives around citations, one notices a (non-trivial) connection between our task and sentiment classification. 
+            </paragraph> 
+            <paragraph> 
+                There are written guidelines of 25 pages, which instruct the annotators to only assign one category per citation, and to skim-read the paper before annotation. 
+                The guidelines provide a decision tree and give decision aids in systematically ambiguous cases, but subjective judgement of the annotators is nevertheless necessary to assign a single tag in an unseen context. 
+                We implemented an annotation tool based on XML/XSLT technology, which allows us to use any web browser to interactively assign one of the 12 tags (presented as a pull-down list) to each citation. 
+            </paragraph> 
+        </section> 
+ 
+        <section imrad="r"> 
+            <paragraph>
+                <title>3 Data</title> 
+                The data we used came from the CmpLg (Computation and Language archive; 320 conference articles in computational linguistics). 
+                The articles are in XML format. 
+                Headlines, titles, authors and reference list items are automatically marked up with the corresponding tags. 
+                Reference lists are parsed, and cited authors names are identified.  <author>Our</author> citation <tool>parser</tool> then applies regular patterns and <action>finds citations</action> and other occurrences of the names of cited authors (without a date) in running text and marks them up. Self-citations are detected by overlap of citing and cited authors. The citation <tool>processor</tool> 
+                <Action>developped</Action> in <author>our</author> group (<cite id="33" function="bas" polarity="pos">Ritchie et al., 2006</cite>) <action>achieves</action> 
+                <kw>high accuracy</kw> for this task (96% of citations recognized, provided the reference list was error-free). On average, our papers contain 26.8 citation instances in running text. 
+            </paragraph> 
+        
+ 
+        
+            <title>4 Human Annotation: results</title> 
+            <paragraph> 
+                In order to machine learn citation function, we are in the process of creating a corpus of scientific articles with human annotated citations, according to the scheme discussed before. 
+                Here we report preliminary results with that scheme, with three annotators who are developers of the scheme. 
+            </paragraph> 
+            <paragraph> 
+                In our experiment, the annotators independently annotated 26 conference articles with this scheme, on the basis of guidelines which were frozen once annotation started. 
+                The data used for the experiment contained a total of 120,000 running words and 548 citations. 
+            </paragraph> 
+            <paragraph> 
+                The relative frequency of each category observed in the annotation is listed in Fig. 5. 
+                As expected, the distribution is very skewed, with more than 60% of the citations of category Neut. 
+                What is interesting is the relatively high frequency of usage categories (PUse, PModi, PBas) with a total of 18.9%. 
+                There is a relatively low frequency of clearly negative citations (Weak, CoCoR-, total of 4.1%), whereas the neutral-contrastive categories (CoCoGM, CoCoR0, CoCoXY) are slightly more frequent at 7.6%. 
+                <context>
+                    This is in <kw>concordance with earlier </kw> annotation experiments (<cite id="34" function="ack" polarity="pos">Moravcsik and Murugesan, 1975</cite>; <cite id="35" function="ack" polarity="pos">Spiegel-Rusing, 1977</cite>)</context>. 
+            </paragraph> 
+            <paragraph> 
+                We reached an inter-annotator agreement of K=. 
+                72 (n=12;N=548;k=3). 
+                <context>This is
+                    <kw>comparable to</kw> aggreement on other discourse annotation tasks such as dialogue act parsing and Argumentative Zoning <cite id="36" function="con" polarity="pos">Teufel et al., 1999</cite>.  We 
+                <action>consider</action> the <data>agreement</data> 
+                <kw>quite good</kw>, considering the number of categories and the difficulties (e.g., non-local dependencies) of the task. </context>
+            </paragraph> 
+            <paragraph> 
+                The annotators are obviously still disagreeing on some categories. 
+                We were wondering to what degree the fine granularity of the scheme is a problem. 
+                When we collapsed the obvious similar categories (all P categories into one category, and all CoCo categories into another) to give four top level categories (Weak, Positive, Contrast, Neutral), this only raised kappa to 0.76. 
+                This As opposed to reference list items, which are fewer. 
+                5 <context>The development of the scheme was done with 40+ different articles. <cite id="37" function="use" polarity="neu">Spiegel-Rusing</cite> 
+                <action>found</action> that out of 2309 citations she examined, <result>80% substantiated statements</result>
+                </context>. <context><kw>Following</kw>
+                <cite id="38" function="bas" polarity="neg">Carletta (1996) </cite>, <author>we</author> 
+                <action>measure</action> 
+                <data>agreement</data>
+                </context> in Kappa, which follows the formula K = F^lp^f> where P(A) is observed, and P(E) expected agreement. Kappa ranges between -1 and 1. K=0 means agreement is only as expected by chance.Generally, Kappas of 0.8 are considered stable, and Kappas of . 69 as marginally stable, according to the strictest scheme applied in the field.  t 's proposal, words are similar points to the fact that most of our annotators disagreed about whether to assign a more informative category or Neut, the neutral fall-back category. 
+                Unfortunately, Kappa is only partially sensitive to such specialised disagreements. 
+                While it will reward agreement with infrequent categories more than agreement with frequent categories, it nevertheless does not allow us to weight disagreements we care less about (Neut vs more informative category) less than disagreements we do care a lot about (informative categories which are mutually exclusive, such as Weak and PSim). 
+            </paragraph> 
+            <paragraph> 
+                Fig. 
+                6 shows a confusion matrix between the two annotators who agreed most with each other. 
+                This again points to the fact that a large proportion of the confusion involves an informative category and Neut. 
+                The issue with Neut and Weak is a point at hand: authors seem to often (deliberately or not) mask their intended citation function with seemingly neutral statements. 
+                Many statements of weakness of other approaches were stated in such caged terms that our anno-tators disagreed about whether the signals given were "explicit" enough. 
+            </paragraph> 
+            <paragraph> 
+                While our focus is not sentiment analysis, it is possible to conflate our 12 categories into three: positive, weakness and neutral by the following mapping: 
+                have only one case of confusion between positive and negative references to cited work. 
+                The vast majority of disagreements reflects genuine ambiguity as to whether the authors were trying to stay neutral or express a sentiment. 
+            </paragraph> 
+            <paragraph> 
+                Thus negative contrasts and weaknesses are grouped into Negative, while neutral contrasts are grouped into Neutral. 
+                All the positive classes are conflated into Positive. 
+                This resulted in kappa=0.75 forthree annotators. 
+            </paragraph> 
+            <paragraph> 
+                Fig. 
+                7 shows the confusion matrix between two an-notators for this sentiment classification. 
+                Fig. 
+                7 is particularly instructive, because it shows that annotators 
+            </paragraph> 
+            <paragraph> 
+                In an attempt to determine how well each category was defined, we created artificial splits of the data into binary distinctions: each category versus a super-category consisting of all the other collapsed categories. 
+                The kappas measured on these datasets are given in Fig. 
+                8. 
+                The higherthey are, the betterthe anno-tators could distinguish the given category from all the other categories. 
+                We can see that out of the informative categories, four are defined at least as well as the overall distinction (i.e. above the line in Fig. 
+                8: PMot, PUse, CoCoGM and CoCoR0. 
+                This is encouraging, as the application of citation maps is almost entirely centered around usage and contrast. 
+                However, the semantics of some categories are less well-understood by our annotators: in particular PSup (where the difficulty lies in what an annotator understands as "mutual support" of two theories), and (unfortunately) PBas. 
+                The problem with PBas is that its distinction from PUse is based on subjective judgement of whether the authors use a part of somebody's previous work, or base themselves entirely on this previous work (i.e., see themselves as following in the same intellectual framework). 
+                Another problem concerns the low distinctivity for the clearly negative categories CoCo- and Weak. 
+                This is in line with MacRoberts and MacRoberts' hypothesis that criticism is often hedged and not clearly lexically signalled, which makes it more difficult to reliably annotate such citations. 
+                Figure 5: Distribution of the categories 
+                Figure 6: Confusion matrix between two annotators 
+                Figure 7: Confusion matrix between two annotators; categories collapsed to reflect sentiment 
+                Figure 8: Distinctiveness of categories 
+            </paragraph> 
+        </section> 
+ 
+        <section imrad="d"> 
+            <title>5 Conclusion</title> 
+            <paragraph> 
+                We have described a new task: human annotation of citation function, a phenomenon which we believe to be closely related to the overall discourse structure of scientific articles. 
+                Our annotation scheme concentrates on contrast, weaknesses of other work, similarities between work and usage of other work. 
+                One of its principles is the fact that relations are only to be marked if they are explicitly signalled. 
+                Here, we report positive results in terms of interannotator agreement. 
+            </paragraph> 
+            <paragraph> 
+                Future work on the annotation scheme will concentrate on improving guidelines for currently suboptimal categories, and on measuring intra-annotator agreement and inter-annotator agreement with naive annota-tors. 
+                We are also currently investigating how well our scheme will work on text from a different discipline, namely chemistry. <context>
+                    <task>Work</task> on applying machine learning techniques for automatic citation classification is currently <kw>underway</kw> (<cite id="39" function="ack" polarity="neg">Teufel et al., 2006</cite>); the agreement of one annotator and the system is currently K=.57, leaving plenty of <kw>room for improvement</kw> in comparison with the human annotation results presented here</context>. 
+            </paragraph> 
+        </section> 
+ 
+        <section> 
+            <title>6 Acknowledgements</title> 
+            <paragraph> 
+                This work was funded by the EPSRC projects CITRAZ (GR/S27832/01, "Rhetorical Citation Maps and Domain-independent Argumentative Zoning") and SCIBORG (EP/C010035/1, "Extracting the Science from Scientific Publications"). 
+            </paragraph> 
+        </section>
+    </paper>
+</annotatedpaper>
+

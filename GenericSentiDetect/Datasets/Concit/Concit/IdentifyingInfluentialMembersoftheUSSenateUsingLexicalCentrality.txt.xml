@@ -1,0 +1,206 @@
+<annotatedpaper>
+    <paper title="MavenRank: Identifying Influential Members of the US Senate Using Lexical Centrality" authors="Anthony Fader, Dragomir Radev, Michael H. Crespin, Burt L. Monroe, Kevin M. Quinn, Michael Colaresi" year="2007"> 
+        <section> 
+            <title>MavenRank: Identifying Influential Members of the US Senate Using Lexical Centrality</title> 
+            Anthony Fader 
+            University of Michigan 
+            afader@umich.edu 
+            Dragomir Radev 
+            University of Michigan 
+            radev@umich.edu 
+            Michael H. Crespin 
+            The University of Georgia 
+            crespin@uga.edu 
+            Burt L. Monroe 
+            The Pennsylvania State University 
+            burtmonroe@psu.edu 
+            Kevin M. Quinn 
+            Harvard University 
+            kevin quinn@harvard.edu 
+            Michael Colaresi 
+            Michigan State University 
+            colaresi@msu.edu 
+        </section> 
+        <section> 
+            <title>Abstract</title> 
+            <paragraph> 
+                We introduce a technique for identifying the most salient participants in a discussion. Our method, MavenRank is based on lexical centrality: a random walk is performed on a graph in which each node is a participant in the discussion and an edge links two participants who use similar rhetoric. As a test, we used MavenRank to identify the most influential members of the US Senate using data from the US Congressional Record and used committee ranking to evaluate the output. Our results show that MavenRank scores are largely driven by committee status in most topics, but can capture speaker centrality in topics where speeches are used to indicate ideological position instead of influence legislation. 
+            </paragraph> 
+        </section> 
+        <section imrad="i"> 
+            <title>1 Introduction</title> 
+            <paragraph> 
+                In a conversation or debate between a group of people, we can think of two remarks as interacting if they are both comments on the same topic. For example, if one speaker says "taxes should be lowered to help business," while another argues "taxes should be raised to support our schools," the speeches are interacting with each other by describing the same issue. In a debate with many people arguing about many different things, we could imagine a large network of speeches interacting with each other in the same way. If we associate each speech in the network with its speaker, we can try to identify the most important people in the debate based on how central their speeches are in the network. </paragraph>
+            <paragraph> 
+                <context> 
+                    <action>To describe</action> this type of centrality, <author>we</author> 
+                    <kw>borrow a term from</kw> The Tipping Point (<cite id="1" function="bas" polarity="pos">Gladwell, 2002</cite>)</context> , in which Gladwell describes a certain type of personality in a social network called a maven. A maven is a trusted expert in a specific field who influences other people by passing information and advice. In this paper, our goal is to identify authoritative speakers who control the spread of ideas within a topic. To do this, we introduce MavenRank, which measures the centrality of speeches as nodes in the type of network described in the previous paragraph. 
+            </paragraph>
+            <paragraph> 
+            </paragraph> 
+            Significant research has been done in the area of identifying central nodes in a network. <context>Various <method>methods</method> 
+                <kw>exist for</kw> 
+                <task>measuring</task> centrality, including degree centrality, closeness, betweenness (<cite id="2" function="use" polarity="pos">Freeman, 1977</cite>; <cite id="3" function="use" polarity="pos">Newman, 2003</cite>), and eigenvector centrality. <method>Eigenvector centrality</method> in particular <kw>has been successfully applied</kw> to many different types of networks, <kw>including</kw> 
+                <data>hyperlinked web pages</data> (<cite id="4" function="use" polarity="pos">Brin and Page, 1998</cite>; <cite id="5" function="use" polarity="pos">Kleinberg, 1998</cite>), <data>lexical networks</data> (<cite id="6" function="use" polarity="pos">Erkan and Radev, 2004</cite>; Mihalcea and Ta-rau, 2004; <cite id="7" function="use" polarity="pos">Kurland and Lee, 2005</cite>; <cite id="8" function="use" polarity="pos">Kurland and Lee, 2006</cite>), <kw>and</kw> 
+                <data>semantic networks</data> (<cite id="9" function="use" polarity="pos">Mihalcea et al., 2004</cite>)</context>. <context>The <paper>authors of</paper> (<cite id="10" function="use" polarity="pos">Lin and Kan, 2007</cite>) <kw>extended</kw> 
+                <methods>these methods</methods> 
+                <kw>to include</kw> timestamped graphs where nodes are added over time <kw>and applied it to</kw> multi-document summarization</context>. <context>        In (<cite id="11" function="use" polarity="pos">Tong and Faloutsos, 2006</cite>), the <paper>authors</paper> 
+                <kw>use</kw> 
+                <method>random walks</method> on a graph as a method for finding a subgraph that best connects some or all of a set of query nodes</context>. 
+            <paragraph> 
+            </paragraph> 
+            In our paper, we introduce a new application of eigenvector centrality for identifying the central speakers in the type of debate or conversation network described above. Our method is based on the one described in (Erkan but modified to rank speakers instead of documents or sentences. In our paper, we apply our method to analyze the US Congressional Record, which is a verbatim transcript of speeches given in the United States House of Representatives and Senate. The Record is a dense corpus of speeches made by a large number of people over a long period of time. Using the transcripts of political speeches adds an extra layer of meaning onto the measure of speaker centrality. The centrality of speakers in Congress can be thought of as a measure of relative importance or influence in the US legislative process. We can also use speaker centrality to analyze committee membership: are the central speakers on a given issue ranking members of a related committee? Is there a type of importance captured through speaker centrality that isn't obvious in the natural committee rankings? 
+            <paragraph> 
+            </paragraph> 
+            There has been growing interest in using techniques from natural language processing in the area of political science. <context>In (<cite id="12" function="ack" polarity="neu">Porter et al., 2005</cite>) the authors performed a network analysis of members and committees of the US House of Representatives. They found connections between certain committees and political positions that suggest that committee membership is not determined at random. In (<cite id="13" function="ack" polarity="neu">Thomas et al., 2006</cite>), the authors use the transcripts of debates from the US Congress to automatically classify speeches as supporting or opposing a given topic by taking advantage of the voting records of the speakers. In (<cite id="14" function="ack" polarity="neu">Wang et al., 2005</cite>), the authors use a generative model to simultaneously discover groups of voters and topics using the voting records and the text from bills of the US Senate and the United Nations </context>. <context>The authors of (<cite id="15" function="bas" polarity="pos">Quinn et al., 2006</cite>) <kw>introduce a</kw> 
+                <method>multinomial mixture model</method> 
+                <action>to perform</action> 
+                <task>unsupervised clustering</task> of Congressional speech documents into topically related categories. <author>We</author> 
+                <kw>rely on the output of this model</kw> 
+                <action>to cluster the speeches</action> from the Record in order to compare speaker rankings within a topic to related committees</context>. 
+            <paragraph> 
+            </paragraph> 
+            We take advantage of the natural measures of prestige in Senate committees and use them as a standard for comparison with MavenRank. Our hypothesis is that MavenRank centrality will capture the importance of speakers based on the natural committee rankings and seniority. We can test this claim by clustering speeches into topics and then mapping the topics to related committees. If the hypothesis is correct, then the speaker centrality should be correlated with the natural committee rankings. 
+            <paragraph> 
+            </paragraph> 
+            <paragraph>
+                There have been other attempts to link floor participation with topics in political science. <context>In (<cite id="16" function="con" polarity="neg">Hall, 1996</cite>), the author found that serving on a committee can positively predict participation in Congress, but that seniority was not a good predictor. His measure <kw>only looked at</kw> six bills in three committees, so his method is by far <negfeature>not as comprehensive</negfeature> <kw>as</kw> the one that we present here</context>. Our approach with MavenRank differs from previous work by providing a large scale analysis of speaker centrality and bringing natural language processing techniques to the realm of political science. 
+            </paragraph> 
+        </section> 
+        <section imrad="m"> 
+            <title>2. Data</title> 
+            <subsection> 
+                <title>2.1 The US Congressional Speech Corpus</title> 
+                <paragraph>  
+                    <context>The text used in the experiments is from the United States Congressional Speech corpus (<cite id="17" function="ack" polarity="pos">Monroe et al., 2006</cite>), which is an XML formatted version of the electronic United States Congressional Record from the Library of Congress. The Congressional Record is a verbatim transcript of the speeches made in the US House of Representatives and Senate beginning with the 101st Congress in 1998 and <posfeature>includes tens of thousands of speeches</posfeature> per year</context>. 
+                    <paragraph> 
+                    </paragraph> 
+                    In our experiments we focused on the records from the 105th and 106th Senates. The basic unit of the US Congressional Speech corpus is a record, which corresponds to a single subsection of the print version of the Congressional Record and may contain zero or more speakers. Each paragraph of text within a record is tagged as either speech or non-speech and each paragraph of speech text is tagged with the unique id of the speaker. Figure 1 shows an example record file for the sixth record on July 14th, 1997 in the 105th Senate. <context>
+                        In our experiments <author>we</author> 
+                        <kw>use</kw> a smaller unit of analysis called a speech document by taking all of the text of a speaker within a single record. The capitalization and punctuation is then removed from the text <kw>as in</kw> (<cite id="18" function="bas" polarity="pos">Monroe et al., 2006</cite>)</context> and then the text stemmed using Porter's Snowball II stemmer. Figure 1 shows an example speech document for speaker 15703 (Herb Kohl of Wisconsin) that has been generated from the record in Figure 1. http://thomas.loc.gov 
+                    <paragraph> 
+                    </paragraph> 
+                    In addition to speech documents, we also use speaker documents. A speaker document is the concatenation of all of a speaker's speech documents within a single session and topic (so a single speaker may have multiple speaker documents across topics). For example within the 105th Senate in topic 1 ("Judicial Nominations"), Senator Kohl has four speech documents, so the speaker document attributed to him within this session and topic would be the text of these four documents treated as a single unit. The order of the concatenation does not matter since we will look at it as a vector of weighted term frequencies (see Section 3.2). 
+                </paragraph> 
+                <title>2.2 Topic Clusters</title> 
+                <paragraph> 
+                    <context>
+                        <author>We</author> 
+                        <kw>used</kw> the direct output of the 42-topic model of the 105th-108th Senates <kw>from</kw> (<cite id="19" function="bas" polarity="pos">Quinn et al., 2006</cite>) to further divide the speech documents into topic clusters</context>. <context>
+                        <paper>In their paper</paper>, they use a model where the probabilities of a document belonging to a certain topic varies smoothly over time and the words within a given document have exactly the same probability of being drawn from a particular topic. These two properties make the model <kw>different than</kw> 
+                        standard mixture models(<cite id="20" function="con" polarity="neu">McLachlan and Peel, 2000</cite>) <kw>and</kw> the <method>latent Dirichlet allocation model</method> of (<cite id="21" function="con" polarity="neu">Blei et al., 2003</cite>)</context>. <context>The model of (<cite id="22" function="con" polarity="neu">Quinn et al., 2006</cite>) <kw>is most closely related to</kw> 
+                       the model of (<cite id="23" function="con" polarity="neu">Blei and Lafferty, 2006</cite>), who present a generalization of the model topics and their related committees</context>. 
+                    <paragraph> 
+                    </paragraph> 
+                    The output from the topic model is a D x 42 matrix Z where D is the number of speech documents and the element zdk represents the probability of the dth speech document being generated by topic k. We clustered the speech documents by assigning a speech document d to the kth cluster where If the maximum value is not unique, we arbitrarily assign d to the lowest numbered cluster where zdj is a maximum.A typical topic cluster contains several hundred speech documents, while some of the larger topic clusters contain several thousand. http://snowball.tartarus.org/ algorithms/english/stemmer.html 
+                </paragraph> 
+                <title>2.3 Committee Membership Information</title> 
+                <paragraph> 
+                    <context>The committee membership information that <author>we</author> 
+                        <kw>used</kw> in the experiments is from Stewart and Woon's committee assignment codebook (<cite id="24" function="bas" polarity="pos">Stewart and Woon, 2005</cite>)</context>. This provided us with a roster for each committee and rank and seniority information for each member. In our experiments we use the rank within party and committee seniority member attributes to test the output of our pipeline. The rank within party attribute orders the members of a committee based on the Resolution that appointed the members with the highest ranking members having the lowest number. The chair and ranking members always receive a rank of 1 within their party. A committee member's committee seniority attribute corresponds to the number of years that the member has served on the given committee. 
+                </paragraph> 
+                <title>2.4 Mapping Topics to Committees</title> 
+                <paragraph> 
+                    In order to test our hypothesis that lexical centrality is correlated with the natural committee rankings, we needed a map from topics to related committees. We based our mapping on Senate Rule XXV,which defines the committees, and the descriptions on committee home pages. Table 1 shows the map, where a topic's related committees are listed in italics below the topic name. Because we are matching short topic names to the complex descriptions given by Rule XXV, the topic-committee map is not one to one or even particularly well defined: some topics are mapped to multiple committees, some topics are not mapped to any committees, and two different topics may be mapped to the same committee. This is not a major problem because even if a one to one map between topics and committees existed, speakers from outside a topic's related committee are free to participate in the topic simply by giving a speech. Therefore there is no way to rank all speakers in a topic using committee information. To test our hypotheses, we focused our attention on topics that have at least one related committee. In Section 4.3 we describe how the MavenRank scores http://rules.senate.gov/senaterules/ rule25.php mr presid a the rank democrat on the antitrust subcommitte let me tell you why i support mr klein nomin why he i a good choic for the job and why we ought to confirm him todai first joel klein i an accomplish lawyer with a distinguish career he graduat from columbia univers and harvard law school and clerk for the u court of appeal here in washington then for justic powel just a importantli he i the presid choic to head the antitrust divis and i believ that ani presid democrat or republican i entitl to a strong presumpt in favor of hi execut branch nomine second joel klein i a pragmatist not an idealogu hi answer at hi confirm hear suggest that he i not antibusi a some would claim the antitrust divis wa in the late 197 0 nor anticonsum a some argu the divis wa dure the 1980 instead he will plot a middl cours i believ that promot free market fair competit and consum welfar the third reason we should confirm joel klein i becaus no on deserv to linger in thi type of legisl limbo here in congress we need the input of a confirm head of the antitrust divis to give u the administr view on a varieti of import polici matter defens consolid electr deregul and telecommun merger among other we need someon who can speak with author for the divis without a cloud hang over hi head more than that without a confirm leader moral at the antitrust divis i suffer and given the pace at which the presid ha nomin and the senat ha confirm appointe if we fail to approv mr klein it will be at least a year befor we confirm a replac mayb longer and mayb never so we need to act now we can't afford to let the antitrust divis continu to drift final mr presid i have great respect for the senat from south carolina a well a the senat from nebraska and north dakota thei have been forc advoc for consum on telecommun matter and Figure 1: A sample of the text from record 105.sen.19970714.006.xml and the speech document for Senator Herb Kohl of Wisconsin (id 15703) generated from it. The "..." represents omitted text. Table 1: <context>The numbers and names of the 42 topics from (<cite id="25" function="ack" polarity="neu">Quinn et al., 2006</cite>) with our mappings to related committees (listed below the topic name, if available)</context>. <RECORD> 
+                        <HEADER> 
+                            <CHAMBER>Senate</CHAMBER> 
+                            <TITLE>NOMINATION OF JOEL KLEIN TO BE ASSISTANT ATTORNEY GENERAL IN CHARGE OF THE ANTITRUST DIVISION </TITLE> 
+                            <PAGEREF></PAGEREF> 
+                            <SPEAKER>NULL</SPEAKER> 
+                            <NONSPEECH>NOMINATION OF JOEL KLEIN TO BE ASSISTANT ATTORNEY GENERAL IN CHARGE OF THE ANTITRUST DIVISION <SPEECH> Mr. President, as the ranking Democrat on the Antitrust Subcommittee, let me tell you why I support Mr. Klein's nomination, why he is a good choice for the job, and why we ought to confirm him today. <SPEAKER>UNK1</SPEAKER> 
+                                    <SPEECH> Without objection, it is so ordered. </SPEECH> of speakers who are not members of related committees were taken into account when we measured the rank correlations</SPEECH>
+                            </NONSPEECH>
+                        </HEADER>
+                    </RECORD>. 
+                </paragraph> 
+            </subsection> 
+        </section> 
+        <section> 
+            <title>3 MavenRank and Lexical Similarity</title> 
+            <paragraph> 
+                The following sections describe MavenRank, a measure of speaker centrality, and tf-idf cosine similarity, which is used to measure the lexical similarity of speeches. 
+            </paragraph> 
+            <subsection> 
+                <title>3.1 MavenRank</title> 
+                <paragraph> 
+                    <context>
+                        <author>MavenRank</author> is a graph-based method for finding speaker centrality. It <kw>is similar to</kw> the methods in (<cite id="26" function="use" polarity="neu">Erkan and Radev, 2004</cite>; <cite id="27" function="use" polarity="neu">Mihalcea and Tarau, 2004</cite>; <cite id="28" function="use" polarity="neu">Kurland and Lee, 2005</cite>), which can be <kw>used for</kw> 
+                        <task>ranking sentences</task> in extractive summaries and documents in an information retrieval system</context>. Given a collection of speeches s1,... ,sN and a measure of lexical similarity between pairs sim(si, Sj) > 0, a similarity graph can be constructed. The nodes of the graph represent the speeches and a weighted similarity edge is placed between pairs that exceed a similarity threshold smin. MavenRank is based on the premise that important speakers will have central speeches in the graph, and that central speeches should be similar to other central speeches. A recursive explanation of this concept is that the score of a speech should be proportional to the scores of its similar neighbors. 
+                    <paragraph> 
+                    </paragraph> 
+                    Given a speech s in the graph, we can express the recursive definition of its score p(s) as where adj[s] is the set of all speeches adjacent to s and wdeg(t) = u_adj[t] sim(t,u), the weighted degree of t. Equation (1) captures the idea that the MavenRank score of a speech is distributed to its neighbors. We can rewrite this using matrix notation as where p = (p(s1),p(s2),... ,p(sN)) and the matrix B is the row normalized similarity matrix of the graph where S(i,j) = sim(si; sj). Equation (2) shows that the vector of MavenRank scores p is the left eigenvector of B with eigenvalue 1. 
+                    <paragraph> 
+                    </paragraph> 
+                    <context>
+                        <author>We</author> 
+                        <kw>can prove</kw> that the eigenvector p exists by using a <method>technique</method> 
+                        <kw>from</kw> (<cite id="29" function="bas" polarity="pos">Page et al., 1999</cite>)</context>. We can treat the matrix B as a Markov chain describing the transition probabilities of a random walk on the speech similarity graph. The vector p then represents the stationary distribution of the random walk. It is possible that some parts of the graph are disconnected or that the walk gets trapped in a component. These problems are solved by reserving a small escape probability at each node that represents a chance of jumping to any node in the graph, making the Markov chain irreducible and aperiodic, which guarantees the existence of the eigenvector.Assuming a uniform escape probability for each node on the graph, <context>
+                        <author>we can rewrite Equation (2) as where U is a square matrix with U(i, j) = 1/N for all i and j, N is the number of nodes, and d is the escape probability chosen in the interval [0.1, 0.2] (<cite id="30" function="bas" polarity="pos">Brin and Page, 1998</cite>)</author>. <method>Equation (4)</method> is known as PageRank (<cite id="31" function="use" polarity="pos">Page et al., 1999</cite>) and <kw>is used for</kw> 
+                        <task>determining prestige on the web</task> in the Google search engine</context>. 
+                </paragraph> 
+                <title>3.2 Lexical Similarity</title> 
+                <paragraph> 
+                    In our experiments, <context>
+                        <author>we</author> 
+                        <kw>used</kw> tf-idf cosine similarity to measure lexical similarity between speech documents. We represent each speech document as a vector of term frequencies (or f), which are weighted according to the relative importance of the given term in the cluster. The terms are weighted by their inverse document frequency or idf. The idf of a term w is given by (<cite id="32" function="bas" polarity="pos">Sparck-Jones, 1972</cite>)</context> where N is the number of documents in the corpus and nw is the number of documents in the corpus containing the term w. It follows that very common words like "of" or "the" have a very low idf, while the idf values of rare words are higher. In our experiments, we calculated the idf values for each topic using all speech documents across sessions within the Abortion Child Education Workers, Protection Retirement Figure 2: MavenRank percentiles for three speakers over four topics. given topic. We calculated topic-specific idf values because some words may be relatively unimportant in one topic, but important in another. For example, in topic 22 ("Abortion"), the idf of the term "abort" is near 0.20, while in topic 38 ("Taxes"), its idf is near 7.18. The tf-idf cosine similarity measure tf-idf-cosine(u, v) is defined as which is the cosine of the angle between the tf-idf vectors. 
+                    <paragraph> 
+                    </paragraph> 
+                    There are other alternatives to tf-idf cosine similarity. <context>Some other possible similarity measures are document edit distance,<method> the language models</method> 
+                        <kw>from</kw> (<cite id="33" function="use" polarity="neu">Kurland and Lee, 2005</cite>), <kw>or</kw> 
+                        <method>generation probabilities</method> 
+                        <kw>from</kw> (<cite id="34" function="use" polarity="neu">Erkan, 2006</cite>). For simplicity, we only used tf-idf similarities in our experiments, but <kw>any of these measures</kw> 
+                        <kw>could be used</kw> in this case</context>. 
+                </paragraph> 
+            </subsection> 
+        </section> 
+        <section imrad="r"> 
+            <title>4 Experiments and Results</title> 
+            <subsection> 
+                <title>4.1 Data</title> 
+                <paragraph> 
+                    We used the topic clusters from the 105th Senate as training data to adjust the parameter smin and observe trends in the data. <context>
+                        We did not run experiments to test the effect of different values of smin on MavenRank scores, but our chosen value of 0.25 has shown to
+                        <result>give acceptable results</result> 
+                        <kw>in similar experiments</kw> (<cite id="35" function="con" polarity="pos">Erkan and Radev, 2004</cite>)</context>. We used the topic clusters from the 106th Senate as test data. For the speech document networks, there was an average of 351 nodes (speech documents) and 2142 edges per topic. For the speaker document networks, there was an average of 63 nodes (speakers) and 545 edges per topic. 
+                </paragraph> 
+                <title>4.2 Experimental Setup</title> 
+                <paragraph> 
+                    We set up a pipeline using a Perl implementation of tf-idf cosine similarity and MavenRank. We ran MavenRank on the topic clusters and ranked the speakers based on the output. We used two different types granularities of the graphs as input: one where the nodes are speech documents and another where the nodes are speaker documents (see Section 2.1) For the speech document graph, a speaker's score is determined by the sum of the MavenRank scores of the speeches given by that speaker. 
+                </paragraph> 
+                <title>4.3 Evaluation Methods</title> 
+                <paragraph> 
+                    To evaluate our output, we estimate independent ordinary least squares linear regression models of MavenRank centrality for topics with at least one related committee (there are 29 total): MavenRankik = f30k + ftsk Seniorityik + +/3rk RankingM emberjk + eik (7) where i indexes Senators, k indexes topics, Senioriti ik is the number of years Senator i has served on the relevant committee for topic k (value zero for those not on a relevant committee) and RankingMemberjk has the value of one only for the Chair and ranking minority member of a relevant committee. We are interested primarily in the overall significance of the estimated model (indicating committee effects) and, secondarily, in the specific source of any committee effect in seniority or committee rank. 
+                </paragraph> 
+                <title>4.4 Results</title> 
+                <paragraph> 
+                    Table 2 summarizes the results. "Maven" status on most topics does appear to be driven by committee status, as expected. There are particularly strong effects of seniority and rank in topics tied to the Judiciary, Foreign Relations, and Armed Services committees, as well as legislation-rich areas of domestic policy. Perhaps of greater interest are the topics that do not have committee effects. These are of three distinct types. The first are highly politicized topics for which speeches are intended not to influence aF-test for joint significance of committee variables. bT-test for significance of committee seniority. cT-test for significance of chair or ranking member status. Table 2: Significance tests for ordinary least squares (OLS) linear regressions of MavenRank scores (Speech-documents graph) on committee seniority (in years) and ranking status (chair or ranking member), 106th Senate, topic-by-topic. Results for the speaker-documents graph are similar. legislation as much as indicate an ideological or partisan position, so the mavens are not on particular committees (abortion, children, seniors, the economy). The second are "distributive politics" topics where many Senators speak to defend state or regional interests, so debate is broadly distributed and there are no clear mavens (agriculture, military base closures, public lands). Third are topics where there are not enough speeches for clear results, because most debate occurred after 1999-2000 (post-9/11 intelligence reform, McCain-Feingold campaign finance reform). 
+                </paragraph> 
+                <paragraph> 
+                    Alternative models, using measures of centrality based on the centroid were also examined. Distance to centroid provides broadly similar results as MavenRank, with several marginal significance results reversed in each direction. Cosine similarity with centroid, on the other hand, appears to have no relationship with committee structure. 
+                </paragraph> 
+                <paragraph> 
+                    Figure 2 shows the MavenRank percentiles (using the speech document network) for Senators Rick Santorum, Barbara Boxer, and Edward Kennedy across a few topics in the 106th Senate. These sample scores conform to the expected rankings for these speakers. In this session, Santorum was the sponsor of a bill to ban partial birth abortions and was a spokesman for Social Security reform, which support his high ranking in abortion and workers/retirement. Boxer acted as the lead opposition to Santorum's abortion bill and is known for her support of child abuse laws. Kennedy was ranking member of the Health, Education, Labor, and Pensions committee and the Judiciary committee (which was involved with the abortion bill). 
+                </paragraph> 
+                <title>4.5 MavenRank in Other Contexts</title> 
+                <paragraph> 
+                    MavenRank is a general method for finding central speakers in a discussion and can be applied to areas outside of political science. One potential application would be analyzing blog posts to find "Maven" bloggers by treating blogs as speakers and posts as speeches. Similarly, MavenRank could be used to find central participants in a newsgroup, a forum, or a collection of email conversations. 
+                </paragraph> 
+            </subsection> 
+        </section> 
+        <section> 
+            <title>5 Conclusion</title> 
+            <paragraph> 
+                We have presented a technique for identifying lexically central speakers using a graph based method called MavenRank. To test our method for finding central speakers, we analyzed the Congressional Record by creating a map from the clusters of speeches to Senate committees and comparing the natural ranking committee members to the output of MavenRank. We found evidence of a possible relationship between the lexical centrality and committee rank of a speaker by ranking the speeches using MavenRank and computing the rank correlation with the natural ordering of speakers. Some specific committees disagreed with our hypothesis that MavenRank and committee position are correlated, which we propose is because of the non-legislative aspects of those specific committees. The results of our experiment suggest that MavenRank can indeed be used to find central speakers in a corpus of speeches. 
+            </paragraph> 
+            <paragraph> 
+                We are currently working on applying our methods to the US House of Representatives and other records of parliamentary speech from the United Kingdom and Australia. We have also developed a dynamic version of MavenRank that takes time into account when finding lexical centrality and plan on using it with the various parliamentary records. We are interested in dynamic MavenRank to go further with the idea of tracking how ideas get propagated through a network of debates, including congressional records, blogs, and newsgroups. 
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>Acknowledgments</title> 
+            <paragraph> 
+                This paper is based upon work supported by the National Science Foundation under Grant No. 0527513, "DHB: The dynamics of Political Representation and Political Rhetoric". Any opinions, findings, and conclusions or recommendations expressed in this paper are those of the authors and do not necessarily reflect the views of the National Science Foundation. 
+            </paragraph> 
+        </section>
+    </paper>
+</annotatedpaper>

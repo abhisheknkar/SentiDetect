@@ -1,0 +1,417 @@
+<annotatedpaper>
+    <paper title="Accurate Argumentative Zoning with Maximum Entropy models" authors="Stephen Merity and Tara Murphy and James R. Curran" year="2009"> 
+        <section> 
+            <title>Accurate Argumentative Zoning with Maximum Entropy models</title> 
+            Stephen Merity and Tara Murphy and James R. Curran 
+            School of Information Technologies 
+            University of Sydney 
+            NSW 2006, Australia 
+            {smerity,tm,james}@it.usyd.edu.au 
+        </section> 
+        <section> 
+            <title>Abstract</title> 
+            <paragraph> 
+                We present a maximum entropy classifier that significantly improves the accuracy of Argumentative Zoning in scientific literature. 
+                <context>
+                    <author>We</author> 
+                    <action>examine</action> the features used to achieve this result and experiment with Argumentative Zoning as a <task>sequence tagging task</task>, decoded with 
+                    <method>Viterbi</method> 
+                    <action>using up</action> to <kw>four previous classification decisions</kw>. The result is a 23% F-score increase on the Computational Linguistics 
+                    conference <data>papers</data> 
+                    <action>marked up</action> 
+                    <kw>by</kw> 
+                    <cite id="1" function="bas" polarity="neu">Teufel (1999)</cite>.
+                </context>   
+            </paragraph> 
+            <paragraph> 
+                Finally, we demonstrate the performance of our system in different scientific domains by applying it to a corpus of Astronomy journal
+                articles annotated using a modified Argumentative Zoning scheme. 
+            </paragraph> 
+        </section> 
+        <section imrad="i"> 
+            <title>1 Introduction</title> 
+            <paragraph> 
+                The task of generating automatic summarizations of one or more texts is a central problem in Natural Language Processing (NLP). 
+                Summarization is a fundamental component for future information retrieval and question answering systems, incorporating both natural
+                language understanding and natural language generation.  
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    <method>Comprehension-based summarization</method>, e.g.  <cite id="2" function="hed" polarity="neg">Kintsch and Van Dijk (1978)</cite> and 
+                    <cite id="3" function="hed" polarity="neg">Brown et al.(1983)</cite>,<kw> is the most ambitious model</kw> 
+                    of automatic summarization, requiring a complete understanding of the text. <kw>Due to the failure</kw> of rule-based NLP and knowledge
+                    <method>representation</method>, <kw>other </kw> 
+                    <method>less knowledge-intensive methods</method> now <kw>dominate. </kw> 
+                </context>
+            </paragraph>
+             
+            <paragraph>
+                <context>  
+                    <task>Sentence extraction</task>, e.g. <cite id="3" function="ack" polarity="neu">Brandow et al. (1995)</cite> and <cite id="4" function="ack" polarity="neu">Kupiec et al. (1995)</cite>, <action>selects</action> a small number
+                    of abstract <data>worthy sentences</data> from a larger text. The resulting sentences form a collection of excerpt sentences meant to capture the essence
+                    of the text.
+                </context>  
+                <context>
+                    The next stage is <task>information fusion</task> (<cite id="5" function="ack" polarity="neu">Barzilay et al., 1999</cite>; <cite id="6" function="ack" polarity="neu">Knight and Marcu, 2000</cite>
+                    which attempts to <action>combine</action> the <data>excerpts</data> into a more cohesive text. <kw>These methods</kw> can <action>create</action> 
+                    <kw>inflexible and incoherent</kw> extracts that result 
+                    in <kw>under-informative results</kw> (<cite id="7" function="ack" polarity="neg">Teufel et al., 1999</cite>). 
+                </context>              
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    <method>Argumentative Zoning</method> (<cite id="8" function="ack" polarity="pos">Teufel, 1999</cite>; <cite id="9" function="ack" polarity="pos">Teufel and Moens, 2002</cite>)<kw> attempts to solve this problem</kw> by <action>representing</action> the structure of a text using a <concept>rhetorically-based schema</concept>.    
+                </context>
+                Sentences are classified into one of a small number of nonhierarchical argumentative roles, which can then be used in both the sentence extraction and text generation/fusion phase of automatic summarization. Argumentative Zoning can enable tailored summarizations depending on the needs of the user, e.g. a layperson versus a domain expert. 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    The <kw>Afirst experiments</kw> in <method>Argumentative Zoning</method> used <tool>Native Bayes (NB) classifiers </tool>   (<cite id="10" function="wea" polarity="neg">Kupiec et al., 1995</cite>; <cite id="11" function="wea" polarity="neg">Teufel, 1999</cite>) which assume conditional independence of the features. <kw>However,</kw> 
+                    <kw>this assumption is rarely true</kw> for the kinds of rich feature representations we want to use for most NLP tasks.                     
+                </context>              
+            </paragraph> 
+            <paragraph>
+                <context>
+                    <concept>Maximum entropy (ME) models</concept> 
+                    <kw>have become popular</kw> in NLP because <kw>they can incorporate</kw> evidence from the complex, <feature>diverse and overlapping features</feature> needed to represent language. <kw>Some example applications include</kw>  
+                    <method>part-of-speech (POS) tagging</method> (<cite id="12" function="use" polarity="pos">Ratnaparkhi, 1996</cite>), <method>parsing</method> (<cite id="13" function="use" polarity="pos">Johnson et al., 1999</cite>), <method>language modelling</method> 
+                    <cite id="14" function="use" polarity="pos">(Rosenfeld, 1996)</cite>, and text categorisation <cite id="15" function="use" polarity="pos">(Nigam et al., 1999)</cite>. 
+                    
+                </context> 
+                
+            </paragraph> 
+            <paragraph> 
+                 We
+                <context>
+                    have developed an Argumentative Zoning (zone) classifier using a ME model. We
+                    <action>compare</action> 
+                    <kw>our</kw> 
+                    <tool>zone classifier</tool> 
+                    to a reimplementation of <cite id="16" function="con" polarity="neu">Teufel and Moens (2002)</cite>
+                    <tool> NB classifier</tool> and features on their original Computational Linguistics corpus.</context><context> <kw>Like</kw> 
+                    <cite id="17" function="bas" polarity="pos">Teufel (1999)</cite>, <author>we</author> 
+                    <action>model
+                    zone classification</action>  as a <task>sequence tagging task</task>. Our zone classifier achieves an F-score of 96.88%, a 20% improvement. We also show how Argumentative Zoning can be applied to other domains by evaluating our system on a corpus of Astronomy journal articles, achieving an F-measure of 97.9%. 
+                    
+                </context>
+                
+            </paragraph> 
+            <paragraph> 
+                Description general scientific background neutral descriptions of other researcher's work neutral descriptions of the authors' new work statements of the particular aim of the current paper statements of textual organisation of the current paper contrastive or comparative statements about other work explicit mention of weaknesses of other work statements that own work is based on other work. Table 1: Teufel's (1999) Argumentative Zones 
+            </paragraph> 
+        </section> 
+        <section imrad="m"> 
+            <title>2 Argumentative Zoning</title> 
+            <paragraph> 
+                <context>
+                    <cite id="18" function="use" polarity="neu">Teufel (1999)</cite> 
+                    <action>introduced</action> a <method>new rhetorical analysis</method> for <paper>scientific texts</paper> called <method>Argumentative Zoning</method>. Each sentence of an article from the scientific literature is classified into one of seven basic rhetorical structures shown in Table 1.                     
+                </context>                
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    
+                
+                    The first three: Background, Other, and Own, are part of the basic schema and represent attribution of intellectual ownership. The <feature>four additional categories</feature>: aim, textual, contrast, and basis, <kw>are based upon</kw> 
+                    <cite id="19" function="bas" polarity="pos">Swales (1990)</cite>'s <experiment>Creating A Research Space (CARS) model </experiment>
+                </context>, and provide pointed information about the author's stance and the paper itself. Teufel assumes that each sentence only requires a single classification and that all sentences clearly fit into the above structure. The assumption is clearly not always correct, but is a useful approximation nevertheless. 
+            </paragraph> 
+            <paragraph> 
+                Due to the specific nature of these classifications it is hoped that this will allow for much more robust automatic abstraction generation. Summaries of a paper could be created specifically for the user, either focusing on the aim of the work, the work's stance in the field (what other works it is based upon or compared with) and so on. 
+            </paragraph> 
+            <paragraph> 
+                Teufel used Argumentative Zoning to determine the author's use and opinion of other authors they cite in their work and also to create Rhetorical Document Profiles (RDP), a type of summarization used to provide typical information that a new reader may need in a systematic manner. 
+            </paragraph> 
+            <paragraph> 
+                <context>                                 
+                    <kw>For the use of</kw> 
+                    <method>Argumentative Zoning</method> in RDPs <cite id="20" function="ack" polarity="neu">Teufel (1999)</cite> 
+                    <kw>points out  that</kw> due to the redundancy in language that near perfect accuracy is not required as important pieces of information will be repeated in the paper. Recognising these salient points once is enough for them to be included in the RDP. <kw>In further tasks</kw>, <kw>such as </kw>the <task>analysis of the function of citations</task> (<cite id="21" function="ack" polarity="neu">Teufel et al., 2006</cite>) and automatic summarization, higher levels of accuracy are more critical. 
+                </context>
+            </paragraph> 
+       
+            <title>3 Maximum Entropy models</title> 
+            <paragraph> 
+                Maximum entropy (ME) or log-linear models are statistical models that can incorporate evidence from a diverse range of complex and potentially overlapping features. Unlike Naive Bayes (NB), the features can be conditionally dependent given the class, which is important since feature sets in NLP rarely satisfy this independence constraint. The ME classifier uses models of the form: 
+            </paragraph> 
+            <paragraph> 
+                where y is the zone label, x is the context (the sentence) and the /j(x, y) are the features with associated weights Aj. 
+            </paragraph> 
+            <paragraph> 
+                The probability of a sequence of zone labels yi... yn given a sequence of sentences is si... snis approximated as follows: 
+            </paragraph> 
+            <paragraph> 
+                p(yi .. 
+            </paragraph> 
+            <paragraph> 
+                where xj is the context for sentence In our experiments that treat argumentative zoning as a sequence labelling task, the context xj incorporates history information - i.e. the previous labelling decisions of the classifier. Optimal decoding of this sequence uses the Viterbi algorithm, which we compare against the Oracle case of knowing the correct label for the previous sentence. 
+            </paragraph> 
+            <paragraph> 
+                The features are binary valued functions which pair a zone label with various elements of the sentential context; for example: 
+            </paragraph> 
+            <paragraph> 
+                goal G x, that is, the word goal is part of the context of the sentence, is a contextual predicate. 
+            </paragraph> 
+            <paragraph> 
+                The central idea in maximum entropy modelling is that the model chosen should satisfy all of the constraints imposed by the training data (in the form of empirical feature counts from the training data) whilst remaining as unbiased as possible. This is achieved by selecting the model with the maximum entropy, i.e. the most uniform distribution, given the constraints. 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    <author>Our </author> 
+                    <tool>classifier </tool> 
+                    <action>uses</action> the <concept>maximum entropy implementation</concept> described in Curran and <cite id="22" function="bas" polarity="pos">Clark (2003)</cite>. Generalised Iterative Scaling (gis) is used to estimate the values of the weights and <author>we</author> 
+                    <action>use a</action> 
+                    <concept>Gaussian</concept> prior over the weights (<cite id="23" function="bas" polarity="pos" >Chen and Rosenfeld, 1999</cite>) <kw>which allows</kw> many rare, but informative,<feature> features </feature>   to be used without overfitting. This will be an important property when we use sparse features like bigrams in the models below.                    
+                </context>              
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>4 Modelling Argumentative Zones</title> 
+            <subsection> 
+                <subtitle>4.1 Our Features</subtitle> 
+                <paragraph> 
+                    The two primary sources of features for our zone classifier were the words in the sentences and the position of the sentence relative to the rest of the paper. A number of feature types use additional external resources (e.g. semantic lists of agents or common rhetorical patterns) or annotations (e.g. named entities). Where feasible <author>we</author> 
+                    <action>have  reimplemented</action> 
+                    <kw>the features described in</kw> 
+                    <cite id="24" function="bas" polarity="pos">Teufel (1999)</cite>. In other cases, our features are somewhat simpler. 
+                </paragraph> 
+                <paragraph>
+                    <context>
+                        <kw>Since the</kw>  
+                        <cite id="25" function="bas" polarity="pos">Curran and Clark (2003)</cite> 
+                        <tool>classifier</tool> 
+                        <kw>only</kw> accepts <feature>binary features</feature>, any numerical features had to be bucketed into smaller sets of alternatives to reduce sparseness, either by integer division or through reducing the number by scaling to a small integer range. <feature>The features</feature> 
+                        <author>we</author> 
+                        <action>implemented</action> are described below.    
+                    </context>                     
+                </paragraph> 
+                <paragraph> 
+                    Unigrams, bigrams and n-grams 
+                </paragraph> 
+                <paragraph> 
+                    A sub-sequence of n words from a given sentence. We include unigram and bigram features and report them individually and together (as n-grams). These features include all of the unigrams and bigrams above the feature cutoff, unlike Teufel's cont-1 features below. Also, both the Computational Linguistics and Astronomy corpora contain marked up citations, cross-references to tables, figures, and sections and mathematical expressions. In the Computational Linguistics corpus self citations are distinguished from other citations. These structured elements have been normalised to a single token each, e.g._CITE_. These tokens have been retained in the unigram and bigram features. first The first four words of a sentence, added individually. 
+                </paragraph> 
+                <paragraph> 
+                    Sections, positions, and lengths section A section counter which increments on each heading to measure the distance into the document. It does not take into consideration whether they are sub-headings or similar. There are two versions of this feature. The first is a straight counter (1 to n) and the second is grouped into two buckets representing each half of the paper (breaking at the middle section). location The position of a sentence between two headings (representing a section). There are two versions of this feature, one counts to a maximum of 10 and the other represents a percentage through the section bucketed into 20% intervals. paragraph The position of the sentence within a paragraph. Again there are two features - either straight counts (with a maximum of 10) or bucketed into thirds of a paragraph. length of sentence grouped into multiples of 3. 
+                </paragraph> 
+                <paragraph> 
+                    Named entity features 
+                </paragraph> 
+                <paragraph> 
+                    <context>
+                        <author>Our</author> 
+                        <data>astronomy corpus</data> 
+                        <kw>has been manually annotated</kw> with <concept>domain-specific named entity information</concept> (<cite id="26" function="bas" polarity="pos">Murphy et al., 2006</cite>). There are 12 coarsegrained categories and 43 fine-grained categories including star, galaxy, telescope, as well as a number of the usual categories including person, organisation and location. Both the coarse-grained and fine-grained categories were used as features.                        
+                    </context>                 
+                </paragraph> 
+            </subsection> 
+            <subsection> 
+    
+                <context>
+                    <subtitle>4.2 <cite id="27" function="bas" polarity="pos">Teufel (1999)</cite>s <feature>features</feature></subtitle>  
+                </context>
+               
+                <paragraph> 
+                    <context>
+                        To compare with previous work, <author>we</author> also <action>implemented</action> 
+                        <kw>most of the</kw> 
+                        <kw>features that gave</kw> 
+                        <cite id="28" function="bas" polarity="pos">Teufel (1999)</cite> the best performance. We list all of the feature types in Table 2, indicating which ones have and have not been implemented.                                          
+                    </context>      
+                </paragraph> 
+                <paragraph> 
+                    Teufel's unigram features (cont-1) are filtered using tf-idf to select the top scoring 10 words in each document, and then these are used to mark the top 40 sentences in each document containing those filtered words. 
+                </paragraph> 
+                <paragraph> 
+                    TLoc marks the position of the sentence over the entire paper, using 10 unevenly sized segments (larger segments are in the middle of the paper). 
+                </paragraph> 
+                <paragraph> 
+                    Struct-1 marks where a sentence appears in a section. It divides each section into three equally sized segments; singles out the first and the last sentence as separate segments; the second and third sentence as a sixth segment; and the second-last plus third-last sentence as a seventh segment. Struct-3 the type of section heading for the current section. In our case, we have not mapped these down to the reduced set used by Teufel. 
+                </paragraph> 
+                <paragraph> 
+                    <context>
+                        <tool>Formu</tool> 
+                        <action>uses</action> 
+                        <method>pattern matching rules</method> to identify formulaic expressions. Ag-1 and Ag-2 identify agent and action expressions from gazetteers. <cite id="29" function="use" polarity="neu">Teufel (1999)</cite> 
+                        <action>provides</action> 
+                        <kw>these</kw> in the appendices.    
+                    </context>                    
+                </paragraph> 
+            </subsection> 
+            <subsection> 
+                <subtitle>4.3 Feature Cutoff</subtitle> 
+                <paragraph> 
+                    <context>
+                        Features that occur rarely in the training set are problematic because the statistics extracted for these features are not reliable. They may still contribute positively to the ME model because <author>we</author> 
+                        <action>use</action> 
+                        <method>Gaussian smoothing</method> (<cite id="30" function="bas" polarity="on">Chen and Rosenfeld, 1999</cite>) help avoid overfitting.    
+                    </context>
+                     
+                </paragraph> 
+                <paragraph> 
+                    Instead of including every possible feature, we used a cutoff to remove features that occur less than four times. This primarily applies to the n-gram features, especially bigrams, which were quite sparse given the small quantity of training data. Due to the speed of the ME implementation it is possible to have quite a low cut-off. 
+                </paragraph> 
+            </subsection> 
+            <subsection> 
+                <subtitle>4.4 History features and Viterbi</subtitle> 
+                <paragraph> 
+                    In order to take advantage of the predictability of tags given prior sequences (for example, AIM commonly following itself) we used history features and treated Argumentative Zoning as a sequence labelling task. Since each prediction now relies on the previous decisions we used the Viterbi algorithm to find the optimal sequence. 
+                </paragraph> 
+                <paragraph> 
+                    Given the small number of labelling alternatives, we experimented with several history lengths ranging from previous label to the previous four labels. To determine the impact of this feature in an ideal situation, we also experimented with using an Oracle set of history features. 
+                </paragraph> 
+            </subsection> 
+        </section> 
+        <section>
+            <title> 
+                5 Results 
+            </title> 
+            <subsection>
+                <paragraph> 
+                    Our results are produced using ten-fold cross validation and are reported in terms of precision, recall and f-score for each of the zone classes, and a weighted average over all classes. 
+                </paragraph> 
+                <paragraph> 
+                    We have investigated the impact of each feature type using sub-tractive analysis, where we have also calculated paired t-test confidence intervals (the error values reported are the 95% confidence interval). 
+                    The baselines for both sets were already quite high (at least 70%) due to the common tag of OWN, representing the author's own work, but our results show significant improvements over this baseline. 
+                </paragraph> 
+                <paragraph>
+                    <subtitle> 
+                        5.1 CMP-LG Corpus 
+                    </subtitle> 
+                
+                </paragraph> 
+            
+                <paragraph> 
+                    <context>
+                        The <data>CMP-LG corpus</data> is a collection of 80 conference papers <action>collected by</action> 
+                        <cite id="31" function="ack" polarity="neu">Teufel (1999)</cite> 
+                        <kw>from the</kw> 
+                        <data>Computation and Language E-Print Archive </data> . The LTeX source was converted to html with La-tex2HTML then transformed into XML with custom PERL scripts. This text was then tokenized using the TTT (Text Tokenization) System into Penn Treebank format. The result is a corpus of 12,000 annotated sentences, containing 333,000 word tokens, in XML format.    
+                    </context>
+                 
+                </paragraph> 
+                <paragraph> 
+                    We attempted to recreate Teufel's original experiments by emulating the features she used with the same type of classifier. <author>We</author> 
+                    <action>used</action> 
+                    <tool>Weka's </tool>  (<cite id="32" function="bas" polarity="pos">Frank et al., 2005</cite>) implementation of the NB classifier. 
+                </paragraph> 
+                <paragraph> 
+                    <context>
+                        Table 3 reproduces 
+                        <kw>the results from</kw>  
+                        <cite id="33" function="con" polarity="neu">Teufel and Moens (2002)</cite> 
+                        <kw>alongside</kw> 
+                        our 
+                        <result>reimplementation of http://xxx.lanl.gov/cmp-lg/</result> Table 2: <cite id="34" function="con" polarity="neu">Teufel (1999)</cite>'s set of features the features using Weka's NB classifier.    
+                    </context>                
+                </paragraph> 
+                <paragraph> 
+                    We have been able to replicate their results to a reasonable extent - gaining higher overall performance using most of their original features. Notably, our Other class is significantly more accurate whilst the original Basis class did better. 
+                </paragraph> 
+                <paragraph> 
+                    Our next experiment investigated the value of treating Argumentative Zoning as a sequence labelling task, i.e. the impact of the Markov history features and Viterbi decoding on performance. For these experiments we only used the unigram and bigram features with the maximum entropy classifier. Table 4 presents the results: the baseline is already much higher than the NB classifier which is a result of both the unigram/bigram features and the ME classifier itself. 
+                </paragraph> 
+                <paragraph> 
+                    The improvement using longer Markov windows (up to 2.13%) is also shown - and longer windows are better, although there is diminishing returns. We chose a Markov history of the four previous decisions for the rest of our experiments. Table 4 also shows that knowing the previous label perfectly (with the Oracle experiment) can make a large difference to classification accuracy. 
+                </paragraph> 
+                <paragraph> 
+                    <context>
+                        Table 5 presents the subtractive analysis to determine the impact of different feature types.<kw> From this</kw> 
+                        <action>we can see</action>  that the <concept>n-grams (unigrams and bi-grams) </concept> 
+                        <kw>have by far the largest impact</kw> - and <kw>neither</kw> of these <feature>feature</feature> types <kw>was</kw> directly <action>implemented by</action>  
+                        <cite id="35" function="wea" polarity="neg">Teufel and Moens (2002)</cite>. The next most important features are the first few words (again a unigram type feature), length and the section number. The Markov history features also have an impact of just over 1%.                     
+                    </context>
+                
+                </paragraph> 
+                <paragraph> 
+                    Table 6 shows a different story for Teufel's features using the maximum entropy model. It seems that none of the feature types alone are making an enormous contribution and that the impact of them varies enormously between folds (the confidence intervals are far bigger than the differences). 
+                </paragraph> 
+                <paragraph> 
+                    Finally, Table 7 gives the results of using the maximum entropy model with Markov history length four and all of the features. Overall, we improve Teufel and Moens' performance by just under 20% on our reproduced experiments. 
+                </paragraph> 
+        
+            </subsection> 
+            <subsection> 
+                <subtitle> 
+                    5.2 Astronomical Corpus 
+                </subtitle> 
+                <paragraph> 
+                    The <data>astronomical corpus</data> 
+                    <action>was created by</action> 
+                    <cite id="36" function="ack" polarity="nos">Murphy et al. (2006)</cite> and <kw>consists of papers obtained from</kw> 
+                    <cite id="37" function="use" polarity="neu">arXiv's (2005)</cite> astrophysics section (astro-ph). The papers were converted from LATEX to Unicode by a custom script which attempted to retain as much of the paper's special characters and formatting as possible. 
+                </paragraph> 
+                <paragraph> 
+                    <context>
+                        The <data>resulting text</data> 
+                        <kw>was</kw> then <action>processed</action> using <tool>MXTerminator</tool> (<cite id="38" function="use" polarity="neu">Reynar and Ratnaparkhi, 1997</cite>) with an additional Python script to find sentence </context>Table 3: <context> <cite id="39" function="con" polarity="neu">Teufel and Moens (2002)</cite>'s <kw>and our</kw> 
+                        <result>NBperformance</result> 
+                        <kw>on CMP-LG Table 6</kw>: Teufel's Subtractive analysisCMP-LG ME Table 4: History features on thecmp-lgcorpus withMEmodel of unigram/bigram features only Table 5: Subtractive analysisCMP-LG MEmodel 
+                        
+                    </context>
+                    
+                </paragraph> 
+                <paragraph> 
+                    Description 
+                </paragraph> 
+                <paragraph> 
+                    As has been noted in prior studies , Abell\!GXYC 2255\!GXYC has an unusually large number of galaxies with extended radio emission . This is consistent with the findings of Hogg\!P Fruchter\!P ( 1999\!DAT ) who found that GRB hosts are in general subluminous galaxies . We scanned the data of about 1.8\!DUR year\!DUR ( TJDs\!DUR 11000-11699\!DUR ) and found 30 new GRB-like events . In Fig . _REF_ we present the 1.4\!FRQ GHz\!FRQ radio images of the cluster A2744\!GXYC , at different angular resolutions . (subclassedfrom OWN) Smith\! P et al. ( 2001 \! DAT ) reported no detection of transient emission at sub-mm ( 850\! WAV um\! WAV ) wavelengths . (subclassed from OTH) Reduction of the NIR images was performed with the IRAF\!CODE and STSDAS\!CODE packages .  (subclassed from OWN) Figure 1: <kw>Examples of</kw> 
+                    <data>sentences</data> with the given tags in the astronomical corpus boundaries, and then <action>tokenized</action> 
+                    <kw>using the</kw> 
+                    <tool>Penn Treebank</tool> (<cite id="40" function="bas" polarity="neu">Marcus et al., 1993</cite>) sed script, with another Python script fixing common errors. 
+                </paragraph> 
+                <paragraph> 
+                    The LATEX, which the tokenizer split off incorrectly, was then reattached. 
+                </paragraph> 
+                <paragraph> 
+                    Each sentence of the corpus was then annotated using a modified version of the Argumentative Zoning schema. While the original three zones: Background, Own, Other are used, we have replaced the CARS labels with content labels describing aspects of the work: DAT for data used in the analysis, OBS for observations performed, and TEC for techniques applied. Only Own and Other are subclassed with the extended schema of Data, Observation and Techniques. Examples of each zone classification are shown in Figure 1. 
+                </paragraph> 
+                <paragraph> 
+                    Table 8 shows the impact of different feature types on classification accuracy for the Astronomy corpus. Again, the most important features are the n-grams (although to a slightly lesser extent than for the Computational Linguistics corpus). The other features make very little contribution at all. Disappointingly, the (gold-standard) named entity features contribute very little additional information - which is surprising given that the content categories (data and observation) are directly connected with some of the entity types (like telescope). 
+                </paragraph> 
+                <paragraph> 
+                    In the Astronomy corpus, the Markov history features actually have a detrimental effect, which suggests the history is misleading. This warrants further exploration, but we suspect there may be more changing backwards and forwards between argumentative zones in the Astronomy corpus. Overall, we can see that the two tasks are of a similar level of difficulty of around 96% F-score. Table 9 shows the distribution over zones and content labels for the Astronomy corpus. The Background label is the hardest to reproduce even though it is not split into content sub-types. The sub-types are relatively rare for Other, so the results should not be considered as reliable. 
+                </paragraph> 
+                <paragraph> 
+                    Table 7: FinalCMP-LG MEperformance Table 9: Finalastro memodel performance Table 8: Subtractive analysisastro memodel 
+                </paragraph> 
+                <paragraph> 
+                    Table 10 compares the performance of our Naive Bayes and Maximum Entropy classifiers on the two corpora for just the basic annotation scheme: Background, Own and Other. The features used are the set of Teufel features we have implemented (so it does not include unigram or bigram features). 
+                </paragraph> 
+                <paragraph> 
+                    The results show that classifiers for both corpora behave in quite similar ways on the basic scheme. Own is by far the most frequent category, and not surprisingly, it is most accurately classified in both domains. Background seems to be easier to distinguish in Astronomy, but Other is more distinct in Computational Linguistics. 
+                </paragraph> 
+                <paragraph> 
+                    Further, we see no advantage to using maximum entropy models over Naive Bayes when the feature set is not sophisticated/overlapping enough, and the dataset large enough, to warrant the extra power (and cost). 
+                </paragraph> 
+            </subsection> 
+        </section> 
+        <section> 
+            <title> 
+                6 Conclusion 
+            </title> 
+            <paragraph> 
+                This paper has presented new models ofArgumen-tative Zoning using Maximum Entropy (me) models. We have demonstrated that using me models with standard word features, such as unigrams and bigrams, significantly outperforms Naive Bayes models incorporating task-specific features. Further, these task-specific features had very little additional impact on the me model. 
+            </paragraph> 
+            <paragraph> 
+                Our me model has raised the state-of-the-art in automatic Argumentative Zoning classification from 76% to 96.88% F-score on Teufel's Computational Linguistics conference paper corpus. 
+            </paragraph> 
+            <paragraph> 
+                To test the wider applicability of Argumentative Zoning, we have annotated a corpus of Astronomy journal articles with a modified zone and content scheme, and achieved a similar level of performance using our maximum entropy classifier. We found that more sophisticated semantic features, e.g. gold-standard named entities, also had little impact on the accuracy of our classifier. 
+            </paragraph> 
+            <paragraph> 
+                Now that we have a very accurate Argumentative Zone classifier, we would like to investigate the impact of Argumentative Zones in information retrieval, question answering, and summarization tasks, particularly in the astronomy domain, where we have additional tools such as the named entity recognizer. 
+            </paragraph> 
+            <paragraph> 
+                In summary, using a maximum entropy classifier with simple unigram and bigram features results in a very accurate classifier for Argumentative Zones across multiple domains. 
+            </paragraph> 
+        </section>
+        <section> 
+            <title> 
+                Acknowledgements 
+            </title> 
+            We would like to thank Sophie Liang and the anonymous reviewers for their helpful feedback on this paper. This work has been supported by the Australian Research Council under Discovery project DP0665973. The first author was supported by the Microsoft Research Asia Scholarship in IT at the University of Sydney. 
+        </section> 
+ 
+    </paper>
+</annotatedpaper>

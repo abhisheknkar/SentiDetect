@@ -1,0 +1,505 @@
+<annotatedpaper>
+    <paper title="Reference Scope Identification in Citing Sentences" authors="Amjad Abu-Jbara, Dragomir Radev" year="2012"> 
+        <section> 
+            <title>Reference Scope Identification in Citing Sentences</title> 
+            Amjad Abu-Jbara 
+            EECS Department 
+            University of Michigan 
+            Ann Arbor, MI, USA 
+            amjbara@umich.edu 
+            Dragomir Radev 
+            EECS Department 
+            University of Michigan 
+            Ann Arbor, MI, USA 
+            radev@umich.edu  
+        </section> 
+        <section> 
+            <title>Abstract</title> 
+            <paragraph> 
+                A citing sentence is one that appears in a scientific article and cites previous work. 
+                Citing sentences have been studied and used in many applications. 
+                For example, they have been used in scientific paper summarization, automatic survey generation, paraphrase identification, and citation function classification. 
+                Citing sentences that cite multiple papers are common in scientific writing. 
+                This observation should be taken into consideration when using citing sentences in applications. 
+                For instance, when a citing sentence is used in a summary of a scientific paper, only the fragments of the sentence that are relevant to the summarized paper should be included in the summary. 
+                In this paper, we present and compare three different approaches for identifying the fragments of a citing sentence that are related to a given target reference. 
+                Our methods are: word classification, sequence labeling, and segment classification. 
+                Our experiments show that segment classification achieves the best results. 
+            </paragraph> 
+        </section> 
+        <section imrad="i"> 
+            <title>1 Introduction</title> 
+            <paragraph> 
+                Citation plays an important role in science. 
+                It makes the accumulation of knowledge possible. 
+                When a reference appears in a scientific article, it is usually accompanied by a span of text that highlights the important contributions of the cited article. 
+                We call a sentence that contains an explicit reference to previous work a citation sentence. 
+                For example, sentence (1) below is a citing sentence that cites a paper by Philip Resnik and describes the problem Resnik addressed in his paper. 
+            </paragraph> 
+            <paragraph>
+                <context>(1) <cite id="1" function="ack" polarity="neu">Resnik (1999)</cite> addressed the issue of language identification for finding Web pages in the languages of interest. </context>
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    <paper>Previous work</paper> 
+                    <kw>has studied and used</kw> 
+                    <concept>citation sentences</concept> in various applications such as: scientific paper summarization (<cite id="2" function="use" polarity="neu">Elkiss et al., 2008</cite>; <cite id="3" function="use" polarity="neu">Qazvinian et al., 2010</cite>; <cite id="4" function="use" polarity="neu">Qazvinian and Radev, 2010</cite>; <cite id="5" function="use" polarity="neu">Abu-Jbara and Radev, 2011</cite>), automatic survey generation (<cite id="6" function="use" polarity="neu">Nanba et al., 2000</cite>; <cite id="7" function="use" polarity="neu">Mohammad et al., 2009</cite>), citation function classification (<cite id="8" function="use" polarity="neu">Nanba et al., 2000</cite>; <cite id="9" function="use" polarity="neu">Teufel et al., 2006</cite>; <cite id="10" function="use" polarity="neu">Siddharthan and Teufel, 2007</cite>; <cite id="11" function="use" polarity="neu">Teufel, 2007</cite>), and paraphrase recognition (<cite id="12" function="use" polarity="neu">Nakov et al., 2004</cite>; <cite id="13" function="use" polarity="neu">Schwartz et al., 2007</cite>). </context>
+            </paragraph> 
+            <paragraph> 
+                Sentence (1) above contains one reference, and the whole sentence is talking about that reference. 
+                This is not always the case in scientific writing. 
+                Sentences that contain references to multiple papers are very common. 
+                For example, sentence (2) below contains three references. 
+            </paragraph> 
+            <paragraph>
+                <context>(2) <cite id="14" function="use" polarity="neu">Grefenstette and Nioche (2000)</cite> and <cite id="15" function="use" polarity="neu">Jones and Ghani (2000)</cite> 
+                    <kw>use</kw> 
+                    <data>the web</data> 
+                    <kw>to</kw> 
+                    <task>generate corpora</task> for languages where electronic resources are scarce</context>, <context> while <cite id="16" function="ack" polarity="neu">Resnik (1999)</cite> describes a method for mining the web for bilingual texts. </context>
+                2012 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, pages 80-90, Montréal, Canada, June 3-8, 2012. 
+                ©2012 Association for Computational Linguistics 
+            </paragraph> 
+            <paragraph> 
+                <context>The first fragment describes the contribution of Grefenstette and <cite id="17" function="ack" polarity="neu">Nioche (2000)</cite> and Jones and <cite id="18" function="ack" polarity="neu">Ghani (2000)</cite>.</context>
+                <context>The second fragment describes the contribution of <cite id="19" function="ack" polarity="neu">Resnik(1999)</cite>.</context>
+            </paragraph> 
+            <paragraph> 
+                This observation should be taken into consideration when using citing sentences in the aforementioned applications. 
+                For example, in citation-based summarization of scientific papers, a subset of citing sentences that cite a given target paper is selected and used to form a summary of that paper. 
+                It is very likely that one or more of the selected sentences cite multiple papers besides the target. 
+                This means that some of the text included in the summary might be irrelevant to the summarized paper. 
+                Including irrelevant text in the summary introduces several problems. 
+                First, the summarization task aims at summarizing the contributions of the target paper using minimal text. 
+                Extraneous text takes space in the summary while being irrelevant and less important. 
+                Second, including irrelevant text in the summary breaks the context and confuses the reader. 
+                <context>Therefore, if sentence (2) above is to be added to a citation-based summary of <cite id="20" function="ack" polarity="neu">Resniks (1999)</cite> paper, only the underlined fragment should be added to the summary and the rest of the sentence should be excluded. </context>
+            </paragraph> 
+            <paragraph> 
+                For another example, consider the task of citation function classification. 
+                The goal of this task is to determine the reason for citing paper B by paper A based on linguistic and structural features extracted from citing sentences that appear in A and cite B. If a citing sentence in A cites multiple papers besides B, classification features should be extracted only from the fragments of the sentence that are relevant to B. Sentence (3) below shows an examples of this case. 
+            </paragraph> 
+            <paragraph> 
+                <context>(3) Cohn and <cite id="21">Lapata (2008)</cite> 
+                    <kw>used</kw> the <method>GHKM extraction method</method> (<cite id="22" function="use" polarity="neg">Galley et al., 2004</cite>), <negfeature>which is limited</negfeature> to constituent phrases and thus produces a reasonably small set of syntactic rules. </context>
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    <kw>If</kw> the <kw>target reference is</kw> 
+                    <cite id="23" function="ack" polarity="neu">Cohn and Lapata (2008)</cite>, only the <concept>underlined segment</concept> 
+                    <kw>should be used for</kw> feature extraction. </context>
+                <context>The limitation stated in the second segment of sentence is referring to <cite id="24" function="ack" polarity="neu">Galley et al., (2004)</cite>.</context>
+            </paragraph> 
+            <paragraph> 
+                In this paper, we address the problem of identifying the fragments of a citing sentence that are related to a given target reference. 
+                Henceforth, we use the term Reference Scope to refer to those fragments. 
+                We present and compare three different approaches to this problem. 
+            </paragraph> 
+            <paragraph> 
+                In the first approach, we define the problem as a word classification task. 
+                We classify each word in the sentence as inside or outside the scope of the target reference. 
+            </paragraph> 
+            <paragraph> 
+                In the second approach, we define the problem as a sequence labeling problem. 
+                This is different from the first approach in that the label assigned to each word is dependent on the labels of nearby words. 
+                In the third approach, instead of classifying individual words, we split the sentence into segments and classify each segment as inside or outside the scope of the target reference. 
+            </paragraph> 
+            <paragraph> 
+                Applying any of the three approaches is preceded by a preprocessing stage. 
+                In this stage, citing sentences are analyzed to tag references, identify groups of references, and distinguish between syntactic and non-syntactic references. 
+            </paragraph> 
+            <paragraph> 
+                The rest of this paper is organized as follows. 
+                Section 2 examines the related work. 
+                We define the problem in Section3. 
+                Section 4 presents our approaches. 
+                Experiments, results and analysis are presented in Section 5. 
+                We conclude and provide directions to future work in Section 6 
+            </paragraph> 
+        </section> 
+        <section imrad="i"> 
+            <title>2 Related Work</title> 
+            <paragraph>
+                <context> 
+                    <author>Our work</author> 
+                    <kw>is related to</kw> a <data>large body of research</data> on citations (<cite id="25" function="bas" polarity="pos">Hodges, 1972</cite>; <cite id="26" function="bas" polarity="pos">Garfield et al., 1984</cite>).</context>
+                The interest in studying citations stems from the fact that bibliometric measures are commonly used to estimate the impact of a researcher's work (Borgman provides a good recent survey of the different research lines that use citations. 
+                In this section we review the research lines that are relevant to our work and show how our work is different. 
+            </paragraph> 
+            <paragraph> 
+                <context>One line of <paper>research</paper> that <kw>is related to</kw> 
+                    <author>our work</author> has to do with identifying what <cite id="27" function="bas" polarity="pos">Nanba and Oku-mura (1999)</cite> call the citing area.</context> They define the citing area as the succession of sentences that appear around the location of a given reference in a scientific paper and have connection to it.
+                Their algorithm starts by adding the sentence that contains the target reference as the first member sentence in the citing area. 
+                Then, they use a set of cue words and hand-crafted rules to determine whether the surrounding sentences should be added to the citing area or not. 
+                <context>In (<cite id="28" function="use" polarity="neu">Nanba et al., 2000</cite>) <person>they</person> 
+                    <kw>use</kw> their <method>citing area identification algorithm</method> 
+                    <kw>to</kw> improve citation type classification and automatic survey generation.</context>
+            </paragraph> 
+            <paragraph> 
+                <context> 
+                    <cite id="29" function="use" polarity="neu">Qazvinian and Radev (2010)</cite> addressed a similar problem. <person>They</person>  
+                    <kw>proposed</kw> a <method>method</method> 
+                    <kw>based on</kw> 
+                    <theory>probabilistic inference</theory> 
+                    <kw>to</kw> extract non-explicit citing sentences;</context> i.e., sentences that appear around the sentence that contains the target reference and are related to it. 
+                They showed experimentally that citation-based survey generation produces better results when using both explicit and non-explicit citing sentences rather than using the explicit ones alone. 
+            </paragraph> 
+            <paragraph> 
+                Although this work shares the same general goal with ours (i.e identifying the pieces of text that are relevant to a given target reference), our work is different in two ways. 
+                First, previous work mostly ignored the fact that the citing sentence itself might be citing multiple references. 
+                <context>Second, it defined the citing area (<cite id="30" function="ack" polarity="neu">Nanba and Okumura, 1999</cite>) or the citation context (<cite id="31" function="ack" polarity="neu">Qazvinian and Radev, 2010</cite>) as a set of whole contiguous sentences. </context>
+                In our work, we address the case where one citing sentence cites multiple papers, and define what we call the reference scope to be the fragments (not necessarily contiguous) of the citing sentence that are related to the target reference. 
+            </paragraph>
+            <paragraph> 
+                <context>In a recent work on citation-based summarization by <cite id="32" function="ack" polarity="neu">Abu-Jbara and Radev (2011)</cite>, the authors noticed the issue of having multiple references in one sentence. </context>
+                They raised this issue when they discussed the factors that impede the coherence and the readability of citation-based summaries. 
+                They suggested that removing the fragments of a citing sentence that are not relevant to the summarized paper will significantly improve the quality of the produced summaries. 
+                In their work, they defined the scope of a given reference as the shortest fragment of the citing sentence that contains the reference and could form a grammatical sentence if the rest of the sentence was removed. 
+                They identify the scope by generating the syntactic parse tree of the sentence and then finding the text that corresponds to the smallest subtree rooted at an S node and contains the target reference node as one of its leaf nodes. 
+                They admitted that their method was very basic and works only when the scope forms one grammatical fragment, which is not true in many cases. 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    <cite id="33" function="ack" polarity="neu">Athar (2011)</cite> noticed the same issue with citing sentences that cite multiple references, but this time in the context of sentiment analysis in citations.</context>
+                He showed experimentally that identifying what he termed the scope of citation influence improves sentiment classification accuracy. 
+                <context>He adapted the same basic method proposed by Abu-Jbara and <cite id="34" function="use" polarity="neu">Radev (2011)</cite>.
+                    <author>We</author> 
+                    <kw>use this</kw> 
+                    <method>method</method> as a baseline in our evaluation below. </context>
+            </paragraph> 
+            <paragraph> 
+                In addition to this related work, there is a large body of research that used citing sentences in different applications. 
+                <context>For example, <method>citing sentences</method> 
+                    <kw>have been used to</kw> 
+                    <task>summarize the contributions</task> of a scientific paper (<cite id="35" function="use" polarity="neu">Qazvinian and Radev, 2008</cite>; <cite id="36" function="use" polarity="neu">Qazvinian et al., 2010</cite>; <cite id="37" function="use" polarity="neu">Qazvinian and Radev, 2010</cite>; <cite id="38" function="use" polarity="neu">Abu-Jbara and Radev, 2011</cite>).</context>
+                <context>
+                    <method>They</method> 
+                    <kw>have been also used to</kw> 
+                    <task>generate surveys</task> of scientific paradigms (<cite id="39" function="use" polarity="neu">Nanba and Okumura, 1999</cite>; <cite id="40" function="use" polarity="neu">Mohammad et al., 2009</cite>). </context>
+                <context>Several <paper>other papers</paper> 
+                    <kw>analyzed</kw> 
+                    <method>citing sentences</method> 
+                    <kw>to</kw> recognize the citation function; i.e., the author's reason for citing a given paper (<cite id="41" function="use" polarity="neu">Nanba et al., 2000</cite>; <cite id="42" function="use" polarity="neu">Teufel et al., 2006</cite>; <cite id="43" function="use" polarity="neu">Teufel, 2007</cite>).</context> 
+                <context>
+                    <cite id="44" function="ack" polarity="neu">Schwartz et al. (2007)</cite> proposed a method for aligning the words within citing sentences that cite the same paper.</context>
+                The goal of his work was to aid named entity recognition and paraphrase identification in scientific papers. 
+                We believe that all the these applications will benefit from the output of our work. 
+            </paragraph> 
+        </section> 
+        <section imrad="i"> 
+            <title>3 Problem Definition</title> 
+            <paragraph> 
+                The problem that we are trying to solve is to identify which fragments of a given citing sentence that cites multiple references are semantically related to a given target reference. 
+                As stated above, we call these fragments the reference scope. 
+                Formally, given a citing sentence S = {w1,w2, ...,wn} where w1,w2, ...,wn are the tokens of the sentence and given that S contains a set of two or more references R, we want to assign the label 1 to the word if it falls in the scope of a given target reference r G R, and 0 otherwise. 
+            </paragraph> 
+            <paragraph> 
+                <context>For example, sentences (4) and (5) below are labeled for the target references <cite id="45" function="ack" polarity="neu">Tetreault and Chodorow (2008)</cite>, and <cite id="46" function="ack" polarity="neu">Cutting et al.(1992)</cite> respectively.</context> 
+                The underlined words are labeled 1 (i.e., inside the target reference scope), while all others are labeled 0. 
+            </paragraph> 
+            <paragraph> 
+                <context>(4) For example, <cite id="47" function="use" polarity="neu">Tetreault and Chodorow (2008)</cite> 
+                    <kw>use</kw> a <method>maximum entropy classifier</method> 
+                    <kw>to</kw> 
+                    <task>build a model</task> of correct preposition usage, with 7 million instances in their training set,</context> and <context>
+                    <cite id="48" function="use" polarity="neu">Lee and Knutsson (2008)</cite> 
+                    <kw>use</kw> 
+                    <method>memory-based learning</method>, <kw>with</kw> 10 million sentences in their <data>training set</data>.</context>
+            </paragraph> 
+            <paragraph> 
+                <context>  (5) <kw>There are</kw> many <tool>POS taggers</tool> developed <kw>using</kw> different techniques for many major languages such as <method>transformation-based error-driven learning</method> (<cite id="49" function="use" polarity="neu">Brill, 1995</cite>), <method>decision trees</method> (<cite id="50" function="use" polarity="neu">Black et al., 1992</cite>), <method>Markov model</method> (<cite id="51" function="use" polarity="neu">Cutting et al., 1992</cite>), <method>maximum entropy methods</method> (<cite id="52" function="use" polarity="neu">Ratnaparkhi, 1996</cite>) etc for English. </context>
+            </paragraph> 
+        </section> 
+        <section imrad="m"> 
+            <title>4 Approach</title> 
+            <paragraph> 
+                In this section, we present our approach for addressing the problem defined in the previous section. 
+                Our approach involves two stages: 1) preprocessing and 2) reference scope identification. 
+                We present three alternative methods for the second stage. 
+                The following two subsections describe the two stages. 
+            </paragraph> 
+            <subsection> 
+                <title>4.1 Stage 1: Preprocessing</title> 
+                <paragraph> 
+                    The goal of the preprocessing stage is to clean and prepare the citing sentence for the next processing steps. 
+                    The second stage involves higher level text processing such as part-of-speech tagging, syntactic parsing, and dependency parsing. 
+                    The available tools for these tasks are not trained on citing sentences which contain references written in a special format. 
+                    For example, it is very common in scientific writing to have references (usually written between parentheses) that are not a syntactic part of the sentence. 
+                    It is also common to cite a group of references who share the same contribution by listing them between parentheses separated by a comma or a semi-colon. 
+                    We address these issues to improve the accuracy of the processing done in the second stage. 
+                    The preprocessing stage involves three tasks: 
+                </paragraph> 
+                <subsection> 
+                    <title>4.1.1 Reference Tagging</title> 
+                    <paragraph> 
+                        The first preprocessing task is to find and tag all the references that appear in the citing sentence. 
+                        Authors of scientific articles use standard patterns to include references in text. 
+                        We apply a regular expression to find all the references that appear in a sentence. 
+                        We replace each reference with a placeholder. 
+                        The target reference is replaced by TREF. 
+                        Each other reference is replaced by REF. 
+                        We keep track of the original text of each replaced reference. 
+                        Sentence (6) below shows an example of a citing sentence with the references replaced. 
+                    </paragraph> 
+                    <paragraph> 
+                        (6) These constraints can be lexicalized (REF.1; REF.2), un-lexicalized (REF.3; TREF.4) or automatically learned (REF.5; REF.6). 
+                    </paragraph> 
+                    <title>4.1.2 Reference Grouping</title> 
+                    <paragraph> 
+                        It is common in scientific writing to attribute one contribution to a group of references. 
+                        Sentence (6) above contains three groups of references. 
+                        Each group constitutes one entity. 
+                        Therefore, we replace each group with a placeholder. 
+                        We use GTREF to replace a group of references that contains the target reference, and GREF to replace a group of references that does not contain the target reference. 
+                        Sentence (7) below is the same as sentence (6) but with the three groups of references replaced. 
+                    </paragraph> 
+                    <paragraph> 
+                        (7) These constraints can be lexicalized (GREF.1), unlexicalized (GTREF.2) or automatically learned (GREF.3). 
+                    </paragraph> 
+                    <title>4.1.3 Non-syntactic Reference Removal</title> 
+                    <paragraph> 
+                        A reference (REF or TREF) or a group of references (GREF or GTREF) could either be a syntactic constituent and has a semantic role in the sentence (e.g. GTREF.1 in sentence (8) below) or not (e.g. REF.2 in sentence (8)). 
+                    </paragraph> 
+                    <paragraph> 
+                        (8) (GTREF.1) apply fuzzy techniques for integrating source syntax into hierarchical phrase-based systems (REF.2). 
+                    </paragraph> 
+                    <paragraph> 
+                        The task in this step is to determine whether a reference is a syntactic component in the sentence or not. 
+                        If yes, we keep it as is. 
+                        If not, we remove it from the sentence and keep track ofits position. 
+                        Accordingly, after this step, REF.2 in sentence (8) will be removed. 
+                        We use a rule-based algorithm to determine whether a reference should be removed from the sentence or kept. 
+                        Our algorithm (Algorithm 1) uses stylistic and linguistic features such as the style of the reference, the position of the reference, and the surrounding words to make the decision. 
+                    </paragraph> 
+                    <paragraph> 
+                        When a reference is removed, we pick a word from the sentence to represent it. 
+                        This is needed for feature extraction in the next stage. 
+                        We use as a representative the head of the closest noun phrase (NP) that comes before the position of the removed reference. 
+                        For example, in sentence (8) above, the closest NP before REF.2 is hierarchical phrase-based systems and the head is the noun systems. 
+                    </paragraph> 
+                </subsection> 
+                <title>4.2 Stage 2: Reference Scope Identification</title> 
+                <paragraph> 
+                    In this section we present three different methods for identifying the scope of a given reference within a citing sentence. 
+                    We compare the performance of these methods in Section 5. 
+                    The following three subsections describe the methods. 
+                    Algorithm 1 Remove Non-syntactic References Require: A citing sentence S 1: for all Reference R (REF, TREF, GREF, or GTREF) in S do 4: else if R is the first word in the sentence or in a 6: else if R is preceded by a preposition (in, of, by, 
+                </paragraph> 
+                <title>4.2.1 Word Classiication</title> 
+                <paragraph> 
+                    In this method we define reference scope identification as a classification task of the individual words of the citing sentence. 
+                    Each word is classified as inside or outside the scope of a given target reference. 
+                    We use a number of linguistic and structural features to train a classification model on a set of labeled sentences. 
+                    The trained model is then used to label new sentences. 
+                    The features that we use to train the model are listed in Table 1. 
+                    <context>
+                        <author>We</author> 
+                        <kw>use</kw> the <tool>Stanford parser</tool> (<cite id="53" function="bas" polarity="pos">Klein and Manning, 2003</cite>) <kw>for</kw> syntactic and dependency parsing.</context>
+                    We experiment with two classification algorithms: Support Vector Machines (SVM) and logistic regression. 
+                </paragraph> 
+                <title>4.2.2 Sequence Labeling</title> 
+                <paragraph> 
+                    In the method described in Section 4.2.1 above, we classify each word independently from the labels of the nearby words. 
+                    The nature of our task, however, suggests that the accuracy of word classification can be improved by considering the labels of the words surrounding the word being classified. 
+                    It is very likely that the word takes the same label as the word before and after it if they all belong to the same clause in the sentence. 
+                    In this method we define the problem as a sequence labeling task. 
+                    Now, instead of looking for the best label for each word individually, we look for the globally best sequence of labels for all the words in the sentence at once. 
+                </paragraph> 
+                <paragraph> 
+                    We use Conditional Random Fields (CRF) as our sequence labeling algorithm. 
+                    In particular, we use first-order chain-structured CRF. 
+                    The chain consists of two sets of nodes: a set of hidden nodes Y which represent the scope labels (0 or 1) in our case, and a set of observed nodes X which represent the observed features. 
+                    The task is to estimate the probability of a sequence of labels Y given the sequence of observed features X: P(Y\!X) 
+                </paragraph> 
+                <paragraph> 
+                    <context>
+                        <cite id="54" function="ack" polarity="neu">Lafferty et al. (2001)</cite> define this probability to be a normalized product of potential functions ip: </context>
+                    Where ipk (vt, Vt-1, x) is defined as 
+                    where f (yt,vt-i, x) is a transition feature function of the label at positions i — 1 and i and the observation sequence x; and Xj is parameter to be estimated from training data. 
+                    We use, as the observations at each position, the same features that we used in Section 4.2.1 above (Table 1). 
+                </paragraph> 
+                <title>4.2.3 Segment Classiication</title> 
+                <paragraph> 
+                    We noticed that the scope of a given reference often consists of units of higher granularity than words. 
+                    Therefore, in this method, we split the sentence into segments of contiguous words and, instead of labeling individual words, we label the whole segment as inside or outside the scope of the target reference. 
+                    We experimented with two different segmentation methods. 
+                    In the first method (method-1), we segment the sentence at punctuation marks, coordination conjunctions, and a set of special expressions such as "for example", "for instance", "including", "includes", "such as", "like", etc. 
+                    Sentence (8) below shows an example of this segmentation method (Segments are enclosed in square brackets). 
+                </paragraph> 
+                <paragraph> 
+                    (8) [Rerankers have been successfully applied to numerous NLP tasks such as] [parse selection (GTREF)], [parse reranking (GREF)], [question-answering (REF)]. 
+                </paragraph> 
+                <paragraph> 
+                    In the second segmentation method (method-2), we split the sentence into segments of finer granularity. 
+                    We use a chunking tool to identify noun groups, verb groups, preposition groups, adjective groups, and adverb groups. 
+                    Each such group (or chunk) forms a segment. 
+                    If a word does not belong to any chunk, it forms a singleton segment by itself. 
+                    Sentence (9) below shows an example of this segmentation method (Segments are enclosed in square brackets). 
+                    Table 1: The features used for word classification and sequence labeling 
+                </paragraph> 
+                <paragraph> 
+                    (9) [To] [score] [the output] [of] [the coreference models], [we] [employ] [the commonly-used MUC scoring program (REF)] [and] [the recently-developed CEAF scoring program (TREF)]. 
+                </paragraph> 
+                <paragraph> 
+                    We assign a label to each segment in two steps. 
+                    In the first step, we use the sequence labeling method described in Section 4.2.2 to assign labels to all the individual words in the sentence. 
+                    In the second step, we aggregate the labels of all the words contained in a segment to assign a label to the whole segment. 
+                    We experimented with three different label aggregation rules: 1) rule-1: assign to the segment the majority label of the words it contains, and 2) rule-2: assign to the segment the label 1 (i.e., inside) if at least one of the words contained in the segment is labeled 1, and assign the label 0 to the segment otherwise, and 3) rule-3: assign the label 0 to the segment if at least of the words it contains is labeled 0, and assign 1 otherwise. 
+                </paragraph> 
+            </subsection>  
+        </section> 
+        <section imrad="r"> 
+            <title>5 Evaluation </title> 
+       
+            <title>5.1 Data</title> 
+            <paragraph> 
+                <context>
+                    <author>We</author> 
+                    <kw>use</kw> the <data>ACL Anthology Network corpus</data> (AAN) (<cite id="55" function="bas" polarity="pos">Radev et al., 2009</cite>) <kw>in</kw> our evaluation.</context> 
+                AAN is a publicly available collection of more than 19,000 NLP papers. 
+                AAN provides a manually curated citation network of its papers and the citing sentence(s) associated with each edge. 
+                The current release of AAN contains about 76,000 unique citing sentences 56% of which contain 2 or more references and 44% contain 1 reference only. 
+                From this set, we randomly selected 3500 citing sentences, each containing at least two references (3.75 references on average with a standard deviation of 2.5). 
+                The total number of references in this set of sentences is 19,591. 
+            </paragraph> 
+            <paragraph> 
+                We split the data set into two random subsets: 
+                a development set (200 sentences) and a training/testing set (3300 sentences). 
+                We used the development set to study the data and develop our strategies of addressing the problem. 
+                The second set was used to train and test the system in a cross-validation mode. 
+            </paragraph> 
+            
+            <title>5.2 Annotation</title> 
+            <paragraph> 
+                We asked graduate students with good background in NLP (the area of the annotated sentences) to provide three annotations for each sentence in the data set described above. 
+                First, we asked them to determine whether each of the references in the sentence was correctly tagged or not. 
+                Second, we asked them to determine for each reference whether it is a syntactic constituent in the sentence or not. 
+                Third, we asked them to determine and label the scope of one reference in each sentence which was marked as a target reference (TREF). 
+                We designed a user-friendly tool to collect the annotations from the students. 
+            </paragraph> 
+            <paragraph> 
+                To estimate the inter-annotator agreement, we picked 500 random sentences from our data set and assigned them to two different annotators. 
+                The inter-annotator agreement was perfect on both the reference tagging annotation and the reference syntacti-cality annotation. 
+                This is expected since both are objective, clear, and easy tasks. 
+                To measure the inter-annotator agreement on the scope annotation task, we deal with it as a word classification task. 
+                <context>This allows <author>us</author> 
+                    <kw>to use</kw> the popular <method>classification agreement measure</method>, the <method>Kappa coefficient</method> (<cite id="56" function="bas" polarity="pos">Cohen, 1968</cite>). </context>
+                The Kappa coefficient is defined as follows: 
+                where P(A) is the relative observed agreement among raters and P(E) is the hypothetical probability of chance agreement. 
+                The agreement between the two annotators on the scope identification task was K = 0.61. 
+                <context>On Landis and Kochs (<cite id="57" function="use" polarity="pos">Landis and Koch, 1977</cite>) <method>scale</method>, this value <kw>indicates</kw> 
+                    <posfeature>substantial agreement</posfeature>. </context>
+            </paragraph> 
+            <title>5.3 Experimental Setup</title> 
+            <paragraph> 
+                <context>
+                    <author>We</author> 
+                    <kw>use</kw> the Edinburgh Language Technology <tool>Text Tokenization Toolkit</tool> (<tool>LT-TTT</tool>) (<cite id="58" function="bas" polarity="pos">Grover et al., 2000</cite>) <kw>for</kw> 
+                    <task>text tokenization</task>, <task>part-of-speech tagging</task>, chunking, and <task>noun phrase head identification</task>. </context>
+                <context>
+                    <author>We</author> 
+                    <kw>use</kw> the <tool>Stanford parser</tool> (<cite id="59" function="bas" polarity="pos">Klein and Manning, 2003</cite>) <kw>for</kw> 
+                    <task>syntactic and dependency parsing</task>.</context> 
+                We use Lib-SVM (<cite id="60" function="bas" polarity="pos">Chang and Lin, 2011</cite>) for Support Vector Machines (SVM) classification. 
+                Our SVM model uses a linear kernel. 
+                <context>
+                    <author>We</author> 
+                    <kw>use</kw> 
+                    <tool>Weka</tool> (<cite id="61" function="bas" polarity="pos">Hall et al., 2009</cite>) <kw>for</kw> 
+                    <task>logistic regression classification</task>.</context> 
+                We use the Machine Learning for Language Toolkit (MALLET) (McCal-lum, 2002) for CRF-based sequence labeling. 
+                In all the scope identification experiments and results below, we use 10-fold cross validation for training/testing. 
+            </paragraph> 
+            <title>5.4 Preprocessing Component Evaluation</title> 
+            <subsection>
+                <paragraph> 
+                    We ran our three rule-based preprocessing modules on the testing data set and compared the output to the human annotations. 
+                    The test set was not used in the tuning of the system but was done using the development data set as described above. 
+                    We report the results for each of the preprocessing modules. 
+                    Our reference tagging module achieved 98.3% precision and 93.1% recall. 
+                    Most of the errors were due to issues with text extraction from PDF or due to bad references practices by some authors (i.e., not following scientific referencing standards). 
+                    Our reference grouping module achieved perfect accuracy for all the correctly tagged references. 
+                    This was expected since this is a straightforward task. 
+                    The non-syntactic reference removal module achieved 90.08% precision and 90.1% recall. 
+                    Again, most of the errors were the result of bad referencing practices by the authors. 
+                </paragraph> 
+            </subsection>
+            <title>5.5 Reference Scope Identification Experiments</title> 
+            <subsection>
+                <paragraph> 
+                    We conducted several experiments to compare the methods proposed in Section 4 and their variants. 
+                    We ran all the experiments on the training/testing set (the 3300 sentences) described in Section 5.1. 
+                </paragraph> 
+                <paragraph> 
+                    The experiments that we ran are as follows: 1) word classification using a SVM classifier (WC-SVM); 2) word classification using a logistic regression classifier(WC-LR); 3) CRF-based sequence labeling (SL-CRF); 4) segment classification using segmentation method-1 and label aggregation rule-1 (SC-S1-R1); 5,6,7,8,9) same as (4) but using different combinations of segmentation methods 1 and 2, and label aggregation rules 1,2 and 3: SC-S1-R2, SC-S1-R3, SC-S2-R1, SC-S2-R2, SC-S2-R3 (where Sx refers to segmentation method x and Ry refers to label aggregation rule y all as explained in Section 4.2.3). 
+                    <context>Finally, 10) we
+                        <kw>compare</kw> 
+                       our
+                      methods
+                        to the <method>baseline method</method> 
+                        <kw>proposed by</kw> 
+                        <cite id="62" function="con" polarity="neu">Abu-Jbara and Radev (2011)</cite> which was described in Section 4 (AR-2011).
+                    </context>
+                </paragraph> 
+                <paragraph> 
+                    To better understand which of the features listed in Table 1 are more important for the task, <context>
+                        <author>we</author> 
+                        <kw>use</kw> 
+                        <cite id="63" function="bas" polarity="pos">Guyon et al.'s (2002)</cite> 
+                        <method>method</method> 
+                        <kw>for</kw> 
+                        <task>feature selection</task> using SVM to rank the features based on their importance. </context>
+                    The results of the experiments and the feature analysis are presented and discussed in the following subsection. 
+                </paragraph> 
+            </subsection>
+            <title>5.6 Results and Discussion</title> 
+            <subsection> 
+                <title>5.6.1 Experimental Results</title> 
+                <paragraph> 
+                    We ran the experiments described in the previous subsection on the testing data described in Sec- 
+                    Table 3: Results of scope identification using the different algorithms described in the paper 
+                    Method Output 
+                    tion 5.1. 
+                    Table 3 compares the precision, recall, F1, and accuracy for the three methods described in Section 4 and their variations. 
+                    All the metrics were computed at the word level. 
+                    <context>The results show that all our methods
+                        <kw>outperform</kw> the <method>baseline method</method> AR-2011 that was <kw>proposed by</kw> 
+                                <cite id="64" function="con" polarity="neg">Abu-Jbara and Radev (2011)</cite>. </context>
+                    In the word classification method, we notice no significant difference between the performance of the SVM vs Logistic Regression classifier. 
+                    We also notice that the CRF-based sequence labeling method performs significantly better than the word classification method. 
+                    This result corroborates our intuition that the labels of neighboring words are dependent. 
+                    The results also show that segment labeling generally performs better than word labeling. 
+                    More specifically, the results indicate that segmentation based on chunking and the label aggregation based on plurality when used together (i.e., SC-S2-R1) achieve higher precision, accuracy, and F-measure than the punctuation-based segmentation and the other label aggregation rules. 
+                </paragraph> 
+            </subsection>
+            <title>5.6.2 Feature Analysis</title> 
+            <subsection>
+                <paragraph> 
+                    <context>
+                        <author>We</author> 
+                        <kw>performed</kw> an <task>analysis of</task> our classification features <kw>using</kw> 
+                        <cite id="65" function="bas" polarity="pos">Guyon et al. (2002)</cite> 
+                        <method>method</method>.</context> 
+                    The analysis revealed that both structural and syntactic features are important. 
+                    Among the syntactic features, the dependency path is the most important. 
+                    Among the structural features, the segment feature (as described in Table 1) is the most important. 
+                </paragraph> 
+            </subsection> 
+
+        </section> 
+        <section> 
+            <title>6 Conclusions</title> 
+            <paragraph> 
+                We presented and compared three different methods for reference scope identification: word classification, sequence labeling, and segment classification. 
+                Our results indicate that segment classification achieves the best performance. 
+                The next direction in this research is to extract the scope of a given reference as a standalone grammatical sentence. 
+                In many cases, the scope identified by our method can form a grammatical sentence with no or minimal postprocessing. 
+                In other cases, more advanced text regeneration techniques are needed for scope extraction. 
+                Table 2 shows the output of the three methods on two example sentences. 
+                The underlined words are labeled by the system as scope words. 
+                Table 2: Two example outputs produced by the three methods 
+            </paragraph> 
+        </section> 
+ 
+    </paper>
+</annotatedpaper>

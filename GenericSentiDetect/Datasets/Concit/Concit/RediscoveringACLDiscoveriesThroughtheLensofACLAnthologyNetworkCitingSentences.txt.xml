@@ -1,0 +1,386 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!-- was: no XML declaration present -->
+<annotatedpaper>
+    <paper title="Rediscovering ACL Discoveries Through the Lens of ACL Anthology Network Citing Sentences" authors="Dragomir Radev, Amjad Abu-Jbara" year="2012"> 
+        <section> 
+            <title>Learning to Classify Email into â€œSpeech Actsâ€�</title> 
+            Dragomir Radev 
+            EECS Department 
+            University of Michigan 
+            Ann Arbor, MI, USA 
+            radev@umich.edu 
+            Amjad Abu-Jbara 
+            EECS Department 
+            University of Michigan 
+            Ann Arbor, MI, USA 
+            amjbara@umich.edu 
+        </section> 
+        <section> 
+            <title>Abstract</title> 
+            <paragraph> 
+                The ACL Anthology Network (AAN) is a comprehensive manually curated networked database of citations and collaborations in the field of Computational Linguistics. 
+                Each citation edge in AAN is associated with one or more citing sentences. 
+                A citing sentence is one that appears in a scientific article and contains an explicit reference to another article. 
+                In this paper, we shed the light on the usefulness of AAN citing sentences for understanding research trends and summarizing previous discoveries and contributions. 
+                We also propose and motivate several different uses and applications of citing sentences. 
+            </paragraph> 
+        </section> 
+        <section imrad="i"> 
+            <title>1 Introduction</title> 
+            <paragraph> 
+                The ACL Anthology is one of the most successful initiatives of the Association for Computational Linguistics (ACL). 
+                It was initiated by Steven Bird in 2001 and is now maintained by Min-Yen Kan. 
+                It includes all papers published by ACL and related organizations as well as the Computational Linguistics journal over a period of four decades. 
+            </paragraph> 
+            <paragraph> 
+                The ACL Anthology Network (AAN) is another successful initiative built on top of the ACL Anthology. 
+                <context>It was started in 2007 by our group (<cite id="1" function="ack" polarity="neu">Radev et al., 2009</cite>) at the University of Michigan.</context> 
+                AAN provides citation and collaboration networks of the articles included in the ACL Anthology (excluding book reviews). 
+                AAN also includes rankings of papers and authors based on their centrality statistics in the citation and collaboration networks. 
+                It also includes the citing sentences associated with each citation link. 
+                These sentences were extracted automatically using pattern matching and then cleaned manually. 
+                Table 1 shows some statistics of the current release of AAN. 
+                http://clair.si.umich.edu/anthology/ 2 http://www.aclweb.org/anthology-new/ 
+            </paragraph> 
+            <paragraph> 
+                The text surrounding citations in scientific publications has been studied and used in previous work. 
+                <context>
+                    <cite id="2" function="use" polarity="pos">Nanba and Okumura (1999)</cite> 
+                    <kw>used</kw> the <concept>term</concept> citing area to refer to citing sentences.</context>
+                They define the citing area as the succession of sentences that appear around the location of a given reference in a scientific paper and has connection to it. 
+                They proposed a rule-based algorithm to identify the citing area of a given reference. 
+                <context>In (<cite id="3" function="use" polarity="pos">Nanba et al., 2000</cite>) <person>they</person> 
+                    <kw>use</kw> their citing area identification <method>algorithm</method> to identify the purpose of citation (i.e. the author's reason for citing a given paper.)</context> 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    <cite id="4" function="ack" polarity="neu">Nakov et al. (2004)</cite> 
+                    <kw>use</kw> the <concept>term</concept> citances <kw>to refer to</kw> citing sentences.
+                </context>
+                They explored several different uses of citances including the creation of training and testing data for semantic analysis, synonym set creation, database curation, summarization, and information retrieval. 
+            </paragraph> 
+            <paragraph> 
+                <context>Other <paper>previous studies</paper> have <kw>used</kw> 
+                    <concept>citing sentences</concept> in various applications such as: scientific paper summarization (<cite id="5" function="use" polarity="pos">Elkiss et al., 2008</cite>; <cite id="6" function="use" polarity="pos">Qazvinian and Radev, 2008</cite>; <cite id="7" function="use" polarity="pos">Mei and Zhai, 2008</cite>; <cite id="8" function="use" polarity="pos">Qazvinian et al., 2010</cite>; <cite id="9" function="use" polarity="pos">Qazvinian and Radev, 2010</cite>; <cite id="10" function="use" polarity="pos">Abu-Jbara and Radev, 2011</cite>a), automatic survey generation (<cite id="11" function="use" polarity="pos">Nanba et al., 2000</cite>; <cite id="12" function="use" polarity="pos">Mohammad et al., 2009</cite>), and citation function classification (<cite id="13" function="use" polarity="pos">Nanba et al., 2000</cite>; <cite id="14" function="use" polarity="pos">Teufel et al., 2006</cite>; <cite id="15" function="use" polarity="pos">Siddharthan and Teufel, 2007</cite>; <cite id="16" function="use" polarity="pos">Teufel, 2007</cite>). </context>
+            </paragraph> 
+            <paragraph> 
+                In this paper, we focus on the usefulness of the citing sentences included in AAN. 
+                We propose several uses of citing sentences such as analyzing the trends of research, understanding the impact of research and how this impact changes over time, summarizing the contributions of a researcher, summarizing the discoveries in a certain research field, and providing high quality data for Natural Language Processing tasks. 
+                In the rest of this paper we present some of these ideas and provide examples from AAN to demonstrate their applicability. 
+                Some of these ideas have been explored in previous work, but we believe that they still need further exploration. 
+                However, most of the ideas are novel to our knowledge. 
+                We present our ideas in the following sections. 
+            </paragraph> 
+        </section> 
+        <section imrad="i"> 
+            <title>2 Temporal Analysis of Citations</title> 
+            <paragraph> 
+                <context>The interest in <task>studying citations stems</task> from the fact that bibliometric measures <kw>are commonly used</kw> to estimate the impact of a researcher's work (<cite id="17" function="use" polarity="pos">Borgman and Furner, 2002</cite>; <cite id="18" function="use" polarity="pos">Luukkonen, 1992</cite>). </context>
+                <context>Several previous studies have performed temporal analysis of citation links (<cite id="19" function="ack" polarity="neu">Amblard et al., 2011</cite>; <cite id="20" function="ack" polarity="neu">Mazloumian et al., 2011</cite>; <cite id="21" function="ack" polarity="neu">Redner, 2005</cite>) to see how the impact of research and the relations between research topics evolve overtime.</context>
+                These studies focused on observing how the number of incoming citations to a given article or a set of related articles change over time. 
+                However, the number of incoming citations is often not the only factor that changes with time. 
+                We believe that analyzing the text of citing sentences allows researchers to observe the change in other dimensions such as the purpose of citation, the polarity of citations, and the research trends. 
+                The following subsections discuss some of these dimensions. 
+            </paragraph> 
+            <subsection> 
+                <title>2.1 Temporal Analysis of Citation Purpose</title> 
+                <paragraph> 
+                    <context>
+                        <cite id="22" function="ack" polarity="neu">Teufel et al. (2006)</cite>  
+                        <kw>has shown</kw> that the <concept>purpose of citation</concept> 
+                        <kw>can be determined by</kw>  
+                        <task>analyzing the text of citing sentences</task>.</context>
+                    We hypothesize that performing a temporal analysis of the purpose for citing a paper gives a better picture about its impact. 
+                    As a proof of concept, we annotated all the citing sentences in AAN that cite the top 10 cited papers from the 1980's with citation purpose labels. 
+                    The labels we used for annotation are based on Teufel et al.'s annotation scheme and are described in Table 2. 
+                    We counted the number of times the paper was cited for each purpose in each year since its publication date. 
+                    This analysis revealed interesting observations about the paper impacts. 
+                    We will discuss these observations in Section 2.3. 
+                    Figure 1 shows the change in the ratio of each purpose with time for Shieber's (1985) work on parsing. 
+                </paragraph> 
+                <title>2.2 Temporal Analysis of Citation Polarity</title> 
+                <paragraph> 
+                    The bibliometric measures that are used to estimate the impact of research are often computed based on the number of citations it received. 
+                    This number is taken as a proxy for the relevance and the quality of the published work. 
+                    It, however, ignores the fact that citations do not necessarily always represent positive feedback. 
+                    Many of the citations that a publication receives are neutral citations, and citations that represent negative criticism are not uncommon. 
+                    To validate this intuition, we annotated about 2000 citing sentences from AAN for citation polarity. 
+                    We found that only 30% of citations are positive, 4.3% are negative, and the rest are neutral. 
+                    <context>In another published study, <cite id="23" function="ack" polarity="neu">Athar (2011)</cite> annotated 8736 citations from AAN with their polarity and found that only 10% of citations are positive, 3% are negative and the rest were all neutral.</context> 
+                    We believe that considering the polarity of citations when conducting temporal analysis of citations gives more insight about 
+                    Table 1: Statistics of AAN 2011 release 
+                    Table 2: Annotation scheme for citation purpose 
+                    Figure 1: Change in the citation purpose of Shieber (1985) paper 
+                    Posivtive 
+                    Negative 
+                    Figure 2: Change in the polarity of the sentences citing Church (1988) paper 
+                    how the way a published work is perceived by the research community over time. 
+                    As a proof of concept, we annotated the polarity of citing sentences for the top 10 cited papers in AAN that were published in the 1980's. 
+                    We split the year range of citations into two-year slots and counted the number of positive, negative, and neutral citations that each paper received during that time slot. 
+                    We observed how the ratios of each category changed overtime. 
+                    <context>Figure 2 shows the result of this analysis when applied to the work of Kenneth <cite id="24" function="ack" polarity="neu">Church (1988)</cite> on part-of-speech tagging.</context>
+                </paragraph> 
+                <title>2.3 Predict Emergence of New Techniques or Decline of Impact of Old Techniques.</title> 
+                <paragraph> 
+                    The ideas discussed in Sections 2.1 and 2.2 and the results illustrated in Figures 1 and 2 suggest that studying the change in citation purpose and citation polarity allow us to predict the emergence of new techniques or the decline in impact of old techniques. 
+                    <context>For example, the analysis illustrated in Figure 2 shows that the <paper>work of Ken</paper> 
+                        <cite id="25" function="hed" polarity="neg">Church (1988)</cite> on part-of-speech tagging <action>received</action> significant <kw>positive feedback</kw> during the 1990s and until early 2000s <kw>before</kw> it started to receive more <kw>negative feedback</kw>.</context>
+                    <context>
+                        <result>This</result> probably <kw>can be explained by</kw> the emergence of <kw>better statistical models</kw> for part-of-speech (POS) tagging (e.g. Conditional Random Fields (<cite id="26" function="use" polarity="pos">Lafferty et al., 2001</cite>)) that outperformed Church's approach.</context>
+                    However, as indicated by the neutral citation curve, Church's work continued to be cited as a classical pioneering research on the POS tagging task, but not as the state-of-the-art approach. 
+                    <context>Similar analysis 
+                        can be applied to the change in citation purpose of <cite id="27" function="ack" polarity="neu">Shieber (1985)</cite> as illustrated in Figure 1</context>
+                </paragraph> 
+                <title>2.4 Study the Dynamics of Research</title> 
+                <paragraph> 
+                    <context>In recent research, <cite id="28" function="ack" polarity="neu">Gupta and Manning (2011)</cite> conducted a study that tries to understand the dynamics of research in computational linguistics (CL).</context>
+                    They analyzed the abstracts of CL papers included in the ACL Anthology Reference Corpus. 
+                    They extracted the contributions, the domain of application, and the techniques and tools used in each paper. 
+                    They combined this information with pre-calculated article-to-community assignments to study the influence of a community on others in terms of techniques borrowed and the maturing of some communities to solve problems from other domains. 
+                    We hypothesize that conducting such an analysis using the citing sentences of papers instead of (or in combination with) abstracts leads to a more accurate picture of research dynamics and the interaction between different research communities. 
+                    There are several intuitions that support this hypothesis. 
+                    Table 3: Comparison of trigger word occurrences in abstracts vs citing sentences. 
+                </paragraph> 
+                <paragraph> 
+                    <context>First, previous research (<cite id="29" function="ack" polarity="neu">Elkiss et al., 2008</cite>) has shown that the citing sentences that cite a paper are more focused and more concise than the paper abstract, and that they consistently contain additional information that does not appear in abstracts.</context>
+                    This means that additional characteristics of a paper can be extracted from citing sentences that cannot be extracted from abstracts. 
+                    <context>To verify this, <author>we</author> 
+                        <kw>compared</kw>  
+                        <data>abstracts</data> vs <data>citing sentences</data> (within AAN) <kw>in terms of</kw> the <contribution>number of occurrences of the trigger words</contribution> that <cite id="30" function="bas" polarity="pos">Gupta and Manning (2011)</cite> deemed to be indicative of paper characteristics (Table 3). </context>
+                    All the abstracts and citing sentences included in the 2011 release of AAN were used to get these numbers. 
+                    The numbers clearly show that the trigger words appear more frequently in the set of citing sentences of papers than they do in the paper abstracts. 
+                    We also found many papers that none of the trigger words appeared in their abstracts, while they do appear in their citing sentences. 
+                    This suggests that more paper properties (contributions, techniques used, etc.) could be extracted from citations than from abstracts. 
+                </paragraph> 
+                <paragraph> 
+                    Second, while the contributions included in an abstract are the claims of the paper author(s), the contributions highlighted in citing sentences are collectively deemed to be important by peer researchers. 
+                    This means that the contributions extracted from citations are more important from the viewpoint of the community and are likely to reflect research trends more accurately. 
+                </paragraph> 
+                <paragraph> 
+                    We performed another simple experiment that demonstrates the use of citing sentences to track the changes in the focus of research. 
+                    We split the set of citing sentences in AAN into three subsets: the set of citing sentences that cite papers from 1980s, the set of citing sentences that cite papers from 1990s, and the set of citing sentences that cite papers from 2000s. 
+                    We counted the frequencies of words in each of the three sets. 
+                    Then, we ranked the words in each set by the decreasing order of their frequencies. 
+                    We selected a number of keywords and compared their ranks in the three year ranges. 
+                    Some of these keywords are listed in Table 4. 
+                    This analysis shows, for example, that there was more focus on "grammar" in the computational linguistics research in the 1980s then this focus declined with time as indicated by the lower rank of the keyword "grammar" in the 1990s and 2000s. 
+                    Similarly, rule based methods were popular in the 1980s and 1990s but their popularity declined significantly in the 2000s. 
+                </paragraph> 
+            </subsection> 
+        </section> 
+        <section imrad="i"> 
+            <title>3 Scientific Literature Summarization Using Citing Sentences</title> 
+            <paragraph> 
+                The fact that citing sentences cover different aspects of the cited paper and highlight its most important contributions motivates the idea of using citing sentences to summarize research. 
+                <context>The comparison that <cite id="31" function="hed" polarity="neu">Elkiss et al. (2008)</cite> performed between abstracts and citing sentences <kw>suggests that</kw> a summary generated from citing sentences will be different and <kw>probably more</kw> concise and informative than the paper abstract or a summary generated from the full text of the paper.</context> 
+                <context>For example, Table 5 shows the abstract of <cite id="32" function="ack" polarity="neu">Resnik (1999)</cite> and 5 selected sentences that cite it in AAN. </context>
+                We notice that citing sentences contain additional facts that are not in the abstract, not only ones that summarize the paper contributions, but also those that criticize it (e.g., the last citing sentence in the Table).
+                Table 3: Comparison of trigger word occurrences in abstracts vs citing sentences. 
+                Table 4: Ranks of selected keywords in citing sentences to papers published in 80s, 90s and 2000s 
+            </paragraph> 
+            <paragraph> 
+                Previous work has explored this research direction. 
+                <context> 
+                    <cite id="33" function="use" polarity="pos">Qazvinian and Radev (2008)</cite> 
+                    <kw>proposed</kw> a <method>method</method> 
+                    <kw>for</kw> 
+                    <task>summarizing scientific articles</task> by building a similarity network of the sentences that cite it, and then applying network analysis techniques to find a set of sentences that covers as much of the paper facts as possible.</context>
+                <context> 
+                    <cite id="34" function="use" polarity="pos">Qazvinian et al. (2010)</cite> 
+                    <kw>proposed</kw> another summarization <method>method</method> 
+                    <kw>that</kw> first extracts a number of important key phrases from the set of citing sentences, and then <task>finds the best subset of sentences</task> that covers as many key phrases as possible. </context>
+            </paragraph> 
+            <paragraph> 
+                These works focused on analyzing the citing sentences and selecting a representative subset that covers the different aspects of the summarized article. 
+                In recent work, Abu-Jbara and Radev (2011b) raised the issue of coherence and readability in summaries generated from citing sentences. 
+                They added a preprocessing and postprocessing steps to the summarization pipeline. 
+                In the preprocessing step, they use a supervised classification approach to rule out irrelevant sentences or fragments of sentences. 
+                In the postprocessing step, they improve the summary coherence and readability by reordering the sentences, removing extraneous text (e.g. redundant mentions of author names and publication year). 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    <cite id="35" function="ack" polarity="neu">Mohammed et al. (2009)</cite> went beyond single paper summarization. </context>
+                They investigated the usefulness of directly summarizing citation texts in the automatic creation of technical surveys. 
+                They generated surveys from a set of Question Answering (QA) and Dependency Parsing (DP) papers, their abstracts, and their citation texts. 
+                The evaluation of the generated surveys shows that both citation texts and abstracts have unique survey-worthy information. 
+                It is worth noting that all the aforementioned research on citation-based summarization used the ACL Anthology Network (AAN) for evaluation. 
+            </paragraph> 
+        </section> 
+        <section imrad="i"> 
+            <title>4 Controversy Identification</title> 
+            <paragraph> 
+                <context>Some arguments and claims made by researchers  may get disputed by other researchers (<cite id="36" function="ack" polarity="neu">Teufel, 1999</cite>). </context>
+                The following are examples of citing sentences that dispute previous work. 
+            </paragraph> 
+            <paragraph> 
+                <context>(1) <kw>Even though</kw> prior work (<cite id="37" function="wea" polarity="neg">Teufel et al., 2006</cite>) <kw>argues that</kw> citation text is unsuitable for summarization, <author>we</author> 
+                    <kw>show that</kw> in the framework of multi-document survey creation, <result>citation texts can play a crucial role</result>. </context>
+            </paragraph> 
+            <paragraph>
+                <context> 
+                    (2) <task>Mining the Web for bilingual text</task> (<cite id="38">Resnik, 1999</cite>) <kw>is not likely to provide</kw> 
+                    <result>sufficient quantities of high quality data</result>. </context>
+            </paragraph> 
+            <paragraph> 
+                In many cases, it is useful to know which arguments were confirmed and accepted by the research community and which ones where disputed or even rejected. 
+                We believe that analyzing citation text helps identify these contrasting views automatically. 
+            </paragraph> 
+        </section> 
+        <section imrad="m"> 
+            <title>5 Comparison of Different Techniques</title> 
+            <paragraph> 
+                Citing sentences that compare different techniques or compare the techniques proposed by the author to previous work are common. 
+                The following sentences are examples of such comparisons. 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    (3) In (<cite id="39" function="use" polarity="pos">Zollmann et al., 2008</cite>), an interesting <kw>comparison between</kw> 
+                    <method>phrase-based</method>, <method>hierarchical and syntax-augmented models</method> 
+                    <kw>is carried out</kw>, concluding that hierarchical and syntax-based models slightly outperform phrase-based models under large data conditions and for sufficiently non-monotonic language pairs. </context>
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    (4) Brill's results demonstrate that this approach can outperform the <method>Hidden Markov Model approaches</method> that <kw>are frequently used for</kw> 
+                    <task>part-of-speech tagging</task> (<cite id="40" function="use" polarity="pos">Jelinek, 1985</cite>; <cite id="41" function="use" polarity="pos">Church, 1988</cite>; <cite id="42" function="use" polarity="pos">DeRose, 1988</cite>; <cite id="43" function="use" polarity="pos">Cutting et al., 1992</cite>; <cite id="44" function="use" polarity="pos">Weischedel et al., 1993</cite>), as well as showing promise for other applications. </context>
+            </paragraph> 
+            <paragraph> 
+                <context> (5) Our highest <result>scores of</result> 90.8% LP and 90.5% LR <kw>outperform</kw> the scores of the best <kw>previously published</kw> parser by <cite id="45" function="con" polarity="neg">Charniak (2000)</cite> who obtains 90.1% for both LP andLR. </context>
+            </paragraph> 
+            <paragraph> 
+                Extracting such comparisons from citations can be of great benefit to researchers. 
+                It will allow them to quickly determine which technique works better for their tasks. 
+                To verify that citation text could be a good source for extracting comparisons, we created a list of words and phrases that are usually used to express comparisons and counted their frequency in AAN citing sentences. 
+                We found, for example, that the word compare (at its variations) appears in about 4000 sentences, and that the words outperform and contrast each appears in about 1000 citing sentences. 
+            </paragraph> 
+        </section> 
+        <section imrad="m"> 
+            <title>6 Ontology Creation</title> 
+            <paragraph> 
+                It is useful for researchers to know which tasks and research problems are important, and what techniques and tools are usually used with them. 
+                Citation text is a good source of such information. 
+                For example, sentence (6) below shows three different techniques (underlined) that were used to extend tools and resources that were created for English so that they work for other languages. 
+                For another example, sentence (7) shows different tasks in which re-ranking has been successfully applied. 
+                These relations can be easily extracted from citing sentences and can be possibly used to build an ontology of tasks, methods, tools, and the relations between them. 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    (6) Another strain of research has sought to exploit resources and tools in some languages (especially English) to construct similar resources and tools for other languages, through heuristic projection (<cite id="46" function="ack" polarity="neu">Yarowsky and Ngai, 2001</cite>; <cite id="47" function="ack" polarity="neu">Xi and Hwa, 2005</cite>) or constraints in learning (<cite id="48" function="ack" polarity="neu">Burkett and Klein, 2008</cite>; <cite id="49" function="ack" polarity="neu">Smith and Eisner, 2009</cite>; <cite id="50" function="ack" polarity="neu">Das and Petrov, 2011</cite>; <cite id="51" function="ack" polarity="neu">McDonald et al., 2011</cite>) or inference (<cite id="52" function="ack" polarity="neu">Smith and Smith, 2004</cite>). </context>
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    (7) <method>(Re)rankers</method> 
+                    <kw>have been successfully applied to</kw> numerous NLP <task>tasks</task>, such as parse selection (<cite id="53" function="use" polarity="pos">Osborne and Baldridge, 2004</cite>; <cite id="54" function="use" polarity="pos">Toutanova et al., 2004</cite>), parse reranking (<cite id="55" function="use" polarity="pos">Collins and Duffy, 2002</cite>; <cite id="56" function="use" polarity="pos">Charniak and Johnson, 2005</cite>), question-answering (<cite id="57" function="use" polarity="pos">Ravichandran et al., 2003</cite>). </context>
+            </paragraph> 
+        </section> 
+        <section imrad="m"> 
+            <title>7 Paraphrase Extraction</title> 
+            <paragraph> 
+                It is common that multiple citing sentences highlight the same facts about a cited paper. 
+                Since these sentences were written by different authors, they often use different wording to describe the cited paper facts. 
+                This motivates the idea of using citing sentences to create data sets for paraphrase extraction. 
+                <context>For example, sentences (8) and (9) below both cite (<cite id="58" function="use" polarity="pos">Turney, 2002</cite>) and <kw>highlight</kw> the same aspect of Turney's <paper>work</paper> 
+                    <kw>using</kw> slightly different wordings.</context>
+                Therefore, sentences (8) and (9) can be considered paraphrases of each other. 
+            </paragraph> 
+            <paragraph>
+                <context> 
+                    (8) In (<cite id="59" function="use" polarity="pos">Turney, 2002</cite>), an unsupervised learning <method>algorithm</method> 
+                    <kw>was proposed</kw> to <task>classify reviews</task> as recommended or not recommended by averaging sentiment annotation of phrases in reviews that contain adjectives or adverbs.</context> 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    (9) For example, <cite id="60" function="use" polarity="pos">Turney (2002)</cite> 
+                    <kw>proposes</kw> a <method>method</method> to <task>classify reviews</task> as recommended/not recommended, based on the average semantic orientation of the review.</context>
+            </paragraph> 
+            <paragraph> 
+                The paraphrase annotation of citing sentences consists of manually labeling which sentence consists of what facts. 
+                Then, if two citing sentences consist of the same set of facts, they are labeled as paraphrases of each other. 
+                For example, if a paper has 50 sentences citing it, this gives us a paraphrasing data set that consists of 50*49 = 2450 pairs. 
+                As a proof of concept, we annotated 25 papers from AAN using the annotation method described above. 
+                This data set consisted of 33,683 sentence pairs of which 8,704 are paraphrases. 
+            </paragraph> 
+            <paragraph> 
+                <context>The idea of using citing sentences to create data sets for paraphrase extraction was initially suggested by <cite id="61" function="use" polarity="pos">Nakov et al. (2004)</cite> who <kw>proposed</kw> an <method>algorithm</method> that <task>extracts paraphrases</task> from citing sentences using rules based on automatic named entity annotation and the dependency paths between them.</context>
+                Table 5: Comparison of the abstract and a selected set of sentences that cite Resnik (1999) work 
+            </paragraph> 
+        </section> 
+        <section imrad="m"> 
+            <title>8 Scientific Article Classification</title> 
+            <paragraph> 
+                Automatic classification of scientific articles is one of the important tasks for creating publication databases. 
+                A variety of machine learning algorithms have been proposed for this task. 
+                Many of these methods perform the classification based on the title, the abstract, or the full text of the article. 
+                Some other methods used citation links in addition to content to make classification decisions. 
+                <context>Cao and <cite id="62" function="use" polarity="pos">Gao (2005)</cite> 
+                    <kw>proposed</kw> a two-phase classification system. 
+                    The system first applies a content-based statistical classification <method>method</method> which is similar to general text classification. 
+                    In the second phase, the system uses an iterative method to <task>update the labels of classified instances</task> using citation links.</context>
+                <context>A <method>similar approach</method> 
+                    <kw>is also proposed by</kw> 
+                    <cite id="63" function="use" polarity="pos">Zhang et al. (2006)</cite>.</context>
+                These approaches use citation links only to improve classification decisions that were made based on content. 
+                We hypothesize that using the text of citing sentences in addition to citation structure and content leads to more accurate classification than using the content and citation links only. 
+            </paragraph> 
+        </section> 
+        <section imrad="m"> 
+            <title>9 Terminology Translation</title> 
+            <paragraph> 
+                Citing sentences can also be used to improve machine translation systems by using citing sentences from different languages to build parallel corpus of terms and their translations. 
+                This can be done by identifying articles written in different languages that cite a common target paper, then extracting the citing sentences from each paper. 
+                Word alignment techniques can then be applied to the text surrounding the reference to the common target paper. 
+                The aligned words from each source can then be extracted and used as translations of the same term. 
+                Sentences (10) and (11) below illustrate how the application of this proposed method can identify that the underlined terms in sentence 10 (Spanish) and sentence 11 (English) are translations of each other. 
+            </paragraph> 
+            <paragraph> 
+                (10) Spanish: Se comprobo que la agrupacion por bloques ofrecia mejores resultados que, la introduction de vocabulario (Hearst, 1997 o las cadenas lÃ©xicas (Hearst, 1994y, por tanto, es la que se ha utilizado en la segunda fase del algoritmo. 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    (11) English: This <kw>can be done either by</kw> analyzing the number of <method>overlapping lexical chains</method> (<cite id="64" function="use" polarity="pos">Hearst, 1994</cite>) <kw>or by</kw> building a short-range and long-range <method>language model</method> (<cite id="65" function="use" polarity="pos">Beeferman et al., 1999</cite>). </context>
+            </paragraph> 
+        </section> 
+        <section imrad="m"> 
+            <title>10 Other Uses of Citing Sentences</title> 
+            <paragraph> 
+                <context>
+                    <cite id="66" function="ack" polarity="neu">Nakov et al. (2004)</cite> 
+                    <kw>proposed</kw> several other <kw>uses of</kw> 
+                    <method>citing sentences</method>. 
+                </context>
+                First, they suggested using them as a source for unannotated comparable corpora. 
+                Such comparable corpora can be used in several applications such as paraphrase extraction as we showed earlier. 
+                They also noticed that the scientific literature is rife with abbreviations and synonyms, and hence, citing sentences referring to the same article may allow synonyms to be identified and recorded. 
+                They also proposed using citing sentences to build a model of the different ways used to express a relationship between two entities. 
+                They hypothesized that this model can help improve both relation extraction and named entity recognition systems. 
+                Finally, they proposed improving the indexing and ranking of publications by considering, in addition to the content of the publication, the text of citing sentences that cite it and their contexts. 
+            </paragraph> 
+        </section> 
+        <section imrad="r"> 
+            <title>11 Summarizing 30 years of ACL Discoveries Using Citing Sentences</title> 
+            <paragraph> 
+                The ACL Anthology Corpus contains all the proceedings of the Annual Meeting of the Association of Computational Linguistics (ACL) since 1979. 
+                All the ACL papers and their citation links and citing sentences are included in the ACL Anthology Network (ACL). 
+                In this section, we show how citing sentences can be used to summarize the most important contributions that have been published in the ACL conference since 1979. 
+                We selected the most cited papers in each year and then manually picked a citing sentence that cites a top cited and describes it contribution. 
+                It should be noted here that the citation counts we used for ranking papers reflect the number of incoming citations the paper received only from the venues included in AAN. 
+                To create the summary, we used citing sentences that has the reference to the cited paper in the beginning of the sentence. 
+                This is 
+                Table 6: A citation-based summary of the important contributions published in ACL conference proceedings since 1979. 
+                The top cited paper in each year is found and one citation sentence is manually picked to represent it in the summary. 
+                because such citing sentences are often high-quality, concise summaries of the cited work. 
+                Table 6 shows the summary of the ACL conference contributions that we created using citing sentences. 
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>12 Conclusion</title> 
+            <paragraph> 
+                We motivated and discussed several different uses of citing sentences, the text surrounding citations. 
+                We showed that citing sentences can be used to analyze the dynamics of research and observe how it trends. 
+                We also gave examples on how analyzing the text of citing sentences can give a better understanding of the impact of a researcher's work and how this impact changes over time. 
+                In addition, we presented several different applications that can benefit from citing sentences such as scientific literature summarization, identifying controversial arguments, and identifying relations between techniques, tools and tasks. 
+                We also showed how citing sentences can provide high-quality for NLP tasks such as information extraction, paraphrase extraction, and machine translation. 
+                Finally, we used AAN citing sentences to create a citation-based summary of the important contributions included in the ACL conference publication in the past 30 years. 
+            </paragraph> 
+        </section> 
+    </paper>
+</annotatedpaper>

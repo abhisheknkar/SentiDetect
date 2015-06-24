@@ -1,0 +1,333 @@
+<annotatedpaper>
+    <paper title= "Efficient Support Vector Classifiers for Named Entity Recognition" authors= "Hideki Isozaki and Hideto Kazawa" year="2002">
+        <section>
+            Hideki Isozaki and Hideto Kazawa
+            NTT Communication Science Laboratories
+            Nippon Telegraph and Telephone Corporation
+            NTT Communication Science Laboratories
+            Nippon Telegraph and Telephone Corporation
+        </section>
+        <section>
+            <title>
+                Abstract
+            </title>
+            <paragraph>
+                Named Entity (NE) recognition is a task in which proper nouns and numerical information are extracted from documents and are classified into categories such as person, organization, and date. It is a key technology of Information Extraction and Open-Domain Question Answering. First, we show that an NE recognizer based on Support Vector Machines (SVMs) gives better scores than conventional systems. However, off-the-shelf SVM classifiers are too inefficient for this task. Therefore, we present a method that makes the system substantially faster. This approach can also be applied to other similar tasks such as chunking and part-of-speech tagging. We also present an SVM-based feature selection method and an efficient training method.
+            </paragraph>
+        </section>
+        <section imrad="i">
+            <title>
+                1 Introduction
+            </title>
+            <paragraph>
+                Named Entity (NE) recognition is a task in which proper nouns and numerical information in a document are detected and classified into categories such as person, organization, and date. 
+                <context>
+                    It is a key technology of Information Extraction and Open-Domain Question Answering (<cite id="1" function="ack" polarity="neu">Voorhees and Harman, 2000</cite>).
+                </context>
+                We are building a trainable Open-Domain Question Answering System called SAIQA-II. 
+              
+                In this paper, we show that an NE recognizer based on Support Vector Machines (SVMs) gives better scores than conventional systems.
+                <context>
+                    <method>SVMs</method> 
+                    <kw>have given</kw> 
+                    <posfeature>high performance</posfeature> 
+                    <kw>in various</kw> 
+                    <task>classification tasks</task> (<cite id="2" function="use" polarity="pos">Joachims, 1998</cite>; <cite id="3" function="use" polarity="pos">Kudo and Matsumoto, 2001</cite>).
+                </context>
+            </paragraph>
+            <paragraph>
+                However,
+
+                it turned out that off-the-shelf SVM classifiers are too inefficient for NE recognition. 
+                <context>
+                    <tool>The recognizer</tool> 
+                    <negfeature>runs at a rate of only 85 bytes/sec</negfeature> on an Athlon 1.3 GHz Linux PC, <kw>while</kw> 
+                    <tool>rule-based systems</tool> (e.g., <cite id="4" function="con" polarity="pos">Isozaki, (2001)</cite>) <posfeature>can process several kilobytes in a second</posfeature>.
+                </context>
+                The major reason is the inefficiency of SVM classifiers. 
+                <context>
+                    <kw>There are</kw> 
+                    <result>other reports</result> 
+                    <kw>on</kw> 
+                    <negfeature>the slowness of</negfeature> 
+                    <tool>SVM classifiers</tool>. Another <tool>SVM-based NE recognizer</tool> (<cite id="5" function="wea" polarity="neg">Yamada and Matsumoto, 2001</cite>)<negfeature> is 0.8 sentences/sec</negfeature> on a Pentium III 933 MHz PC. 
+                </context>
+                <tool>An SVM-based part-of-speech (POS) tagger</tool> (<cite id="6" function="wea" polarity="neg">Nakagawa et al., 2001</cite>) <kw>is</kw>
+                <negfeature>20 tokens/sec on an Alpha 21164A 500 MHz processor</negfeature>.
+            </paragraph>
+            <paragraph>
+                It is difficult to use such slow systems in practical applications. In this paper, we present a method that makes the NE system substantially faster. This method can also be applied to other tasks in natural language processing such as chunking and POS tagging. Another problem with SVMs is its incomprehensibility. It is not clear which features are important or how they work. The above method is also useful for finding useless features. We also mention a method to reduce training time.
+            </paragraph>
+            
+                
+                1.1 Support Vector Machines
+                
+                <paragraph>
+                    Suppose we have a set of training data for a two-class problem: (xi,yi),..., (xjv,j/iv), where Xj(e is a feature vector of the -th sample in the training data and is the label for the sample. The goal is to find a decision function that accurately predicts for unseen . A non-linear SVM classifier gives a decision function sign for an input vector where
+                </paragraph>
+                <paragraph>
+                    Here, means is a member of a certain class and means is not a member. Zjs are called support vectors and are representatives of training examples. £ is the number of support vectors. Therefore, computational complexity of is proportional to . Support vectors and other constants are determined by solving a certain quadratic programming problem. K(x., z) is a kernel that implicitly maps vectors into a higher dimensional space. Typical kernels use dot products: . A polynomial kernel of degree is given by . We can use various kernels, and the design of an appropriate kernel for a particular application is an important research issue. •: positive example, o: negative example ®,® support vectors Figure 1: Support Vector Machine
+                </paragraph>
+                <paragraph>
+                    Figure 1 shows a linearly separable case. The decision hyperplane defined by g(x.) = 0 separates positive and negative examples by the largest margin. The solid line indicates the decision hyperplane and two parallel dotted lines indicate the margin between positive and negative examples. 
+                    <context>
+                        Since such a separating hyperplane may not exist, a positive parameter C is introduced to allow misclassifications. See <cite id="7" function="ack" polarity="neu">Vapnik (1995)</cite>.
+                    </context>
+                </paragraph>
+            
+                
+                1.2 SVM-based NE recognition
+                
+                <paragraph>
+                    <context>
+                        As far as we know, <posfeature>the first</posfeature>
+                        <tool>SVM-based NE system</tool> 
+                        <kw>was proposed by</kw> 
+                        <cite id="8" function="use" polarity="neu">Yamada et al. (2001)</cite> for Japanese. 
+                    </context>
+                    <context>
+                        His <tool>system</tool> 
+                        <kw>is an extension of</kw> 
+                        <tool>Kudo's chunking system</tool> (<cite id="9" function="use" polarity="pos">Kudo and Matsumoto, 2001</cite>) <kw>that gave</kw> 
+                        <posfeature>the best performance</posfeature> 
+                        <kw>at</kw> 
+                        <task>CoNLL-2000 shared tasks</task>.
+                    </context>
+                    In their system, every word in a sentence is classified sequentially from the beginning or the end of a sentence. However, since Yamada has not compared it with other methods under the same conditions, it is not clear whether his NE system is better or not. Here, we show that our SVM-based NE system is more accurate than conventional systems. 
+                    <context>
+                        <author>Our</author>
+                        <tool>system</tool> 
+                        <kw>uses</kw>
+                        <method>the Viterbi search</method> (<cite id="10" function="bas" polarity="pos">Allen, 1995</cite>) instead of sequential determination.
+                    
+                    </context>
+                </paragraph>
+                <paragraph>
+                    <context>
+                        <kw>For training</kw>
+                        <author> we</author>
+                        <kw>use</kw>
+                        <data>'CRL data'</data>, which was prepared for IREX (Information Retrieval and Extraction Exercise, Sekine and <cite id="11" function="bas" polarity="neu">Eriguchi (2000)</cite>). 
+                    </context>
+                    It has about 19,000 NEs in 1,174 articles.
+                    <context>
+                        <author>We</author>
+                        <kw>also use additional</kw>
+                        <data>data</data>
+                        <kw>by</kw> 
+                        <cite id="12" function="bas" polarity="neu">Isozaki (2001)</cite>.
+                    </context>           
+
+                    Both datasets are based on Mainichi Newspaper's 1994 and 1995 CD-ROMs. We use IREX's formal test data called GENERAL that has 1,510 named entities in 71 articles from Mainichi Newspaper of 1999. Systems are compared in terms of GENERAL's F-measure which is the harmonic mean of 'recall' and 'precision' and is defined as follows.
+                </paragraph>
+                <paragraph>
+                    Recall = M/(the number of correct NEs), Precision = M/(the number of NEs extracted by a system), where M is the number of NEs correctly extracted and classified by the system.
+                </paragraph>
+                <paragraph>
+                    <context>
+                        <author>We</author> 
+                        <kw>developed</kw> 
+                        <tool>an SVM-based NE system</tool> 
+                        <kw>by following our</kw> 
+                        <tool>NE system</tool> 
+                        <kw>based on</kw>
+                        <method>maximum entropy (ME) modeling</method> (<cite id="13" function="bas" polarity="pos">Isozaki, 2001</cite>). 
+                    </context>
+                    We simply replaced the ME model with SVM classifiers. The above datasets are processed by a morphological analyzer ChaSen 2.2.1. It tokenizes a sentence into words and adds POS tags. ChaSen uses about 90 POS tags such as common-noun and location-name. Since most unknown words are proper nouns, ChaSen's parameters for unknown words are modified for better results. Then, a character type tag is added to each word. 
+                    <context>
+                        It uses 17 character types such as all-kanji and small-integer. See <cite id="14" function="ack" polarity="neu">Isozaki (2001)</cite> for details.
+                    </context>
+                </paragraph>
+                <paragraph>
+                    <context>
+                        Now, Japanese NE recognition is solved by the classification of words (<cite id="15" function="ack" polarity="neu">Sekine et al., 1998</cite>; <cite id="16" function="ack" polarity="neu">Borth-wick, 1999</cite>; <cite id="17" function="ack" polarity="neu">Uchimoto et al., 2000</cite>).
+                    </context>
+                    For instance, the words in "President George Herbert Bush said Clinton is ..." are classified as follows: "President" = other, "George" = person-begin, "Herbert" = person-middle, "Bush" = person-end, "said" = other, "Clinton" = person-single, "is" = other. In this way, the first word of a person's name is labeled as person-begin. The last word is labeled as person-end. Other words in the name are person-middle. If a person's name is expressed by a single word, it is labeled as personsingle. If a word does not belong to any named entities, it is labeled as other. Since IREX defines eight NE classes, words are classified into 33 ( ) categories.
+                </paragraph>
+                <paragraph>
+                    Each sample is represented by 15 features because each word has three features (part-of-speech tag, character type, and the word itself), and two preceding words and two succeeding words are also used for context dependence. Although infrequent features are usually removed to prevent overfitting, we use all features because SVMs are robust. Each sample is represented by a long binary vector, i.e., a sequence of 0 (false) and 1 (true). For instance, "Bush" in the above example is represented by a vector described below. Only 15 elements are 1. http://chasen.aist-nara.ac.jp/ // Current word is not 'Charlie'
+                </paragraph>
+                <paragraph>
+                    Here, we have to consider the following problems. First, SVMs can solve only a two-class problem. Therefore, we have to reduce the above multi-class problem to a group of two-class problems. Second, we have to consider consistency among word classes in a sentence. For instance, a word classified as person-begin should be followed by person-middle or person-end. It implies that the system has to determine the best combinations of word classes from numerous possibilities. Here, we solve these problems by combining existing methods.
+                </paragraph>
+                <paragraph>
+                    There are a few approaches to extend SVMs to cover -class problems. Here, we employ the "one class versus all others" approach. That is, each classifier /c(x) is trained to distinguish members of a class from non-members. In this method, two or more classifiers may give +1 to an unseen vector or no classifier may give +1. One common way to avoid such situations is to compare values and to choose the class index of the largest .
+                </paragraph>
+                <paragraph>
+                    The consistency problem is solved by the Viterbi search. 
+                    <context>
+                        <kw>Since</kw> 
+                        <method>SVMs</method> 
+                        <negfeature>do not output probabilities</negfeature>,<author> we</author> 
+                        <kw>use</kw> 
+                        <method>the SVM+sigmoid method</method> (<cite id="18" function="bas" polarity="pos">Platt, 2000</cite>).
+                    </context>
+
+                    That is, we use a sigmoid function to map to a probability-like value. The output of the Viterbi search is adjusted by a postprocessor for wrong word boundaries. 
+                    <context>
+                        The adjustment rules are also statistically determined (<cite id="19" function="ack" polarity="neu">Isozaki, 2001</cite>).
+                    </context>
+                </paragraph>
+            
+                
+                1.3 Comparison of NE recognizers
+                
+                <paragraph>
+                    We use a fixed value ft = 100. F-measures are not very sensitive to unless is too small. When we used 1,038,986 training vectors, GENERAL's F-measure was 89.64% for ft = 0.1 and 90.03% for . We employ the quadratic kernel ( ) because it gives the best results. Polynomial kernels Number of NEs in training data (x! 0)
+                </paragraph>
+                <paragraph>
+                    Figure 2: F-measures ofNE systems and 87.04% respectively when we used 569,994 training vectors. Figure 2 compares NE recognizers in terms of GENERAL's F-measures. 
+                    <context>
+                        'SVM' in the figure indicates F-measures of our system trained by Kudo's when we used only CRL data. 'ME' indicates our ME system and 'RG+DT' indicates a rule-based machine learning system (<cite id="20" function="ack" polarity="neu">Isozaki, 2001</cite>). 
+                    </context>>
+                    
+                    According to this graph, 'SVM' is better than the other systems.
+                </paragraph>
+                <paragraph>
+                    
+                    However,SVM classifier sare too slow. 
+                    <context>
+                        <kw>Famous</kw> 
+                        <tool>SVM-Light 3.50</tool> (<cite id="21" function="wea" polarity="neg">Joachims, 1999</cite>) <negfeature>took 1.2 days to classify 569,994 vectors</negfeature> derived from 2 MB documents. 
+                    </context>
+                    
+                    That is, it runs at only 19 bytes/sec. TinySVM's classifier seems best optimized among publicly available SVM toolkits, but it still works at only 92 bytes/sec.
+                </paragraph>
+           
+        </section>
+        <section imrad="m">
+            <title>
+                2 Efficient Classifiers
+            </title>
+            <paragraph>
+                In this section, we investigate the cause of this inefficiency and propose a solution. All experiments are conducted for training data of 569,994 vectors. The total size of the original news articles was 2 MB and the number of NEs was 39,022. According to the definition of g(x), a classifier has to process I support vectors for each . Table 1 shows s for different word classes. According to this table, classification of one word requires x's dot products with 228,306 support vectors in 33 classifiers. Therefore, the classifiers are very slow. We have never seen such large s in SVM literature on pattern recognition. The reason for the large s is word features. In other domains such as character recognition, dimension D is usually fixed. However, in the NE task, D increases monotonically with respect to the size of the training data. Since SVMs learn combinations of features, £ tends to be very large. This tendency will hold for other tasks of natural language processing, too. http://cl.aist-nara.ac.jp/~taku-ku/software/TinySVM
+            </paragraph>
+            <paragraph>
+                Here, we focus on the quadratic kernel k{x) = that yielded the best score in the above experiments. Suppose has only to (=15) non-zero elements. The dot product of and is given by We can rewrite g(x) as follows.
+            </paragraph>
+            <paragraph>
+                Now, can be given by summing up for every non-zero element and for every non-zero pair Accordingly, we only need to add 1 + to + to(to — l)/2 (=121) constants to get . Therefore, we can expect this method to be much faster than a naive implementation that computes tens of thousands of dot products at run time. We call this method 'XQK' (eXpand the Quadratic Kernel).
+            </paragraph>
+            <paragraph>
+                Table 1 compares TinySVM and XQK in terms of CPU time taken to apply 33 classifiers to process the training data. Classes are sorted by £. Small numbers in parentheses indicate the initialization time for reading support vectors and allocating memory. XQK requires a longer initialization time in order to prepare and . For instance, TinySVM took 11,490.26 seconds (3.2 hours) in total for applying other's classifier to all vectors in the training data. Its initialization phase took 2.13 seconds and all vectors in the training data were classified in 11,488.13 (= 11,490.26 - 2.13) seconds. On the other hand, XQK took 225.28 seconds in total and its initialization phase took 174.17 seconds. Therefore, 569,994 vectors were classiied in 51.11 seconds. The initialization time can be disregarded because we can reuse the above coeficents. Consequently, XQK is 224.8 (=11,488.13/51.11) times faster than TinySVM for other. TinySVM took 6 hours to process all the word classes, whereas XQK took only 17 minutes. XQK is 102 times faster than SVM-Light 3.50 which took 1.2 days.
+            </paragraph>
+   
+            <title>
+                3 Removal of useless features
+            </title>
+            <paragraph>
+                XQK makes the classiiers faster, but memory requirement increases from to where (=15) is the number of non-zero elements in . Therefore, removal of useless features would be beneicial. Conventional SVMs do not tell us how an individual feature works because weights are given not to features but to . However, the above weights ( and ) clarify how a feature or a feature pair works. We can use this fact for feature selection after the training. We simplify by removing all features that satisfy.
+            </paragraph>
+            <paragraph>
+                The largest that does not change the number of misclassiications for the training data is found by using the binary search for each word class. We call this method 'XQK-FS' (XQK with Feature Selection). This approximation slightly degraded GENERAL's F-measure from 88.31% to 88.03%.
+            </paragraph>
+            <paragraph>
+                Table 2 shows the reduction of features that appear in support vectors. Classes are sorted by the numbers of original features. For instance, other has 56,220 features in its support vectors. According to the binary search, its performance did not change even when the number of features was reduced to 21,852 at 6 = 0.02676. Table 1: Reduction of CPU time (in seconds) by XQK
+            </paragraph>
+            <paragraph>
+                The total numberoffeatures was reduced by75% and that of weights was reduced by 60%. The table also shows CPU time for classiication by the selected features. XQK-FS is 28.5 (=21754.23/ 763.10) times faster than TinySVM. Although the reduction of features is signiicant, the reduction of CPU time is moderate, because most ofthe reduced features are infrequent ones. However, simple reduction of infrequent features without considering weights damages the system's performance. For instance, when we removed 5,066 features that appeared four times or less in the training data, the modified classifier for organization-end mis-classiied 103 training examples, whereas the original classifier misclassified only 19 examples. On the other hand, XQK-FS removed 12,141 features without an increase in misclassiications for the training data.
+            </paragraph>
+            <paragraph>
+                XQK can be easily extended to a more general quadratic kernel and to nonbinary sparse vectors. XQK-FS can be used to select useful features before training by other kernels. As mentioned above, we conducted an experiment for the cubic kernel ( ) by using all features. When we trained the cubic kernel classiiers by using only features selected by XQK-FS, TinySVM's classiication time was reduced by 40% because was reduced by 38%. GENERAL's F-measure was slightly improved from 87.04% to 87.10%. On the other hand, when we trained the cubic kernel classiiers by using only features that appeared three times or more (without considering weights), TinySVM's classification time was reduced by only 14% and the F-measure was slightly degraded to 86.85%. Therefore, we expect XQK-FS to be useful as a feature selection method for other kernels when such kernels give much better results than the quadratic kernel.
+            </paragraph>
+        </section>
+        <section imrad="r">
+            <title>
+                4 Reduction of training time
+            </title>
+            <paragraph>
+                Since training of 33 classiiers also takes a long time, it is dificult to try various combinations ofpa-rameters and features. Here, we present a solution for this problem. In the training time, calculation of for various s is dominant. Conventional systems save time by caching the results. By analyzing TinySVM's classiier, we found that they can be calculated more eficiently.
+            </paragraph>
+            <paragraph>
+                <context>
+                    For <concept>sparse vectors</concept>,<kw> most</kw>
+                    <tool>SVM classiiers</tool> (e.g., SVM-Light) <kw>use</kw>
+                    <method>a sparse dot product algorithm </method>(<cite id="22" function="use" polarity="neu">Platt, 1999</cite>) that compares non-zero elements of and those of to get in.
+                </context>
+                However, is common to all dot products in Table 2: Reduction offeatures by XQK-FS. Therefore, we can implement a faster classiier that calculates them concurrently. TinySVM's classifier prepares a list fi2si[/i] that contains all z^s whose -th coordinates are not zero. In addition, counters for are prepared because dot products of binary vectors are integers. Then, for each non-zero , the counters are incremented for all fi2si . By checking only members of fi2si[/j] for non-zero x[h], the classifier is not bothered by fruitless cases: or x[h] 7^ 0,Zj[h] = 0. Therefore, TinySVM's clas-siier is faster than other classiiers. This method is applicable to any kernels based on dot products.
+            </paragraph>
+            <paragraph>
+                For the training phase, we can build fi2si that contains all s whose -th coordinates are not zero. Then, can be eficiently calculated because is common. This improvement is effective especially when the cache is small and/or the training data is large. When we used a 200 MB cache, the improved system took only 13 hours for training by the CRL data, while TinySVM and SVM-Light took 30 hours and 46 hours respectively for the same cache size. Although we have examined other SVM toolkits, we could not ind any system that uses this approach in the training phase.
+            </paragraph>
+        </section>
+        <section imrad="d">
+            <title>
+                5 Discussion
+            </title>
+            <paragraph>
+                The above methods can also be applied to other tasks in natural language processing such as chunking and POS tagging because the quadratic kernels give good results.
+            </paragraph>
+            <paragraph>
+                <context>
+                    <cite id="23" function="ack" polarity="neu">Utsuro et al. (2001)</cite> report that a combination of two NE recognizers attained F = 84.07%, but wrong word boundary cases are excluded.  Our system attained 85.04% and word boundaries are automatically adjusted. Yamada (<cite id="24" function="ack" polarity="neu">Yamada et al., 2001</cite>) also reports that is best. 
+                </context>
+               
+                <context>
+                    <kw>Although his</kw> 
+                    <tool>system</tool> 
+                    <feature>attained F = 83.7%</feature> for 5-fold cross-validation of the CRL data (<cite id="25" function="con" polarity="neg">Yamada and Matsumoto, 2001</cite>), <author>our</author> 
+                    <tool>system</tool> 
+                    <posfeature>attained 86.8%</posfeature>. 
+                </context>
+                <context>
+                    <kw>Since</kw> 
+                    <author>we</author>
+                    <kw>followed</kw> 
+                    <method>Isozaki's implementation</method> (<cite id="26" function="bas" polarity="pos">Isozaki, 2001</cite>), <author>our</author> 
+                    <tool>system</tool> 
+                    <kw>is different</kw> from Yamada's system in the following points: 1) adjustment ofword boundaries, 2) ChaSen's parameters for unknown words, 3) character types, 4) use of the Viterbi search.
+                </context>
+            </paragraph>
+            <paragraph>
+                <context>
+                    <kw>For</kw> 
+                    <posfeature>eficient</posfeature> 
+                    <task>classiication</task>,  <cite id="27" function="use" polarity="neu">Burges and Schoilkopf (1997)</cite> 
+                    <kw>propose</kw> 
+                    <method>an approximation method</method> that uses "reduced set vectors" instead of support vectors.
+                </context>
+                Since the size of the reduced set vectors is smaller than , classiiers become more eficient, but the computational cost to determine the vectors is very large.
+                <context>
+                    <cite id="28" function="use" polarity="neu"> Osuna and Girosi (1999)</cite> 
+                    <kw>propose</kw> 
+                    <method>two methods</method>. The <method>first method</method> 
+                    <feature>approximates g(x) by support vector regression</feature>, <kw>but</kw> this method <negfeature>is applicable only when C is large</negfeature> enough. The second method reformulates the training phase.
+                </context>
+                Our approach is simpler than these methods.
+                <context>
+                    Downs et al. (<cite id="29" function="ack" polarity="neu">Downs et al., 2001</cite>) try to reduce the number of support vectors by using linear dependence.
+                </context>
+            </paragraph>
+            <paragraph>
+                <context>
+                <author>We</author><kw>can also</kw><posfeature>reduce the run-time complexity</posfeature> of a multi-class problem <kw>by</kw><method>cascading SVMs in the form of a binary tree</method> (<cite id="30" function="use" polarity="pos">Schwenker, 2001</cite>) <kw>or a </kw> <method>direct acyclic graph</method> (<cite id="31" function="use" polarity="pos">Platt et al., 2000</cite>). 
+                </context>
+                <context>
+                <cite id="32" function="ack" polarity="neu">Yamada and Mat-sumoto (2001)</cite> applied such a method to their NE system and reduced its CPU time by 39%.
+                </context>
+
+                This approach can be combined with our SVM classifers.
+            </paragraph>
+            <paragraph>
+                <context>
+                <task>NE recognition</task> <kw>can be regarded as</kw><feature>a variable-length multi-class problem.</feature>
+                <kw>For this kind of</kw> <task>problem</task>, <method>probability-based kernels</method> <kw>are studied</kw> for more theoretically well-founded methods (<cite id="33" function="use" polarity="neu">Jaakkola and Haussler, 1998</cite>; <cite id="34" function="use" polarity="neu">Tsuda et al., 2001</cite>; <cite id="35" function="use" polarity="neu">Shimodaira et al., 2001</cite>).
+                </context>
+            </paragraph>
+        
+            <title>
+                6 Conclusions
+            </title>
+            <paragraph>
+                Our SVM-based NE recognizer attained F = 90.03%. This is the best score, as far as we know. Since it was too slow, we made SVMs faster. The improved classifier is 21 times faster than TinySVM and 102 times faster than SVM-Light. The improved training program is 2.3 times faster than TinySVM and 3.5 times faster than SVM-Light. We also presented an SVM-based feature selection method that removed 75% of features. These methods can also be applied to other tasks such as chunking and POS tagging.
+            </paragraph>
+        
+            <title>
+                Acknowledgment
+            </title>
+            <paragraph>
+                We would like to thank Yutaka Sasaki for the training data. We thank members of Knowledge Processing Research Group for valuable comments and discussion. We also thank Shigeru Katagiri and Ken-ichiro Ishii for their support. 
+            </paragraph>
+        </section>
+    </paper>
+</annotatedpaper>

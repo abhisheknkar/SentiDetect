@@ -1,0 +1,371 @@
+<annotatedpaper><paper title="Co-Training for Cross-Lingual Sentiment Classification" authors="Xiaojun Wan" year="2009"> 
+<section> 
+<title>Co-Training for Cross-Lingual Sentiment Classification</title> 
+Xiaojun Wan 
+Institute of Compute Science and Technology &amp; Key Laboratory of Computational Linguistics, 
+MOE 
+Peking University, Beijing 100871, China 
+wanxiaojun@icst.pku.edu.cn  
+</section> 
+<section> 
+<title>Abstract</title> 
+<paragraph> 
+The lack of Chinese sentiment corpora limits the research progress on Chinese sentiment classification. 
+However, there are many freely available English sentiment corpora on the Web. 
+This paper focuses on the problem of cross-lingual sentiment classification, which leverages an available English corpus for Chinese sentiment classification by using the English corpus as training data. 
+Machine translation services are used for eliminating the language gap between the training set and test set, and English features and Chinese features are considered as two independent views of the classification problem. 
+We propose a co-training approach to making use of unlabeled Chinese data. 
+Experimental results show the effectiveness of the proposed approach, which can outperform the standard inductive classifiers and the transductive classifiers. 
+</paragraph> 
+</section> 
+<section imrad="i"> 
+<title>1 Introduction</title> 
+<paragraph> 
+Sentiment classification is the task of identifying the sentiment polarity of a given text. 
+The sentiment polarity is usually positive or negative and the text genre is usually product review. 
+<context>In recent years, <task>sentiment classification</task> has drawn much attention in the NLP field and it <kw>has many useful applications</kw>, such as opinion mining and summarization (<cite id="1" function="use" polarity="pos">Liu et al., 2005</cite>; <cite id="2" function="use" polarity="pos">Ku et al., 2006</cite>; <cite id="3" function="use" polarity="pos">Titov and McDonald, 2008</cite>).</context> 
+</paragraph> 
+<paragraph> 
+To date, a variety of corpus-based methods have been developed for sentiment classification. 
+The methods usually rely heavily on an annotated corpus for training the sentiment classifier. 
+The sentiment corpora are considered as the most valuable resources for the sentiment classification task. 
+However, such resources in different languages are very imbalanced. 
+Because most previous work focuses on English sentiment classification, many annotated corpora for English sentiment classification are freely available on the Web. 
+However, the annotated corpora for 
+Chinese sentiment classification are scarce and it is not a trivial task to manually label reliable Chinese sentiment corpora. 
+The challenge before us is how to leverage rich English corpora for Chinese sentiment classification. 
+In this study, we focus on the problem of cross-lingual sentiment classification, which leverages only English training data for supervised sentiment classification of Chinese product reviews, without using any Chinese resources. 
+Note that the above problem is not only defined for Chinese sentiment classification, but also for various sentiment analysis tasks in other different languages. 
+</paragraph> 
+<paragraph> 
+<context>Though pilot studies have been performed to make use of English corpora for subjectivity classification in other languages (<cite id="4" function="wea" polarity="neg">Mihalcea et al., 2007</cite>; <cite id="5" function="wea" polarity="neg">Banea et al., 2008</cite>), the methods are very straightforward by directly employing an inductive classifier (e.g. SVM, NB), and the classification <negfeature>performance is far from satisfactory</negfeature> because of the language gap between the original language and the translated language.</context> 
+</paragraph> 
+<paragraph> 
+In this study, we propose a co-training approach to improving the classification accuracy of polarity identification of Chinese product reviews. 
+Unlabeled Chinese reviews can be fully leveraged in the proposed approach. 
+First, machine translation services are used to translate English training reviews into Chinese reviews and also translate Chinese test reviews and additional unlabeled reviews into English reviews. 
+Then, we can view the classification problem in two independent views: Chinese view with only Chinese features and English view with only English features. 
+We then use the co-training approach to making full use of the two redundant views of features. 
+The SVM classifier is adopted as the basic classifier in the proposed approach. 
+Experimental results show that the proposed approach can outperform the baseline inductive classifiers and the more advanced transductive classifiers. 
+</paragraph> 
+<paragraph> 
+The rest of this paper is organized as follows: Section 2 introduces related work. 
+The proposed co-training approach is described in detail in Section 3. 
+Section 4 shows the experimental results. 
+Lastly we conclude this paper in Section 5. 
+</paragraph> 
+</section> 
+<section imrad="m"> 
+<title>2 Related Work</title> 
+<subsection> 
+<title>2.1 Sentiment Classification</title> 
+<paragraph> 
+Sentiment classification can be performed on words, sentences or documents. 
+In this paper we focus on document sentiment classification. 
+The methods for document sentiment classification can be generally categorized into lexicon-based and corpus-based. 
+</paragraph> 
+<paragraph> 
+Lexicon-based methods usually involve deriving a sentiment measure for text based on sentiment lexicons. 
+<context><cite id="6" function="ack" polarity="neu">Turney (2002)</cite> predicates the sentiment orientation of a review by the average semantic orientation of the phrases in the review that contain adjectives or adverbs, which is denoted as the semantic oriented method.</context> 
+<context><cite id="7" function="use" polarity="neu">Kim and Hovy (2004)</cite> <kw>build</kw> three <method>models</method> <kw>to assign</kw> a sentiment category to a given sentence by combining the individual sentiments of sentiment-bearing words.</context> 
+<context><cite id="8" function="use" polarity="neu">Hiroshi et al. (2004)</cite> <kw>use</kw> the <method>technique of</method> deep language analysis <kw>for</kw> machine translation <kw>to extract</kw> sentiment units in text documents.</context> 
+<context><cite id="9" function="use" polarity="neu">Kennedy and Inkpen (2006)</cite> <kw>determine</kw> the sentiment of a customer review <kw>by counting</kw> positive and negative terms and <kw>taking into account</kw> contextual valence shifters, such as negations and intensifiers.</context> 
+<context><cite id="10" function="use" polarity="neu">Devitt and Ahmad (2007)</cite> <kw>explore</kw> a computable metric of positive or negative polarity <kw>in</kw> financial news text.</context> 
+</paragraph> 
+<paragraph> 
+Corpus-based methods usually consider the sentiment analysis task as a classification task and they use a labeled corpus to train a sentiment classifier. 
+<context>Since the work of <cite id="11" function="use" polarity="pos">Pang et al. (2002)</cite>, various classification <method>models</method> and linguistic features <kw>have been proposed to</kw> <posfeature>improve</posfeature> the <task>classification performance</task> (<cite id="12" function="use" polarity="pos">Pang and Lee, 2004</cite>;</context> Mullen investigate a structured model for jointly classifying the sentiment of text at varying levels of granularity. 
+<context><cite id="13" function="use" polarity="neu">Blitzer et al. (2007)</cite> <kw>investigate</kw> domain adaptation <kw>for</kw> sentiment classifiers, <kw>focusing on</kw> online reviews for different types of products.</context><context> 
+<cite id="14" function="use" polarity="pos">Andreevskaia and Bergler (2008)</cite> <kw>present</kw> a <posfeature>new system</posfeature> <kw>consisting of</kw> the ensemble of a corpus-based classifier and a lexicon-based classifier with precision-based vote weighting.</context> 
+</paragraph> 
+<paragraph> 
+<context>Chinese <task>sentiment analysis</task> <kw>has also been studied</kw> (<cite id="15" function="use" polarity="neu">Tsou et al., 2005</cite>; <cite id="16" function="use" polarity="neu">Ye et al., 2006</cite>; <cite id="17" function="use" polarity="neu">Li and Sun, 2007</cite>) and most such work uses similar lexiconbased or <method>corpus-based methods</method> <kw>for</kw> Chinese <task>sentiment classification</task>.</context>
+</paragraph> 
+<paragraph> 
+To date, several pilot studies have been performed to leverage rich English resources for sentiment analysis in other languages. 
+<context><tool>Standard Naïve Bayes</tool> and <tool>SVM classifiers</tool> <kw>have been applied for</kw> <task>subjectivity classification</task> <kw>in</kw> Romanian (<cite id="18" function="use" polarity="pos">Mihalcea et al., 2007</cite>; <cite id="19" function="use" polarity="pos">Banea et al., 2008</cite>), and the <result>results</result> <kw>show that</kw> automatic translation <posfeature>is a viable alternative for</posfeature> the construction of resources and tools for subjectivity analysis in a new target language.</context> 
+<context><cite id="20" function="use" polarity="pos">Wan (2008)</cite> <kw>focuses on</kw> leveraging both Chinese and English lexicons <posfeature>to improve</posfeature> Chinese sentiment analysis by using lexicon-based <method>methods</method>.</context> 
+In this study, we focus on improving the corpus-based method for cross-lingual sentiment classification of Chinese product reviews by developing novel approaches. 
+</paragraph> 
+<title>2.2 Cross-Domain Text Classification</title> 
+<paragraph> 
+Cross-domain text classification can be considered as a more general task than cross-lingual sentiment classification. 
+In the problem of cross-domain text classification, the labeled and unla-beled data come from different domains, and their underlying distributions are often different from each other, which violates the basic assumption of traditional classification learning. 
+</paragraph> 
+<paragraph> 
+<context>To date, many semi-supervised <method>learning algorithms</method> <kw>have been developed for</kw> addressing the cross-domain text classification problem by transferring knowledge across domains, including Transductive SVM (<cite id="21" function="use" polarity="neu">Joachims, 1999</cite>), classification (<cite id="22" function="use" polarity="neu">Dai et al., 2007</cite>b), two-stage approach (<cite id="23"  function="use" polarity="neu">Jiang and Zhai, 2007</cite>).</context> 
+<context><cite id="24" function="ack" polarity="neu">DauméIII and Marcu (2006)</cite> introduce a statistical formulation of this problem in terms of a simple mixture model.</context> 
+</paragraph> 
+<paragraph> 
+In particular, <context>several previous <experiment>studies</experiment> <kw>focus on</kw> the problem of cross-lingual text classification, which can be considered as a special case of general cross-domain text classification. 
+<cite id="25" function="use" polarity="pos">Bel et al. (2003)</cite> <kw>present</kw> <posfeature>practical and cost-effective</posfeature> solutions.</context> 
+<context>A few <method>novel models</method> <kw>have been proposed to</kw> <posfeature>address the problem</posfeature>, e.g. the EM-based algorithm (<cite id="26" function="use" polarity="neu">Rigutini et al., 2005</cite>), the information bottleneck approach (<cite id="27" function="use" polarity="neu">Ling et al., 2008</cite>), the multilingual domain models (<cite id="28" function="use" polarity="neu">Gliozzo and Strapparava, 2005</cite>), etc.</context> 
+To the best of our knowledge, co-training has not yet been investigated for cross-domain or cross-lingual text classification. 
+</paragraph> 
+</subsection> 
+</section> 
+<section imrad="m"> 
+<title>3 The Co-Training Approach</title> 
+<subsection> 
+<title>Overview</title> 
+<paragraph> 
+The purpose of our approach is to make use of the annotated English corpus for sentiment polarity identification of Chinese reviews in a supervised framework, without using any Chinese resources. 
+Given the labeled English reviews and unlabeled Chinese reviews, two straightforward methods for addressing the problem are as follows: 
+</paragraph> 
+<paragraph> 
+1) We first learn a classifier based on the labeled English reviews, and then translate Chinese reviews into English reviews. 
+Lastly, we use the classifier to classify the translated English reviews. 
+</paragraph> 
+<paragraph> 
+2) We first translate the labeled English reviews into Chinese reviews, and then learn a classifier based on the translated Chinese reviews with labels. 
+Lastly, we use the classifier to classify the unlabeled Chinese reviews. 
+</paragraph> 
+<paragraph> 
+<context>The above two methods have been used in (<cite id="29" function="wea" polarity="neg">Banea et al., 2008</cite>) for Romanian subjectivity analysis, <kw>but</kw> the <result>experimental results</result> <negfeature>are not very promising</negfeature>.</context> 
+As shown in our experiments, the above two methods do not perform well for Chinese sentiment classification, either, because the underlying distribution between the original language and the translated language are different. 
+</paragraph> 
+<paragraph> 
+In order to address the above problem, we propose to use the co-training approach to make use of some amounts of unlabeled Chinese reviews to improve the classification accuracy. 
+The co-training approach can make full use of both the English features and the Chinese features in a unified framework. 
+The framework of the proposed approach is illustrated in Figure 1. 
+</paragraph> 
+<paragraph> 
+The framework consists of a training phase and a classification phase. 
+In the training phase, the input is the labeled English reviews and some amounts of unlabeled Chinese reviews. 
+The labeled English reviews are translated into labeled Chinese reviews, and the unlabeled Chinese reviews are translated into unlabeled English reviews, by using machine translation services. 
+Therefore, each review is associated with an English version and a Chinese version. 
+The English features and the Chinese features for each review are considered two independent and redundant views of the review. 
+The co-training algorithm is then applied to learn two classifiers and finally the two classifiers are combined into a single sentiment classifier. 
+In the classification phase, each unlabeled Chinese review for testing is first translated into English review, and then the learned classifier is applied to classify the review into either positive or negative. 
+</paragraph> 
+<paragraph> 
+The steps of review translation and the co-training algorithm are described in details in the next sections, respectively. 
+Figure 1. 
+Framework of the proposed approach 
+</paragraph> 
+<title>3.2 Review Translation</title> 
+<paragraph> 
+In order to overcome the language gap, we must translate one language into another language. 
+Fortunately, machine translation techniques have been well developed in the NLP field, though the translation performance is far from satisfactory. 
+A few commercial machine translation services can be publicly accessed, e.g. Google Translate, Yahoo Babel Fish and Windows Live Translate. 
+The unlabeled Chinese reviews used for co-training do not 2 http://translate.google.com/translate_t include the unlabeled Chinese reviews for testing, i.e., the 3 http://babelfish.yahoo.com/translate_txt Chinese reviews for testing are blind to the training phase. 
+4 http://www.windowslivetranslator.com/ 
+In this study, we adopt Google Translate for both English-to-Chinese Translation and Chinese-to-English Translation, because it is one of the state-of-the-art commercial machine translation systems used today. 
+Google Translate applies statistical learning techniques to build a translation model based on both monolingual text in the target language and aligned text consisting of examples of human translations between the languages. 
+</paragraph> 
+<title>3.3 The Co-Training Algorithm</title> 
+<paragraph> 
+<context>The <method>co-training algorithm</method> (<cite id="30" function="use" polarity="pos">Blum and Mitchell, 1998</cite>) <posfeature>is a typical</posfeature> bootstrapping method, which starts with a set of labeled data, and <kw>increase the amount of</kw> annotated data using some amounts of unlabeled data in an incremental way.</context> 
+One important aspect of co-training is that two conditional independent views are required for co-training to work, but the independence assumption can be relaxed. 
+<context>Till now, co-training <posfeature>has been successfully applied</posfeature> <kw>to</kw> statistical parsing (<cite id="31" function="use" polarity="pos">Sarkar, 2001</cite>), reference resolution (<cite id="32" function="use" polarity="pos">Ng and Cardie, 2003</cite>), part of speech tagging (<cite id="33" function="use" polarity="pos">Clark et al., 2003</cite>), word sense disambiguation (<cite id="34" function="use" polarity="pos">Mihalcea, 2004</cite>) and email classification (<cite id="35" function="use" polarity="pos">Kiritchenko and Matwin, 2001</cite>).</context> 
+</paragraph> 
+<paragraph> 
+In the context of cross-lingual sentiment classification, each labeled English review or unla-beled Chinese review has two views of features: English features and Chinese features. 
+Here, a review is used to indicate both its Chinese version and its English version, until stated otherwise. 
+The co-training algorithm is illustrated in Figure 2. 
+In the algorithm, the class distribution in the labeled data is maintained by balancing the parameter values of p and n at each iteration. 
+</paragraph> 
+<paragraph> 
+The intuition of the co-training algorithm is that if one classifier can confidently predict the class of an example, which is very similar to some of labeled ones, it can provide one more training example for the other classifier. 
+But, of course, if this example happens to be easy to be classified by the first classifier, it does not mean that this example will be easy to be classified by the second classifier,<context> so the second classifier will get useful information to improve itself and vice versa (<cite id="36" function="ack" polarity="neu">Kiritchenko and Matwin, 2001</cite>)</context>. 
+</paragraph> 
+<paragraph> 
+In the co-training algorithm, a basic classification algorithm is required to construct Cen and Ccn. 
+Typical text classifiers include Support Vector Machine (SVM), Naive Bayes (NB), Maximum Entropy (ME), K-Nearest Neighbor (KNN), etc. 
+<context>In this study, <author>we</author> <kw>adopt</kw> the <posfeature>widely-used</posfeature> <tool>SVM classifier</tool> (<cite id="37" function="bas" polarity="pos">Joachims, 2002</cite>).</context> 
+Viewing input data as two sets of vectors in a feature space, SVM constructs a separating hyperplane in the space by maximizing the margin between the two data sets. 
+The English or Chinese features used in this study include both unigrams and bigrams and the feature weight is simply set to term fre-quency. 
+Feature selection methods (e.g. Document Frequency (DF), Information Gain (IG), and Mutual Information (MI)) can be used for dimension reduction. 
+But we use all the features in the experiments for comparative analysis, because there is no significant performance improvement after applying the feature selection techniques in our empirical study. 
+The output value of the SVM classifier for a review indicates the confidence level of the review's classification. 
+Usually, the sentiment polarity of a review is indicated by the sign of the prediction value. 
+</paragraph> 
+<paragraph> 
+In the training phase, the co-training algorithm learns two separate classifiers: Cen and Ccn. 
+For Chinese text, a unigram refers to a Chinese word and a bigram refers to two adjacent Chinese words. 
+Term frequency performs better than TFIDF by our empirical analysis. 
+Note that the examples with conflicting labels are not included in E en U E cn In other words, if an example is in both E en and E cn, but the labels for the example is conflicting, the example will be excluded from E en U E n 
+Figure 2. 
+The co-training algorithm 
+Therefore, in the classification phase, we can obtain two prediction values for a test review. 
+We normalize the prediction values into [-1, 1] by dividing the maximum absolute value. 
+Finally, the average of the normalized values is used as the overall prediction value of the review. 
+</paragraph> 
+</subsection> 
+</section> 
+<section imrad="r"> 
+<title>4. Empirical Evaluation</title> 
+<subsection> 
+<title>4.1 Evaluation Setup</title> 
+<subsection> 
+<title>4.1.1 Data set</title>
+<paragraph> 
+The following three datasets were collected and used in the experiments: 
+</paragraph> 
+<paragraph> 
+Test Set (Labeled Chinese Reviews): In order to assess the performance of the proposed approach, we collected and labeled 886 product reviews (451 positive reviews + 435 negative reviews) from a popular Chinese IT product web site-IT168. 
+The reviews focused on such products as mp3 players, mobile phones, digital camera and laptop computers. 
+</paragraph> 
+<paragraph> 
+Training Set (Labeled English Reviews): 
+<context>There are many labeled English corpora available on the Web and <author>we</author> <kw>used</kw> the corpus constructed for multi-domain sentiment classification (<cite id="38" function="bas" polarity="pos">Blitzer et al., 2007</cite>), <kw>because</kw> the corpus was large-scale and it was within similar domains as the test set.</context> 
+The dataset consisted of 8000 Amazon product reviews (4000 positive reviews + 4000 negative reviews) for four different product types: books, DVDs, electronics and kitchen appliances. 
+</paragraph> 
+<paragraph> 
+Unlabeled Set (Unlabeled Chinese Reviews): 
+We downloaded additional 1000 Chinese product reviews from IT168 and used the reviews as the unlabeled set. 
+Therefore, the unlabeled set and the test set were in the same domain and had similar underlying feature distributions. 
+</paragraph> 
+<paragraph> 
+Each Chinese review was translated into English review, and each English review was translated into Chinese review. 
+Therefore, each review has two independent views: English view and Chinese view. 
+A review is represented by both its English view and its Chinese view. 
+</paragraph> 
+<paragraph> 
+Note that the training set and the unlabeled set are used in the training phase, while the test set is blind to the training phase. 
+</paragraph> 
+<title>4.1.2 Evaluation Metric</title> 
+<paragraph> 
+We used the standard precision, recall and F-measure to measure the performance of positive and negative class, respectively, and used the accuracy metric to measure the overall performance of the system. 
+The metrics are defined the same as in general text categorization. 
+http://www.it168.com 
+http://www.cis.upenn.edu/~mdredze/datasets/sentiment/ 
+</paragraph> 
+<title>4.1.3 Baseline Methods</title> 
+<paragraph> 
+In the experiments, the proposed co-training approach (CoTrain) is compared with the following baseline methods: 
+</paragraph> 
+<paragraph> 
+SVM(CN): This method applies the inductive SVM with only Chinese features for sentiment classification in the Chinese view. 
+Only English-to-Chinese translation is needed. 
+And the unla-beled set is not used. 
+</paragraph> 
+<paragraph> 
+SVM(EN): This method applies the inductive SVM with only English features for sentiment classification in the English view. 
+Only Chinese-to-English translation is needed. 
+And the unla-beled set is not used. 
+</paragraph> 
+<paragraph> 
+SVM(ENCN1): This method applies the inductive SVM with both English and Chinese features for sentiment classification in the two views. 
+Both English-to-Chinese and Chinese-to-English translations are required. 
+And the unla-beled set is not used. 
+</paragraph> 
+<paragraph> 
+SVM(ENCN2): This method combines the results of SVM(EN) and SVM(CN) by averaging the prediction values in the same way with the co-training approach. 
+</paragraph> 
+<paragraph> 
+TSVM(CN): This method applies the transductive SVM with only Chinese features for sentiment classification in the Chinese view. 
+Only English-to-Chinese translation is needed. 
+And the unlabeled set is used. 
+</paragraph> 
+<paragraph> 
+TSVM(EN): This method applies the transductive SVM with only English features for sentiment classification in the English view. 
+Only Chinese-to-English translation is needed. 
+And the unlabeled set is used. 
+</paragraph> 
+<paragraph> 
+TSVM(ENCN1): This method applies the transductive SVM with both English and Chinese features for sentiment classification in the two views. 
+Both English-to-Chinese and Chinese-to-English translations are required. 
+And the unla-beled set is used. 
+</paragraph> 
+<paragraph> 
+TSVM(ENCN2): This method combines the results of TSVM(EN) and TSVM(CN) by averaging the prediction values. 
+Note that the first four methods are straightforward methods used in previous work, while the latter four methods are strong baselines because the transductive SVM has been widely used for improving the classification accuracy by leveraging additional unlabeled examples. 
+</paragraph> 
+</subsection> 
+<title>4.2 Evaluation Results</title> 
+<subsection> 
+<title>4.2.1 Method Comparison</title> 
+<paragraph> 
+In the experiments, we first compare the proposed co-training approach (7=40 and p=n=5) with the eight baseline methods. 
+The three parameters in the co-training approach are empirically set by considering the total number (i.e. 1000) of the unlabeled Chinese reviews. 
+In our empirical study, the proposed approach can perform well with a wide range of parameter values, which will be shown later. 
+Table 1 shows the comparison results. 
+</paragraph> 
+<paragraph> 
+Seen from the table, the proposed co-training approach outperforms all eight baseline methods over all metrics. 
+Among the eight baselines, the best one is TSVM(ENCN2), which combines the results of two transductive SVM classifiers. 
+Actually, TSVM(ENCN2) is similar to CoTrain because CoTrain also combines the results of two classifiers in the same way. 
+However, the co-training approach can train two more effective classifiers, and the accuracy values of the component English and Chinese classifiers are 0.775 and 0.790, respectively, which are higher than the corresponding TSVM classifiers. 
+Overall, the use of transductive learning and the combination of English and Chinese views are beneficial to the final classification accuracy, and the co-training approach is more suitable for making use of the unlabeled Chinese reviews than the transductive SVM. 
+</paragraph> 
+<title>4.2.2 Influences of Iteration Number (I)</title> 
+<paragraph> 
+Figure 3 shows the accuracy curve of the co-training approach (Combined Classifier) with different numbers of iterations. 
+The iteration number I is varied from 1 to 80. 
+When I is set to 1, the co-training approach is degenerated into SVM(ENCN2). 
+The accuracy curves of the component English and Chinese classifiers learned in the co-training approach are also shown in the 
+figure. 
+We can see that the proposed co-training approach can outperform the best baseline- 
+TSVM(ENCN2) after 20 iterations. 
+After a large number of iterations, the performance of the co-training approach decreases because noisy training examples may be selected from the remaining unlabeled set. 
+Finally, the performance of the approach does not change any more, because the algorithm runs out of all possible examples in the unlabeled set. 
+Fortunately, the proposed approach performs well with a wide range of iteration numbers. 
+We can also see that the two component classifier has similar trends with the co-training approach. 
+It is encouraging that the component Chinese classifier alone can perform better than the best baseline when the iteration number is set between 40 and 70. 
+</paragraph> 
+<title>4.2.3 Influences of Growth Size (p, n)</title> 
+<paragraph> 
+Figure 4 shows how the growth size at each iteration (p positive and n negative confident examples) influences the accuracy of the proposed co-training approach. 
+In the above experiments, we set p=n, which is considered as a balanced growth. 
+When p differs very much from n, the growth is considered as an imbalanced growth. 
+Balanced growth of (2, 2), (5, 5), (10, 10) and (15, 15) examples and imbalanced growth of (1, 5), (5, 1) examples are compared in the figure. 
+We can see that the performance of the co-training approach with the balanced growth can be improved after a few iterations. 
+And the performance of the co-training approach with large p and n will more quickly become unchanged, because the approach runs out of the limited examples in the unlabeled set more quickly. 
+However, the performance of the co-training approaches with the two imbalanced growths is always going down quite rapidly, because the labeled unbalanced examples hurt the performance badly at each iteration. 
+English Classfier(CoTrain) -©-— Combined Classfier(CoTrain) 
+Chinese Classfier(CoTrain) TSVM(ENCN2)_ 
+Iteration Number (I) 
+Figure 3. 
+Accuracy vs. number of iterations for co-training(p=n=5) 
+Figure 4. 
+Accuracy vs. different (p, n) for co-training 
+Figure 5. 
+Influences of feature size 
+</paragraph> 
+<title>4.2.4 Influences of Feature Selection</title> 
+<paragraph> 
+In the above experiments, all features (unigram + bigram) are used. 
+As mentioned earlier, feature selection techniques are widely used for dimension reduction. 
+In this section, we further conduct experiments to investigate the influences of feature selection techniques on the classification results. 
+We use the simple but effective document frequency (DF) for feature selection. 
+Figures 6 show the comparison results of different feature sizes for the co-training approach and two strong baselines. 
+The feature size is measured as the proportion of the selected features against the total features (i.e. 100%). 
+</paragraph> 
+<paragraph> 
+We can see from the figure that the feature selection technique has very slight influences on the classification accuracy of the methods. 
+It can be seen that the co-training approach can always outperform the two baselines with different feature sizes. 
+The results further demonstrate the effectiveness and robustness of the proposed co-training approach. 
+</paragraph> 
+</subsection> 
+</subsection> 
+</section> 
+<section imrad="d"> 
+<title>5 Conclusion and Future Work</title> 
+<paragraph> 
+In this paper, we propose to use the co-training approach to address the problem of cross-lingual sentiment classification. 
+The experimental results show the effectiveness of the proposed approach. 
+In future work, we will improve the sentiment classification accuracy in the following two ways: 
+</paragraph> 
+<paragraph> 
+1) <context>The smoothed co-training <method>approach</method> <kw>used in</kw> (<cite id="39" function="use" polarity="neu">Mihalcea, 2004</cite>) <kw>will be adopted for</kw> sentiment classification.</context> 
+The approach has the effect of "smoothing" the learning curves. 
+During the bootstrapping process of smoothed co-training, the classifier at each iteration is replaced with a majority voting scheme applied to all classifiers constructed at previous iterations. 
+</paragraph> 
+<paragraph> 
+2) The feature distributions of the translated text and the natural text in the same language are still different due to the inaccuracy of the machine translation service. 
+<context><author>We</author> <kw>will employ</kw> the structural correspondence learning (SCL) domain adaption algorithm <kw>used in</kw> (<cite id="40" function="bas" polarity="pos">Blitzer et al., 2007</cite>) <kw>for</kw> linking the translated text and the natural text.</context> 
+</paragraph> 
+</section> 
+<section> 
+<title>Acknowledgments</title> 
+<paragraph> 
+This work was supported by NSFC (60873155), RFDP (20070001059), Beijing Nova Program (2008B03), National High-tech R&amp;D Program (2008AA01Z421) and NCET (NCET-08-0006). 
+We also thank the anonymous reviewers for their useful comments. 
+</paragraph> 
+</section> 
+ 
+ 
+ </paper>
+</annotatedpaper>

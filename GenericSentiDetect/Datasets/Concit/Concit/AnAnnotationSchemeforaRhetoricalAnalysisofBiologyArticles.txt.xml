@@ -1,0 +1,207 @@
+<annotatedpaper>
+    <paper title="An Annotation Scheme for a Rhetorical Analysis of Biology Articles" authors="Yoko Mizuta, Nigel Collier " year="2004"> 
+        <section> 
+            <title>An Annotation Scheme for a Rhetorical Analysis of Biology Articles</title> 
+            Yoko Mizuta and Nigel Collier  
+            National Institute of Informatics  
+            2-1-2 Hitotsubashi, Chiyoda-ku, Tokyo 101-8430, JAPAN  
+            {ymizuta, collier} @nii.ac.jp 
+        </section> 
+		
+        <section> 
+            <title>Abstract</title> 
+            <paragraph> 
+                In information extraction from scientific texts, it is crucially important to identify the unique contribution of the research.
+                The task is complicated by the large number of statements made in each article that pertain to results, including reference to previous
+                work and technical details. Simple keyword searches are helpful for a content-based analysis but fail to tell new results from other ones.
+                <context><author>We</author> aim to <kw>approach the problem</kw> from a rhetorical perspective and give a zone analysis (ZA) of texts <kw>in light of</kw><cite id="1" function="bas" polarity="pos">
+                    Teufel, Carletta, Moens (1999)</cite>
+                </context>. We analyze a text into zones with a shallow nesting based on the rhetorical 
+                status which each sequence of statements fit into and annotate the text correspondingly. Our current focus is on the molecular biology
+                domain. In this paper, we propose an annotation scheme for ZA based on an empirical analysis of major online journals
+                (EMBO, NAR, PNAS, and JCB), and illustrate how it works. Our scheme provides a way to differentiate the text in terms of the aspects 
+                of the authors own work (e.g. experimental procedure, findings, implications) and to identify a set of statements relating data and 
+                findings and therefore helps identify the author�s new results and findings.  
+            </paragraph> 
+        </section> 
+        <section imrad="i"> 
+            <title>1. Introduction</title> 
+            
+			<paragraph> 
+                In information extraction (IE) from scientific texts, it is of critical importance but is not easy to identify the main contribution 
+                of the research. To take the example of the molecular biology domain, an immense volume of experimental results have been reported,
+                most of which still remain in the full-text format. <context>It is important to <action>store</action>, <action>utilize</action>, and 
+                <action>update</action> major research results in 
+                <kw>The need is demonstrated by</kw> the recent intensive research done on text mining in this domain (<cite id="2" function="use" polarity="pos">Craven et al., 1999</cite>;
+                <cite id="3" function="use" polarity="pos">Humphreys et al., 2000</cite>; <cite id="4" function="use" polarity="pos">Tanabe et al., 2002</cite>)</context>. Now we 
+                are facing a challenge. The task of
+               identifying new results
+               is complicated by the large number of statements made in each article that pertain to results, including 
+                reference to previous work as well as technical details and conjectures. Simple keyword searches are helpful for a content-based analysis
+                but are not powerful enough, because it fails to tell new results from other ones. <context>The same statement may be made as a new result, as a previously known result, as a conjecture, etc., that is, in different rhetorical contexts( e.g. <cite id="5" function="ack" polarity="neu">Farkas, 1999</cite></context> ) . 
+                We need to focus on those statements made as new results and findings. We therefore expect that a rhetorical analysis should provide an 
+                insight into how our problem can be solved.  
+            </paragraph> 
+            <paragraph> 
+                <context>There are two lines of approach to rhetorical analysis; <method>Rhetorical Structure Theory </method>RST : <cite id="6" function="con" polarity="neu">Mann &amp; Thompson, 1988</cite>;<cite id="7" function="con" polarity="neu">Marcu et al., 2002</cite>) and <method>Zone Analysis</method>  
+                (ZA) as we call it (<cite id="8" function="con" polarity="neu"> e.g. Teufel, Carletta &amp; Moens, 1999</cite>; <cite id="9" function="con" polarity="neu">Hernandez et al., 2003</cite>; <cite id="10" function="con" polarity="neu">Farkas, 1999</cite>; <cite id="11" function="con" polarity="neu">Lehman, 1999</cite>). RST
+                        investigates local discourse relations between sentences (e.g. explanation, contrast, elaboration), in a hierarchical fashion, 
+                <kw>whereas</kw>
+                        ZA
+                       investigates  the global rhetorical status
+                        of each sentence in terms of argumentation and intellectual attribution</context>.  <context> 
+                    <cite id="12" function="use" polarity="pos">Teufel &amp; Moens (2000)</cite> 
+                        <action>propose</action> analyzing the text into rhetorical zone in a flat structure (e.g. AIM, BACKGROUND, OWN) and <action>provide</action>  an <method>annotation   scheme </method>
+                </context>. They report the feasibility of the approach based on an  application to automatic text summarization of computer science articles and from a machine learning perspective.  
+            </paragraph> 
+            <paragraph> 
+                We find the latter line of approach, ZA, suits our purpose, since we are concerned with filtering the text according to the relevance to the author's results and findings. We thus attempt to apply ZA to IE. Specifically, we aim to annotate the text based on ZA. Our current focus is on the molecular biology domain. While we aim at a generalization to a larger scientific domain, application to the biology domain deserves our attention in its own right for the reasons mentioned above. 
+            </paragraph> 
+            <paragraph> 
+                As the first step, we investigated a total of 20 biology articles taken from four major online journals (i.e. EMBO: European Molecular Biology Organization, NAR: Nucleic Acid Research, PNAS: Proceeding of National Academy of Science, and JCB: Journal of Cell Biology), using an existing annotation scheme mentioned above (Teufel, Carletta and Moens 1999: henceforth, 'TCM'). Despite the relatively small number of articles analyzed, our analysis exemplified some critical issues to be considered in the annotation scheme.  
+            </paragraph> 
+            <paragraph> 
+                In this paper, we first summarize our empirical analysis of online journal articles, and then propose an annotation scheme for biology articles, illustrating how it works.The proposed scheme provides a way to differentiate the text in terms of the aspects of one's own work (e.g. experimental procedure, findings, implications) and to identify a certain set of statements relating data and findings the author's own or to others.We conclude that this is a step forward in identifying the author's new experimental results and findings.  
+            </paragraph> 
+        </section> 
+        <section imrad="m"> 
+            <title>2.Requirements for the annotation scheme</title> 
+            <paragraph> 
+                The journals investigated have a common section format, consisting of "Introduction", "Materials and Methods", "Results", and "Discussions" sections (henceforth, the I-, M-, R-, and D- sections) together with an Abstract.1The articles investigated fit into an experimental framework and each section has its own pattern of argumentation shared by most articles. The whole article is committed to a main problem-solving such as 'the identification of the effect of Mnt deletion in governing key Myc functions' and 'the identification of the receptor for MAG that elicit morphological changes in neurons', which is done as a combination of smaller units. A generalization is this: the I-section introduces the problem and outlines the content of the article, the M-section states the methodological details, the R-section states smaller problem-solving units, and the D-section synthesizes the results and findings and provids prospective remarks. To be emphasized, important information is provided across sections, from a broader perspective in the I- and the D- sections, and from a more specific perspective in the R-section.  
+            </paragraph> 
+            <paragraph> 
+                Through our empirical analysis of the four journals, we identified the following issues that need to be considered in the annotation scheme. The first two concern the design of zone classes and the third one concerns the annotation principle. 
+            </paragraph> 
+            
+                <subtitle>Fine-grained classification of one's own work</subtitle> 
+                <paragraph> 
+                    <context>The following passage 
+                    taken from the R-section (<cite id="13" function="bas" pol ="pos">NAR, 2003</cite>, 31(7), p.1871) illustrates a problem-solving unit (numbering is ours and dots indicate removed words): [1] Microarrays have been used to map replication in yeast (ref.). [2] <author>We</author> 
+                    <action>performed</action> a <kw>similar experiment</kw> in ...... [5] The resulting plot represents the relative similar experiment was performed using</context>...... (Fig.). 
+                </paragraph> 
+                <paragraph> 
+                    The statements above provide various rhetorical information; background information ([1]), the goal of the experiment ([3]), experimental procedures ([2], [4], [6]), results ([5], [7]), and the author's interpretations of the results ([8] -- [10]). Since the R-section consists of such units, the author's new results and findings (e.g. [8] -- [10] above) spread over the section.  
+                </paragraph> 
+                <paragraph> 
+                    The TCM scheme provides a single class "OWN", which covers virtually all aspects of the author's own work.2Thus, sentences [2] through [10] above would all fit into OWN. For our purpose we have found it necessary to develop a more fine-grained classification of the author's own work sensitive to the aspects of the work as illustrated above. 
+                </paragraph> 
+           
+                <subtitle>Relation between data and findings</subtitle> 
+                <paragraph> 
+                    <context>
+                        <kw> The following are the examples</kw> of commonly-found statements relating the author's own data and findings to their own or others' (<cite id="14" function="ack" polarity="neu">NAR, 2003</cite>, 31(7); italics are ours): (1) 'this peroxide treatment experiment was consistent with previous data' (2) 'The results also confirm the recent discovery of MntH as an important component of H2O2 resistance and virulence in Salmonella (ref)</context>. 
+                </paragraph> 
+                <paragraph> 
+                    Such statements indicate the (in)consistency between data and findings and therefore are worth annotating.  
+                </paragraph> 
+                <paragraph> 
+                    <context> The <method>TCM scheme</method> offers two zone classes which are relevant here, CONTRAST and BASIS. They are, <kw>however</kw>, used for rather <kw>restricted purposes</kw>: they identify the author's (positive or negative) attitudes toward other work as well as the status of the author's work in research paradigms (<cite id="15" function="wea" polarity="neg">Teufel &amp; Moens, 2002</cite>). We need to cover a wider range of relations concerning data and findings Nested annotation </context>
+                </paragraph> 
+           
+                <subtitle>Nested annotation</subtitle> 
+                <paragraph> 
+                    <context>
+                        <kw>Another issue concerns</kw> the <method>annotation principle</method>. The example below (<cite id="16" function="wea" polarity="neg">EMBO, 2003</cite>, 22(20)) illustrates a case motivating nested annotation (italics are ours): (3) the average length of the new flagellum was shorter than the one measured from replicating slender cells at the same stage (21 instead of 25 pm)</context> (ref.). 
+                </paragraph> 
+                <paragraph> 
+                    Here, the whole sentence simultaneously; 1) states the author's result, and 2) compares it with previously provided data. Thus, the sentence fits into complex rhetorical classes. This is conceptually distinct from ambiguity between two classes and from a combination of clauses fitting into different rhetorical classes. It thus motivates combined (more generally, nested) annotation.  
+                </paragraph> 
+                <paragraph> 
+                    For Teufel and Moens' (2002) scheme, zone classes should be non-overlapping and annotation should be unique. For example, they suggest having a smaller annotation unit in cases where the sentence consists of clauses fitting into different classes. However, the example above illustrates a new case. Our intuition tells that it is one thing for classes to be conceptually non-overlapping and that it is another for a linguistic unit to fit into a single class. That is, a linguistic unit may well represent complex concepts. Therefore, we consider that nested annotation is a necessity, even though it complicates annotation 
+                </paragraph> 
+         
+         
+            
+                <title>3.Annotation scheme for biology articles</title> 
+                <paragraph> 
+                    Based on the issues discussed in the last section, we provide below an annotation scheme for biology articles. 
+                </paragraph> 
+                
+                    <subtitle>The set of zones</subtitle> 
+                    <paragraph> 
+                        The set of zones is as follows:  BACKGROUND (BKG): an assumption referring to previous work or a generally accepted fact. PROBLEM SETTING (PBM): a problem to be solved and/or the goal of the present work/paper. OUTLINE (OTL): a characterization or a summary of the content of the paper. � TEXTUAL (TXT): the organization of the paper.  OWN: the author's own work. Sub classes: ? METHOD (MTH): methodology and materials; ? RESULT (RES): the results of the experiment performed; ? INSIGHT (INS): the insights/findings obtained (e.g. the author's interpretation of the result); ? IMPLICATION (IMP): the implications of the experimental results, including conjectures, assessment, applications, and future work; ? ELSE (ELS): anything else about the author's work. DIFFERENCE (DFF): a contrast or inconsistency between data and/or findings.  CONNECTION (CNN): a relation or consistency 
+                    </paragraph> 
+                    <paragraph> 
+                        The fine-grained classification of OWN with the five subclasses makes it possible to focus on the author's findings annotated as INS, and on other aspects of the work. The DFF and the CNN classes cover a certain set of statements, which mention what supports (or refutes) a certain finding or data, and which indicate the (in)consistency between data provided in researches. Examples (1) and (2) both fit into CNN.  
+                    </paragraph> 
+                    <paragraph> 
+                        The OTL class is another unique element in our scheme. It may provide the aim, the goal, the main results, and/or methodological descriptions, and therefore may well overlap with the information fitting into other classes. We consider though that it is deserving of an independent class, as it provides a concise characterization of the work or an 'excerpts' from the work as an abstract does.3 Annotation principle 
+                    </paragraph> 
+                    <paragraph> 
+                        An annotated zone may be as small as a phrase and as large as a paragraph, depending on linguistic and other features. To take examples of a smaller zone: (4) To test whether....., we performed .... (5) X (: a list of experimental results), indicating that Y (: a statement of a finding) The boldfaced phrase in (4) signals the goal of the experiment and is annotated as PBM, whereas the clause in (5) signalled by 'indicating that' is annotated as INS.In contrast, a sequence of methodological descriptions as observed in the M-section constitutes a larger MTH zone.  
+                    </paragraph> 
+                    <paragraph> 
+                        <context><author> We</author> also <action>employ</action> 
+                        <method>nested annotation</method> on an empirical and theoretical basis mentioned above. This helps reduce the unavoidable inconsistency of a flat annotation scheme noted by  <cite id="17" function="bas" polarity="pos">Teufel and Moens (1999)</cite>
+                        </context>: we attribute it to the non-clear-cut nature of categorization in general rather than to misclassification. To control the human error caused by a complex annotation scheme, we only allow for one-level nesting. Example (3) fits into INS and CNN.  
+                    </paragraph> 
+               
+            </section> 
+        <section imrad="r"> 
+            <title>4.Application of the scheme</title> 
+            
+                <subtitle>Sample annotation</subtitle> 
+                <paragraph> 
+                    The passage mentioned in Section 2 is annotated as shown in Figure 1. The last part illustrates a nested annotation, with a CNN zone embedded in an INS zone.4 
+                </paragraph> 
+            
+                <subtitle>Zone identification</subtitle> 
+                <paragraph> 
+                    Based on a sample of hand-annotated data, although rather small in amount at this point, we discuss our preliminary investigation on zone identification. 
+                </paragraph> 
+                <paragraph> 
+                    In the R- section, it is common for a MTH and a RSL zone to appear in pair, as shown in Figure 1. They present a complementary distribution in matrix verbs, and therefore identifiable; MTH takes verbs related to an experimental procedure (e.g. perform, examine, use), whereas RSL takes verbs related to phenomena and BKG Microarrays have been used to map replication in yeast (ref.). MTH We performed a similar experiment in Salmonella PBM to demonstrate that....... MTH First, .... RES The resulting plot represents the relative increase in gene copy number...... (Fig.#). MTH A similar experiment was performed using ...... (Fig.#). RES The position of genes .. are scrambled IMP We speculate that .. INS ., this experiment shows that .. CNN The results also confirm the recent discovery of MntH .. (ref.) observation (e.g. represent, show, observe) and biology-specific verbs in the passive form (e.g. be + scrambled, transformed).   
+                </paragraph> 
+                <paragraph> 
+                    An INS zone, either in the R-section or in the D-section, is usually signalled by 'indicate that' or the like (e.g. suggest, demonstrate, reveal, show), having the results or experiments as the subject:(6) These(/Our) results indicate that Y (: a finding).  
+                </paragraph> 
+                <paragraph> 
+                    This is a conventionalized form which the author uses in stating his/her interpretation of the results. Its variant illustrated in example (5) is also commonly used. An alternative form signalling an INS zone (following a RSL zone) is 'Therefore,......seem/appear to 
+                </paragraph> 
+                <paragraph> 
+                    An IMP zone is currently used as a cover category for the author's 'weaker insights' from experimental results and for any kind of implication of the research, including applications and future work. Thus, it still leaves room for conceptual sophistication. 'Weaker insights' as opposed to 'regular' insights fitting into INS are signalled by modal expressions (e.g. could, may, might, be possible, one possibility is that) and verbs related to conjecture (e.g. speculate, hypothesize).  
+                </paragraph> 
+         
+                <subtitle>Zone distribution</subtitle> 
+                <paragraph> 
+                    Table 1 shows the distribution of zones, investigated using four articles taken from the NAR journal.. 
+                </paragraph> 
+                <paragraph> 
+                    The section-by-section zone distribution is given vertically in the 'A' columns. For example, 74.4% of the I-section fit into a BKG zone.The zone distribution across sections is given horizontally in the 'B' columns. For example, 68.7% of BKG zones appeared in the I-section. Calculation was done by the number of words.5The 'A' column totals exceeding 100 is due to nested annotations. Common cases of nested annotation were; CNN and DFF zones embedded in an INS or an IMP zone (in the R- and D-sections), and PBM zones overlapping with a BKG zone (in the I-section) Whereas the abstract is provided outside the full text, OTL is provided outside the 'body' of the full text (in the I-section). We use a graphical representation of annotation, where zones are indicated in different colors (and fonts, for DFF and CNN). Subsection titles are exempt from annotations but are included in the total number of words in the section. This explains the 'A' column total for the M-section being below 100. Table 1: The distribution of zones (% by the # of words) within each section (A) and across sections (B) 
+                </paragraph> 
+                <paragraph> 
+                    As shown in the 'B' columns, most part of the INS, IMP, CNN, and DFF zones appeared in the R- and the D-sections. Table 1 mostly conforms to our observations of all articles studied. An idiosyncrasy of this sample is that DFF zones are few and are missing in the D-section.  
+                </paragraph> 
+                <paragraph> 
+                    The 20 articles studied indicate the following. The R-section presents a regular pattern of zone sequence (i.e. PBM-MTH-RES-INS/IMP for each problem-solving unit), as shown in Figure 1. The D-section presents quite flexible patterns across articles. Characteristically though, the D-section contains larger IMP zones, each of which provides complex content including conjectures and arguments toward deeper interpretations of the results.  
+                </paragraph> 
+           
+        </section> 
+        <section imrad="d"> 
+            <title>5. Theoretical and practical implications</title> 
+            <paragraph> 
+                We have proposed an annotation scheme which helps identify the author's results and findings and a certain type of relations between data and findings. To identify the relative significance of information provided within a zone or across zones, further analysis in line with RST would be helpful. However, a rather small set of relations would suffice including 'cause/explanation' (signalled by therefore etc.), 'opposition' (signalled by however etc.), and 'list' (AND and OR relations)6. 
+            </paragraph> 
+            <paragraph> 
+                We expect that our annotation scheme could be applied also to other domains in an experimental framework (e.g. experimental physics and psychology) with minor modifications, if any. Articles in a theoretical framework would require some substantial modifications of the scheme; for example, the author's proposal and its effect should make important zone classes  
+            </paragraph> 
+        
+        
+            <title>6.Concluding remarks</title> 
+            <paragraph> 
+                The proposed scheme provides a way to differentiate the text in terms of the aspects of the author's own work (e.g. experimental procedure, findings, implications) and to identify a certain set of statements relating data and findings. We therefore conclude that it is a step forward in identifying the author's unique experimental results and findings. As a future direction, we aim to collect a larger number of hand-annotated samples and use them as training data for machine leaning. We then aim at automatic annotation in the proposed scheme for further steps toward our goal. 
+                <context> 
+                    <cite id="18" function="use" polarity="pos"> Marcu and Echihabi (2002)</cite> 
+                <action>propose</action> 
+                <kw>a simplified version of </kw> 
+                <method>RST</method> classes (i.e. 'contrast', 'cause-explanation-evidence', 'condition', and 'elaboration') from a machine learning perspective. </context>
+            </paragraph> 
+        </section>  
+        <section> 
+            <title>Acknowledgements</title> 
+            <paragraph> 
+                We are grateful for the helpful comments from two anonymous reviewers.  
+            </paragraph> 
+        </section> 
+    </paper> 
+</annotatedpaper>

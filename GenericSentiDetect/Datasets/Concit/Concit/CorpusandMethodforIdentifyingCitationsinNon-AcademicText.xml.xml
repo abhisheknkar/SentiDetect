@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!-- was: <?xml version="1.0" encoding="ISO-8859-1"?> -->
+<annotatedpaper>
+    <paper title= "Corpus and Method for Identifying Citations in Non-Academic Text" year="2014" authors="Yifan He, Adam Meyers">
+        <section>
+            <title>Corpus and Method for Identifying Citations in Non-Academic Text</title>
+            Yifan He Adam Meyers
+            Computer Science Department
+            New York University
+            {yhe, meyers}@cs.nyu.edu
+        </section>
+        <section>
+            <title>Abstract</title>
+            <paragraph>We attempt to identify citations in non-academic text such as patents. Unlike academic articles which often provide bibliographies and follow consistent citation styles, non-academic text cites scientific research in a more ad-hoc manner. We manually annotate citations in 50 patents, train a CRF classifier to find new citations, and apply a reranker to incorporate non-local information. Our best system achieves 0.83 F-score on 5-fold cross validation.</paragraph>
+            <paragraph>Keywords: Citation identification, Corpus annotation, Sequence labeling</paragraph>
+        </section>
+        <section imrad="i">
+            <title>1. Introduction</title>
+            <paragraph>Identification of citations in text is an important first step in citation analysis.
+                <context>
+                    <kw> Existing</kw> 
+                    <tool>citation parsing systems</tool> (e.g. ParsCit (<cite id="1" function="wea" polarity="neg">Councill et al., 2008</cite>)) <negfeature>mainly focus on academic papers</negfeature>, where inline citations can typically be recognized in a two-step procedure: 1) collecting citations from the bibliography section; and 2) mapping collected citations to their mentions in text.
+                </context>
+            
+            </paragraph>
+            <paragraph>Beyond academic papers, other genres of text such as patents, weblogs, and newswire articles also cite scientific research. Extracting and analyzing citations in non-academic text can improve citation analysis by identifying technical trends earlier (through citations in weblogs) or by assessing the industrial impact of a research area more comprehensively (through citations in patents). Recognizing citations in non-academic text is more difficult than citation extraction in academic articles for the lack of several important resources: • Bibliography. Non-academic text such as patents and weblogs do not always have a bibliography section, so we do not have a repository to track inline citation mentions; • Consistent style. In non-academic text, citation segments can appear in any order or be missing: e.g. many citations in patents do not have the name of the journal, venue, or even the title of the article explicitly mentioned (cf. Section 2.); • Annotated data. While citation segmentation and citation mapping (from bibliography to reference) in academic text is well-researched and annotated data is readily available (see e.g. (Anzaroot and McCal-lum, 2013)), annotated data that could support citation identification in non-academic text does not exist to the best of our knowledge.</paragraph>
+            <paragraph>We try to address these limitations by creating a new annotated dataset that is tailored specifically for this task and train CRF-based taggers to extract citation instances. The rest of the paper is organized as follows: we first propose guidelines and accordingly create an annotated corpus of 50 patents on speech processing in Section 2., train sequence labeling models to extract citations in Section 3., refine system output with a simple reranker in Section 4., and report experimental results in Section 5. We review related work in Section 6. and conclude in Section 7.</paragraph>
+        </section>
+        <section imrad="m">
+            <title>2. Annotating Citations in Patents</title>
+            <paragraph>In this paper, we focus on identifying citations in patents. Patents are of particular interest to us because they can reflect industry's acceptance to a technology and they are sorted with a classification number. We can easily focus on a small domain in this pilot study with the classification number.</paragraph>
+            
+            2.1. Annotation Guidelines
+            <paragraph>We randomly collect 50 US patents from the speech processing domain for annotation, taken from a corpus of Lex-isNexis patents made available by the U.S. government. We apply the following guidelines while annotating the corpus: • Definition of a citation. We define a citation as a reference to another scholarly work. We limit ourselves to only annotating citations to scientific articles, as patent citations can usually be recognized with regular expressions and can have very different textual features. • Extent of a citation. A citation is the longest, non-redundant, consecutive sequence of constituents (words, phrases, numbers or punctuation), such that each constituent either: (a) fills a field from the set: author, title of article, title of journal/collection, page range, year, volume number and issue number; or (b) is a one to three word-long string of words splitting the fields into two groups (there can only be one such string, so a citation can only be divided one time in this way). We are investigating ways of releasing these data.</paragraph>
+            
+            
+            2.2. Examples
+            <paragraph>We illustrate annotation guidelines with the following examples (citations are underlined): EX1: Such techniques are described, for example, by Robert Roth et ah, Dragon Systems 1994 Large Vocabulary Continuous Speech Recognizer, Proceedings of the Spoken Language Systems Technology Workshop, Jan. 22-25, 1995, pages 116-120 EX2: e.g., the aforementioned U.S. Patent No. 5,414,796, Rabiner &amp;amp; Schäfer, supra, and Rabiner &amp;amp; Juang, supra, at 69-140. EX3: ... as described in the article Cochlear Modeling by J. B. Allen appearing in the IEEEASSP Magazine, January 1985, page 3.</paragraph>
+            <paragraph>EX1 is comparable to a bibliographic entry in a scientific paper, but other citations in patents, such as EX2 and EX3, can sometimes be informal. There are two short citations in EX2 that only include author names and page numbers. We annotate both cases, because although they lack some critical information, it is still possible to map them to the complete form of a citation that appears elsewhere in the patent. Besides author names and page numbers, we also allow article citations that are limited to other subsets ofthe appropriate fields, e.g., title, year, and publisher. However, the reference to another patent is not part of the annotation; see the unannotated "U.S. Patent No. 5,414,796" in EX2.</paragraph>
+            <paragraph>We also consider EX3 as a citation, although it does not conform to typical citation styles in academic writing. We include the words "appearing" and "in", as these link the title of the article with other fields of the citation.</paragraph>
+            <paragraph>Following the above guideline, we annotate 390 citations in 50 patents, averaging 7.8 citations per patent.</paragraph>
+            
+      
+            <title>3. Citation Identification</title>
+            <paragraph>In this section, we treat citation identification as a sequence labeling problem. We describe our baseline that uses a linear chain CRF model and report the features used in our models.</paragraph>
+            
+            3.1. Citation Identification as Sequence Labeling
+            <paragraph>Following common approaches in natural language chunking, we model citation identification as a sequence labeling problem.
+                <context>
+                    <author>We</author> 
+                    <kw>use</kw> 
+                    <method>a linear chain conditional random fields</method> (CRF: (<cite id="2" function="bas" polarity="pos">Lafferty et al., 2001</cite>)) model, <kw>which</kw> 
+                    <task>predicts a sequence of citation labels</task> y1... T, given a token sequence xi... T.
+                </context>
+                <context>
+                    <author>We</author> 
+                    <kw>use</kw> 
+                    <method>CRF</method> 
+                    <kw>as it is shown to</kw> 
+                    <posfeature>perform better than</posfeature> other sequence labeling algorithms (e.g. <method>HMM</method>) in closely related tasks such as citation segmentation  <cite id="3" function="bas" polarity="pos">(Peng and Mc-Callum, 2006</cite>).
+                </context>
+            
+            </paragraph>
+            <paragraph>We define citation labels . ) under the BIO paradigm, in which the first token in a citation has the label "B", the other tokens in a citation have the label "I", and non-citation tokens have the label "O".</paragraph>
+            <paragraph>In most NLP tasks, the input token sequence x1... T represents a sentence, but as citations often consist of abbreviated journal names, author names, and irregular use of punctuation marks, existing sentence splitters developed mainly for news text do no perform reliably. Therefore, we conduct training and testing on paragraphs instead of sentences. Paragraph boundaries are determined by XML metadata and visual clues (consecutive line breaks).</paragraph>
+            
+            
+           3.2. Sequence Labeling Features
+            <paragraph>We use both surface level text features and gazetteer features of journal, conference, and author names.</paragraph>
+            <paragraph>
+                <context>
+                    <data>Text features</data> 
+                    <kw>are inspired by</kw> 
+                    <method>word and word shape features</method> 
+                    <kw>defined in</kw> (<cite id="4" function="bas" polarity="pos">Collins, 2002</cite>), originally designed for named entity extraction.  <kw>These include</kw>: <concept>the word</concept>; <concept>the shape</concept> (<kw>as in</kw> (<cite id="5" function="bas" polarity="pos">Collins, 2002</cite>)) of the word; <concept>the type</concept> (letter, digit, or other) of the first and the last character. 
+                </context>
+                <context>
+                   
+                </context>
+                
+                We extract features on a five word window (i.e. two words before the current word, two word after the current word, and the current word itself).</paragraph>
+            <paragraph>• Gazetteer features are collected from the internet. Authors include researchers in the NLP and speech field who are cited more than 500 times according to Microsoft Academic Search. Journals include ACM and IEEE published journals, plus Computational Linguistics, IBM Journal of Research and Development, and Bell System Technical Journal. Conference names are collected from Microsoft academic search as well. If a phrase matches an item of type t in the gazetteer, the first token in the phrase will fire the feature "Gazetteer-B-t", and the other tokens in the phrase will fire "Gazetteer-I-t". For example, in "Computational Linguistics", "Computational" will fire the binary gazetteer feature "Gazetteer-B-journal" and "Linguistics" will fire "Gazetteer-I-journal".</paragraph>
+            
+      
+            <title>4. Incorporating Non-local Information</title>
+            <paragraph>Citations in non-academic articles have some non-localfea-tures that are hard to encode in a ±2 word context window used by sequential CRF taggers. For instance, in a typical citation, quotation marks and brackets are paired and most of the words start with a alpha-numerical character. To incorporate these features into a CRF model will be expensive, but they are helpful for disambiguating some of the cases that the CRF model could not effectively recognize. In this section, we first show examples where non-local information could help improve the recognition of citations, then we present a simple reranking scheme which utilizes such information. http://academic.research.microsoft.com/RankList?entitytype=2&amp;amp;topdomainid= 2&amp;amp;subdomainid=9&amp;amp;orderby=1 http :// www.acm.org/publications http://en.wikipedia.org/wiki/Li st_of_ Institute_of_Electrical_and_Electronics_ Engineers_publications com/RankList?entitytype=3&amp;amp;topDomainID= 2&amp;amp;subDomainID=9 http://academic.research.microsoft .</paragraph>
+            
+            4.1. Non-local Information in Citation Extraction
+            <paragraph>Consider the following outputs from the CRF model using features described in Section 3. .. EX4: include a list of phrases such as ... "AM", "PM", "Buzzer", ... "Volume Up", "Volume Down"... etc.. EX5: ... filter-bank based recognizers (Rabiner, L. R. and Juang, B. H., Fundamentals of Speech Recognition, (Prentice Hall, 1993).</paragraph>
+            <paragraph>The predictions of the CRF model are underlined. The predicted "citation" in EX4 is in fact a list of commands acceptable by a dialog system. The annotated sequence contains a lot of capitalized characters and the word "Volume", which confuses the tagger. However, this sequence consists of many non-alphanumerical tokens, which suggests that it is not a legitimate citation. In EX5, the tagger makes a boundary error, erroneously including the right round bracket.</paragraph>
+            <paragraph>These examples show that non-local information such as the ratio of alpha-numerical tokens and bracket pairing can potentially help improve citation extraction accuracy. To avoid the cost of incorporating such information into CRF directly, we use the n-best output of the CRF tagger to approximate its search space and try to find the best prediction by reranking the n-best list.</paragraph>
+            
+            
+            4.2. Incorporating Non-local Information via Reranking
+            <paragraph>We utilize a reranker that follows a very simple deterministic rule: the reranker should traverse the n-best list from the top, and return the first citation in which all round/square/curly brackets match and the ratio of alphanumeric tokens is greater than 0.5. If there is no item in the n-best list that could satisfy this constraint, the top item will be returned.</paragraph>
+            <paragraph>We use very simple rules to show the effectiveness of nonlocal information and the necessity of exploiting the search space of the decoder. However, statistical reranking might work much better when we have abundant training data.</paragraph>
+            
+        </section>
+        <section imrad="r">
+            <title>5. Experiments</title>
+            <paragraph>We perform 5-fold cross-validation on 50 annotated patents. We report precision, recall, and F-scores on chunk level. CRF training and decoding is performed with the CRF++ package using its default setting.</paragraph>
+            
+            5.1. Feature Experiments
+            <paragraph>In Table 1, we experiment with different feature combinations. Many of the errors occur on the boundary of citations, such as stopping before the name of the publisher or allowing unpaired brackets. We try to alleviate some of them with reranking (cf. Section 5. .).</paragraph>
+            <paragraph>
+                <context>
+                    <author>We</author> 
+                    <kw>also experimented with</kw>
+                    <method>statistical ranking algorithms</method>, <kw>such as</kw> 
+                    <method>the ranking SVM</method> (<cite id="6" function="wea" polarity="neg">Joachims, 2002</cite>), <kw>but the result</kw>
+                    <negfeature>was unstable</negfeature>, because currently we can only obtain a very small number of training examples for statistical rerankers.
+                </context>
+                http ://crfpp.sourceforge.net Table 1 : Experimental results using different feature sets</paragraph>
+            <paragraph>Looking at the impact of features, we notice that the conference gazetteer (Text + Conference) helps performance the most. We expect this, because there are several very influential conferences on speech processing (such as ICASSP). They appear very often in citations and are usually unambiguous. Journal names help as well, but not as much as conference names. We suspect that this is domain-dependent: if we analyze patents on biology, where journals are more prominent than conferences, journal names could be more informative.</paragraph>
+            <paragraph>The gazetteer of author names (Text + Authors) is not as helpful as conference and journal gazetteers. There could be two reasons: 1) author names are ambiguous, in the sense that identifying a person name in gazetteer does not always mean the existence of a citation. It could simply be a name mention or the author of a patent (patent citations should not be extracted according to our annotation guideline); and 2) our gazetteer only covers the most cited authors. Although the best papers that could lead to patents are most likely published on top journals and conferences, the same does not apply to authors.</paragraph>
+            
+            
+            5.2. Reranking
+            <paragraph>We experiment with the reranker and present results in Table 2. We use the probability of the top CRF prediction as a confidence measure and only rerank instances whose top-1 probability is less than 0.99.</paragraph>
+            <paragraph>We limit ourselves to the 50-best output. We examine one fold of our test set, where the CRF model makes 21 incorrect top-1 predictions. Among these 21 errors, 10 gold sequences can be recovered from the 10-best list, 13 from the 27-best, 14 from the 63-best, and the rest are not found in the 500-best list. We therefore determine that the 50-best list is large enough for our purpose.</paragraph>
+            <paragraph>We rerank the 50-best output of both the best performing tagger (Text + Conferences) and the tagger with the richest feature set (Text + All Gazetteer). Experiments show that for Text + Conferences, reranking improves F-score from 0.80 to 0.83, while for Text + All Gazetteer, F-score improves from 0.79 to 0.82. This confirms the necessity of utilizing non-local features in citation extraction. our current reranking scheme is very simple due to the scarcity of data. We believe that statistical rerankers, or a model that incorporate non-local features are promising on this task when more training data is available. Table 2: Experimental results using reranking</paragraph>
+            
+            
+            5.3. Size of Training Data
+            <paragraph>Table 3 : Experimental Results using different size of training set</paragraph>
+            <paragraph>To explore whether more annotation is necessary, we change the size of training data during cross-validation.</paragraph>
+            <paragraph>As is demonstrated in Table 3, we consistently obtain around 5 points improvement on F-score when we expand the data set from 25% to 50% and from 50% to 75%. The final quarter of training data still improves F-score by 2 points. This result shows that the size of training data is not yet saturated. We expect to obtain more improvement simply by adding more training data. It is also worth noting that we currently focus on a small domain and building a general domain citation extractor will need more annotated data.</paragraph>
+            
+        </section>
+        <section imrad="d">
+            <title>6. Related Work</title>
+            <paragraph>
+                <context>
+                    <task>Citation recognition and analysis</task> (<cite id="7" function="ack" polarity="pos">Garfield, 1972</cite>) <posfeature>has attracted much interest</posfeature> from the research community. <kw>However</kw>, <kw>most of the existing work</kw> on recognizing citations <negfeature>either focuses on citation segmentation</negfeature> in well-formed citations (<cite id="8" function="wea" polarity="neg">Peng and McCallum, 2006</cite>), <kw>and/or</kw> 
+                    <feature>performing coreference resolution</feature> among citation instances (<cite id="9" function="wea" polarity="neg">Wellner et al., 2004</cite>).
+                </context> 
+            
+            </paragraph>
+            <paragraph>The work presented in this paper is most closely related to the citation segmentation task. 
+                <context>
+                    <kw>Early</kw> 
+                    <tool>citation segmentation systems</tool> 
+                    <kw>use either</kw> 
+                    <feature>manual rules</feature> (<cite id="10" function="use" polarity="neu">Ding et al., 1999</cite>) <kw>or</kw> 
+                    <method>sequence labeling algorithms like HMM</method> (<cite id="11" function="use" polarity="neu">Seymore et al., 1999</cite>). 
+                </context>
+                <context>
+                    <method>CRF</method> 
+                    <kw>is later applied to</kw> 
+                    <task>citation segmentation</task> 
+                    <kw>and</kw> 
+                    <posfeature>achieves high accuracy</posfeature> (<cite id="12" function="use" polarity="pos">Peng and McCallum, 2006</cite>), but is shown to be sensitive to domain variations. 
+                </context>
+                <context>
+                    (<cite id="13" function="use" polarity="pos">Anzaroot and McCallum, 2013</cite>) <kw>provides a new</kw>
+                    <data>dataset</data> 
+                    <kw>that</kw> 
+                    <posfeature>covers the computer science domain better</posfeature> and establishes baseline results on the dataset. <tool>open source packages</tool> 
+                    <kw>such as</kw> 
+                    <tool>ParsCit</tool> (<cite id="14" function="use" polarity="pos">Councill et al., 2008</cite>) <posfeature>add to the popularity</posfeature> of this strand of research.
+                </context>
+            </paragraph>
+            <paragraph>
+                Although we are also trying to analyze citations in text, the problem we are handling is different from citation segmentation. In addition, citations in non-academic text are more informal and lack consistent style, which leads us to create new annotation and build our own system, instead of reusing published work.</paragraph>
+      
+            <title>7. Conclusions and Future Work</title>
+            <paragraph>We developed resource to support system development on citation extraction in non-academic text. We presented CRF models to identify citations, which obtained 0.80 F-score on 5-fold cross validation. We further improved the performance of our system with reranking and achieved 0.83 F-score.</paragraph>
+            <paragraph>
+                <context>
+                <author>We</author> <kw>plan to continue</kw> <kw>our</kw> <task>annotation effort and experiment</task> <kw>with other</kw> <method>sequence labeling paradigms</method>, such as the LD-CRF model (<cite id="15" function="use" polarity="neu">Morency et al., 2007</cite>) that can capture the internal structures of citations.
+                </context>
+            </paragraph>
+        
+            <title>Acknowledgments</title>
+            <paragraph>We thank Siyuan zhou for writing the initial version of the citation extractor described in this paper. We are grateful to Lisheng Fu and the anonymous reviewers for insightful comments. Supported in part by the Intelligence Advanced Research Projects Activity (IARPA) via Department of Interior National Business Center contract number D11PC20154. The U.S.Government is authorized to reproduce and distribute reprints for Governmental purposes notwithstanding any copyright annotation thereon. The views and conclusions contained herein are those of the authors and should not be interpreted as necessarily representing the official policies or endorsements, either expressed or implied, of IARPA, DoI/NBC, or the U.S. Government.</paragraph>
+        </section>
+    </paper>
+</annotatedpaper>

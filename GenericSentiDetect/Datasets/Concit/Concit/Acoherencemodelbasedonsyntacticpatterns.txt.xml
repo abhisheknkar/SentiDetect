@@ -1,0 +1,403 @@
+<annotatedpaper>
+    <paper title="A coherence model based on syntactic patterns" 
+           authors="Louis Annie, Nenkova Ani" year="2012"> 
+        <section> 
+            <title>A coherence model based on syntactic patterns</title> 
+            Annie Louis 
+            University of Pennsylvania 
+            Philadelphia, PA 19104, USA 
+            lannie@seas.upenn.edu 
+            Ani Nenkova 
+            University of Pennsylvania 
+            Philadelphia, PA 19104, USA 
+            nenkova@seas.upenn.edu 
+        </section> 
+        <section> 
+            <title>Abstract</title> 
+            <paragraph> 
+                We introduce a model of coherence which captures the intentional discourse structure in text. Our work is based on the hypothesis that syntax provides a proxy for the communicative goal of a sentence and therefore the sequence of sentences in a coherent discourse should exhibit detectable structural patterns. Results show that our method has high discriminating power for separating out coherent and incoherent news articles reaching accuracies of up to 90%. We also show that our syntactic patterns are correlated with manual annotations of intentional structure for academic conference articles and can successfully predict the coherence of abstract, introduction and related work sections of these articles. 
+            </paragraph> 
+        </section> 
+        <section imrad="i"> 
+            <title>1 Introduction</title> 
+            <paragraph> 
+                <context>
+                    <experiment>Recent studies</experiment> 
+                    <action>have introduced</action> 
+                    <kw>successful</kw> automatic <method>methods </method>to predict the structure and coherence of texts. <kw>They include</kw> 
+                    <method>entity approaches for local coherence</method> which track the repetition <kw>and</kw> 
+                    <method>syntactic realization of entities</method> in adjacent sentences (<cite id="1" function="use" polarity="pos">Barzilay and Lapata, 2008</cite>; <cite id="2" function="use" polarity="pos">Elsner and Charniak, 2008</cite>)  and <experiment>content approaches for global coherence</experiment> 
+                    <kw>which  view texts</kw> as <data>sequence of topics</data>, each characterized by a particular distribution of lexical items (<cite id="3" function="use" polarity="pos">Barzilay and Lee, 2004</cite>; <cite id="4" function="use" polarity="pos">Fung and Ngai, 2006</cite>). <experiment>Other work</experiment> 
+                    <kw>has shown </kw>    that <concept>co-occurrence of words</concept> (<cite id="5" function="use" polarity="pos">Lapata, 2003</cite>; <cite id="6" function="use" polarity="pos">Soricut and Marcu, 2006</cite>) and discourse relations (<cite id="7" function="use" polarity="pos" >Pitler and Nenkova, 2008</cite>; <cite id="8" function="use" polarity="pos">Lin et al., 2011</cite>) also predict coherence.            
+                </context>
+                 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    <theory>Early theories</theory> (<cite id="9" function="ack" polarity="neu">Grosz and Sidner, 1986</cite>) <kw>posited that</kw> 
+                    <kw>there are </kw> three <concept>factors</concept> which collectively contribute to coherence: intentional structure (purpose of discourse), attentional structure (what items are discussed) and the organization of discourse segments.The highly successful entity approaches capture attentional structure and content approaches are related to topic segments but intentional structure has largely been neglected. Every discourse has a purpose: explaining a concept, narrating an event, critiquing an idea and so on. As a result each sentence in the article has a communicative goal and the sequence of goals helps the author achieve the discourse purpose. In this work, we introduce a model to capture coherence from the intentional structure dimension. Our key proposal is that syntactic patterns are a useful proxy for intentional structure.                
+                </context>               
+            </paragraph> 
+            <paragraph> 
+                This idea is motivated from the fact that certain sentence types such as questions and definitions have distinguishable and unique syntactic structure. For example, consider the opening sentences of two descriptive articles shown in Table 1. Sentences (1a) and (2a) are typical instances of definition sentences. Definitions are written with the concept to be defined expressed as a noun phrase followed by a copular verb (is/are).The predicate contains two parts: the first is a noun phrase reporting the concept as part of a larger class (eg. an aqueduct is a water supply), the second component is a relative clause listing unique properties of the concept. These are examples of syntactic patterns related to the communicative goals of individual sentences. Similarly, sentences (1b) and (2b) which provide further details about the concept also have some distinguish- Wikipedia articles on "Aqueduct" and "Cytokine Receptors" 1a) An aqueduct is a water supply or navigable channel constructed to convey water. b) In modern engineering, the term is used for any system of pipes, canals, tunnels, and other structures used for this purpose. 2a) Cytokine receptors are receptors that binds cytokines. b) In recent years, the cytokine receptors have come to demand more attention because their deficiency has now been directly linked to certain debilitating immunodeficiency states.Table 1: The first two sentences of two descriptive articlesing syntactic features such as the presence of a top-icalized phrase providing the focus of the sentence.The two sets of sentences have similar sequence of communicative goals and so we can expect the syntax of adjacent sentences to also be related. 
+            </paragraph> 
+            <paragraph> 
+                We aim to characterize this relationship on a broad scale using a coherence model based entirely on syntax. The model relies on two assumptions which summarize our intuitions about syntax and intentional structure: 
+            </paragraph> 
+            1.Sentences with similar syntax are likely to have the same communicative goal. 
+            2.Regularities in intentional structure will be manifested in syntactic regularities between adjacent sentences. 
+            <paragraph> 
+                <context>
+                    <kw>There is</kw> also <kw>evidence</kw> from recent work <kw>that supports these assumptions</kw>.  <cite id="10" function="ack" polarity="neu">Cheung and Penn (2010)</cite> find that a better syntactic parse of a sentence can be derived when the syntax of adjacent sentences is also taken into account. <cite id="11" function="ack" polarity="neu">Lin et al. (2009)</cite> 
+                    <action>report</action> that the <data>syntactic productions</data> in adjacent sentences <kw>are powerful features</kw> for predicting which discourse relation (cause, contrast, etc.) holds between them. <cite id="12" function="ack" polarity="neu">Cocco et al. (2011)</cite> show that significant associations exist between certain part of speech tags and sentence types such as explanation, dialog and argumentation. 
+                    
+                </context>
+                
+            </paragraph> 
+            <paragraph> 
+                In our model, syntax is represented either as parse tree productions or a sequence of phrasal nodes augmented with part of speech tags. Our best performing method uses a Hidden Markov Model to learn the patterns in these syntactic items. Sections 3 and 5 discuss the representations and their specific implementations and relative advantages. Results show that syntax models can distinguish coherent and incoherent news articles from two domains with 7590% accuracies over a 50% baseline. In addition, the syntax coherence scores turn out complementary to scores given by lexical and entity models. 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    We also study our models' predictions on academic articles, a genre where intentional structure is widely studied. Sections in these articles have well-defined purposes and we find recurring sentence types such as motivation, citations, description, and speculations. <kw>There is</kw> 
+                    <kw>a large body of work</kw> (<cite id="13" function="ack" polarity="neu">Swales, 1990</cite>; <cite id="14" function="ack" polarity="neu">Teufel et al., 1999</cite>; <cite id="15" function="ack" polarity="neu">Liakata et al., 2010</cite>) <kw>concerned with</kw> 
+                    <task>defining and annotating</task> these sentence types (called zones) in conference articles. In Section 6, we describe  how indeed some patterns captured by the syntax-based modelsare correlated with zone categories that were proposed in prior literature. We also present results on coherence prediction: our model can distinguish the introduction section of conference papers from its perturbed versions with over 70% accuracy. Further, our model is able to identify conference from workshop papers with good accuracies, given that we can expect these articles to vary in purpose.                    
+                </context>
+                
+            </paragraph> 
+        </section> 
+        <section imrad="m"> 
+            <title>2 Evidence for syntactic coherence</title> 
+        
+            <paragraph> 
+                We first present a pilot study that confirms that adjacent sentences in discourse exhibit stable patterns of syntactic co-occurrence. This study validates our second assumption relating the syntax of adjacent sentences. Later in Section 6, we examine syntactic patterns in individual sentences (assumption 1) using a corpus of academic articles where sentences were manually annotated with communicative goals. 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    <kw>Prior work</kw> has <action>reported</action> that certain <result>grammatical productions are repeated</result> 
+                    <result>in adjacent sentences</result> more often than would be expected by chance (<cite id="16" function="wea" polarity="neg">Reitter et al., 2006</cite>; <cite id="17" function="wea" polarity="neg">Cheung and Penn, 2010</cite>). <author>We</author> 
+                    <action>analyze</action> 
+                    <kw>all</kw> 
+                    <concept>co-occurrence patterns</concept> 
+                    <kw>rather than</kw> just <kw>repetitions</kw>.           
+                </context>         
+            </paragraph> 
+            <paragraph> 
+                <context>
+                    <author>We</author> 
+                    <action>use</action> the <concept>gold standard parse trees</concept> 
+                    <kw>from</kw> the Penn Treebank (<cite id="18" function="bas" polarity="pos">Marcus et al., 1994</cite>). Our unit of analysis is a pair of adjacent sentences (S1; S2) and we choose to use Section 0 of the corpus which has 99 documents and 1727 sentence pairs. We enumerate all productions that appear in the syntactic parse of any sentence and exclude those that appear less than 25 times, resulting in a list of 197 unique productions. Then all ordered pairs (p1,p2) of productions are formed. For each pair, we compute (p i, p 2 ) and (p 2 , p 1 ) are considered as different pairs. Table 2: Example sentences for preferred production sequences. The span of the LHS of the corresponding production is indicated by [] braces. the following: c(p1p2) = number of sentence pairs where p1 G S1 and p2 G S2; c(p1,p2) = number of pairs where p1 G S1 and p2 G S2; c(p1,p2) and c(p1,p2) are computed similarly.Then we perform a chi-square test to understand if the observed count c(p1p2) is significantly (95% confidence level) greater or lesser than the expected value if occurrences of p1 and p2 were independent. 
+                </context>
+            </paragraph> 
+            <paragraph> 
+                Of the 38,809 production pairs, we found that 1,168 pairs occurred in consecutive sentences significantly more often than chance and 172 appeared significantly fewer times than expected. In Table 2 we list, grouped in three simple categories, the 25 pairs of the first kind with most significant p-values. 
+            </paragraph> 
+            <paragraph> 
+                Some of the preferred pairs are indeed repetitions as pointed out by prior work. But they form only a small fraction (5%) of the total preferred production pairs indicating that there are several other classes of syntactic regularities beyond priming. Some of these other sequences can be explained by the fact that these articles come from the finance domain: they involve productions containing numbers and quantities. An example for this type is shown in Table 2. Finally, there is also a class that is not repetitions or readily observed as domain-specific. The most frequent one reflects a pattern where the first sentence introduces a subject and predicate and the subject in the second sentence is pronominalized.Examples for two other patterns are given in Table 2. For the sequence (VP — VB VP \! NP-SBJ — NNP NNP), a bare verb is present in S1 and is often associated with modals.  In the corpus, these statements often present hypothesis or speculation. The following sentence S2 has an entity, a person or organization, giving an explanation or opinion on the statement. This pattern roughly correponds to a SPE CU -late followed by endorse sequence of intentions. Similarly, in all the six adjacent sentence pairs from our corpus containing the items (NP-LOC - NNP \! S-TPC-1 - NP-SBJ VP), p1 introduces a location name, and is often associated with the title of a person or organization. The next sentence has a quote from that person, where the quotation forms the topical-ized clause in p2. Here the intentional structure is INTRODUCE X / STATEMENT BY X. 
+            </paragraph> 
+            <paragraph> 
+                In the remainder of the paper we formalize our representation of syntax and the derived model of coherence and test its efficacy in three domains. 
+            </paragraph> 
+            <section> 
+                <title>3 Coherence models using syntax 
+                </title> 
+                <paragraph> 
+                    <context>
+                        We first describe the two representations of sentence structure we adopted for our analysis.Next, we present two coherence models: a local model which captures the co-occurrence of structural features in adjacent sentences and a global one which learns from clusters of sentences with similar syntax. Our representations are similar to features used for rerank-ing in parsing. <author>Our</author> first <concept>representation</concept> 
+                        <kw>corresponds to</kw> 
+                        <concept>"rules" features </concept> 
+                        <cite id="19" function="bas" polarity="pos">(Charniak and Johnson, 2005</cite>; <cite id="20" function="bas" polarity="pos">Collins and Koo, 2005)</cite>, and <author>our</author> second representation <kw>is related to</kw> "spines" (<cite id="21" function="bas" polarity="pos">Carreras et al., 2008</cite>) <kw>and</kw> 
+                        <concept>edge annotation</concept>(<cite id="22" function="bas" polarity="pos" >Huang, 2008</cite>). Table 3: Top patterns in productions from WSJ 
+                    </context>               
+                </paragraph> 
+                <subsection> 
+                    <subtitle> 
+                        3.1 Representing syntax 
+                    </subtitle> 
+                    <paragraph> 
+                        Our models rely exclusively on syntactic cues. We derive representations from constituent parses of the sentences, and terminals (words) are removed from the parse tree before any processing is done. The leaf nodes in our parse trees are part of speech tags. Productions: In this representation we view each sentence as the set of grammatical productions, LHS — RHS, which appear in the parse of the sentence. As we already pointed out, the right-hand side (RHS) contains only non-terminal nodes. This representation is straightforward, however, some productions can be rather specific with long right hand sides. Another apparent drawback of this representation is that it contains sequence information only about nodes that belong to the same constituent. d-sequence: In this representation we aim to preserve more sequence information about adjacent constituents in the sentence. The simplest approach would be to represent the sentence as the sequence of part of speech (POS) tags but then we lose all the abstraction provided by higher level nodes in tree. Instead, we introduce a more general representation, d-sequence where the level of abstraction can be controlled using a parameter d. The parse tree is truncated to depth at most d, and the leaves of the resulting tree listed left to right form the d-sequence representation. For example, in Figure 1, the line depicts the cutoff at depth 2. 
+                    </paragraph> 
+                    <paragraph> 
+                        Next the representation is further augmented; all phrasal nodes in the d-sequence are annotated (concatenated) with the left-most leaf that they dominate in the full non-lexicalized parse tree. This is shown as suffixes on the S, NP and VP nodes in the figure. Such annotation conveys richer information about the structure of the subtree below nodes in the d-sequence. For example, "the chairs", "his chairs", "comfortable chairs" will be represented as NPdt, NPpRp$ and NPjj. In the resulting representations, sentences are viewed as sequences of syntactic words (w1,w2...,wk), k less p, where p is the length of the full POS sequence and each wi is either POS tag or a phrasal node+POS tag combination. 
+                    </paragraph> 
+                    <paragraph> 
+                        Figure 1: Example ford-sequence representation. In our example, at depth-2, the quotation sentence gets the representation (wi=" , w2=Sdt , w=, , w4=" , w5=nPnnp , w6=vPvbd , wy=.) where the actual quote is omitted. Sentences that contain attributions are likely to appear more similar to each other when compared using this representation in contrast to representations derived from word or POS sequence. The depth-3 sequence is also indicated in the figure. 
+                    </paragraph> 
+ 
+                    <paragraph> 
+                        The main verb of a sentence is central to its structure, so the parameter d is always set to be greater than that of the main verb and is tuned to optimize performance for coherence prediction. 
+                    </paragraph> 
+                </subsection> 
+                <subsection> 
+                    <subtitle> 
+                        3.2 Implementing the model 
+                    </subtitle> 
+                    <paragraph> 
+                        We adapt two models of coherence to operate over the two syntactic representations. 
+                    </paragraph> 
+                    <subsection> 
+                        3.2.1 Local co-occurrence model 
+                        <paragraph> 
+                            This model is a direct extension from our pilot study. It allows us to test the assumption that coherent discourse is characterized by syntactic regularities in adjacent sentences. We estimate the probabilities of pairs of syntactic items from adjacent sentences in the training data and use these probabilities to compute the coherence of new texts. 
+                        </paragraph> 
+                        <paragraph> 
+                            The coherence of a text T containing n sentences (S1...Sn) is computed as: 
+                        </paragraph> 
+                        <paragraph> 
+                            p (t )=nn xSr^ii p(sj isk-i) 
+                        </paragraph>  
+                        <paragraph> 
+                            where SX indicates the yth item of Sx. Items are either productions or syntactic word unigrams depending on the representation. The conditional probabilities are computed with smoothing: 
+                        </paragraph> 
+                        <paragraph> 
+                            Cluster a 
+                            [1] This method VP-[is ADJP-[capable of sequence-specific detection of DNA with high accuracy]-ADJP]-VP . 
+                            [2] The same VP-[is ADJP-[true for synthetic polyamines such as polyallylamine]-ADJP]-VP . 
+ 
+                            Cluster b 
+                            [1] Our results for the difference in reactivity VP-[can 
+                            VP-[be linked to experimental observations]-VP]-VP . 
+                            [2] These phenomena taken together VP-[can VP-[be considered as the signature of the gelation process]-VP]-VP . 
+ 
+                            Table 4: Example syntactic similarity clusters. 
+                            The top two descriptive productions for each cluster are also listed. 
+                        </paragraph> 
+                        <paragraph> 
+                            where Wi and Wj are syntactic items and c(Wi, Wj) is the number of sentences that contain the item Wi immediately followed by a sentence that contains Wj. \! V\! is the vocabulary size for syntactic items. 
+                        </paragraph> 
+                    </subsection> 
+                    <subsection> 
+                        3.2.2 Global structure 
+                        <paragraph> 
+                            Now we turn to a global coherence approach that implements the assumption that sentences with similar syntax have the same communicative goal as well as captures the patterns in communicative goals in the discourse. <method>This approach</method> 
+                            <kw>uses</kw> a <concept>Hidden Markov Model (HMM)</concept> which <kw>has been a popular implementation</kw> for <concept>modeling coherence</concept> 
+                            <cite id="23" function="use" polarity="pos">(Barzi-lay and Lee, 2004</cite>; <cite id="24" function="use" polarity="pos">Fung and Ngai, 2006</cite>; <cite id="25" function="use" polarity="pos">Elsner et al., 2007</cite>). The hidden states in our model depict communicative goals by encoding a probability distribution over syntactic items. This distribution gives higher weight to syntactic items that are more likely for that communicative goal. Transitions between states record the common patterns in intentional structure for the domain. 
+                        </paragraph> 
+                        <paragraph> 
+                            In this syntax-HMM, states hk are created by clustering the sentences from the documents in the training set by syntactic similarity. For the productions representation of syntax, the features for clustering are the number of times a given production appeared in the parse of the sentence. For the d-sequence approach, the features are n-grams of size one to four of syntactic words from the sequence. <task>Clustering</task> 
+                            <action>was done</action> by <kw>optimizing</kw> for average cosine similarity <kw>and</kw> 
+                            <action>was implemented</action> 
+                            <kw>using</kw> the <tool>CLUTO toolkit</tool> (<cite id="26" function="bas" polarity="pos" >Zhao et al., 2005</cite>). C clusters are formed and taken as the states of the model. Table 4 shows sentences from two clusters formed on the abstracts of journal articles using the productions representation. One of them, cluster (a), appears to capture descriptive sentences and cluster (b) involves mostly speculation type sentences. 
+                        </paragraph> 
+                        <paragraph> 
+                            The emission probabilities for each state are modeled as a (syntactic) language model derived from the sentences in it. For productions representation, this is the unigram distribution of productions from the sentences in hk. For d-sequences, the distribution is computed for bigrams of syntactic words. These language models use Lidstone smoothing with constant 6e . The probability for a sentence Si to be generated from state hk, pE(Si \!hk) is computed using these syntactic language models. 
+                        </paragraph> 
+                        <paragraph> 
+                            The transition probability pM from a state hi to state hj is computed as: where d(hi) is the number of documents whose sentences appear in hi and d(hi, hj) is the number of documents which have a sentence in hi which is immediately followed by a sentence in hj. In addition to the C states, we add one initial hS and one final hF state to capture document beginning and end. Transitions from hS to any state hk records how likely it is for hk to be the starting state for documents of that domain. 6m is a smoothing constant. 
+                        </paragraph> 
+                        The likelihood of a text with n sentences is given by P (T ) = £fcl...h„ ECU pm (ht\!ht_i)pB (St\!ht). All model parameters—the number of clusters C, smoothing constants 6c , 6e , 6m and d for d-sequences—are tuned to optimize how well the model can distinguish coherent from incoherent articles. We describe these settings in Section 5.1. 
+                    </subsection> 
+                </subsection> 
+            </section> 
+            <section> 
+                <title> 
+                    4 Content and entity grid models 
+                </title> 
+                <paragraph> 
+                   
+                        We compare the syntax model with content model and entity grid methods.These approaches are the most popular ones from prior work and also allow us to test the complementary nature of syntax with lexical statistics and entity structure. This section explains how we implemented these approaches. 
+                        <context> <concept>Content models</concept> 
+                        <kw>introduced by</kw>  
+                        <cite id="27" function="ack" polarity="neu">Barzilay and Lee (2004)</cite> and  <cite id="28" function="ack" polarity="neu">Fung and Ngai (2006)</cite> use lexically driven HMMs to capture coherence</context>. The hidden states represent the topics of the domain and encode a probability distribution over words. Transitions between states record the probable succession of topics. We built a content model using our HMM implementation. Clusters are created using word bigram features after replacing numbers and proper names with tags NUM and PROP. <context>The emissions are given by a bigram language model on words from the clustered sentences.  <cite id="29" function="con" polarity="neu"> Barzilay and Lee (2004)</cite> 
+                        <kw>also employ</kw> an <method>iterative clustering procedure</method> before finalizing the states of the HMM but 
+                        our method only uses
+                        one-step clustering. Despite the difference, the content model accuracies for our implementation <kw>are quite close to that</kw> from the original</context>. <context>For the entity grid model, <author>we</author> 
+                        <action>follow</action> the <method>generative approach</method> 
+                        <kw>proposed by</kw>  
+                        <cite id="30" function="bas" polarity="pos">Lapata and Barzilay (2005)</cite> .</context>  A text is converted into a matrix, where rows correspond to sentences, in the order in which they appear in the article. Columns are created one for each entity appearing in the text. Each cell ) is filled with the grammatical role ri;j of the entity j in sentence i. We computed the entity grids using the Brown Coherence Toolkit. The probability of the text (T) is defined using the likely sequence of grammatical role transitions. for m entities and n sentences. Parameter h controls the history size for transitions and is tuned during development. When h = 1, for example, only the grammatical role for the entity in the previous sentence is considered and earlier roles are ignored.                                                           
+                                 
+                </paragraph> 
+            </section> 
+        </section> 
+        <section imrad="r"> 
+            <title> 
+                5 Evaluating syntactic coherence 
+            </title> 
+            <paragraph> 
+                We follow the common approach from prior work and use pairs of articles, where one has the original document order and the other is a random permutation of the sentences from the same document. Since the original article is always more coherent than a random permutation, a model can be evaluated using the accuracy with which it can identify the original article in the pair, i.e. it assigns higher probability to the original article. <kw>This</kw>  
+                <method>setting</method> 
+                <kw>is not ideal</kw> 
+                <kw>but</kw> 
+                <action>has become</action> the <kw>de facto</kw> 
+                <method>standard for evaluation of coherence models </method>(<cite id="31" function="wea" polarity="neg">Barzilay and Lee, 2004</cite>; <cite id="32" function="wea" polarity="neg">Elsner et al., 2007</cite>; <cite id="33" function="wea" polarity="neg">Barzilay and Lapata, 2008</cite>; <cite id="34" function="wea" polarity="neg">Karamanis et al., 2009</cite>; <cite id="35" function="wea" polarity="neg">Lin et al., 2011</cite>; <cite id="36" function="wea" polarity="neg" >Elsner and Charniak, 2011</cite>). <kw>It is however based on</kw> a reasonable assumption as <paper>recent work</paper> (<cite id="37" function="bas" polarity="pos">Lin et al., 2011</cite>) shows that people identify the original article as more coherent than its permutations with over 90% accuracy and assessors also have high agreement. Later, we present an experiment distinguishing conference from workshop articles as a more realistic evaluation. 
+            </paragraph> 
+            <paragraph> 
+                <author>We</author> 
+                <action>use</action> two <data>corpora</data> that are <kw>widely employed</kw> for <task>coherence prediction</task> (<cite id="38" function="bas" polarity="pos">Barzilay and Lee, 2004</cite>; El-sner et al., 2007; <cite id="39" function="bas" polarity="pos">Barzilay and Lapata, 2008</cite>; <cite id="40" function="bas" polarity="pos">Lin et al., 2011</cite>). One contains reports on airplane accidents from the National Transportation Safety Board and the other has reports about earthquakes from the Associated Press. These articles are about 10 sentences long. These corpora were chosen since within each dataset, the articles have the same intentional structure. Further, these corpora are also standard ones used in prior work on lexical, entity and discourse relation based coherence models. Later in Section 6, we show that the models perform well on the academic genre and longer articles too. 
+            </paragraph> 
+            <paragraph> 
+                For each of the two corpora, we have 100 articles for training and 100 (accidents) and 99 (earthquakes) for testing. A maximum of 20 random permutations were generated for each test article to create the pairwise data (total of 1986 test pairs for the accident corpus and 1956 for earthquakes). The baseline accuracy for random prediction is 50%. <data>The articles</data> 
+                <kw>were</kw> 
+                <action>parsed</action> 
+                <kw>using</kw> 
+                <tool>the Stanford parser</tool> (<cite id="41" function="bas" polarity="pos">Klein and Manning, 2003</cite>). 
+            </paragraph> 
+        </section>
+        
+       
+        <section imrad="d">
+            
+        <subsection>
+            <subtitle> 
+                5.1 Accuracy of the syntax model 
+            </subtitle> 
+            <paragraph> 
+                For each model, the relevant parameters were tuned using 10-fold cross validation on the training data. In each fold, 90 documents were used for training and evaluation was done on permutations from the remaining articles. After tuning, the final model was trained on all 100 articles in the training set. 
+            </paragraph> 
+            <paragraph> 
+                Table 5 shows the results on the test set. The best number of clusters and depth for d-sequences are also indicated. Overall, the syntax models work quite well, with accuracies at least 15% or more absolute improvement over the baseline. 
+            </paragraph> 
+            <paragraph> 
+                In the local co-occurrence approach, both productions and d-sequences provide 72% accuracy for the accidents corpus. For the earthquake corpus, the accuracies are lower and the d-sequence method works better. The best depth setting for d-sequence is rather small: depth of main verb (MVP) + 2 (or 1), and indicates that a fairly abstract level of nodes is preferred for the patterns. For comparison, we also provide results using just the POS tags in the model and this is worse than the d-sequence approach. 
+            </paragraph> 
+            <paragraph> 
+                The global HMM model is better than the local model for each representation type giving 2 to 38% better accuracies. Here we see a different trend for the d-sequence representation, with better results for greater depths. At such depths (8 and 9) below the main verb, the nodes are mostly POS tags. 
+            </paragraph> 
+            <paragraph> 
+                Overall both productions and d-sequence work competitively and give the best accuracies when implemented with the global approach. 
+            </paragraph> 
+        </subsection> 
+        <subsection> 
+            <subtitle> 
+                5.2 Comparison with other approaches 
+            </subtitle> 
+            <paragraph> 
+                For our implementations of the content and entity grid models, the best accuracies are 71% on the accidents corpus and 85% on the earthquakes one, similar to the syntactic models. 
+            </paragraph> 
+            <paragraph> 
+                Ideally, we would like to combine models but we do not have separate training data. So we perform the following classification experiment which combines the predictions made by different models on the test set. Each test pair (article and permutation) forms one example and is given a class value of 0 or 1 depending on whether the first article in the pair is the original one or the second one. The example is represented as an n-dimensional vector, where n is the number of models we wish to combine. For instance, to combine content models and entity grid, two features are created: one of these records the difference in log probabilities for the two articles from the content model, the other feature indicates the difference in probabilities from the entity grid. 
+            </paragraph> 
+            <paragraph> 
+                A logistic regression classifier is trained to predict the class using these features. The test pairs are created such that an equal number of examples have Prodns d-seq POS Prodns d-seq Egrid Content Accidents Earthquake Parameter Acc Parameter B. HMM-syntax C. Other approaches history 1 Table 5: Accuracies on accident and earthquake corpora class 0 and 1, so the baseline accuracy is 50%. We run this experiment using 10-fold cross validation on the test set after first obtaining the log probabilities from individual models. In each fold, the training is done using the pairs from 90 articles and tested on permutations from the remaining 10 articles. These accuracies are reported in Table 6. When the accuracy of a combination is better than that using any of its smaller subsets, the value is bolded. 
+            </paragraph> 
+            <paragraph> 
+                We find that syntax supplements both content and entity grid methods. While on the airplane corpus syntax only combines well with the entity grid, on the earthquake corpus, both entity and content approaches give better accuracies when combined with syntax. However, adding all three approaches does not outperform combinations of any two of them. This result can be due to the simple approach that we tested for combination. In <paper>prior work</paper>, <method>content and entity grid methods</method> 
+                <action>have been combined</action> 
+                <kw>generatively</kw> (<cite id="42" function="ack" polarity="pos">Elsner et al., 2007</cite>) and using discriminative training with different objectives (Soricut and Table 6: Accuracies for combined approaches <cite id="43" function="ack" polarity="pos">Marcu, 2006</cite>). <kw>Such approaches</kw> 
+                <kw>might bring out</kw> the <kw>complementary strengths</kw> of the different aspects better and we leave such analysis for future work. 
+            </paragraph> 
+        </subsection> 
+        
+        <subsection> 
+            <title> 
+                6 Predictions on academic articles 
+            </title> 
+            <paragraph> 
+                <context>
+                    The <concept>distinctive intentional structure of academic articles</concept> 
+                    <action>has motivated</action> 
+                    <kw>several proposals</kw> to define and annotate the communicative purpose (argumentative zone) of each sentence (<cite id="44" function="ack" polarity="neu">Swales, 1990</cite>; <cite id="45" function="ack" polarity="neu">Teufel et al., 1999</cite>; <cite id="46" function="ack" polarity="neu">Liakata et al., 2010</cite>). Supervised <tool>classifiers</tool> 
+                    <kw>were</kw> also <action>built</action> 
+                    <kw>to</kw> 
+                    <action>identify</action> these zones (<cite id="47" function="use" polarity="pos">Teufel and Moens, 2000</cite>; <cite id="48" function="use" polarity="pos">Guo et al., 2011</cite>). So we expect that these articles form a good testbed for our models. In the remainder of the paper, we examine how unsu-pervised patterns discovered by our approach relate to zones and how well our models predict coherence for articles from this genre. 
+                        
+                </context>
+                    
+            </paragraph> 
+            <paragraph>
+                <context>
+                    <author> We</author> 
+                    <action>employ</action> two <data>corpora</data> of scientific articles.  
+                </context> 
+                    
+            </paragraph> 
+            <paragraph> 
+                <data>ART Corpus:</data> contains a set of 225 Chemistry journal articles that were manually annotated for intentional structure (<cite id="49" function="bas" polarity="pos">Liakata and Soldatova, 2008</cite>). Each sentence was assigned one of 11 zone labels: Result, Conclusion, Objective, Method, Goal, Background, Observation, Experiment, Motivation, Model, Hypothesis. For our study, we use the annotation of the introduction and the abstract sections. For abstracts, we have 75, 50 and 100 for these sets respectively. For introductions, this split is 75, 31, 82. <data>ACL Anthology Network (AAN) Corpus</data>: <cite id="50" function="bas" polarity="pos">Radev et al. (2009)</cite> provides the full text of publications from ACL venues. These articles do not have any zone annotations. The <data>AAN corpus</data> is produced from OCR analysis and no section marking is available. To recreate these, we use the Parscit tagger(<cite id="51" function="bas" polarity="pos">Councill et al., 2008</cite>). We create two test sets: one has 500 ACL-NAACL conference articles and another has 500 articles from ACL-sponsored workshops. We only choose articles in which all three sections—abstract, introduction and related work— could be successfully identified using Parscit. 
+            </paragraph> 
+            <paragraph> 
+                This <data>data</data> 
+                <kw>was</kw> 
+                <task>sentence-segmented</task> 
+                <kw>using</kw> 
+                <tool>MxTer-minator</tool> (<cite id="52" function="bas" polarity="pos">Reynar and Ratnaparkhi, 1997</cite>) <kw>and</kw> 
+                <action>parsed</action> with <tool>the Stanford Parser</tool> (<cite id="53" function="bas" polarity="pos" >Klein and Manning, 2003</cite>). 
+            </paragraph> 
+            <paragraph> 
+                For each corpus and each section, we train all our syntactic models: the two local coherence models using the production and d-sequence representations and the HMM models with the two representations. These models are tuned on the respective development data, on the task of differentiating the original from a permuted section. For this purpose, we created a maximum of 30 permutations per article. 
+            </paragraph> 
+            <subsection> 
+                <subtitle> 
+                    6.1 Comparison with ART Corpus zones 
+                </subtitle> 
+                <paragraph> 
+                    We perform this analysis using the ART corpus. The zone annotations present in this corpus allow us to directly test our first assumption in this work, that sentences with similar syntax have the same communicative goal. 
+                </paragraph> 
+                <paragraph> 
+                    For this analysis, we use the the HMM-prod model for abstracts and the HMM-d-seq model for introductions. These models were chosen because they gave the best performance on the ART corpus development sets. We examine the clusters created by these models on the training data and check whether there are clusters which strongly involve sentences from some particular annotated zone.  
+                </paragraph> 
+                <paragraph> 
+                    For each possible pair of cluster and zone (Ci, Zj), we compute c(Ci, Zj): the number of sentences in Ci that are annotated as zone Zj.Then we use a chi-square test to identify pairs for which c(Ci, Zj) is significantly greater than expected (there is a "positive" association between Ci and Zj) and pairs where c(Ci, Zj) is significantly less than chance (Ciis not associated with Zj). A 95% confidence level was used to determine significance. 
+                </paragraph> 
+                <paragraph> 
+                    The HMM-prod model for abstracts has 9 clusters (named Clus0 to 8) and the HMM-d-seq model for introductions has 6 clusters (Clus0 to 5). The pairings of these clusters with zones which turned out to be significant are reported in Table 7. We also report for each positively associated cluster-zone pair, the following numbers: matches c(Ci, Zj), precision c(Ci, Zj)/\!Ci\! and recall c(Ci, Zj)/1Zj\!. We also exclude introduction and related work sections longer than 50 sentences and those shorter than 4 sentences since they often have inaccurate section boundaries. Their test accuracies are reported in the next section. Abstracts (HMM-prod 9 clusters) Not associated: Clus7 - Conclusion, Clus8 - Conclusion Introductions (HMM-d-seq 6 clusters) Not associated: Clus1 - Motivation, Clus2 - Goal, Clus4 - Background, Clus 5 - Model Table 7: Cluster-Zone mappings on the ART Corpus 
+                </paragraph> 
+                <paragraph> 
+                    The presence of significant associations validate our intuitions that syntax provides clues about communicative goals. Some clusters overwhelmingly contain the same zone, indicated by high precision, for example 64% of sentences in Clus2 from introduction sections are background sentences. Other clusters have high recall of a zone, 55% of all goal sentences from the abstracts training data is captured by Clus7. It is particularly interesting to see that Clus7 of abstracts captures both objective and goal zone sentences and for introductions, Clus4 is a mix of hypothesis and goal sentences which intuitively are closely related categories. 
+                </paragraph> 
+            </subsection> 
+            <subsection> 
+                <subtitle> 
+                    6.2 Original versus permuted sections 
+                </subtitle> 
+                <paragraph> 
+                    We also explore the accuracy of the syntax models for predicting coherence of articles from the test set of ART corpus and the 500 test articles from ACL-NAACL conferences. We use the same experimental setup as before and create pairs of original and permuted versions of the test articles. We created a maximum of 20 permutations for each article. The baseline accuracy is 50% as before. 
+                </paragraph> 
+                <paragraph> 
+                    For the ART corpus, we also built an oracle model of annotated zones. We train a first order Markov Chain to record the sequence of zones in the training articles. For testing, we assume that the oracle zone is provided for each sentence and use the model to predict the likelihood of the zone sequence. Results from this model represent an upper bound because an accurate hypothesis of the communicative goal is available for each sentence. 
+                </paragraph> 
+                <paragraph> 
+                    The accuracies are presented in Table 8. Overall, the HMM-d-seq model provides the best accuracies. The highest results are obtained for ACL introduction sections (74%). These results are lower than that obtained on the earthquake/accident corpus but the task here is much harder: the articles are longer and the ACL corpus also has OCR errors which affect sentence segmentation and parsing accuracies. When the oracle zones are known, the accuracies are much higher on the ART corpus indicating that the intentional structure of academic articles is very predictive of their coherence. 
+                </paragraph> 
+            </subsection> 
+            <subsection> 
+                <subtitle> 
+                    6.3 Conference versus workshop papers 
+                </subtitle> 
+                <paragraph> 
+                    Finally, we test whether the syntax-based model can distinguish the structure of conference from workshop articles. Workshops are also venues to discuss a focused and specialized topic. So the way information is conveyed in the abstracts and introductions would vary in these articles. 
+                </paragraph> 
+                <paragraph> 
+                    We perform this analysis on the ACL corpus and no permutations are used, only the original text of the 500 articles each in the conference and workshop test sets. While permutation examples provide cheap training/test data, they have a few unrealistic properties. For example, both original and permuted articles have the same length. Further some permutations could result in an outstandingly incoherent sample which is easily distinguished from the original articles. So we use the conference versus workshop task as another evaluation of our model. 
+                </paragraph> 
+                <paragraph> 
+                    We designed a classification experiment for this task which combines features from the different syntax models that were trained on the ACL conference training set. We include four features indicating the perplexity of an article under each model (Local-prod, Local-d-seq, HMM-prod, HMM-d-seq). We use perplexity rather than probability because the length of the articles vary widely in contrast to the previous permutation-based tests, where both permutation and original article have the same length. We compute perplexity as P(T)-1/n, where n is the number of words in the article. We also obtain the most likely state sequence for the article under HMM-prod and HMM-d-seq models using Viterbi decoding. Then the proportion of sentences from each state of the two models are added as features. 
+                </paragraph> 
+                <paragraph> 
+                    We also add some fine-grained features from the local model. We represent sentences in the training set as either productions or d-sequence items and compute pairs of associated items (xi, xj) from adjacent sentences using the same chi-square test as in our pilot study. The most significant (lowest p-values) 30 pairs (each for production and d-seq) are taken as features. For a test article, we compute features that represent how often each pair is present in the article such that xi is in Sm and xj is in Sm+1. 
+                </paragraph> 
+                <paragraph> 
+                    We perform this experiment for each section and there are about 90 to 140 features for the different sections. We cast the problem as a binary classification task: conference articles belong to one class and workshop to the other. Each class has 500 articles and so the baseline random accuracy is 50%. We perform 10-fold cross validation using logistic regression. Our results were 59.3% accuracy for distinguishing abstracts of conference verus workshop, 50.3% for introductions and 55.4% for related work. For abstracts and related work, these accuracies are significantly better than baseline (95% confidence level from a two-sided paired t-test comparing the accuracies from the 10 folds). It is possible that introductions in either case, talk in general about the field and importance of the problem addressed and hence have similar structure. 
+                </paragraph> 
+                <paragraph> 
+                    Our accuracies are not as high as on permutations examples because the task is clearly harder. It may also be the case that the prediction is more difficult for certain papers than for others. So we also analyze our results by the confidence provided by the classifier for the predicted class. We consider only the examples predicted above a certain confidence level and compute the accuracy on these predictions. A cutoff is applied such that the pair was seen at least 25 times in the training data. Table 9: Accuracy (% examples) above each confidence level for the conference versus workshop task. 
+                </paragraph> 
+                <paragraph> 
+                    These results are shown in Table 9. 
+                    The proportion of examples under each setting is also indicated. 
+                </paragraph> 
+                <paragraph> 
+                    When only examples above 0.6 confidence are examined, the classifier has a higher accuracy of 63.8% for abstracts and covers close to 70% of the examples. Similarly, when a cutoff of 0.7 is applied to the confidence for predicting related work sections, we achieve 63.3% accuracy for 53% of examples. So we can consider that 30 to 47% of the examples in the two sections respectively are harder to tell apart. Interestingly however even high confidence predictions on introductions remain incorrect. 
+                </paragraph> 
+                These results show that our model can successfully distinguish the structure of articles beyond just clearly incoherent permutation examples. 
+            </subsection> 
+        </subsection> 
+        <title> 
+            7 Conclusion 
+        </title> 
+        <paragraph> 
+            Our work is the first to develop an unsupervised model for intentional structure and to show that it has good accuracy for coherence prediction and also complements entity and lexical structure of discourse. This result raises interesting questions about how patterns captured by these different coherence metrics vary and how they can be combined usefully for predicting coherence. We plan to explore these ideas in future work. We also want to analyze genre differences to understand if the strength of these coherence dimensions varies with genre. 
+        </paragraph> 
+        </section> 
+    
+ 
+    <section> 
+        <title> 
+            Acknowledgements 
+        </title> 
+        <paragraph> 
+            This work is partially supported by a Google research grant and NSF CAREER 0953445 award. Table 8: Accuracy in differentiating permutation from original sections on ACL and ART test sets. 
+        </paragraph> 
+    </section> 
+ 
+    </paper>
+</annotatedpaper>

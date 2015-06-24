@@ -1,0 +1,240 @@
+<annotatedpaper>
+    <paper title="Thumbs up? Sentiment Classification using Machine Learning Techniques" authors="Bo Pang, Lillian Lee, Shivakumar Vaithyanathan" year="2002"> 
+        <section> 
+            <title>Thumbs up? Sentiment Classification using Machine Learning Techniques</title> 
+            Bo Pang and Lillian Lee 
+            Department of Computer Science 
+            Cornell University 
+            Ithaca, NY 14853 USA 
+            {pabo,llee}@cs.cornell.edu 
+            Shivakumar Vaithyanathan 
+            IBM Almaden Research Center 
+            650 Harry Rd. 
+            San Jose, CA 95120 USA 
+            shiv@almaden.ibm.com 
+        </section> 
+        <section> 
+            <title>Abstract</title> 
+            <paragraph> 
+                We consider the problem of classifying documents not by topic, but by overall sentiment, e.g., determining whether a review is positive or negative. Using movie reviews as data, we find that standard machine learning techniques definitively outperform human-produced baselines. However, the three machine learning methods we employed (Naive Bayes, maximum entropy classification, and support vector machines) do not perform as well on sentiment classification as on traditional topic-based categorization. We conclude by examining factors that make the sentiment classification problem more challenging. 
+            </paragraph> 
+        </section> 
+        <section imrad="i"> 
+            <title>1 Introduction</title> 
+            <paragraph> 
+                Today, very large amounts of information are available in on-line documents. As part of the effort to better organize this information for users, researchers have been actively investigating the problem of automatic text categorization. 
+            </paragraph> 
+            <paragraph> 
+                The bulk of such work has focused on topical categorization, attempting to sort documents according to their subject matter (e.g., sports vs. politics). However, recent years have seen rapid growth in on-line discussion groups and review sites (e.g., the New York Times' Books web page) where a crucial characteristic of the posted articles is their sentiment, or overall opinion towards the subject matter — for example, whether a product review is positive or negative. Labeling these articles with their sentiment would provide succinct summaries to readers; indeed, these labels are part of the appeal and value-add of such sites as www.rottentomatoes.com, which both labels movie reviews that do not contain explicit rating indicators and normalizes the different rating schemes that individual reviewers use. <context>
+                    <task>Sentiment classification</task> 
+                    <kw>would also be</kw> 
+                    <posfeature>helpful in</posfeature> business intelligence applications (e.g. MindfulEye's Lexant system) and recommender systems (e.g., <cite id="1" function="ack" polarity="pos">Terveen et al. (1997)</cite>, <cite id="2" function="ack" polarity="pos">Tatemura (2000)</cite>)</context>, where user input and feedback could be quickly summarized; indeed, in general, free-form survey responses given in natural language format could be processed using sentiment categorization. <context>Moreover, <kw>there are</kw> also <posfeature>potential applications</posfeature> 
+                    <kw>to</kw> 
+                    <task>message filtering</task>; for example, one might be able to use sentiment information to recognize and discard "flames" (<cite id="3" function="ack" polarity="pos">Spertus, 1997</cite>). </context>
+            </paragraph>
+            <paragraph> 
+                In this paper, we examine the effectiveness of applying machine learning techniques to the sentiment classification problem. A challenging aspect of this problem that seems to distinguish it from traditional topic-based classification is that while topics are often identifiable by keywords alone, sentiment can be expressed in a more subtle manner. For example, the sentence "How could anyone sit through this movie?" contains no single word that is obviously negative. (See Section 7 for more examples). Thus, sentiment seems to require more understanding than the usual topic-based classification. So, apart from presenting our results obtained via machine learning techniques, we also analyze the problem to gain a better understanding of how difficult it is. 
+            </paragraph> 
+        </section> 
+        <section imrad="i"> 
+            <title>2 Previous Work</title> 
+            <paragraph> 
+                This section briefly surveys previous work on non-topic-based text categorization. <context>One area of research concentrates on classifying documents according to their source or source style, with statistically-detected stylistic variation (<cite id="4" function="ack" polarity="neu">Biber, 1988</cite>) serving as an important cue.</context> 
+                <context>Examples include author, publisher (e.g., the New York Times vs. The Daily News), native-language background, and "brow" (e.g., high-brow vs. "popular", or low-brow) (<cite id="5" function="ack" polarity="neu">Mosteller and Wallace, 1984</cite>; Argamon-Engelson et 1997).</context> 
+            </paragraph> 
+            <paragraph> 
+                <context>Another, more related area of research is that of determining the genre of texts; subjective genres, such as "editorial", are often one of the possible categories (<cite id="6" function="ack" polarity="neu">Karlgren and Cutting, 1994</cite>;</context> 
+                <context>Kessler et <kw>attempts to find</kw> 
+                    <feature>features</feature> indicating that subjective language <kw>is being used</kw> (<cite id="7">Hatzivassiloglou and Wiebe, 2000</cite>; <cite id="8">Wiebe et al., 2001</cite>).</context> But, while techniques for genre categorization and subjectivity detection can help us recognize documents that express an opinion, they do not address our specific classification task of determining what that opinion actually is. 
+            </paragraph> 
+            <paragraph> 
+                Most previous research on sentiment-based classification has been at least partially knowledge-based. <context>
+                    <paper>Some of this work</paper> 
+                    <kw>focuses on</kw> 
+                    <task>classifying the semantic orientation</task> of individual words or phrases, <kw>using</kw> linguistic heuristics or a pre-selected set of seed words (<cite id="9" function="use" polarity="neu">Hatzivassiloglou and McKeown, 1997</cite>; <cite id="10" function="use" polarity="neu">Turney and Littman, 2002</cite>).</context> 
+                <context>
+                    <paper>Past work</paper> on sentiment-based categorization of entire documents <kw>has often involved</kw> either <kw>the use of</kw> models inspired by cognitive linguistics (<cite id="11" function="use" polarity="neu">Hearst, 1992</cite>; <cite id="12" function="use" polarity="neu">Sack, 1994</cite>) or the manual or semi-manual construction of discriminant-word lexicons (<cite id="13" function="use" polarity="neu">Huettner and Subasic, 2000</cite>; <cite id="14" function="use" polarity="neu">Das and Chen, 2001</cite>; <cite id="15" function="use" polarity="neu">Tong, 2001</cite>).</context> Interestingly, our baseline experiments, described in Section 4, show that humans may not always have the best intuition for choosing discriminating words. 
+            </paragraph> 
+            <paragraph> 
+                Turney's (2002) work on classification of reviews is perhaps the closest to ours. He applied a specific unsupervised learning technique based on the mutual information between document phrases and the words "excellent" and "poor", where the mutual information is computed using statistics gathered by a search engine. In contrast, we utilize several completely prior-knowledge-free supervised machine learning methods, with the goal of understanding the inherent difficulty of the task. 
+            </paragraph> 
+        </section> 
+        <section imrad="i"> 
+            <title>3 The Movie-Review Domain</title> 
+            <paragraph> 
+                For our experiments, we chose to work with movie reviews. This domain is experimentally convenient because there are large on-line collections of such reviews, and because reviewers often summarize their overall sentiment with a machine-extractable rating indicator, such as a number of stars; hence, we did not need to hand-label the data for supervised learning or evaluation purposes. <context>
+                    <author>We</author> also <kw>note that</kw> 
+                    <cite id="16" function="ack" polarity="neu">Turney (2002)</cite> found <task>movie reviews</task> 
+                    <kw>to be the most difficult</kw> of several domains for sentiment classification, reporting an accuracy of 65.83% on a 120-document set (random-choice performance: 50%).</context> But we stress that the machine learning methods and features we use are not specific to movie reviews, and should be easily applicable to other domains as long as sufficient training data exists. 
+            </paragraph> 
+            <paragraph> 
+                Indeed, although our choice of title was completely independent of his, our selections were eerily similar. Our data source was the Internet Movie Database (IMDb) archive of the rec.arts.movies.reviews newsgroup. We selected only reviews where the author rating was expressed either with stars or some numerical value (other conventions varied too widely to allow for automatic processing). Ratings were automatically extracted and converted into one of three categories: positive, negative, or neutral. For the work described in this paper, we concentrated only on discriminating between positive and negative sentiment. To avoid domination of the corpus by a small number of prolific reviewers, we imposed a limit of fewer than 20 reviews per author per sentiment category, yielding a corpus of 752 negative and 1301 positive reviews, with a total of 144 reviewers represented. This dataset will be available on-line at http://www.cs.cornell.edu/people/pabo/-movie-review-data/ (the URL contains hyphens only around the word "review"). 
+            </paragraph> 
+        </section> 
+        <section imrad="i"> 
+            <title>4 A Closer Look At the Problem</title> 
+            <paragraph> 
+                Intuitions seem to differ as to the difficulty of the sentiment detection problem. An expert on using machine learning for text categorization predicted relatively low performance for automatic methods. On the other hand, it seems that distinguishing positive from negative reviews is relatively easy for humans, especially in comparison to the standard text categorization problem, where topics can be closely related. One might also suspect that there are certain words people tend to use to express strong sentiments, so that it might suffice to simply produce a list of such words by introspection and rely on them alone to classify the texts. 
+            </paragraph> 
+            <paragraph> 
+                To test this latter hypothesis, we asked two graduate students in computer science to (independently) choose good indicator words for positive and negative sentiments in movie reviews. Their selections, shown in Figure 1, seem intuitively plausible. We then converted their responses into simple decision procedures that essentially count the number of the proposed positive and negative words in a given document. We applied these procedures to uniformly-distributed data, so that the random-choice baseline result would be 50%. As shown in Figure 1, the accuracy — percentage of documents classified correctly — for the human-based classifiers were 58% and 64%, respectively. Note that the tie rates — percentage of documents where the two sentiments were rated equally likely — are quite high (we chose a tie breaking policy that maximized the accuracy of the baselines). 
+            </paragraph> 
+            <paragraph> 
+                Figure 2: Results for baseline using introspection and simple statistics of the data (including test data). 
+            </paragraph> 
+            <paragraph> 
+                While the tie rates suggest that the brevity of the human-produced lists is a factor in the relatively poor performance results, it is not the case that size alone necessarily limits accuracy. Based on a very preliminary examination of frequency counts in the entire corpus (including test data) plus introspection, we created a list of seven positive and seven negative words (including punctuation), shown in Figure 2. As that figure indicates, using these words raised the accuracy to 69%. Also, although this third list is of comparable length to the other two, it has a much lower tie rate of 16%. We further observe that some of the items in this third list, such as "?" or "still", would probably not have been proposed as possible candidates merely through introspection, although upon reflection one sees their merit (the question mark tends to occur in sentences like "What was the director thinking?"; "still" appears in sentences like "Still, though, it was worth seeing"). 
+            </paragraph> 
+            <paragraph> 
+                We conclude from these preliminary experiments that it is worthwhile to explore corpus-based techniques, rather than relying on prior intuitions, to select good indicator features and to perform sentiment classification in general. These experiments also provide us with baselines for experimental comparison; in particular, the third baseline of 69% might actually be considered somewhat difficult to beat, since it was achieved by examination of the test data (although our examination was rather cursory; we do not claim that our list was the optimal set of fourteen words). Later experiments using these words as features for machine learning methods did not yield better results. 5 This is largely due to 0-0 ties. 
+            </paragraph> 
+        </section> 
+        <section imrad="m"> 
+            <title>5 Machine Learning Methods</title> 
+            <paragraph> 
+                Our aim in this work was to examine whether it suffices to treat sentiment classification simply as a special case of topic-based categorization (with the two "topics" being positive sentiment and negative sentiment), or whether special sentiment-categorization methods need to be developed. We experimented with three standard algorithms: Naive Bayes classification, maximum entropy classification, and support vector machines. The philosophies behind these three algorithms are quite different, but each has been shown to be effective in previous text categorization studies.  
+            </paragraph> 
+            <paragraph> 
+                To implement these machine learning algorithms on our document data, we used the following standard bag-of-features framework. Let {f1,..., fm} be a predefined set of m features that can appear in a document; examples include the word "still" or the bigram "really stinks". Let Ui(d) be the number of times f occurs in document d. Then, each document d is represented by the document vector d := (ni(d),n2(d),...,nTO(d)). 
+            </paragraph> 
+            <subsection> 
+                <subtitle>5.1 Naive Bayes</subtitle> 
+                <paragraph> 
+                    One approach to text classification is to assign to a given document d the class c* = argmaxc P(c \! d). We derive the Naive Bayes (NB) classifier by first observing that by Bayes' rule, where P( d) plays no role in selecting c* . To estimate the term P( d c , Naive Bayes decomposes it by assuming the fi's are conditionally independent given d's class: Figure 1: Baseline results for human word lists. Data: 700 positive and 700 negative reviews. 
+                </paragraph> 
+                <paragraph> 
+                    Our training method consists of relative-frequency estimation of P (c) and P (fi \! c), using add-one smoothing. 
+                </paragraph> 
+                <paragraph> 
+                    <context>Despite its simplicity and the fact that its conditional independence assumption clearly does not hold in real-world situations, <method>Naive Bayes-based text categorization</method> still <kw>tends to perform</kw> 
+                        <posfeature>surprisingly well</posfeature> (<cite id="17" function="ack" polarity="pos">Lewis, 1998</cite>);</context> 
+                    <context>indeed, <cite id="18" function="ack" polarity="pos">Domingos and Pazzani (1997)</cite> 
+                        <kw>show that</kw> 
+                        <method>Naive Bayes</method> 
+                        <kw>is</kw> 
+                        <posfeature>optimal for</posfeature> certain problem classes with highly dependent features.</context> On the other hand, more sophisticated algorithms might (and often do) yield better results; we examine two such algorithms next.  
+                </paragraph> 
+            </subsection> 
+            <subsection> 
+                <subtitle>5.2 Maximum Entropy</subtitle> 
+                <paragraph> 
+                    <context>
+                        <method>Maximum entropy classification</method> (MaxEnt, or ME, for short) is an alternative technique which <kw>has proven</kw> 
+                        <posfeature>effective</posfeature> 
+                        <kw>in</kw> a number of natural language processing applications (<cite id="19" function="use" polarity="pos">Berger et al., 1996</cite>).</context> 
+                    <context>
+                        <cite id="20" function="ack" polarity="pos">Nigam et al. (1999)</cite> show that <method>it</method> sometimes, but not always, <posfeature>outperforms</posfeature> 
+                        <method>Naive Bayes</method> at standard text classification.</context> Its estimate of P (c \! d) takes the following exponential form: where Z(d) is a normalization function. 
+                </paragraph> 
+                <paragraph> 
+                    Pi c is a feature/class function for feature fi and class c, defined as follows: For instance, a particular feature/class function might fire if and only if the bigram "still hate" appears and the document's sentiment is hypothesized to be negative. Importantly, unlike Naive Bayes, MaxEnt makes no assumptions about the relationships between features, and so might potentially perform better when conditional independence assumptions are not met. 
+                </paragraph> 
+                <paragraph> 
+                    The Ai c's are feature-weight parameters; inspection of the definition of PME shows that a large Ai cmeans that fi is considered a strong indicator for class c. The parameter values are set so as to maximize the entropy of the induced distribution (hence the classifier's name) subject to the constraint that the expected values of the feature/class functions with respect to the model are equal to their expected values with respect to the training data: the underlying philosophy is that we should choose the model making the fewest assumptions about the data while still remaining consistent with it, which makes intuitive sense. <context>
+                        <author>We</author> 
+                        <kw>use</kw> ten iterations of the improved <tool>iterative scaling algorithm</tool> (Della <cite id="21" function="bas" polarity="pos">Pietra et al., 1997</cite>) <kw>for</kw> parameter training (this was a sufficient number of iterations for convergence of training-data accuracy), <kw>together with</kw> a <method>Gaussian prior</method> to prevent overfitting (<cite id="22" function="bas" polarity="pos">Chen and Rosenfeld, 2000</cite>). </context>
+                </paragraph> 
+            </subsection> 
+            <subsection> 
+                <subtitle>5.3 Support Vector Machines</subtitle> 
+                <paragraph> 
+                    <context>
+                        <method>Support vector machines</method> (SVMs) <kw>have been shown to be</kw> 
+                        <posfeature>highly effective</posfeature> at traditional text categorization, generally outperforming Naive Bayes (<cite id="23" function="use" polarity="pos">Joachims, 1998</cite>).</context> They are large-margin, rather than probabilistic, classifiers, in contrast to Naive Bayes and MaxEnt. In the two-category case, the basic idea behind the training procedure is to find a hyperplane, represented by vector w, that not only separates the document vectors in one class from those in the other, but for which the separation, or margin, is as large as possible. This search corresponds to a constrained optimization problem; letting Cj &lt; G {1, —1} (corresponding to positive and negative) be the correct class of document dj, the solution can be written as where the a j's are obtained by solving a dual optimization problem. Those dj such that aj is greater than zero are called support vectors, since they are the only document vectors contributing to «. Classification of test instances consists simply of determining which side of w's hyperplane they fall on. 
+                </paragraph> 
+                <paragraph> 
+                    We used Joachim's (1999) SVMlight package for training and testing, with all parameters set to their default values, after first length-normalizing the document vectors, as is standard (neglecting to normalize generally hurt performance slightly). 
+                </paragraph> 
+            </subsection> 
+        </section> 
+        <section imrad="r"> 
+            <title>6 Evaluation</title> 
+            <subsection> 
+                <subtitle>6.1 Experimental Set-up</subtitle> 
+                <paragraph> 
+                    We used documents from the movie-review corpus described in Section 3. To create a data set with uniform class distribution (studying the effect of skewed class distributions was out of the scope of this study), we randomly selected 700 positive-sentiment and 700 negative-sentiment documents. We then divided this data into three equal-sized folds, maintaining balanced class distributions in each fold. (We did not use a larger number of folds due to the slowness of the MaxEnt training procedure.) All results reported below, as well as the baseline results from Section 4, are the average three-fold cross-validation results on this data (of course, the baseline algorithms had no parameters to tune). 
+                </paragraph> 
+                <paragraph> 
+                    Figure 3: Average three-fold cross-validation accuracies, in percent. Boldface: best performance for a given setting (row). Recall that our baseline results ranged from 50% to 69%. 
+                </paragraph> 
+                To prepare the documents, we automatically removed the rating indicators and extracted the textual information from the original HTML document format, treating punctuation as separate lexical items. No stemming or stoplists were used. 
+                <paragraph> 
+                    One unconventional step we took was to attempt to model the potentially important contextual effect of negation: clearly "good" and "not very good" indicate opposite sentiment orientations. <context>
+                        <kw>Adapting</kw> a <method>technique of</method> 
+                        <cite id="24" function="bas" polarity="pos">Das and Chen (2001)</cite>, <author>we</author> added the tag NOT_ to every word between a negation word ("not", "isn't", "didn't", etc.) and the first punctuation mark following the negation word.</context> (Preliminary experiments indicate that removing the negation tag had a negligible, but on average slightly harmful, effect on performance.) 
+                </paragraph> 
+                <paragraph> 
+                    For this study, we focused on features based on unigrams (with negation tagging) and bigrams. Because training MaxEnt is expensive in the number of features, we limited consideration to (1) the 16165 unigrams appearing at least four times in our 1400-document corpus (lower count cutoffs did not yield significantly different results), and (2) the 16165 bi-grams occurring most often in the same data (the selected bigrams all occurred at least seven times). Note that we did not add negation tags to the bi-grams, since we consider bigrams (and n-grams in general) to be an orthogonal way to incorporate context. 
+                </paragraph> 
+            </subsection> 
+            <subsection> 
+                <subtitle>6.2 Results</subtitle> 
+                <paragraph> 
+                    Initial unigram results The classification accuracies resulting from using only unigrams as features are shown in line (1) of Figure 3. As a whole, the machine learning algorithms clearly surpass the random-choice baseline of 50%. They also handily beat our two human-selected-unigram baselines of 58% and 64%, and, furthermore, perform well in comparison to the 69% baseline achieved via limited access to the test-data statistics, although the improvement in the case of SVMs is not so large.  
+                </paragraph> 
+                <paragraph> 
+                    <context>On the other hand, in <task>topic-based classification</task>, all three classifiers <kw>have been reported to use</kw> 
+                        <data>bag-of-unigram features</data> 
+                        <kw>to</kw> achieve accuracies of 90% and above for particular categories (<cite id="25" function="ack" pol="neu">Joachims, 1998</cite>; <cite id="26" function="ack" pol="neu">Nigam et al., 1999</cite>) — and such results are for settings with more than two classes.</context> This provides suggestive evidence that sentiment categorization is more difficult than topic classification, which corresponds to the intuitions of the text categorization expert mentioned above. Nonetheless, we still wanted to investigate ways to improve our sentiment categorization results; these experiments are reported below.  
+                </paragraph> 
+                <paragraph> 
+                    Feature frequency vs. presence Recall that we represent each document d by a feature-count vector (n1(d),..., nm(d)). However, the definition of the MaxEnt feature/class functions FijC only reflects the presence or absence of a feature, rather than directly incorporating feature frequency. In order to investigate whether reliance on frequency information could account for the higher accuracies of Naive Bayes and SVMs, we binarized the document vectors, setting Ui(d) to 1 if and only feature fi appears in d, and reran Naive Bayes and SVMl%ght on these new vectors. 
+                </paragraph> 
+                <paragraph> 
+                    As can be seen from line (2) of Figure 3, better performance (much better performance for SVMs) is achieved by accounting only for feature presence, not feature frequency. <context>Interestingly, this is in direct opposition to the observations of <cite id="27" function="ack" polarity="neu">McCallum and Nigam (1998)</cite> with respect to Naive Bayes topic classification.</context> We speculate that this indicates a difference between sentiment and topic categorization — perhaps due to topic being conveyed mostly by particular content words that tend to be repeated — but this remains to be verified. In any event, as a result of this finding, we did not incorporate frequency information into Naive Bayes and SVMs in any of the following experiments. 
+                </paragraph> 
+                <paragraph> 
+                    Bigrams In addition to looking specifically for negation words in the context of a word, we also studied the use of bigrams to capture more context in general. Note that bigrams and unigrams are surely not conditionally independent, meaning that the feature set they comprise violates Naive Bayes' conditional-independence assumptions; on the other hand, recall that this does not imply that Naive Bayes will necessarily do poorly (Domingos and Paz-zani, 1997). 
+                </paragraph> 
+                <paragraph> 
+                    Line (3) of the results table shows that bigram information does not improve performance beyond that of unigram presence, although adding in the bi-grams does not seriously impact the results, even for Naive Bayes. This would not rule out the possibility that bigram presence is as equally useful a feature as unigram presence; <context>in fact, <cite id="28" function="use" polarity="pos">Pedersen (2001)</cite> found that <data>bigrams alone</data> 
+                        <kw>can be</kw> 
+                        <posfeature>effective features</posfeature> 
+                        <kw>for</kw> 
+                        <task>word sense disambiguation</task>.</context> However, comparing line (4) to line (2) shows that relying just on bigrams causes accuracy to decline by as much as 5.8 percentage points. Hence, if context is in fact important, as our intuitions suggest, bigrams are not effective at capturing it in our setting. 
+                </paragraph> 
+                <paragraph> 
+                    Parts of speech 
+                    <context>
+                        <author>We</author> also <kw>experimented</kw> with appending POS tags to every word via
+                        <tool>Oliver Mason's Qtag program</tool>. This serves <kw>as</kw> a crude form of <task>word sense disambiguation</task> (<cite id="29" function="bas" polarity="pos">Wilks and Stevenson, 1998</cite>):</context> for example, it would distinguish the different usages of "love" in "I love this movie" (indicating sentiment orientation) versus "This is a love story" (neutral with respect to sentiment). However, the effect of this information seems to be a wash: as depicted in line (5) of Figure 3, the accuracy improves slightly for Naive Bayes but declines for SVMs, and the performance of MaxEnt is unchanged. 
+                </paragraph> 
+                <paragraph> 
+                    <context>Since <data>adjectives</data> 
+                        <kw>have been a focus of</kw> 
+                        <paper>previous work</paper> in sentiment detection (<cite id="30" function="bas" polarity="pos">Hatzivassiloglou and Wiebe, 2000</cite>; <cite id="31" function="bas" polarity="pos">Turney, 2002</cite>), <author>we</author> 
+                        looked at the performance of <kw>using</kw> adjectives alone.</context> Intuitively, we might expect that adjectives carry a great deal of information regarding a document's sentiment; indeed, the human-produced lists from Section 4 contain almost no other parts of speech. Yet, the results, shown in line (6) of Figure 3, are relatively poor: the 2633 adjectives provide less useful information than unigram presence. Indeed, line (7) shows that simply using the 2633 most frequent unigrams is a better choice, yielding performance comparable to that of using (the presence of) all 16165 (line (2)). This may imply that applying explicit feature-selection algorithms on unigrams could improve performance. 
+                </paragraph> 
+                <paragraph> 
+                    Position An additional intuition we had was that the position of a word in the text might make a difference: movie reviews, in particular, might begin with an overall sentiment statement, proceed with a plot discussion, and conclude by summarizing the author's views. As a rough approximation to determining this kind of structure, we tagged each word according to whether it appeared in the first quarter, last quarter, or middle half of the document. The results (line (8)) didn't differ greatly from using unigrams alone, but more refined notions of position might be more successful. 
+                </paragraph> 
+            </subsection> 
+        </section> 
+        <section imrad="d"> 
+            <title>7 Discussion</title> 
+            <paragraph> 
+                The results produced via machine learning techniques are quite good in comparison to the human-generated baselines discussed in Section 4. In terms of relative performance, Naive Bayes tends to do the worst and SVMs tend to do the best, although the differences aren't very large. 
+            </paragraph> 
+            <paragraph> 
+                On the other hand, we were not able to achieve accuracies on the sentiment classification problem comparable to those reported for standard topic-based categorization, despite the several different types of features we tried. Unigram presence information turned out to be the most effective; in fact, none of the alternative features we employed provided consistently better performance once unigram presence was incorporated. <context>Interestingly, <kw>though</kw>, the superiority of presence information in comparison to frequency information in our setting <kw>contradicts</kw> 
+                    <kw>previous</kw> observations
+                    made in topic-classification work(<cite id="32" function="con" polarity="neg">McCallum and Nigam, 1998</cite>). </context>
+            </paragraph> 
+            <paragraph> 
+                What accounts for these two differences — difficulty and types of information proving useful — between topic and sentiment classification, and how might we improve the latter? To answer these questions, we examined the data further. (All examples below are drawn from the full 2053-document corpus.) 
+            </paragraph> 
+            <paragraph> 
+                As it turns out, a common phenomenon in the documents was a kind of "thwarted expectations" narrative, where the author sets up a deliberate contrast to earlier discussion: for example, "This film should be brilliant. It sounds like a great plot, the actors are first grade, and the supporting cast is good as well, and Stallone is attempting to deliver a good performance. However, it can't hold up" or "I hate the Spice Girls. ... [3 things the author hates about them]... Why I saw this movie is a really, really, really long story, but I did, and one would think I'd despise every minute of it. But... Okay, I'm really ashamed of it, but I enjoyed it. I mean, I admit it's a really awful movie ...the ninth floor of helL. The plot is such a mess that it's terrible. But I loved it." 
+            </paragraph> 
+            <paragraph> 
+                In these examples, a human would easily detect the true sentiment of the review, but bag-of-features classifiers would presumably find these instances difficult, since there are many words indicative of the opposite sentiment to that of the entire review. Fundamentally, it seems that some form of discourse analysis is necessary (using more sophisticated techniques than our positional feature mentioned above), or at least some way of determining the focus of each sentence, so that one can decide when the author is talking about the film itself. <context>(<cite id="33" function="ack" polarity="neu">Turney (2002)</cite> makes a similar point, noting that for reviews, "the whole is not necessarily the sum of the parts".)</context> Furthermore, it seems likely that this thwarted-expectations rhetorical device will appear in many types of texts (e.g., editorials) devoted to expressing an overall opinion about some topic. Hence, we believe that an important next step is the identification of features indicating whether sentences are on-topic (which is a kind of co-reference problem); we look forward to addressing this challenge in future work. 
+            </paragraph> 
+        </section> 
+        <section> 
+            <title>Acknowledgements</title> 
+            <paragraph> 
+                We thank Joshua Goodman, Thorsten Joachims, Jon Kleinberg, Vikas Krishna, John Lafferty, Jussi Myl-lymaki, Phoebe Sengers, Richard Tong, Peter Tur-ney, and the anonymous reviewers for many valuable comments and helpful suggestions, and Hubie Chen and Tony Faradjian for participating in our baseline experiments. Portions of this work were done while the first author was visiting IBM Almaden. This paper is based upon work supported in part by the National Science Foundation under ITR/IM grant IIS-0081334. Any opinions, findings, and conclusions or recommendations expressed above are those of the authors and do not necessarily reflect the views of the National Science Foundation. 
+            </paragraph> 
+        </section> 
+    </paper>
+</annotatedpaper>

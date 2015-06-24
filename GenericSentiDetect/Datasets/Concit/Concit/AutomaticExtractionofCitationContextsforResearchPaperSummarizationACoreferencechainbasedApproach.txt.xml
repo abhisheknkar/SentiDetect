@@ -1,0 +1,382 @@
+<annotatedpaper>﻿<paper title="Automatic Extraction of Citation Contexts for Research Paper Summarization: A Coreference-chain based Approach" authors="Dain Kaplan, Ryn Iida, Takenobu Tokunaga"> 
+        <section> 
+            <title>Automatic Extraction of Citation Contexts for Research Paper Summarization: A Coreference-chain based Approach</title> 
+            Dain Kaplan, Ryn Iida, Takenobu Tokunaga 
+            Department of Computer Science 
+            Tokyo Institute of Technology 
+            {dain,ryu-i,take}@cl.cs.titech.ac.jp 
+        </section> 
+ 
+        <section imrad="i"> 
+            <title>Abstract</title> 
+            <paragraph> 
+                This paper proposes a new method based on coreference-chains for extracting citations from research papers. 
+                To evaluate our method we created a corpus of citations comprised of citing papers for 4 cited papers. 
+                We analyze some phenomena of citations that are present in our corpus, and then evaluate our method against a cue-phrase-based technique. 
+                Our method demonstrates higher precision by 7-10%. 
+            </paragraph> 
+         
+            <title>1 Introduction</title> 
+            <paragraph> 
+                Review and comprehension of existing research is fundamental to the ongoing process of conducting research; however, the ever increasing volume of research papers makes accomplishing this task increasingly more difficult. 
+                To mitigate this problem of information overload, a form of knowledge reduction may be necessary. 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                Past research  (<cite id="1" function="ack" polarity="neu">Garfield et al., 1964</cite>; <cite id="2" function="ack" polarity="neu">Small, 1973</cite>) has shown that citations contain a plethora of latent information available and that much can be gained by exploiting it. 
+                </context>
+                <context>
+                Indeed, there is a wealth of literature on topic-clustering, e.g. bibliographic coupling (<cite id="3" function="ack" polarity="neu">Kessler, 1963</cite>), or co-citation analysis (<cite id="4" function="ack" polarity="neu">Small, 1973</cite>).
+                </context>
+                
+                <context>
+                Subsequent research demonstrated that citations could be clustered on their quality, using keywords that appeared in the running-text of the citation (<cite id="5" function="ack" polarity="neu">Weinstock, 1971</cite>; <cite id="6" function="ack" polarity="neu">Nanba et al., 2000</cite>; <cite id="7" function="ack" polarity="neu">Nanba et al., 2004</cite>; Teufel et al.,2006). 
+                </context>
+            </paragraph> 
+            <paragraph> 
+                Similarly, other work has shown the utility in the IR domain of ranking the relevance of cited papers by using supplementary index terms extracted from the content of citations in citing papers, 
+                <context>
+           <kw>including</kw> <method>methods</method> <kw>that</kw> <task>search through a fixed character-length</task> window (O'<cite id="8" function="use" polarity="neu">Connor, 1982</cite>; Brad-shaw, 2003), <kw>or that focus solely on</kw> <task>the sentence containing the citation</task> (<cite id="9" function="use" polarity="neu">Ritchie et al., 2008</cite>) for acquiring these terms.          
+                    
+                </context>
+            <context>
+                A prior case study (<cite id="10" function="ack" polarity="neu">Ritchie et al., 2006</cite>) pointed out the challenges in proper identification of the full span of a citation in running text and acknowledged that fixed-width windows have their limits. 
+            </context>
+               <context> <kw>In contrast</kw> to this, <kw>endeavors have been made to</kw> <task>extract the entire span of</task> a citation by using cue-phrases collected and deemed salient by statistical merit (<cite id="11" function="con" polarity="neu">Nanba et al., 2000</cite>; <cite id="12" function="con" polarity="neu">Nanba et al., 2004</cite>). 
+               This has met in evaluations with some success. </context>
+            </paragraph> 
+            <paragraph> 
+                <context>
+                <tool>The Cite-Sum system</tool> (<cite id="13" function="use" polarity="neu">Kaplan and Tokunaga, 2008</cite>) <kw>also aims at</kw> <task>knowledge reduction through use of citations</task>. 
+                </context>
+                It receives a paper title as a query and attempts to generate a summary of the paper by finding citing papers and extracting citations in the running-text that refer to the paper. 
+                Before outputting a summary, it also classifies extracted citation text, and removes citations with redundant content. 
+                <context>
+                <kw>Another similar study</kw> (<cite id="14" function="con" polarity="neu">Qazvinian and Radev, 2008</cite>) <kw>aims at using</kw> using <data>the content of citations</data> within citing papers to <task>generate summaries of fields of research</task>. 
+                </context>
+            </paragraph> 
+            <paragraph> 
+                It is clear that merit exists behind extraction of citations in running text. 
+                This paper proposes a new method for performing this task based on coreference-chains. 
+                To evaluate our method we created a corpus of citations comprised of citing papers for 4 cited papers. 
+                We also analyze some phenomena of citations that are present in our corpus. 
+            </paragraph> 
+            <paragraph> 
+                The paper organization is as follows. 
+                We first define terminology, discuss the construction of our corpus and the results found through its analysis, and then move on to our proposed method using coreference-chains. 
+                We evaluate the proposed method by using the constructed corpus, and then conclude the paper. 
+                Papers are downloaded automatically from the web. 
+            </paragraph> 
+        </section> 
+        <section imrad="m"> 
+            <title>2 Terminology</title> 
+            <paragraph> 
+                So that we may dispense with convoluted explanations for the rest of this paper, we introduce several terms. 
+            </paragraph> 
+            <paragraph> 
+                An anchor is the string of characters that marks the occurrence of a citation in the running-text of a paper, such as "(Fakeman 2007)" or "[57]". 
+                The sentence that this anchor resides within is then the anchor sentence. 
+                The citation continues from before and after this anchor as long as the text continues to refer to the cited work; this block of text may span more than a single sentence. 
+                We introduce the citation-site,orc-site for short, to represent this block of text that discusses the cited work. 
+                Since more than once sentence may discuss the cited work, each of these sentences is called a c-site sentence. 
+                For clarity will also call the anchor the c-site anchor henceforth. 
+                A citing paper contains the c-site that refers to the cited paper. 
+                Finally, the reference at the end of the paper provides details about a c-site anchor (and the c-site). 
+            </paragraph> 
+            <paragraph> 
+                Figure 1 shows a sample c-site with the c-site anchor wavy-underlined, and the c-site itself italicized; the non-italicized text is unrelated to the c-site. 
+                The reference for this c-site is also provided below the dotted line. 
+                In all subsequent examples, the c-site will be in italics and the current place of emphasis wavy-underlined. 
+                ". .. 
+                Our area of interest is plant growth. 
+                In past research (Fj\!kegaanaaaal;n200i), the relationship between sunlight and plant growth was shown to directly correlate. 
+                It was also shown to adhere to simple equations for deducing this relationship, the equation varying by plant. 
+                We propose a method that..." 
+                J. Fakeman: Changing Plant Growth Factors during Global Warming. 
+                In: Proceedings of SCANLP2001. 
+                Figure 1: A sample c-site and its reference 
+            </paragraph> 
+       
+            <title>3 Corpus Construction and Analysis</title> 
+            <paragraph> 
+                We created a corpus comprised of 38 papers citing 4 (cited) papers taken from Computational Linguistics: Special Issue on the Web as Corpus,Vol-ume 29, Number 3, 2003 as our data set and pre-processed it to automatically mark c-site anchors to facilitate the annotation process. 
+                The citing papers were downloaded from CiteSeer-X; see Table 1 for details. 
+                In practice the anchor does not include brackets, though the brackets do signal the start/end of the anchor. 
+                This is because multiple anchors may be present at once, e.g. (Fakeman 2007; Noman 2008). 
+            </paragraph> 
+            <paragraph> 
+                <context>
+                <author>We</author> then <action>proceeded</action> <kw>to</kw> <action>manually annotate</action> the corpus <kw>using</kw><tool>SLAT</tool> (<cite id="15" function="bas" polarity="pos">Noguchi et al., 2008</cite>), a browser-based multi-purpose annotation tool. 
+                </context>
+                We devised the following guidelines for annotation. 
+                Since the tool allows for two types of annotation, namely segments that demarcate a region of text, and links, that allow an annotator to assign relationships between them, we created four segment types and three link types. 
+                Segments were used to mark c-site anchors, c-sites, background information (explained presently), and references. 
+                We used the term background information to refer to any running-text that elaborates on a c-site but is not strictly part of the c-site itself (refer to Figure 2 for an example). 
+                Even during annotation, however, we encountered situations that felt ambiguous, making this a rather contentious issue. 
+            </paragraph> 
+            <paragraph> 
+                Our corpus had a limited number of background information annotations, or we would likely have experienced more issues. 
+                That being said, it is at leastimportantto recognize thatsuch kinds ofsup-plementary content exist (that may not be part of the c-site but is still beneficial to be included), and needs to be considered more in the future. 
+            </paragraph> 
+            <paragraph> 
+                We then linked each c-site to its anchor, each anchor to its reference, and any background information to the c-site supplemented. 
+                We also decided on annotating entire sentences, even if only part of a sentence referred to the cited paper. 
+                Table 1 outlines our corpus. 
+                Table l: Corpus composition 
+            </paragraph> 
+            <paragraph> 
+                To our knowledge, this is the first corpus constructed in the context of paper summarization related to collections of citing papers. 
+                Analysis of the corpus provided some interesting insights, though a larger corpus is required to confirm the frequency and validity of such phenomena. 
+                The more salient discoveries are itemized below. 
+                These phenomena may also co-occur. 
+                http://citeseerx.ist.psu.edu 
+                <context>
+                    Though not specific to the task of summarization through use of c-sites, citation corpora have been constructed in the past, e.g. (<cite id="16" function="ack" polarity="pos">Teufel et al., 2006</cite>). 
+                </context>
+                
+            </paragraph> 
+            <paragraph> 
+                Background Information Though not strictly part of a c-site, background information may need to be included for the citation to be comprehensible. 
+                Take Figure 2 for example (background information is wavy-underlined) for the c-site anchor "(Resnik &amp; Smith 2003)". 
+                The authors insert their own research into the c-site (illustrated with wavy-underlines); this information is important for understanding the following c-site sentence, but is not strictly discussing the cited paper. 
+                Background information is thus a form of "meta-information" about the c-site. 
+            </paragraph> 
+            <paragraph> 
+                In well written papers, often the flow of content is gradual, which can make distinguishing background information difficult. 
+                "... 
+                Resnik and his colleagues (Resnik &amp; Smith 2003) proposed a new approach, STRAND, ... 
+                The databases for parallel texts in several languages with download tools are available from the STRAND webpage. 
+                Recently they also applied the same technique for collecting a set of links to monolingual pages identified as Russian by http://www.archive.org, and Internet archiving service WaaeaahaaavaeaaevaaalauaaateadaatahaeaaRauasasiaaan database produced by this method and identified 
+                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 
+                £jaraniibe^a?fn!srioaasaEaoa?lemasawwithiita First, it does not identify the time when the page was downloaded and stored in the Internet archive 
+                <context>
+                     Figure 2: <data>A non-contiguous c-site</data> w/ background information (<kw>from</kw> (<cite id="17" function="bas" polarity="pos">Sharoff, 2006</cite>))  
+                </context>
+              
+            </paragraph> 
+            <paragraph> 
+                Contiguity C-sites are not necessarily contiguous We found in fact that authors tend to insert opinions or comments related to their own work with sentences/clauses in between actual c-site sentences/clauses, that would be best omitted from the c-site In Figure 2 the wavy-underlined text shows the author's opinion portion. 
+                This creates problems for cue-phrase based techniques, as though they detect the sentence following it, they fail on the opinion sentence. 
+                Incorporation of a leniency for a gap in such techniques may be possible, but seems more problematic and likely to misidentify c-site sentences altogether. 
+            </paragraph> 
+            <paragraph> 
+                Related/Itemization Authors often list several works (namely, insert several c-site anchors) in the same sentence using connectives. 
+                The works may likely be related, and though this may be useful information for certain tasks, it is important to differentiate which material is related to the c-site, and which is the c-site itself. 
+                In Figure 3 the second sentence discusses both c-site anchors (and should be included in both their c-sites); the first sentence, however, contains two main clauses connected with a connective, each clause a different c-site (one with the anchor "[3]" and one with "[4]"). 
+                Sub-clausal analysis is necessary for resolving issues such as these. 
+                For our current task, however, we annotated only sentences, and so in this example the second c-site anchor is included in the first. 
+                "... 
+                STRAND system [4] searches the web for parallel text aanadaa[a3a]aeaxatraaacatsaataraanasalaataioanasaapaaairas aamaaoanagaaanacahaoarataexatasapaoaianatianagataoagaetahaearataoataheaasaamaae webpage. 
+                However they all suffered from the lack ofsuch bilingual resources available on the web 
+                <context>
+                Figure 3: <concept>Itemized c-sites</concept> <feature>partially overlapping</feature> (<kw>from</kw> (<cite id="18" function="bas" pol="neu">Zhang et al., 2005</cite>)) 
+                </context>
+            </paragraph> 
+            <paragraph> 
+                Nesting C-sites may be nested. 
+                In Figure 4 the nested citation ("[Lafferty and Zhai 2001, Lavrenko and Croft 2001]") should be included in the parent one ("[Kraaij et al. 2002]"). 
+                The wavy-underlined portion shows the sentence needed for full comprehension of the c-site. 
+                .in^Ranaa^aeenaaagreat^successa/LjffejrtaaandaZihaaLi 2ooinLavxenaaonndnCxo£a200l]n it is possible 
+                to extend the approach to CLIR by integrating a translation model. 
+                This is the approach proposed in [Kraaij et al. 2002]..." 
+                <context>
+                Figure 4: <feature>Separate</feature> <data>c-site anchors</data> does not mean separate c-sites (from (<cite id="19">Nie, 2002</cite>))     
+                </context>                
+            </paragraph> 
+            <paragraph> 
+                Aliases Figure 5 demonstrates another issue: aliasing. 
+                The author redefines how they cite the paper, in this case using the acronym "K&amp;L". 
+                "... 
+                To address the data-sparsity issue, we employed the technique used in Keller and Lapata (2003, K&amp;L) to get a more robust approximation of predicate-argument counts. 
+                K&amp;L use this technique to obtain frequencies for predicate-argument bigrams that were unseen in a given corpus, showing that the massive size of the web outweighs the noisy and unbalanced nature of searches performed on it to produce statistics that correlate well with corpus data ... " 
+                Figure 5: C-Site with Aliasing for anchor "Keller 
+            </paragraph> 
+        </section> 
+        <section imrad="r"> 
+            <title>4 Coreference Chain-based Extraction</title> 
+            <paragraph> 
+                Some of the issues found in our corpus, namely identification of background information, noncontiguous c-sites, and aliases, show promise of resolution with coreference-chains. 
+                This is because coreference-chains match noun phrases that appear with other noun phrases to which they refer, a characteristic present in these three categories. 
+                On the other hand, cue-phrases do not detect any c-site sentence that does not use keywords (e.g. 
+                "In addition"). 
+                In the following section we discuss our implementation of a corefer-ence chain-based extraction technique, and how we then applied it to the c-site extraction task. 
+                An analysis of the results then follows. 
+                Table 2: Evaluation results for coreference resolution against the MUC-7 formal corpus. 
+            </paragraph> 
+            <subsection> 
+                <subtitle>4.1 Training the Coreference Resolver</subtitle> 
+                <paragraph> 
+                    To create and train our coreference resolver,
+                    <context>
+                         <author>we</author> <kw>used</kw> a combination of <method>techniques</method> as outlined originally <kw>by</kw> (<cite id="20" function="bas" polarity="pos">Soon et al., 2001</cite>) and subsequently extended by (<cite id="21" function="bas" polarity="pos">Ng and Cardie, 2002</cite>). 
+                    </context>
+                   
+                    
+                    Mimicking their approaches, we used the corpora provided for the MUC-7 coreference resolution task (LDC2001T02, 2001), which includes sets of newspaper articles, annotated with coreference relations, for both training and testing. 
+                    They also outlined a list of features to extract for training the resolver to recognize the coreference relations. 
+                    <context>
+                    Specifically, (<cite id="22" function="use" polarity="neu">Soon et al., 2001</cite>) <kw>established</kw> <data>a list</data> <kw>of</kw> <method>12 features that compare</method> a given anaphor with a candidate antecedent
+                    </context>
+                    , e.g. gender agreement, number agreement, both being pronouns, both part of the same semantic class (i.e. WordNet synset hyponyms/hypernyms), etc. 
+                </paragraph> 
+                <paragraph> 
+                    For training the resolver, a corpus annotated with anaphors and their antecedents is processed, and pairs of anaphor and candidate antecedents are created so as to have only one positive instance per anaphor (the annotated antecedent). 
+                    Negative examples are created by taking all occurrences of noun phrases that occur between the anaphor and its antecedent in the text. 
+                    The antecedent in these steps is also always considered to be to the left of, or preceding, the anaphor; cataphors are not addressed in this technique. 
+                </paragraph> 
+                <paragraph> 
+                    <context>
+                        <author>We</author> <kw>implemented</kw>, at least minimally, <kw>all</kw> <method>12 of these features</method>, with a few additions of what (<cite id="23" function="bas" polarity="pos">Ng and Cardie, 2002</cite>) hand selected as being most salient for increased performance. 
+                    </context>
+                    
+                    
+                    We also extended this list by adding a cosine-similarity metric between two noun phrases; it uses bag-of-words to create a vector for each noun phrase (where each word is a term in the vector) to compute their similarity. 
+                    The intuition behind this is that noun phrases with more similar surface forms should be more likely to corefer. 
+                </paragraph> 
+                <paragraph> 
+                    We further optimized string recognition and plurality detection for handling citation-strings. 
+                    See Table 3 for the full list of our features. 
+                    <context>
+                        <kw>While both</kw>  (<cite id="24" function="con" polarity="neg" >Soon et al., 2001</cite>) and (<cite id="25" function="con" polarity="neg">Ng and Cardie, 2002</cite>) induced decision trees (C5 and C4.5, respectively) we opted for using an SVM-based approach <kw>instead</kw> (<cite id="26" function="con" polarity="pos">Vapnik, 1998</cite>; <cite id="27" function="con" pol ="pos">Joachims, 1999</cite>). 
+                    </context>
+                    
+                    SVMs are known for being reliable and having good performance. 
+                </paragraph> 
+            </subsection> 
+            <subsection> 
+                <subtitle>4.2 Evaluating the Coreference Resolver</subtitle> 
+                <paragraph> 
+                    We ran our trained SVM classifier against the MUC-7 formal evaluation corpus; the results are shown in Table 2. 
+                </paragraph> 
+                <paragraph> 
+                    The results using all features listed in Table 3 are inferior to those set forth by (Soon et al., to poorer selection of features. 
+                    Upon analysis, it seems that half of the misidentified antecedents were still chosen within the correct sentence and more than 10% identified the proper antecedent, but selected the entire noun phrase (when that antecedent was marked as, for example, only its head); the majority of these cases involved the antecedent being only one sentence away from the anaphor. 
+                    Since the former seemed suspect of a partial string matching feature, we decided to re-run the tests first excluding our implementation of the SOON_STR_MATCH feature, and then our COSINE_SIMILARITY feature. 
+                    The results for this are shown in Table 2. 
+                    It can be seen that using either of the two string comparison features works substantially better than with both of them in tandem, with the COSINE_SIMILARITY feature showing signs of overall better performance which is competitive to (Soon et al., 
+                    Table 3: Features used for coreference resolution. 
+                    SOON_STR_MATCH feature in the following experiments. 
+                </paragraph> 
+                <paragraph> 
+                    However, the MUC-7 task measures the ability to identity the proper antecedent from a list of candidates; the c-site extraction task is less ambitious in that it must only identify if a sentence contains the antecedent, not which noun phrase it is. 
+                    When we evaluate our resolver using these loosened conditions it is expected that it will perform better. 
+                </paragraph> 
+                <paragraph> 
+                    To accomplish this we reevaluate the results from the resolver in a sentence-wise manner; we group the test instances by anaphor, and then by sentence. 
+                    If any noun phrase within the sentence is marked as positive when there is in fact a positive noun phrase in the sentence, the sentence is marked as correct, and incorrect otherwise. 
+                    The results in Table 2 for this simplified task show an increase in recall, and subsequently F-measure. 
+                    The numbers for the loosened constraints evaluation are counted by sentence; the original is counted by noun phrase only. 
+                </paragraph> 
+                <paragraph> 
+                    Our system also generates many fewer training instances than the previous research, which we attribute to a more stringent noun phrase extraction procedure, but have not investigated thoroughly yet. 
+                </paragraph> 
+            </subsection> 
+            <subsection> 
+                <subtitle>4.3 Application to the c-site extraction task</subtitle> 
+                <paragraph> 
+                    As outlined above, we used the resolver with the loosened constraints, namely evaluating the sentence a potential antecedent is in as likely or not, and not which noun phrase within the sentence is the actual antecedent. 
+                    Using this principle as a base, we devised an algorithm for scanning sentences around a c-site anchor sentence to determine their likelihood of being part of the c-site. 
+                    The algorithm, shown in simplified form in Figure 6, is described below. 
+                </paragraph> 
+                <paragraph> 
+                    Starting at the beginning of a c-site anchor sentence AS, scan left-to-right; for every noun phrase encountered within AS, begin a right-to-left sentence-by-sentence search; prepend any sentence S containing an antecedent above a certain likelihood THRESHOLD, until DISTANCE sentences have been scanned and no suitable candidate sentences have been found. 
+                    We set the likelihood score to 1.0, tested ad-hoc for best results, and the distance-threshold to 5 sentences, having noted in our corpus that no citation is discontinuous by more than 4. 
+                </paragraph> 
+                <paragraph> 
+                    In a similar fashion, the algorithm then proceeds to scan text following AS; for every noun phrase NP encountered (moving left-to-right), begin a right-to-left search for a suitable antecedent. 
+                    If a sentence is not evaluated above THRESHOLD, 
+                    Table 4: Evaluation results for c-site extraction w/o background information 
+                    Sentence (Micro-average) C-site (Macro-average) 
+                    set CSITE to AS pre: 
+                    foreach NP in AS 
+                    foreach sentence S preceding AS if DISTANCE > MAX-DIST goto post if likelihood > THRESHOLD then set CSITE to S + CSITE reset DISTANCE 
+                    end end end 
+                    foreach sentence S after AS foreach NP in S foreach sentence S2 until S if DISTANCE > MAX-DIST stop if S2 has link then if likelihood > THRESHOLD then 
+                    set S2 has link end end end end end 
+                    Figure 6: Simplified c-site extraction algorithm using coreference-chains 
+                    it will be ignored when the algorithm backtracks to look for candidate noun phrases for a subsequent sentence, thus preserving the coreference-chain and preventing additional spurious chains. 
+                    If more than DISTANCE sentences are scanned without finding a c-site sentence, the process is aborted and the collection of sentences returned. 
+                </paragraph> 
+            </subsection> 
+            <subsection> 
+                <subtitle>4.4 Experiment Setup</subtitle> 
+                <paragraph> 
+                    <context>
+                        <kw>To evaluate</kw> our coreference-chain extraction method <author>we</author> <kw>compare it with a</kw> <method>cue-phrases technique</method> (<cite id="28" function="bas" polarity="pos">Nanba et al., 2004</cite>) and two baselines. 
+                        
+                    </context>
+                    
+                    
+                    Baseline 1 extracts only the c-site anchor sentence as the c-site; baseline 2 includes sentences before/after the c-site anchor sentence as part of the c-site with a 50/50 probability — it tosses a coin for each consecutive sentence to decide its inclusion. 
+                    We also created two hybrid methods that combine the results of the cue-phrases and coreference-chain techniques, one the union of their results (includes the extracted sentences of both methods), and the other the intersection (includes sentences only for which both methods agree), to measure their mutual compatibility. 
+                </paragraph> 
+                <paragraph> 
+                    The annotated corpus provided the locations of c-site anchors for the cited paper within the citing paper's running-text. 
+                    We then compared the extracted c-sites of each method to the c-sites of the annotated corpus. 
+                </paragraph> 
+            </subsection> 
+            <subsection> 
+                <subtitle>4.5 Evaluation</subtitle> 
+                <paragraph> 
+                    The results of our experiments are presented in Table 4. 
+                    We evaluated each method as follows. 
+                    Recall and precision were measured for a c-site based on the number of extracted sentences; if an extracted sentence was annotated as part of the c-site, it counted as correct, and if an extracted sentence was not part of a c-site, incorrect; sentences annotated as being part of the c-site not extracted by the method counted as part of the total sentences for that c-site. 
+                    As an example, if an annotated c-site has 3 sentences (including the c-site anchor sentence), and the evaluated method extracted 2 of these and 1 incorrect sentence, then the recall for this c-site using this method would be 2/3,and the precision 2/(2 + 1). 
+                </paragraph> 
+                <paragraph> 
+                    Since the evaluation is inherently sentence-based, we provide two averages in Table 4. 
+                    The micro-average is for sentences across all c-sites; in other words, we tallied the correct and incorrect sentence count for the whole corpus and then divided by the total number of sentences (94). 
+                    This average provides a clearer picture on the efficacy of each method than does the macro-average. 
+                    The macro-average was computed per c-site (as explained above) and then averaged over the total number of c-sites in the corpus (50). 
+                </paragraph> 
+                <paragraph> 
+                    With the exception of a 3% lead in macro-average recall, coreference-chains outperform cue-phrases in every way. 
+                    We can see a substantial difference in micro-average precision (74. 
+                    4 vs. 64.9), which results in nearly a 5% higher F-measure. 
+                    The macro-average precision is also higher by more than 6%. 
+                    It matches more and misses far less. 
+                    The loss in the macro-average recall can be attributed to the coreference-chain method missing one of two sentences for several c-sites, which would lower its overall recall score; keep in mind that since in the macro-average all c-sites are treated equally, even large c-sites in which the coreference-chain method performs well, such an advantage will be reduced with averaging and is therefore misleading. 
+                </paragraph> 
+                <paragraph> 
+                    Baseline 2 performed as expected, i.e. higher than baseline 1 for recall. 
+                    Looking only at F-measures for evaluating performance in this case is misleading. 
+                    This is particularly the case because precision is more important than recall — we want accuracy. 
+                    Coreference-chains achieved a precision of over 87.2 compared to the 71.2 of baseline 2. 
+                </paragraph> 
+                <paragraph> 
+                    The combined methods also showed promise. 
+                    In particular, the intersection method had very high precision (91.2 and 95.7), and marginally managed to extract more sentences than baseline 1. 
+                    The union method has more conservative scores. 
+                </paragraph> 
+                <paragraph> 
+                    We also understood from our corpus that only about half of c-sites were represented by c-site anchor sentences. 
+                    The largest c-site in the corpus was 6 sentences, and the average 1.8. 
+                    This means using the c-site anchor sentence alone excludes on average about half of the valuable data. 
+                </paragraph> 
+                <paragraph> 
+                    These results are promising, but a larger corpus is necessary to validate the results presented here. 
+                </paragraph> 
+            </subsection> 
+        </section> 
+ 
+        <section imrad="d"> 
+            <title>5 Conclusions and Future Work</title> 
+            The results demonstrate that a coreference-chain-based approach may be useful to the c-site extraction task. 
+            We can also see that there is still much work to be done. 
+            <context>
+                
+            The scores for the hybrid methods also indicate potential for a method that more tightly couples these two tasks, such as Rhetorical Structure Theory (RST) (<cite id="29" function="ack" polarity="neu">Thompson and Mann, 1987</cite>; <cite id="30" function="ack" polarity="neu">Marcu, 2000</cite>).    
+                
+            </context>
+        <paragraph>                 
+            Though it has demonstrated superior performance, coreference resolution is not a light-weight task; this makes real-time application more difficult than with cue-phrase-based approaches. 
+            Our plans for future work include the construction of a larger corpus of c-sites, investigation of other features for improving our coreference resolver, and applying RST to c-site extraction. 
+        </paragraph> 
+        
+            <title>Acknowledgments</title> 
+            <paragraph> 
+                The authors would like to express appreciation to Microsoft for their contribution to this research by selecting it as a recipient of the 2008 WEBSCALE Grant (Web-Scale NLP 2008, 2008). 
+            </paragraph> 
+        </section> 
+    </paper>
+</annotatedpaper>
