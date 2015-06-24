@@ -65,7 +65,6 @@ public class AANOperations
 		}
 		return AANPapers;
 	}
-	
 	public static HashMap<String, Integer> getAuthorHashMap() throws IOException
 	{
 		HashMap<String, Integer> AuthorHashMap = new HashMap<String, Integer>();
@@ -89,8 +88,7 @@ public class AANOperations
 			if (in!= null) in.close();
 		}
 		return AuthorHashMap;
-	}
-		
+	}		
 	public static HashMap<String, Integer> getAuthorNodeHashMap() throws IOException
 	{
 		//Create nodes for authors
@@ -116,7 +114,6 @@ public class AANOperations
 		}
 		return AuthorNodeHashMap;
 	}
-
 	public static HashMap<Integer, SparseMultigraph<Integer, CoAuthorshipLink>> formCoAuthorshipNetwork(HashMap <String, AANPaper> Papers) throws IOException
 	{
 		//Nodes are of type CoAuthorNode, edges are of type CoAuthorEdge
@@ -195,7 +192,8 @@ public class AANOperations
 		}
 		return CitationNetwork;
 	}	
-	
+	//---
+
 	public static SparseMultigraph<Integer, CoAuthorshipLink> AuthorNetworkTill(int year, HashMap<Integer, SparseMultigraph<Integer, CoAuthorshipLink>> CoAuthorshipNetwork) throws IOException
 	{
 		SparseMultigraph<Integer, CoAuthorshipLink> G = new SparseMultigraph<Integer, CoAuthorshipLink>();
@@ -219,7 +217,7 @@ public class AANOperations
 		}
 		return G;
 	}
-	public static HashMap<Integer, List<Double>> runAlgo01Part1(HashMap<Integer, SparseMultigraph<Integer, CoAuthorshipLink>> CoAuthorshipNetwork, HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork, HashMap <String, AANPaper> AANPapers, int earliest) throws IOException
+	public static TreeMap<Integer, List<Double>> runAlgo01Part1(HashMap<Integer, SparseMultigraph<Integer, CoAuthorshipLink>> CoAuthorshipNetwork, HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork, HashMap <String, AANPaper> AANPapers, int earliest) throws IOException
 	{
 		File fout1 = new File("Outputs/AAN/CoAuthorshipDistanceMap.tmp");
 		File fout2 = new File("Outputs/AAN/YearDiffvsDistanceList.tmp");
@@ -234,7 +232,7 @@ public class AANOperations
 		if (fout1.exists()) CoAuthorshipDistanceMap = FileOperations.readObject(fout1);//new HashMap<String,Integer>(); 
 		else CoAuthorshipDistanceMap = new HashMap<String,Integer>(); 
 				
-		HashMap<Integer, List<Double>> YearDiffvsDist = new HashMap<Integer, List<Double>>();
+		TreeMap<Integer, List<Double>> YearDiffvsDist = new TreeMap<Integer, List<Double>>();
 		
 		String AuthorComboKey;
 		
@@ -310,7 +308,7 @@ public class AANOperations
 		return YearDiffvsDist;
 	}
 
-	public static void runAlgo01Part2(HashMap<Integer, List<Double>> YearDiffvsDistance, int toRead, int infToConsider, int defaultpathlength) throws IOException
+	public static void runAlgo01Part2(TreeMap<Integer, List<Double>> YearDiffvsDistance, int toRead, int infToConsider, int defaultpathlength) throws IOException
 	{
 		//Get mean, median and plot
 		File fin = new File("Outputs/AAN/YearDiffvsDistanceList.tmp");
@@ -325,7 +323,7 @@ public class AANOperations
 		getProfileFromRawData(YearDiffvsDistance, meantitle, mediantitle, meansavepath, mediansavepath, infToConsider, defaultpathlength);
 	}
 
-	public static void getProfileFromRawData(HashMap<Integer, List<Double>> YearDiffvsDistance, String meantitle, String mediantitle, String meansavepath, String mediansavepath, int infToConsider, int defaultpathlength) throws IOException
+	public static void getProfileFromRawData(TreeMap<Integer, List<Double>> YearDiffvsDistance, String meantitle, String mediantitle, String meansavepath, String mediansavepath, int infToConsider, int defaultpathlength) throws IOException
 	{
 		int infthresh = 100;
 				
@@ -335,9 +333,12 @@ public class AANOperations
 			
 		for(Map.Entry<Integer, List<Double>> E : YearDiffvsDistance.entrySet())
 		{
-			mean = GeneralOperations.getMeanOfList(E.getValue(), infthresh, infToConsider, defaultpathlength);
+//			mean = GeneralOperations.getMeanOfList(E.getValue(), infthresh, infToConsider, defaultpathlength);
+//			median = GeneralOperations.getMedianOfList(E.getValue());
+
+			mean = GeneralOperations.getSumOfList(E.getValue(), infthresh, infToConsider, defaultpathlength);
 			median = GeneralOperations.getMedianOfList(E.getValue());
-			
+						
 			Means.put(E.getKey(), mean);
 			Medians.put(E.getKey(), median);			
 		}
@@ -349,11 +350,13 @@ public class AANOperations
 		LineChartClass P2 = new LineChartClass(Medians, mediantitle, "Year Difference", "Distance");
 //		P2.plot(); 
 		P2.setYRange(0, 15);
-		P2.save(new File(mediansavepath));
+//		P2.save(new File(mediansavepath));
 	}
 	
-	public static void getIndividualCitationProfile(int iterations, int citthresh, int infToConsider, int defaultpathlength, String Method, int earliest) throws IOException
+	public static void getIndividualCitationProfile(int iterations, int citthresh, int infToConsider, int defaultpathlength, String Method, int earliest, int bucketsize, double alpha) throws IOException
 	{
+		Process p;
+		int bucketnumber;
 		HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork = FileOperations.readObject(new File("Outputs/AAN/CitationNetworkYearWise.tmp"));
 		
 		HashMap<String, AANPaper> papermap = readAANMetadata();
@@ -365,7 +368,7 @@ public class AANOperations
 
 		for (int i = 0; i < iterations; ++i)
 		{
-			HashMap<Integer, List<Double>> YearDiffvsDist = new HashMap<Integer, List<Double>>();		
+			TreeMap<Integer, List<Double>> YearDiffvsDist = new TreeMap<Integer, List<Double>>();		
 			randomIndex = (int) Math.round(Math.random()*paperIDs.size());	//Strange, but works
 			
 			randomID = paperIDs.get(randomIndex);
@@ -398,15 +401,43 @@ public class AANOperations
 					System.out.println("Iteration number - " + i);
 					meantitle = "Mean distribution - " + scope;
 					mediantitle = "Median distribution - " + scope;
-					meansavepath = "Outputs/AAN/MeanProfiles/" + Method + "Mean_" + randomID + ".jpg";
-					mediansavepath = "Outputs/AAN/MedianProfiles/" + Method + "Median_" + randomID + ".jpg";
+					
+					bucketnumber = citcount / bucketsize;
+//					bucketnumber = getBucketNumberAlpha(YearDiffvsDist, alpha, citcount);
+					
+//					meansavepath = "Outputs/AAN/MeanProfiles/" + Method + bucketnumber + "/Mean_" + randomID + ".jpg";
+					meansavepath = "Outputs/AAN/SumProfiles/" + Method + bucketnumber + "/Mean_" + randomID + ".jpg";
+					mediansavepath = "Outputs/AAN/MedianProfiles/" + Method + bucketnumber + "/Median_" + randomID + ".jpg";
 		
+//					File file1 = new File("Outputs/AAN/MeanProfiles/" + Method + bucketnumber); 
+					File file1 = new File("Outputs/AAN/SumProfiles/" + Method + bucketnumber); 
+					if (!file1.exists()) file1.mkdirs();
+					File file2 = new File("Outputs/AAN/MedianProfiles/" + Method + bucketnumber); 
+					if (!file2.exists()) file2.mkdirs();
 					getProfileFromRawData(YearDiffvsDist, meantitle, mediantitle, meansavepath, mediansavepath, infToConsider, defaultpathlength);
 				}
 			}
 		}
-		
 	}
+	
+	public static int getBucketNumberAlpha(TreeMap<Integer, List<Double>> YearDiffvsDist, double alpha, int citcount)
+	{
+		int bucketnumber=0;
+		int count = 0;
+		int countToReach = (int) (citcount * alpha);
+		
+		for(Map.Entry<Integer, List<Double>> entry : YearDiffvsDist.entrySet())
+		{
+			count += entry.getValue().size();
+			if (count > countToReach) 
+			{
+				bucketnumber = entry.getKey();
+				break;
+			}
+		}
+		return bucketnumber;
+	}
+	
 	
 	public static void getCitationNetworkStatistics() throws IOException
 	{

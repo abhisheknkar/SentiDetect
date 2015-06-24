@@ -52,4 +52,29 @@ public class GeneralOperations
 		Double median = getMedianOfList(Obj, Double.MAX_VALUE);
 		return median;
 	}	
+
+	public static <E> Double getSumOfList(List<E> Obj, Integer infthresh, Integer infToConsider, Integer infval)
+	{
+		Double sum=0.0;
+		Integer count = 0;
+		for(E e : Obj)
+		{
+			if ((Double) e < infthresh)
+			{
+				++count;
+				sum += (Double) e;
+			}
+			else
+			{
+				if(infToConsider==1)
+				{
+					++count;
+					sum += (double) infval;
+				}
+			}
+		}
+		return sum;
+	}
+
+
 }
