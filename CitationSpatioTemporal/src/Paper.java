@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-
 public class Paper 
 {
 	public String id;
@@ -15,8 +14,9 @@ public class Paper
 	
 	public void printPaper()
 	{
-		System.out.println(id);
-		System.out.println(title + "\n");
+		System.out.println("\n"+id);
+		System.out.println(title);
+		System.out.print(referenceids.toString()+"\n");
 	}
 
 }

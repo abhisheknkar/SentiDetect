@@ -22,7 +22,7 @@ public class TheMainU
 
 //		String dataset = "AAN";
 		String dataset = "DBLP";
-		
+
 		HashMap<String, Paper> papers = null;		
 		switch (dataset)
 		{
@@ -35,6 +35,12 @@ public class TheMainU
 		}
 
 		//Function calls go here:						
+		//To print papers
+		for (Map.Entry<String, Paper> paper : papers.entrySet())
+		{
+			paper.getValue().printPaper();
+		}
+
 		CoAuthorshipNetworkYW coauthorshipnetworkYW = DatasetOperations.formCoAuthorshipNetworkYW(papers);
 		
 		long endTime   = System.currentTimeMillis();		
