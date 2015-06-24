@@ -4,32 +4,64 @@ import java.io.*;
 import edu.uci.ics.jung.graph.SparseGraph;
 import edu.uci.ics.jung.graph.SparseMultigraph;
 
+
 public class TheMainU 
 {
+	private static final String METHODID = "1";
+	private static final String MODE = "Mean";
+	private static final int ITERATIONS = 100;
+	private static final int INFTOCONSIDER = 1;
+	private static final int DEFAULTPATHLENGTH = 22;
+	private static final int EARLIEST = 1990;
+	private static final int CITTHRESH = 25;
+	private static final int BUCKETSIZE = 25;
+	private static final double ALPHA = 25;
+	
 	public static void main(String[] args) throws IOException
 	{
 		long startTime = System.currentTimeMillis();
 
-		HashMap<String, Paper> papers = DatasetReader.readAANMetadata();
-//		HashMap<String, Integer> authorhashmap = DatasetOperations.getAuthorHashMap(papers);
-//		CoAuthorshipNetworkYW coauthorshipnetwork = DatasetOperations.formCoAuthorshipNetworkYW(papers);
-		CitationNetworkYW cn = DatasetOperations.formCitationNetworkYW(papers);
+//		String dataset = "AAN";
+		String dataset = "DBLP";
 		
-		for(Map.Entry<Integer, CitationNetwork> e : cn.network.entrySet())
+		HashMap<String, Paper> papers = null;		
+		switch (dataset)
 		{
-			for (CitationLink c : e.getValue().network.getEdges())
-			{
-//				System.out.println(e.getValue().network.getEndpoints(c).toString());
-			}
+			case "AAN":
+				papers = DatasetReader.readAANMetadata();
+				break;
+			case "DBLP":
+				papers = DatasetReader.readDBLPMetadata();
+				break;
 		}
-/*		
-		for (Map.Entry<Integer, CoAuthorshipNetwork> e : coauthorshipnetwork.network.entrySet())
-		{
-			System.out.println("Year: " + e.getKey() + " " + e.getValue().network.toString());// + ", Map: " + e.getValue());
-		}
-*/	
-		long endTime   = System.currentTimeMillis();
+
+		//Function calls go here:						
+		CoAuthorshipNetworkYW coauthorshipnetworkYW = DatasetOperations.formCoAuthorshipNetworkYW(papers);
+		
+		long endTime   = System.currentTimeMillis();		
 		System.out.println("Total time: " + (endTime - startTime) + "ms.");		
 	}
-
 }
+
+
+/*
+		CoAuthorshipNetworkYW coauthorshipnetworkYW = DatasetOperations.formCoAuthorshipNetworkYW(papers);
+		CitationNetworkYW citationnetworkYW = DatasetOperations.formCitationNetworkYW(papers);
+		TreeMap<Integer, List<Double>> t = DatasetOperations.getCiterDistanceDataByYearDiff(coauthorshipnetworkYW, citationnetworkYW, papers, EARLIEST, dataset);
+		DatasetOperations.plotCiterDistanceSummaryALL(dataset, METHODID, MODE, INFTOCONSIDER, DEFAULTPATHLENGTH);
+		DatasetOperations.getIndividualCitationProfile(papers, ITERATIONS, dataset, MODE, CITTHRESH, INFTOCONSIDER, DEFAULTPATHLENGTH, METHODID, EARLIEST, BUCKETSIZE, ALPHA);
+		System.out.println(DatasetOperations.getDiameter(new File("Outputs/" + dataset + "/CoAuthorshipDistanceMap.tmp")));
+		
+		//To print citation network
+		for (Map.Entry<Integer, CitationNetwork> e : citationnetworkYW.network.entrySet())
+		{
+			System.out.println(e.getValue().network.toString());
+		}
+
+		//To print papers
+		for (Map.Entry<String, Paper> paper : papers.entrySet())
+		{
+			paper.getValue().printPaper();
+		}
+
+*/

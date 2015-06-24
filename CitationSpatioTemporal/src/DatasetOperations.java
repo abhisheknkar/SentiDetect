@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.*;
 
+import javax.print.DocFlavor.STRING;
+
 import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath;
 import edu.uci.ics.jung.graph.*;
 import edu.uci.ics.jung.graph.util.EdgeType;
@@ -108,6 +110,263 @@ public class DatasetOperations
 		}
 		return citationnetworkYW;
 	}	
+
+	public static CoAuthorshipNetwork AuthorNetworkTill(int year, CoAuthorshipNetworkYW coauthorshipnetworkYW, HashMap<String, Paper> papers) throws IOException
+	{
+		CoAuthorshipNetwork G = new CoAuthorshipNetwork();
+		HashMap<String, Integer> authorhashmap = getAuthorHashMap(papers);
+		
+		for (Integer C : authorhashmap.values())
+		{
+			G.network.addVertex(C);
+		}
+
+		for (int curryear : coauthorshipnetworkYW.network.keySet())
+		{
+			if (curryear <= year)
+			{
+//				System.out.println("Curryear = " + curryear + "; Year = " + year + "\n");
+				for (CoAuthorshipLink E : coauthorshipnetworkYW.network.get(curryear).network.getEdges())
+				{
+					G.network.addEdge(E, coauthorshipnetworkYW.network.get(curryear).network.getEndpoints(E).getFirst(), coauthorshipnetworkYW.network.get(curryear).network.getEndpoints(E).getSecond(), EdgeType.DIRECTED);
+				}
+			}
+		}
+		return G;
+	}
+
+	public static TreeMap<Integer, List<Double>> getCiterDistanceDataByYearDiff(CoAuthorshipNetworkYW coauthorshipnetworkYW, CitationNetworkYW citationnetworkYW, HashMap <String, Paper> papers, int earliest, String Dataset) throws IOException
+	{
+		/*
+		 * For all citations, we compute the corresponding coauthorship distance and classify
+		 * by the difference in years of citation and publication
+		 */
+		//The files containing precomputed data
+		File fout1 = new File("Outputs/" + Dataset + "/CoAuthorshipDistanceMap.tmp");
+		File fout2 = new File("Outputs/" + Dataset + "/YearDiffvsDistanceList.tmp");
+		File fout3 = new File("Outputs/" + Dataset + "/CitationNetworkYearWise.tmp");
+
+		int PathLength, currLength;
+		int count = 0;
+		String[] AuthorSource;
+		String[] AuthorDestination;
+		String AuthorComboKey;
+		TreeMap<Integer, List<Double>> yeardiffVSdist = new TreeMap<Integer, List<Double>>();
+		HashMap<String, Integer> authorhashmap = getAuthorHashMap(papers);
+		HashMap<String,Integer> coauthorshipdistancemap = null;
+
+		if (fout1.exists()) coauthorshipdistancemap = FileOperations.readObject(fout1);//new HashMap<String,Integer>(); 
+		else coauthorshipdistancemap = new HashMap<String,Integer>(); 
+						
+		for (Map.Entry<Integer, CitationNetwork> E : citationnetworkYW.network.entrySet())
+		{
+			CitationNetwork gCitation = E.getValue();
+			CoAuthorshipNetwork gCoAuthor = AuthorNetworkTill(E.getKey(), coauthorshipnetworkYW, papers);			
+			
+			DijkstraShortestPath<Integer,CoAuthorshipLink> alg = new DijkstraShortestPath(gCoAuthor.network);	
+
+			for (CitationLink C : gCitation.network.getEdges())
+			{
+				//Get the citer and the cited
+				Pair<CitationNode> P = gCitation.network.getEndpoints(C);
+				if(papers.get(P.getSecond().ID).year > earliest)
+				{
+					//Get the author lists
+					AuthorSource = papers.get(P.getFirst().ID).authors;
+					AuthorDestination = papers.get(P.getSecond().ID).authors;
+					
+					PathLength = Integer.MAX_VALUE;
+					currLength = Integer.MAX_VALUE;
+					if ((count % 1000) == 0)System.out.println(count);
+					++count;
+					for (int i = 0; i < AuthorSource.length; ++i)
+					{
+						for (int j = 0; j < AuthorDestination.length; ++j)
+						{
+							//For each pair of authors, get their shortest path in the coauthorship network
+							//Store the paths in a Map
+							AuthorComboKey = AuthorSource[i] + ";" + AuthorDestination[j] + ";" + Integer.toString(gCitation.network.getEndpoints(C).getFirst().year);
+							
+							if (!coauthorshipdistancemap.containsKey(AuthorComboKey))
+							{
+								//Check if both nodes are present
+								if(authorhashmap.containsKey(AuthorSource[i]) && authorhashmap.containsKey(AuthorDestination[j]))
+								{
+									List<CoAuthorshipLink> L = alg.getPath(authorhashmap.get(AuthorSource[i]),authorhashmap.get(AuthorDestination[j]));
+	//								System.out.println(L.toString());
+									if (L.size() > 0) currLength = L.size();
+									else currLength = Integer.MAX_VALUE;
+	
+									coauthorshipdistancemap.put(AuthorComboKey, currLength);
+								}
+							}
+							else 
+							{
+								currLength = coauthorshipdistancemap.get(AuthorComboKey);
+							}
+							
+							if (currLength < PathLength) PathLength = currLength;						
+						}
+					}
+					C.AuthorshipDistance = PathLength;
+					
+					if(!yeardiffVSdist.containsKey(C.yeardiff)) yeardiffVSdist.put(C.yeardiff, new ArrayList<Double>());
+					yeardiffVSdist.get(C.yeardiff).add((double)PathLength);
+					
+					C.AuthorshipDistance = PathLength;
+				}
+			}
+			E.setValue(gCitation);
+			gCoAuthor = null;
+			gCitation = null;
+		}
+		
+		File outputfolder = new File("Outputs/" + Dataset);
+		outputfolder.mkdirs();
+
+		FileOperations.writeObject(coauthorshipdistancemap, fout1);
+		FileOperations.writeObject(yeardiffVSdist, fout2);
+//		FileOperations.writeObject(CitationNetwork, fout3);
+		
+		return yeardiffVSdist;
+	}
+
+	public static void plotCiterDistanceSummaryALL(String dataset, String methodid, String mode, int infToConsider, int defaultpathlength) throws IOException
+	{
+		//Get mean, median and plot
+		File fin = new File("Outputs/" + dataset + "/YearDiffvsDistanceList.tmp");
+		TreeMap<Integer, List<Double>> yeardiffVSdist  = FileOperations.readObject(fin);
+		
+		String scope = dataset;		
+		String meantitle = mode + "distribution - " + scope;
+		String mediantitle = "Median distribution - " + scope;
+		String meansavepath = "Outputs/" + dataset + "/" + mode +"Profiles/Method" + methodid + "/Mean_" + scope + ".jpg";
+		String mediansavepath = "Outputs/" + dataset + "/MedianProfiles/Method" + methodid + "/Median_" + scope + ".jpg";
+		
+		File fin2 = new File("Outputs/" + dataset + "/" + mode + "Profiles/Method" + methodid);
+		fin2.mkdirs();
+		fin2 = new File("Outputs/" + dataset + "/MedianProfiles/Method" + methodid);
+		fin2.mkdirs();
+		
+		getProfileFromRawData(yeardiffVSdist, meantitle, mediantitle, meansavepath, mediansavepath, infToConsider, defaultpathlength, mode);
+	}
+
+	public static void getProfileFromRawData(TreeMap<Integer, List<Double>> yeardiffVSdist, String meantitle, String mediantitle, String meansavepath, String mediansavepath, int infToConsider, int defaultpathlength, String mode) throws IOException
+	{
+		int infthresh = 100;
+				
+		double mean=0,median=0;
+		TreeMap<Integer,Double> Means = new TreeMap<Integer,Double>();
+		TreeMap<Integer,Double> Medians = new TreeMap<Integer,Double>();
+			
+		for(Map.Entry<Integer, List<Double>> E : yeardiffVSdist.entrySet())
+		{
+			if (mode.equals("Mean"))
+			{
+				mean = GeneralOperations.getMeanOfList(E.getValue(), infthresh, infToConsider, defaultpathlength);
+				median = GeneralOperations.getMedianOfList(E.getValue());
+			}
+			else
+			{
+				mean = GeneralOperations.getSumOfList(E.getValue(), infthresh, infToConsider, defaultpathlength);
+				median = GeneralOperations.getMedianOfList(E.getValue());
+			}	
+			
+			Means.put(E.getKey(), mean);
+			Medians.put(E.getKey(), median);			
+		}
+
+		LineChartClass P1 = new LineChartClass(Means, meantitle, "Year Difference", "Distance");
+//		P1.plot(); 
+		P1.save(new File(meansavepath));
+		
+		LineChartClass P2 = new LineChartClass(Medians, mediantitle, "Year Difference", "Distance");
+//		P2.plot(); 
+		P2.setYRange(0, 15);
+		P2.save(new File(mediansavepath));
+	}
+
+	public static void getIndividualCitationProfile(HashMap<String, Paper> papers, int iterations, String dataset, String mode, int citthresh, int infToConsider, int defaultpathlength, String Method, int earliest, int bucketsize, double alpha) throws IOException
+	{
+		Process p;
+		int bucketnumber;
+		HashMap<Integer, SparseGraph<CitationNode, CitationLink>> CitationNetwork = FileOperations.readObject(new File("Outputs/AAN/CitationNetworkYearWise.tmp"));
+		
+		ArrayList<String> paperIDs = new ArrayList<String>(papers.keySet());
+				
+		int randomIndex, citcount;
+		String randomID;
+		String meantitle, mediantitle, meansavepath, mediansavepath, scope = "Individual", meanfolder, medianfolder;
+
+		for (int i = 0; i < iterations; ++i)
+		{
+			TreeMap<Integer, List<Double>> YearDiffvsDist = new TreeMap<Integer, List<Double>>();		
+			randomIndex = (int) Math.round(Math.random()*paperIDs.size());	//Strange, but works
+			
+			randomID = paperIDs.get(randomIndex);
+			if (papers.get(randomID).year > earliest)
+			{
+				for (Map.Entry<Integer, SparseGraph<CitationNode, CitationLink>> entry : CitationNetwork.entrySet())
+				{
+					for(CitationNode n : entry.getValue().getVertices())
+					{
+						if(n.ID.equals(randomID))
+						{
+							for (CitationLink c : entry.getValue().getIncidentEdges(n))
+							{
+								if (!YearDiffvsDist.containsKey(c.yeardiff)) YearDiffvsDist.put(c.yeardiff, new ArrayList<Double>());
+								YearDiffvsDist.get(c.yeardiff).add((double)c.AuthorshipDistance); 
+							}
+						}
+					}
+				}
+	
+				//Get total citations, see if they exceed citation threshold
+				citcount = 0;
+				for(Map.Entry<Integer, List<Double>> entry : YearDiffvsDist.entrySet())
+				{
+					citcount += entry.getValue().size();
+				}
+				
+				if (citcount >= citthresh)
+				{
+					System.out.println("Iteration number - " + i);
+					meantitle = "Mean distribution - " + scope;
+					mediantitle = "Median distribution - " + scope;
+					
+					bucketnumber = citcount / bucketsize;
+//					bucketnumber = getBucketNumberAlpha(YearDiffvsDist, alpha, citcount);
+								
+					meanfolder = "Outputs/" + dataset + "/" + mode + "Profiles/Method" + Method + "/" + bucketnumber;
+					medianfolder = "Outputs/" + dataset + "/MedianProfiles/Method" + Method + "/" + bucketnumber;
+					
+					meansavepath = meanfolder + "/Mean_" + randomID + ".jpg";
+					mediansavepath = medianfolder + "/Median_" + randomID + ".jpg";
+		
+					File file1 = new File(meanfolder); 
+					if (!file1.exists()) file1.mkdirs();
+					File file2 = new File(medianfolder); 
+					if (!file2.exists()) file2.mkdirs();
+					
+					getProfileFromRawData(YearDiffvsDist, meantitle, mediantitle, meansavepath, mediansavepath, infToConsider, defaultpathlength, mode);
+				}
+			}
+		}
+	}
+	
+	public static int getDiameter(File SPFile) throws IOException
+	{
+		int diameter = 0;
+		HashMap<String,Integer> coauthorshipdistancemap = FileOperations.readObject(SPFile);
+		
+		for (Map.Entry<String, Integer> e : coauthorshipdistancemap.entrySet())
+		{
+			if ((e.getValue() > diameter) && e.getValue()<100) diameter = e.getValue();
+		}
+		return diameter;
+	}
+	
+	
 }
 
 class CoAuthorshipNetworkYW implements Serializable
@@ -149,45 +408,46 @@ class CitationNetwork implements Serializable
 		network = new SparseGraph<CitationNode, CitationLink>();
 	}
 }
-
 class CoAuthorshipLink implements Serializable
 {
-	String edgelabel;
-	public CoAuthorshipLink(String edgelabel)
+	String EdgeLabel;
+	public CoAuthorshipLink(String EdgeLabel)
 	{
-		this.edgelabel = edgelabel;
+		this.EdgeLabel = EdgeLabel;
 	}
 	public String toString()
 	{
-		return edgelabel;
+		return EdgeLabel;
 	}
 }
 
 class CitationNode implements Serializable
 {
-	public String id;
+	public String ID;
 	public int year;
-	public CitationNode(String id, int year)
+	public CitationNode(String ID, int year)
 	{
-		this.id = id;
+		this.ID = ID;
 		this.year = year;
 	}
 	public String toString()
 	{
-		return "V" + id;
+		return "V" + ID;
 	}
 }
 
 class CitationLink implements Serializable
 {
-	public Integer authorshipdistance = Integer.MAX_VALUE;
+	boolean EdgeLabel;
+	public Integer AuthorshipDistance = Integer.MAX_VALUE;
 	public Integer yeardiff;
 	public CitationLink(int yeardiff)
 	{		
+		this.EdgeLabel = true;
 		this.yeardiff = yeardiff;
 	}
 	public String toString()
 	{
-		return String.valueOf(authorshipdistance)+","+String.valueOf(yeardiff);
+		return String.valueOf(AuthorshipDistance)+","+String.valueOf(yeardiff);
 	}
 }

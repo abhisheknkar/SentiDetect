@@ -139,7 +139,7 @@ public class DatasetReader
 					if(Metadata.size() > 0)
 					{
 						++count;
-						if(count % 10000 == 0) System.out.println(count + " papers read.");
+//						if(count % 10000 == 0) System.out.println(count + " papers read.");
 
 						Paper paper = new Paper();
 						char second;
