@@ -4,7 +4,6 @@ import java.io.*;
 import edu.uci.ics.jung.graph.SparseGraph;
 import edu.uci.ics.jung.graph.SparseMultigraph;
 
-
 public class TheMainU 
 {
 	private static final String METHODID = "1";

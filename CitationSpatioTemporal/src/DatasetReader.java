@@ -8,7 +8,6 @@ import java.util.HashMap;
 import edu.uci.ics.jung.graph.SparseGraph;
 import edu.uci.ics.jung.graph.util.EdgeType;
 
-
 public class DatasetReader 
 {
 	public static HashMap <String, Paper> readAANMetadata() throws IOException
