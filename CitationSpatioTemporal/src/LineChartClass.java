@@ -22,6 +22,7 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+
 public class LineChartClass extends ApplicationFrame
 {
 	private ChartPanel chartPanel;

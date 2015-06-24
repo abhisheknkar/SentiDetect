@@ -6,9 +6,9 @@ import edu.uci.ics.jung.graph.SparseMultigraph;
 
 public class TheMainU 
 {
-	private static final String METHODID = "1";
-	private static final String MODE = "Mean";
-	private static final int ITERATIONS = 100;
+	private static final String METHODID = "6";
+	private static final String MODE = "Sum";
+	private static final int ITERATIONS = 5000;
 	private static final int INFTOCONSIDER = 1;
 	private static final int DEFAULTPATHLENGTH = 22;
 	private static final int EARLIEST = 1990;
@@ -20,8 +20,8 @@ public class TheMainU
 	{
 		long startTime = System.currentTimeMillis();
 
-//		String dataset = "AAN";
-		String dataset = "DBLP";
+		String dataset = "AAN";
+//		String dataset = "DBLP";
 
 		HashMap<String, Paper> papers = null;		
 		switch (dataset)
@@ -35,13 +35,7 @@ public class TheMainU
 		}
 
 		//Function calls go here:						
-		//To print papers
-		for (Map.Entry<String, Paper> paper : papers.entrySet())
-		{
-			paper.getValue().printPaper();
-		}
-
-		CoAuthorshipNetworkYW coauthorshipnetworkYW = DatasetOperations.formCoAuthorshipNetworkYW(papers);
+		DatasetOperations.getIndividualCitationProfile(papers, ITERATIONS, dataset, MODE, CITTHRESH, INFTOCONSIDER, DEFAULTPATHLENGTH, METHODID, EARLIEST, BUCKETSIZE, ALPHA);
 		
 		long endTime   = System.currentTimeMillis();		
 		System.out.println("Total time: " + (endTime - startTime) + "ms.");		

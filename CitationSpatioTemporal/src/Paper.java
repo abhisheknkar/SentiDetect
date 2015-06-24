@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+
 public class Paper 
 {
 	public String id;

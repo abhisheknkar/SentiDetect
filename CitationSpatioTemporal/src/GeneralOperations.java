@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class GeneralOperations 
 {
 	public static <E> Double getMeanOfList(List<E> Obj, Integer infthresh, Integer infToConsider, Integer infval)

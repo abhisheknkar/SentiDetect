@@ -384,8 +384,7 @@ class CoAuthorshipNetwork implements Serializable
 	public CoAuthorshipNetwork()
 	{
 		network = new SparseMultigraph<Integer, CoAuthorshipLink>();
-	}
-	
+	}	
 }
 
 class CitationNetworkYW implements Serializable
