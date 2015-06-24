@@ -184,8 +184,9 @@ public class AmjadFeatures
 	public static void computeSentenceScore_VaderSentiment(ArrayList<AmjadCitation> Citations) throws IOException
 	{
 		String Sentence;
-		int DisplayScore = 1;
+		int DisplayScore = 0;
 		String s;
+		int count = 0;
 		for (AmjadCitation Citation : Citations)
 		{
 			for (int i = 0; i < 4; ++i)
@@ -198,6 +199,7 @@ public class AmjadFeatures
 		             
 		            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+	            	System.out.println(count++);
 		            if (DisplayScore == 1)
 		            {
 		            	while ((s = stdInput.readLine()) != null) 
