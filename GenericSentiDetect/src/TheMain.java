@@ -9,7 +9,11 @@ import java.io.ObjectOutputStream;
 import java.util.*;
 
 //Class to perform operations on the Amjad dataset
-public class TheMain {
+public class TheMain 
+{
+	private static final String[] PronounList = {"i", "me", "my", "mine", "we", "us", "we", "our", "ours",
+		"he", "she", "it", "they", "him", "her", "them","his", "her", "its", "their", "theirs"}; 
+	
 	public static void main(String[] args) throws IOException
 	{
 		long startTime = System.currentTimeMillis();
@@ -24,12 +28,19 @@ public class TheMain {
 	{
 		HashMap<String, Paper> papers = DatasetReader.readAANMetadata();
 		ArrayList<Citation> citations = DatasetReader.readAmjadCitations();
-
-		AmjadFeatures.getFeatures1and2(citations);	
-		AmjadFeatures.getFeature3(citations, papers);	
-//		AmjadFeatures.computeSentenceScore_OpinionFinder(citations, Words);	
+		
+		AmjadFeatures.plotPolarityProfiles(citations, papers);
 	}	
 }
+
+
+
+
+
+
+
+
+
 
 
 /*
@@ -40,9 +51,10 @@ public class TheMain {
 		Words = OpinionFinder.readDataset_OpinionFinder();
 
 		AANPapers = AANOperations.readAANMetadata();
-		AANOperations.getEarliest(AANPapers);
-		AmjadFeatures.getRefCountandIsSeparate(Citations);	
-		AmjadFeatures.getSelfCitations(Citations, AANPapers);	
+		AmjadFeatures.getFeatures0and1(citations);	
+		AmjadFeatures.getFeature2(citations, papers);	
+		AmjadFeatures.getFeature3(citations);
+		AmjadFeatures.writeToARFF(citations);
 		AmjadFeatures.computeSentenceScore_OpinionFinder(Citations, Words);	
 
 SentiWordnetWords = SentiWordnet.readDataset_SentiWordnet();

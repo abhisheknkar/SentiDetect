@@ -38,9 +38,8 @@ public class Citation implements Serializable
 			 Sentence[i] = Input[3+2*i];
 			 SentenceScore[i] = Integer.parseInt(Input[4+2*i]);
 			 FunctionIndex = Integer.parseInt(Input[11]);
-			 PolarityIndex = Integer.parseInt(Input[12]);
-		 }
-		 
+			 PolarityIndex = Integer.parseInt(Input[12]); if (PolarityIndex < 1 || PolarityIndex > 3) PolarityIndex = 1;
+		 }		 
 	}
 
 }

@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.*;
 
+import edu.stanford.nlp.dcoref.sievepasses.PronounMatch;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
 import edu.stanford.nlp.pipeline.Annotation;
@@ -12,9 +13,10 @@ import edu.stanford.nlp.util.CoreMap;
 //All members are static functions
 public class AmjadFeatures 
 {
-	private final String[] PronounList = {"i", "me", "my", "mine", "we", "us", "we", "our", "ours",
+	private static final String[] PronounList = {"i", "me", "my", "mine", "we", "us", "we", "our", "ours",
 			"he", "she", "it", "they", "him", "her", "them","his", "her", "its", "their", "theirs"}; 
-	public static void getFeatures1and2(ArrayList<Citation> citations)
+	
+	public static void getFeatures0and1(ArrayList<Citation> citations)
 	{
 		/*
 		 * Number of references and if the target reference is separate from the rest
@@ -42,7 +44,7 @@ public class AmjadFeatures
 		}
 	}
 
-	public static void getFeature3(ArrayList<Citation> citations, HashMap<String, Paper> papers)
+	public static void getFeature2(ArrayList<Citation> citations, HashMap<String, Paper> papers)
 	{
 		/*
 		 * Get the self citations
@@ -69,7 +71,32 @@ public class AmjadFeatures
 			}
 			s1 = null; s2 = null;
 		}
-}
+	}
+	
+	public static void getFeature3(ArrayList<Citation> citations)
+	{
+		boolean found = false;
+		for(Citation citation : citations)
+		{
+			for (int i = 0; i < citation.Sentence.length; ++i)
+			{
+				if(citation.SentenceScore[i] != 0)
+				{
+					for (int j = 0; j < PronounList.length; ++j)
+					{
+						found = citation.Sentence[i].matches("(?i).*\\b"+ PronounList[j] +"\\b.*");
+						if (found) 
+						{
+							citation.Features[3]=1;
+//							System.out.println("Pronoun: " + PronounList[j] + ", Sentence: " + citation.Sentence[i]);
+							break;
+						}
+					}
+					if (found) break;
+				}
+			}
+		}		
+	}
 	
 	public static int findNoOfOccurrences(String str, String findStr)
 	{
@@ -197,12 +224,129 @@ public class AmjadFeatures
 		                while ((s = stdError.readLine()) != null) {
 		                    System.out.println(s);
 		                }
-		            }
-		
-				
+		            }				
 				}
 			}
 		}
+	}
+
+	public static void writeToARFF(ArrayList<Citation> citations)
+	{
+		int features = 5;	//Including outputs
+		try 
+		{
+			File file = new File("Outputs/Amjad/4features.arff");
+ 
+			// if file doesnt exists, then create it
+			if (!file.exists()) 
+			{
+				file.createNewFile();
+			}
+			String initialization = "@relation polarity\n\n"
+					+ "@attribute refCount real\n"
+					+ "@attribute isSeparate {0,1}\n"
+					+ "@attribute selfCitation {0,1}\n"
+					+ "@attribute PP_1or3 {0,1}\n"
+					+ "@attribute polarity {1,2,3}\n\n"
+					+ "@data\n";
+			
+			String content;
+			
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+
+			bw.write(initialization);
+			for (Citation citation : citations)
+			{
+				content = "";
+				for (int i = 0; i < features; ++i)
+				{
+					if (i!=features-1)
+					{
+						content += citation.Features[i] + ",";
+					}
+					else 
+					{
+						content += citation.PolarityIndex + "\n";
+					}
+				}
+				bw.write(content);
+			}
+			
+			bw.close();
+			System.out.println("ARFF File written");
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+	}
+	public static void plotPolarityProfiles(ArrayList<Citation> citations, HashMap<String, Paper> papers) throws IOException
+	{
+		/*
+		 * An arraylist (an entry for each polarity) of hashmaps (an entry for each paper) of yearwise citation polarity counts
+		 */
+		ArrayList<HashMap<String, TreeMap<Integer, Double>>> paperprofiles = new ArrayList<HashMap<String, TreeMap<Integer, Double>>>();
+		for (int i = 0; i < 3; ++i)
+		{
+			paperprofiles.add(new HashMap<String, TreeMap<Integer, Double>>());
+		}
+		
+		int yearpub, yeardiff;
+		int polarityscore;
+		double currval;
+		
+		for (Citation citation : citations)
+		{
+			if (!paperprofiles.get(citation.PolarityIndex-1).containsKey(citation.Cited)) paperprofiles.get(citation.PolarityIndex-1).put(citation.Cited, new TreeMap<Integer, Double>());
+			yearpub = papers.get(citation.Cited).year;
+			yeardiff = citation.year - yearpub;
+			
+			polarityscore = citation.PolarityIndex; 
+			if (polarityscore < 1 || polarityscore > 3) polarityscore = 1;
+
+			//If that year's entry isn't there
+			if (!paperprofiles.get(citation.PolarityIndex-1).get(citation.Cited).containsKey(yeardiff)) 
+			{
+				paperprofiles.get(citation.PolarityIndex-1).get(citation.Cited).put(yeardiff, 0.0);
+			}
+			currval = paperprofiles.get(citation.PolarityIndex-1).get(citation.Cited).get(yeardiff);
+			paperprofiles.get(citation.PolarityIndex-1).get(citation.Cited).put(yeardiff, currval +1);
+		}
+		
+		String Xtitle = "Year Difference";
+		String Ytitle = "Citations";
+		//Now average and plot		
+		int count = 0; int totalcitations;
+		for (Map.Entry<String, TreeMap<Integer, Double>> e : paperprofiles.get(0).entrySet())
+		{
+			totalcitations = 0;
+			for (int i = 0; i < 3; ++i) if(paperprofiles.get(i).containsKey(e.getKey())) totalcitations += paperprofiles.get(i).get(e.getKey()).size();
+			
+			String title = "Polarity Profile for " + e.getKey() + " (pub." + papers.get(e.getKey()).year + "), Citations = " + totalcitations;
+			File fout = new File("Outputs/Amjad/PolarityProfiles/polprof_" + e.getKey() + ".jpg"); 
+			LineChartClass lcc = new LineChartClass(title, Xtitle, Ytitle);
+			
+			System.out.println((count++) +" - " + e.getKey() + ", citations = " + totalcitations);
+			
+			lcc.addToDataset(paperprofiles.get(0).get(e.getKey()), "Neutral");
+			if(paperprofiles.get(1).containsKey(e.getKey())) lcc.addToDataset(paperprofiles.get(1).get(e.getKey()), "Positive");
+			if(paperprofiles.get(2).containsKey(e.getKey())) lcc.addToDataset(paperprofiles.get(2).get(e.getKey()), "Negative");
+			lcc.makePlot();
+			lcc.save(fout);
+			lcc.clearDataset();
+		}
+
+/*		for (Map.Entry<String, TreeMap<Integer, Double>> e : paperprofiles.get(0).entrySet())
+		{
+			System.out.println("Paper: " + e.getKey());
+			for (int j = 0; j < 3; ++j)
+			{
+				System.out.println("For j = " + j + ", Profile:\n" + paperprofiles.get(j).get(e.getKey()));
+			}
+		}
+*/		
+		
 	}
 
 }
