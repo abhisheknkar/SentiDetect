@@ -219,6 +219,3 @@ public class ContextOperations
 		}
 	}
 }
-
-//ArrayList<Pattern> citationpatterns = new ArrayList<Pattern>();
-//citationpatterns.add(Pattern.compile(citationnametype[i]));
