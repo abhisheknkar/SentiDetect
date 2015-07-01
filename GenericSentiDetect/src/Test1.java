@@ -13,8 +13,7 @@ public class Test1 {
 
 	public static void main(String[] args) throws IOException
 	{
-		// TODO Auto-generated method stub
-
+//		String oneCapital = "[a-z]*[A-Z][a-z]*";
 		String nametype1 = "[A-Z][A-Za-z]*([ \r\n]+[A-Za-z]\\.?[-A-Za-z\n]+){1,5}";	//<FN> <LN>
 		String nametype2 = "[A-Z][A-Za-z]*,([ \r\n]+[A-Za-z]\\.?[-A-Za-z\n]+){1,5}"; //<LN>, <FN>			
 		String nametype3 = "([A-Z][\\. \r\n]+)+([A-Za-z][-A-Za-z\n]+){1,5}"; //I. <LN>			
@@ -40,7 +39,7 @@ public class Test1 {
 //			String filepath = "C:/Abhishek_Narwekar/Papers,Datasets/Citation Polarity/Datasets/AAN/aan/papers_text/" + entry.getValue().id + ".txt";
 			String filepath = "Datasets/AAN/testpaper.txt";
 			File f = new File(filepath);
-			
+
 			if (f.exists())
 			{
 				String content = new String(Files.readAllBytes(Paths.get(filepath)), StandardCharsets.UTF_8);
@@ -48,13 +47,11 @@ public class Test1 {
 				Matcher matcher = pattern.matcher(content);
 				while(matcher.find())
 				{
-					System.out.println("matched \"" + matcher.group() + "\"");// at position " + matcher.start());
+					System.out.println("matched \"" + matcher.group(0) + "\"");// at position " + matcher.start());
 //					matchedAt = matcher.start();
 				}
 			}		
 		}
-//		int matchedAt=0;
-		
+	
 	}
-
 }
