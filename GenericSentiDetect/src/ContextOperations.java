@@ -14,6 +14,7 @@ import java.util.Scanner;
 
 public class ContextOperations 
 {
+	private static final boolean verbose = false;
 	private static final String[] refnametypes = new String[4];
 	private static final int TOTAL_CITATION_NAMETYPES = 4;
 	static
@@ -32,8 +33,8 @@ public class ContextOperations
 	private static final String nameoccurrencex = "(,?" + whitespace + name + ")*";
 	private static final String nameoccurrencelast = ",?" + whitespace + "(and)?" + whitespace + "(" + name + ")?[\\.]" + whitespace;
 	private static final String yearoccurrence = "[0-9]{4}[A-Za-z]*"; 		
-//	private static final String regex = nameoccurrence1 + nameoccurrencex + nameoccurrencelast + yearoccurrence;
-	private static final String regex = nameoccurrence1;// + nameoccurrencex;// + nameoccurrencelast;//+ yearoccurrence;
+	private static final String regex = nameoccurrence1 + nameoccurrencex + nameoccurrencelast + yearoccurrence;
+//	private static final String regex = nameoccurrence1;// + nameoccurrencex;// + nameoccurrencelast;//+ yearoccurrence;
 
 //************************Main function*****************************************	
 	public static void main(String[] args) throws IOException
@@ -47,7 +48,7 @@ public class ContextOperations
 		
 		for (Map.Entry<String, Paper> entry : papers.entrySet())
 		{
-			System.out.println(entry.getKey());
+//			System.out.println(entry.getKey());
 //			String filepath = "C:/Abhishek_Narwekar/Papers,Datasets/Citation Polarity/Datasets/AAN/aan/papers_text/" + entry.getValue().id + ".txt";
 			String filepath = "Datasets/AAN/testpaper.txt";
 			File f = new File(filepath);
@@ -134,7 +135,7 @@ public class ContextOperations
 			surnamearray = new String[authorarray.length];
 			for (int i = 0; i < authorarray.length; ++i)
 			{
-				System.out.println(authorarray[i]);
+//				System.out.println(authorarray[i]);
 				for (int j = 0; j < refnametypes.length; ++j)
 				{
 					if (authorarray[i].matches(refnametypes[j]))
@@ -165,14 +166,15 @@ public class ContextOperations
 			rList.add(r);
 		}
 		references.put(paperid, rList);
-/*
-		for (Reference r1 : rList)
-		{
-			System.out.println("***\n" + r1.reftext + ":");
-			for (Map.Entry<String, String> e : r1.authorsurnamemap.entrySet())
-				System.out.println(e.getKey() + "-" + e.getValue());
-		}
-*/
+
+		if (verbose)
+			for (Reference r1 : rList)
+			{
+				System.out.println("***\nRef Text: " + r1.reftext + ". Authors(surnames)");
+				for (Map.Entry<String, String> e : r1.authorsurnamemap.entrySet())
+					System.out.println(e.getKey() + "-" + e.getValue());
+			}
+
 		return references;
 	}
 	
@@ -210,10 +212,10 @@ public class ContextOperations
 			{	
 				p = Pattern.compile(citationnametype[i]);
 				m = p.matcher(content);
-				
+								
 				while (m.find())
 				{
-					System.out.println("Matched : \"" + m.group() + "\" at location: " + m.start());
+					if (verbose) System.out.println("Matched : \"" + m.group() + "\" at location: " + m.start());
 				}
 			}
 		}
