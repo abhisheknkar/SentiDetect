@@ -18,7 +18,7 @@ public class StanfordNLP
         props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
         
-		ArrayList<AmjadCitation> Citations = AmjadOperations.readDataSet();
+		ArrayList<Citation> Citations = AmjadOperations.readDataSet();
 		AmjadFeatures.computeSentenceScore_StanfordNLP(Citations);
     }
 }
