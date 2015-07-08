@@ -23,9 +23,9 @@ public class Citation implements Serializable
 	 * 6: Contains contrary expression
 	 * 7: Headline of the sections which appear
 	 * 
-	 * ?: Closest subjective clue
-	 * ?: Closest Verb / Adjective
-	 * ?: Dependency Relations
+	 * 8: Closest subjective clue
+	 * 9: Closest Verb / Adjective / Adverb
+	 * 10: Dependency Relations
 	 */
 
 	public Citation(String[] Input)
@@ -41,5 +41,4 @@ public class Citation implements Serializable
 			 PolarityIndex = Integer.parseInt(Input[12]); if (PolarityIndex < 1 || PolarityIndex > 3) PolarityIndex = 1;
 		 }		 
 	}
-
 }

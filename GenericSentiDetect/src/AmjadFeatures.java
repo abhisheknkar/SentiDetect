@@ -1,11 +1,14 @@
 import java.io.*;
 import java.util.*;
-
 import edu.stanford.nlp.dcoref.sievepasses.PronounMatch;
 import edu.stanford.nlp.ling.CoreAnnotations;
+import edu.stanford.nlp.ling.IndexedWord;
+import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.semgraph.SemanticGraph;
+import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations.CollapsedCCProcessedDependenciesAnnotation;
 import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
 import edu.stanford.nlp.trees.Tree;
 import edu.stanford.nlp.util.CoreMap;
@@ -16,6 +19,10 @@ public class AmjadFeatures
 	private static final String[] PronounList = {"i", "me", "my", "mine", "we", "us", "we", "our", "ours",
 			"he", "she", "it", "they", "him", "her", "them","his", "her", "its", "their", "theirs"}; 
 	
+	private final static String[] POSadv = {"RB","RBR","RBS", "WRB"};
+	private final static String[] POSverb = {"VB","VBD","VBG","VBN","VBP","VBZ"};
+	private final static String[] POSadj = {"JJ","JJR","JJS"};
+
 	public static void getFeatures0and1(ArrayList<Citation> citations)
 	{
 		/*
@@ -97,6 +104,50 @@ public class AmjadFeatures
 			}
 		}		
 	}
+	
+	public static void getFeature8(ArrayList<Citation> citations)
+	{
+		int distance;
+		String text;
+		ArrayList<ArrayList<String>> targetPOS = new ArrayList<ArrayList<String>>();
+		ArrayList<String> a = new ArrayList<String>(Arrays.asList(POSadv));
+		ArrayList<String> b = new ArrayList<String>(Arrays.asList(POSverb));
+		ArrayList<String> c = new ArrayList<String>(Arrays.asList(POSadj));
+		targetPOS.add(a);targetPOS.add(b);targetPOS.add(c);
+
+		Properties props = new Properties();
+		// creates a StanfordCoreNLP object, with POS tagging, lemmatization, NER, parsing, and coreference resolution 
+        props.put("annotators", "tokenize, ssplit, parse");
+        StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+		
+        for (Citation citation : citations)
+        {
+        	text = citation.Sentence[1];
+            // create an empty Annotation just with the given text
+            Annotation document = new Annotation(text);
+
+            // run all Annotators on this text
+            pipeline.annotate(document);
+
+            // these are all the sentences in this document
+            // a CoreMap is essentially a Map that uses class objects as keys and has values with custom types
+            List<CoreMap> sentences = document.get(SentencesAnnotation.class);
+            for(CoreMap sentence: sentences) 
+    	    {
+            	// this is the parse tree of the current sentence
+            	// Tree tree = sentence.get(TreeAnnotation.class);
+            	// System.out.println(tree.toString());
+    			
+            	// this is the Stanford dependency graph of the current sentence
+            	SemanticGraph dependencies = sentence.get(CollapsedCCProcessedDependenciesAnnotation.class);
+            	IndexedWord source = dependencies.getNodeByWordPattern("<TREF>");
+            	distance = StanfordNLP.getBFSDistanceto3POS(dependencies,source,targetPOS,new ArrayList<IndexedWord>(), Integer.MAX_VALUE);
+//            	System.out.println(dependencies.toString());
+            	System.out.println("Distance between TREF and required POS tag is: " + distance);
+    	     }	
+        	
+        }
+	}	
 	
 	public static int findNoOfOccurrences(String str, String findStr)
 	{

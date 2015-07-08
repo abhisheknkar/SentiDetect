@@ -28,8 +28,8 @@ public class TheMain
 	{
 		HashMap<String, Paper> papers = DatasetReader.readAANMetadata();
 		ArrayList<Citation> citations = DatasetReader.readAmjadCitations();
+		AmjadFeatures.getFeature8(citations);
 		
-		AmjadFeatures.plotPolarityProfiles(citations, papers);
 	}	
 }
 
@@ -56,6 +56,7 @@ public class TheMain
 		AmjadFeatures.getFeature3(citations);
 		AmjadFeatures.writeToARFF(citations);
 		AmjadFeatures.computeSentenceScore_OpinionFinder(Citations, Words);	
+		AmjadFeatures.plotPolarityProfiles(citations, papers);
 
 SentiWordnetWords = SentiWordnet.readDataset_SentiWordnet();
 AmjadFeatures.computeSentenceScore_SentiWordnet(Citations, SentiWordnetWords);
