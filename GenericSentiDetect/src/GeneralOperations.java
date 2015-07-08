@@ -3,6 +3,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath;
+import edu.uci.ics.jung.graph.*;
+import edu.uci.ics.jung.graph.util.EdgeType;
+import edu.uci.ics.jung.graph.util.Pair;
+
 
 public class GeneralOperations 
 {
@@ -103,5 +108,40 @@ public class GeneralOperations
         return costs[b.length()];
     }
 
+	public static SparseGraph<String, Integer> readGraph(File fin, String separator) throws IOException
+	{
+		//Learn usage of transformers!
+		String line;
+		int count = 0;
+		String[] linesplit;
+		BufferedReader in = new BufferedReader(new FileReader(fin));
+		SparseGraph<String, Integer> G = new SparseGraph<String, Integer>();
+		while((line=in.readLine()) != null)
+		{
+			linesplit = line.split(separator);
+			G.addEdge(count++, linesplit[0], linesplit[1]);			
+		}
+		return G;
+	}
+	
+	public static <E> int getBFSDistance(SparseGraph<E, Integer> G, E source, E dest, ArrayList<E> visitednodes, int distance)
+	{
+		int BFSDistance;
+		visitednodes.add(source);
+		for(E child : G.getNeighbors(source))
+		{
+			if(visitednodes.contains(child)) continue;
+			if(child.equals(dest)) return 1;
+		}
+		
+		for(E child : G.getNeighbors(source))
+		{
+			if(visitednodes.contains(child))continue;
+			visitednodes.add(child);
+			BFSDistance = getBFSDistance(G, child, dest, visitednodes, distance);
+			if(BFSDistance != Integer.MAX_VALUE) distance = Math.min(BFSDistance + 1, distance);
+		}
+		return distance;
+	}
 
 }
