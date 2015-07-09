@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+
 import edu.stanford.nlp.dcoref.sievepasses.PronounMatch;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.IndexedWord;
@@ -9,6 +10,7 @@ import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations.CollapsedCCProcessedDependenciesAnnotation;
+import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 import edu.stanford.nlp.sentiment.SentimentCoreAnnotations;
 import edu.stanford.nlp.trees.Tree;
 import edu.stanford.nlp.util.CoreMap;
@@ -23,7 +25,7 @@ public class AmjadFeatures
 	private final static String[] POSverb = {"VB","VBD","VBG","VBN","VBP","VBZ"};
 	private final static String[] POSadj = {"JJ","JJR","JJS"};
 
-	public static void getFeatures0and1(ArrayList<Citation> citations)
+	public static ArrayList<Citation> getFeatures0and1(ArrayList<Citation> citations)
 	{
 		/*
 		 * Number of references and if the target reference is separate from the rest
@@ -49,9 +51,10 @@ public class AmjadFeatures
 //			System.out.println(count);
 			citation.Features[0] = count;
 		}
+        return citations;
 	}
 
-	public static void getFeature2(ArrayList<Citation> citations, HashMap<String, Paper> papers)
+	public static ArrayList<Citation> getFeature2(ArrayList<Citation> citations, HashMap<String, Paper> papers)
 	{
 		/*
 		 * Get the self citations
@@ -78,9 +81,10 @@ public class AmjadFeatures
 			}
 			s1 = null; s2 = null;
 		}
+        return citations;
 	}
 	
-	public static void getFeature3(ArrayList<Citation> citations)
+	public static ArrayList<Citation> getFeature3(ArrayList<Citation> citations)
 	{
 		boolean found = false;
 		for(Citation citation : citations)
@@ -103,11 +107,18 @@ public class AmjadFeatures
 				}
 			}
 		}		
+        return citations;
 	}
 	
-	public static void getFeature8(ArrayList<Citation> citations)
+	public static ArrayList<Citation> getFeature8(ArrayList<Citation> citations) throws IOException
 	{
-		int distance;
+		File depfile = new File("Outputs/Amjad/dependencies.tmp");
+		HashMap<String, Integer> depmap = new HashMap<String, Integer>();
+		if(depfile.exists()) depmap = FileOperations.readObject(depfile);
+		
+		String source_string, dest_string, type_string, to_write;
+		int source_till, dest_till;
+		int distance = Integer.MAX_VALUE;
 		String text;
 		ArrayList<ArrayList<String>> targetPOS = new ArrayList<ArrayList<String>>();
 		ArrayList<String> a = new ArrayList<String>(Arrays.asList(POSadv));
@@ -140,13 +151,31 @@ public class AmjadFeatures
     			
             	// this is the Stanford dependency graph of the current sentence
             	SemanticGraph dependencies = sentence.get(CollapsedCCProcessedDependenciesAnnotation.class);
+
+            	for(SemanticGraphEdge edge : dependencies.edgeListSorted())
+            	{
+            		source_string = edge.getSource().toString();
+            		source_till = source_string.indexOf('-');
+            		source_string = source_string.substring(0, source_till).toLowerCase();
+            		
+            		dest_string = edge.getTarget().toString();
+            		dest_till = dest_string.indexOf('-');
+            		dest_string = dest_string.substring(0, dest_till).toLowerCase();
+
+//            		System.out.println(source_string + "->" + dest_string + "," + edge.getRelation().toString());
+            		to_write = edge.getRelation().toString() + "_" + source_string + "_" + dest_string;
+            		if (!depmap.containsKey(to_write)) depmap.put(to_write, depmap.size()); 
+            	}
             	IndexedWord source = dependencies.getNodeByWordPattern("<TREF>");
-            	distance = StanfordNLP.getBFSDistanceto3POS(dependencies,source,targetPOS,new ArrayList<IndexedWord>(), Integer.MAX_VALUE);
+            	distance = getBFSDistanceto3POS(dependencies,source,targetPOS,new ArrayList<IndexedWord>(), Integer.MAX_VALUE);
 //            	System.out.println(dependencies.toString());
-            	System.out.println("Distance between TREF and required POS tag is: " + distance);
-    	     }	
-        	
+//            	System.out.println(dependencies.edgeListSorted().toString());
+            	System.out.println("Distance between TREF and required POS tag is: " + distance);            	
+    	    }	        	
+            citation.Features[8] = distance;
         }
+        FileOperations.writeObject(depmap, depfile);
+        return citations;
 	}	
 	
 	public static int findNoOfOccurrences(String str, String findStr)
@@ -387,17 +416,82 @@ public class AmjadFeatures
 			lcc.save(fout);
 			lcc.clearDataset();
 		}
-
-/*		for (Map.Entry<String, TreeMap<Integer, Double>> e : paperprofiles.get(0).entrySet())
+		
+	}
+	public static int getBFSDistanceto3POS(SemanticGraph G, IndexedWord source, ArrayList<ArrayList<String>> targetPOS, ArrayList<IndexedWord> visitednodes, int distance)
+	{
+		int BFSDistance;
+		visitednodes.add(source);
+//		for(IndexedWord child : G.getChildren(source))
+		if(G.containsVertex(source))
 		{
-			System.out.println("Paper: " + e.getKey());
-			for (int j = 0; j < 3; ++j)
+			for (IndexedWord child : G.getParentList(source))
 			{
-				System.out.println("For j = " + j + ", Profile:\n" + paperprofiles.get(j).get(e.getKey()));
+				if(visitednodes.contains(child)) continue;
+	//			if(child.equals(dest)) return 1;
+				for(ArrayList<String> list : targetPOS)
+				{
+					for(String pos : list)
+					{
+						if(child.toString().contains(pos)) return 1;
+					}
+				}
+			}
+			
+	//		for(IndexedWord child : G.getChildren(source))
+			for(IndexedWord child : G.getParentList(source))
+			{
+				if(visitednodes.contains(child)) continue;
+				visitednodes.add(child);
+				BFSDistance = getBFSDistanceto3POS(G, child, targetPOS, visitednodes, distance);
+				if(BFSDistance != Integer.MAX_VALUE) distance = Math.min(BFSDistance + 1, distance);
 			}
 		}
-*/		
+		return distance;
+	}
+	
+	public static void getNegationCues() throws IOException
+	{
+		String[] negprefix = {"in", "un", "non", "de", "dis", "a", "anti", "im", "il", "ir"};
+		String[] negsuffix = {"n't"};
+		List<String> negprefixlist = Arrays.asList(negprefix);
+		List<String> negsuffixlist = Arrays.asList(negsuffix);
 		
+		File fin = new File("Datasets/SEM-2012-SharedTask-CD-SCO-training-09032012.txt");
+		File negationfile = new File("Outputs/negationcues.tmp");
+		HashSet<String> negations = new HashSet<String>();
+		
+		if (negationfile.exists()) negations = FileOperations.readObject(negationfile);
+		
+		String line;
+		String[] linesplit;
+		int linesize, maxnegations; 
+		
+		BufferedReader in = new BufferedReader(new FileReader(fin));
+		
+		while((line = in.readLine()) != null)
+		{
+			linesplit = line.split("\t");
+			linesize = linesplit.length;
+			
+			maxnegations = (linesize - 8)/3 + 1;
+			
+			for(int i = 0; i < maxnegations; ++i)
+			{
+				if(linesplit[7+3*i].equals("***") || linesplit[7+3*i].equals("_")) continue;
+				else	//Negation found!
+				{
+//					if(linesplit[7+3*i].equals("at")) System.out.println(line);
+					
+					if(negprefixlist.contains(linesplit[7+3*i])) negations.add((linesplit[7+3*i] + linesplit[8+3*i]).toLowerCase());
+					else if(negsuffixlist.contains(linesplit[7+3*i])) negations.add((linesplit[8+3*i] + linesplit[7+3*i]).toLowerCase());
+					else negations.add(linesplit[7+3*i].toLowerCase());
+				}					
+			}			
+		}
+		System.out.println(negations.toString());
+			
+		FileOperations.writeObject(negations, negationfile);
 	}
 
 }

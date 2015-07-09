@@ -26,14 +26,20 @@ public class TheMain
 
 	public static void doAmjadOperations() throws IOException
 	{
-		HashMap<String, Paper> papers = DatasetReader.readAANMetadata();
-		ArrayList<Citation> citations = DatasetReader.readAmjadCitations();
-		AmjadFeatures.getFeature8(citations);
+		File fin = new File("Outputs/Amjad/Citations.tmp");
+		ArrayList<Citation> citations = new ArrayList<Citation>();
 		
+		HashMap<String, Paper> papers = DatasetReader.readAANMetadata();
+
+		if(fin.exists()) citations = FileOperations.readObject(fin);
+		else citations = DatasetReader.readAmjadCitations();
+		
+		//Extract features here
+		AmjadFeatures.getNegationCues();
+		
+		FileOperations.writeObject(citations, new File("Outputs/Amjad/Citations.tmp"));
 	}	
 }
-
-
 
 
 
@@ -51,9 +57,10 @@ public class TheMain
 		Words = OpinionFinder.readDataset_OpinionFinder();
 
 		AANPapers = AANOperations.readAANMetadata();
-		AmjadFeatures.getFeatures0and1(citations);	
-		AmjadFeatures.getFeature2(citations, papers);	
-		AmjadFeatures.getFeature3(citations);
+		citations = AmjadFeatures.getFeatures0and1(citations);	
+		citations = AmjadFeatures.getFeature2(citations, papers);	
+		citations = AmjadFeatures.getFeature3(citations);
+		citations = AmjadFeatures.getFeature8(citations);
 		AmjadFeatures.writeToARFF(citations);
 		AmjadFeatures.computeSentenceScore_OpinionFinder(Citations, Words);	
 		AmjadFeatures.plotPolarityProfiles(citations, papers);
