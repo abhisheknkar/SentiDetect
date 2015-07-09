@@ -35,16 +35,9 @@ public class TheMain
 		else citations = DatasetReader.readAmjadCitations();
 		
 		//Extract features here
-		AmjadFeatures.getNegationCues();
-		
 		FileOperations.writeObject(citations, new File("Outputs/Amjad/Citations.tmp"));
 	}	
 }
-
-
-
-
-
 
 
 
@@ -60,7 +53,13 @@ public class TheMain
 		citations = AmjadFeatures.getFeatures0and1(citations);	
 		citations = AmjadFeatures.getFeature2(citations, papers);	
 		citations = AmjadFeatures.getFeature3(citations);
+		citations = AmjadFeatures.getFeature4(citations);
 		citations = AmjadFeatures.getFeature8(citations);
+
+		AmjadFeatures.getNegationCues();
+		AmjadFeatures.getSpeculationCues(new File("Datasets/bioscope/full_papers.xml"));
+		AmjadFeatures.getSpeculationCues(new File("Datasets/bioscope/abstracts.xml"));
+
 		AmjadFeatures.writeToARFF(citations);
 		AmjadFeatures.computeSentenceScore_OpinionFinder(Citations, Words);	
 		AmjadFeatures.plotPolarityProfiles(citations, papers);

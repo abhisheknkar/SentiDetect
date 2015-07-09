@@ -1,5 +1,7 @@
 import java.io.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import edu.stanford.nlp.dcoref.sievepasses.PronounMatch;
 import edu.stanford.nlp.ling.CoreAnnotations;
@@ -177,6 +179,34 @@ public class AmjadFeatures
         FileOperations.writeObject(depmap, depfile);
         return citations;
 	}	
+
+	public static ArrayList<Citation> getFeature4(ArrayList<Citation> citations) throws IOException
+	{
+		File fin = new File("Outputs/negationcues.tmp");
+		HashSet<String> negations = FileOperations.readObject(fin);
+		boolean found = false;
+		for(Citation citation : citations)
+		{
+			for (int i = 0; i < citation.Sentence.length; ++i)
+			{
+				if(citation.SentenceScore[i] != 0)
+				{
+					for (String negation : negations)
+					{
+						found = citation.Sentence[i].matches("(?i).*\\b"+ negation +"\\b.*");
+						if (found) 
+						{
+							citation.Features[4]=1;
+//							System.out.println("Pronoun: " + PronounList[j] + ", Sentence: " + citation.Sentence[i]);
+							break;
+						}
+					}
+					if (found) break;
+				}
+			}
+		}		
+        return citations;
+	}
 	
 	public static int findNoOfOccurrences(String str, String findStr)
 	{
@@ -494,4 +524,36 @@ public class AmjadFeatures
 		FileOperations.writeObject(negations, negationfile);
 	}
 
+	public static void getSpeculationCues(File fin) throws IOException
+	{
+		BufferedReader in = new BufferedReader(new FileReader(fin));
+		File fout = new File("Outputs/speculationcues.tmp");
+		
+		HashSet<String> speculations = new HashSet<String>();
+		if(fout.exists()) speculations = FileOperations.readObject(fout);
+		
+		String line;
+		int matchedAt, matchEnd;
+		String regex = "<cue type=\"speculation\" ref=\".+\">";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = null;
+		String cue;
+		
+		while((line = in.readLine())!=null)
+		{
+			matcher = pattern.matcher(line);
+			while(matcher.find())
+			{
+				matchedAt = matcher.start() + matcher.group().length();
+				matchEnd = line.substring(matchedAt, line.length()).indexOf('<');
+				cue = line.substring(matchedAt, matchedAt + matchEnd);
+				
+				speculations.add(cue.toLowerCase());
+			}
+		}
+		FileOperations.writeObject(speculations, fout);
+		System.out.println(speculations.toString());
+		System.out.println(speculations.size());
+		
+	}
 }
