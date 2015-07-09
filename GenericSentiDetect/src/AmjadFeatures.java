@@ -208,6 +208,33 @@ public class AmjadFeatures
         return citations;
 	}
 	
+	public static ArrayList<Citation> getFeature5(ArrayList<Citation> citations) throws IOException
+	{
+		File fin = new File("Outputs/speculationcues.tmp");
+		HashSet<String> speculations = FileOperations.readObject(fin);
+		boolean found = false;
+		for(Citation citation : citations)
+		{
+			for (int i = 0; i < citation.Sentence.length; ++i)
+			{
+				if(citation.SentenceScore[i] != 0)
+				{
+					for (String speculation : speculations)
+					{
+						found = citation.Sentence[i].matches("(?i).*\\b"+ speculation +"\\b.*");
+						if (found) 
+						{
+							citation.Features[5]=1;
+							break;
+						}
+					}
+					if (found) break;
+				}
+			}
+		}		
+        return citations;
+	}
+
 	public static int findNoOfOccurrences(String str, String findStr)
 	{
 		int lastIndex = 0;

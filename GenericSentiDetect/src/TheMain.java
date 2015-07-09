@@ -35,6 +35,7 @@ public class TheMain
 		else citations = DatasetReader.readAmjadCitations();
 		
 		//Extract features here
+		
 		FileOperations.writeObject(citations, new File("Outputs/Amjad/Citations.tmp"));
 	}	
 }
@@ -54,6 +55,7 @@ public class TheMain
 		citations = AmjadFeatures.getFeature2(citations, papers);	
 		citations = AmjadFeatures.getFeature3(citations);
 		citations = AmjadFeatures.getFeature4(citations);
+		citations = AmjadFeatures.getFeature5(citations);
 		citations = AmjadFeatures.getFeature8(citations);
 
 		AmjadFeatures.getNegationCues();
