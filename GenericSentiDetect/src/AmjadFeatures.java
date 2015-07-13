@@ -27,11 +27,41 @@ public class AmjadFeatures
 	private final static String[] POSverb = {"VB","VBD","VBG","VBN","VBP","VBZ"};
 	private final static String[] POSadj = {"JJ","JJR","JJS"};
 
+	public static ArrayList<Citation> cleanCitations(ArrayList<Citation> citations)
+	{
+		String REF = "<REF>.*?</REF>";
+		String TREF = "<TREF>.*?</TREF>";
+
+		Pattern pattern1 = Pattern.compile(REF);
+		Pattern pattern2 = Pattern.compile(TREF);
+
+		Matcher matcher1, matcher2;
+		
+		for (Citation citation : citations)
+		{
+			for (int i = 0; i < 4; ++i)
+			{
+//				System.out.println("Before: " + citation.Sentence[i]);
+				matcher1 = pattern1.matcher(citation.Sentence[i]);
+				citation.Sentence[i] = matcher1.replaceAll("<REF>");
+				
+				if(i == 1)
+				{
+					matcher2 = pattern2.matcher(citation.Sentence[i]);
+					citation.Sentence[i] = matcher2.replaceAll("<TREF>");
+				}
+//				System.out.println("After: " + citation.Sentence[i]);
+			}
+		}
+		
+		return citations;
+	}
 	public static ArrayList<Citation> getFeatures0and1(ArrayList<Citation> citations)
 	{
 		/*
 		 * Number of references and if the target reference is separate from the rest
 		 * Handles the first two features
+		 * Assuming cleaned citations
 		 */
 		int count, delta;
 		for (Citation citation : citations)
@@ -42,7 +72,7 @@ public class AmjadFeatures
 			{
 				if(citation.SentenceScore[i] == 1)
 				{
-					delta = findNoOfOccurrences(citation.Sentence[i], "REF>") / 2;
+					delta = findNoOfOccurrences(citation.Sentence[i], "REF>");
 					if ((i == 1) && (delta > 1))
 					{
 						citation.Features[1] = 0;
@@ -88,6 +118,9 @@ public class AmjadFeatures
 	
 	public static ArrayList<Citation> getFeature3(ArrayList<Citation> citations)
 	{
+		/*
+		 * 1/3 PP pronoun
+		 */
 		boolean found = false;
 		for(Citation citation : citations)
 		{
@@ -111,9 +144,133 @@ public class AmjadFeatures
 		}		
         return citations;
 	}
-	
-	public static ArrayList<Citation> getFeature8(ArrayList<Citation> citations) throws IOException
+	public static ArrayList<Citation> getFeature4(ArrayList<Citation> citations) throws IOException
 	{
+		/*
+		 * Negation
+		 */
+		File fin = new File("Outputs/negationcues.tmp");
+		HashSet<String> negations = FileOperations.readObject(fin);
+		boolean found = false;
+		for(Citation citation : citations)
+		{
+			for (int i = 0; i < citation.Sentence.length; ++i)
+			{
+				if(citation.SentenceScore[i] != 0)
+				{
+					for (String negation : negations)
+					{
+						found = citation.Sentence[i].matches("(?i).*\\b"+ negation +"\\b.*");
+						if (found) 
+						{
+							citation.Features[4]=1;
+//							System.out.println("Pronoun: " + PronounList[j] + ", Sentence: " + citation.Sentence[i]);
+							break;
+						}
+					}
+					if (found) break;
+				}
+			}
+		}		
+        return citations;
+	}
+	
+	public static ArrayList<Citation> getFeature5(ArrayList<Citation> citations) throws IOException
+	{
+		/*
+		 * Speculation
+		 */
+		File fin = new File("Outputs/speculationcues.tmp");
+		HashSet<String> speculations = FileOperations.readObject(fin);
+		boolean found = false;
+		for(Citation citation : citations)
+		{
+			for (int i = 0; i < citation.Sentence.length; ++i)
+			{
+				if(citation.SentenceScore[i] != 0)
+				{
+					for (String speculation : speculations)
+					{
+						found = citation.Sentence[i].matches("(?i).*\\b"+ speculation +"\\b.*");
+						if (found) 
+						{
+							citation.Features[5]=1;
+							break;
+						}
+					}
+					if (found) break;
+				}
+			}
+		}		
+        return citations;
+	}
+
+	public static ArrayList<Citation> getFeature7(ArrayList<Citation> citations) throws IOException
+	{
+		/*
+		 * Headline
+		 */
+		String[] sections = new String[4];
+		boolean foundflag;
+		sections[0] = "(I.?[Nn].?[Tt].?[Rr].?[Oo].?[Dd].?[Uu].?[Cc].?[Tt].?[Ii].?[Oo].?[Nn])|"
+				+ "([Mm].?[Oo].?[Tt].?[Ii].?[Vv].?[Aa].?[Tt].?[Ii].?[Oo].?[Nn])";
+		sections[1] = "(B.?[Aa].?[Cc].?[Kk].?[Gg].?[Rr].?[Oo].?[Uu].?[Nn].?[Dd])|"
+				+ "((P.?[Rr].?[Ii].?[Oo].?[Rr])|([Rr].?[Ee].?[Ll].?[Aa].?[Tt].?[Ee].?[Dd])|(P.?[Rr].?[Ee].?[Vv].?[Ii].?[Oo].?[Uu].?[Ss]).?[Ww].?[Oo].?[Rr].?[Kk])";
+		sections[2] = "(E.?[Xx].?[Pp].?[Ee].?[Rr].?[Ii].?[Mm].?[Ee].?[Nn].?[Tt].?[Ss]?)|"
+				+ "(D.?[Aa].?[Tt].?[Aa])|"
+				+ "(E.?[Vv].?[Aa].?[Ll].?[Uu].?[Aa].?[Tt].?[Ii].?[Oo].?[Nn])|"
+				+ "(R.?[Ee].?[Ss].?[Uu].?[Ll].?[Tt].?[Ss])";
+		sections[3] = "(D.?[Ii].?[Ss].?[Cc].?[Uu].?[Ss].?[Ss].?[Ii].?[Oo].?[Nn])|"
+				+ "(C.?[Oo].?[Nn].?[Cc].?[Ll].?[Uu].?[Ss].?[Ii].?[Oo].?[Nn])|"
+				+ "(F.?[Uu].?[Tt].?[Uu].?[Rr].?[Ee].?[Ww].?[Oo].?[Rr].?[Kk])";		
+		
+		Pattern[] patterns = new Pattern[4];		
+		Matcher[] matcher = new Matcher[4];
+		String context = "";
+
+		for(int i = 0; i < 4; ++i) 
+		{
+			patterns[i] = Pattern.compile(sections[i]);
+		}
+
+		for (Citation citation : citations)
+        {
+			foundflag = false;
+			context = "";
+			for(int i = 0; i < 4; ++i)
+        	{
+        		context += citation.Sentence[i];
+        	}
+        	for(int i = 0; i < 4; ++i)
+        	{
+        		matcher[i] = patterns[i].matcher(context);
+        		while(matcher[i].find())
+        		{
+        			citation.Features[7] = i;
+        			foundflag = true;
+        			break;
+        		}
+        		if(foundflag) 
+        		{        			
+        			break;
+        		}
+        	}
+        	if(!foundflag)
+        	{
+        		citation.Features[7] = 4;
+        	}
+//			System.out.println("Section: " + citation.Features[7]);
+        }
+		return citations;
+	}
+	
+	public static ArrayList<Citation> getFeature9and10(ArrayList<Citation> citations) throws IOException
+	{
+		/*
+		 * Closest verb/adjective/adverb and
+		 * dependency relations
+		 */
+		
 		File depfile = new File("Outputs/Amjad/dependencies.tmp");
 		HashMap<String, Integer> depmap = new HashMap<String, Integer>();
 		if(depfile.exists()) depmap = FileOperations.readObject(depfile);
@@ -174,66 +331,11 @@ public class AmjadFeatures
 //            	System.out.println(dependencies.edgeListSorted().toString());
             	System.out.println("Distance between TREF and required POS tag is: " + distance);            	
     	    }	        	
-            citation.Features[8] = distance;
+            citation.Features[10] = distance;
         }
         FileOperations.writeObject(depmap, depfile);
         return citations;
 	}	
-
-	public static ArrayList<Citation> getFeature4(ArrayList<Citation> citations) throws IOException
-	{
-		File fin = new File("Outputs/negationcues.tmp");
-		HashSet<String> negations = FileOperations.readObject(fin);
-		boolean found = false;
-		for(Citation citation : citations)
-		{
-			for (int i = 0; i < citation.Sentence.length; ++i)
-			{
-				if(citation.SentenceScore[i] != 0)
-				{
-					for (String negation : negations)
-					{
-						found = citation.Sentence[i].matches("(?i).*\\b"+ negation +"\\b.*");
-						if (found) 
-						{
-							citation.Features[4]=1;
-//							System.out.println("Pronoun: " + PronounList[j] + ", Sentence: " + citation.Sentence[i]);
-							break;
-						}
-					}
-					if (found) break;
-				}
-			}
-		}		
-        return citations;
-	}
-	
-	public static ArrayList<Citation> getFeature5(ArrayList<Citation> citations) throws IOException
-	{
-		File fin = new File("Outputs/speculationcues.tmp");
-		HashSet<String> speculations = FileOperations.readObject(fin);
-		boolean found = false;
-		for(Citation citation : citations)
-		{
-			for (int i = 0; i < citation.Sentence.length; ++i)
-			{
-				if(citation.SentenceScore[i] != 0)
-				{
-					for (String speculation : speculations)
-					{
-						found = citation.Sentence[i].matches("(?i).*\\b"+ speculation +"\\b.*");
-						if (found) 
-						{
-							citation.Features[5]=1;
-							break;
-						}
-					}
-					if (found) break;
-				}
-			}
-		}		
-        return citations;
-	}
 
 	public static int findNoOfOccurrences(String str, String findStr)
 	{
@@ -369,10 +471,10 @@ public class AmjadFeatures
 
 	public static void writeToARFF(ArrayList<Citation> citations)
 	{
-		int features = 5;	//Including outputs
+		int features = 7;	//Including outputs
 		try 
 		{
-			File file = new File("Outputs/Amjad/4features.arff");
+			File file = new File("Outputs/Amjad/features_train.arff");
  
 			// if file doesnt exists, then create it
 			if (!file.exists()) 
@@ -384,6 +486,8 @@ public class AmjadFeatures
 					+ "@attribute isSeparate {0,1}\n"
 					+ "@attribute selfCitation {0,1}\n"
 					+ "@attribute PP_1or3 {0,1}\n"
+					+ "@attribute negation {0,1}\n"
+					+ "@attribute speculation {0,1}\n"
 					+ "@attribute polarity {1,2,3}\n\n"
 					+ "@data\n";
 			
@@ -475,6 +579,8 @@ public class AmjadFeatures
 		}
 		
 	}
+	
+
 	public static int getBFSDistanceto3POS(SemanticGraph G, IndexedWord source, ArrayList<ArrayList<String>> targetPOS, ArrayList<IndexedWord> visitednodes, int distance)
 	{
 		int BFSDistance;

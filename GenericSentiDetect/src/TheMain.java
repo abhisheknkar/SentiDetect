@@ -26,22 +26,26 @@ public class TheMain
 
 	public static void doAmjadOperations() throws IOException
 	{
+		boolean readfromfile = false;
+		
 		File fin = new File("Outputs/Amjad/Citations.tmp");
 		ArrayList<Citation> citations = new ArrayList<Citation>();
 		
 		HashMap<String, Paper> papers = DatasetReader.readAANMetadata();
 
-		if(fin.exists()) citations = FileOperations.readObject(fin);
+		if(readfromfile)
+		{
+			if(fin.exists()) citations = FileOperations.readObject(fin);
+			else citations = DatasetReader.readAmjadCitations();
+		}
+
 		else citations = DatasetReader.readAmjadCitations();
-		
 		//Extract features here
-		
-		FileOperations.writeObject(citations, new File("Outputs/Amjad/Citations.tmp"));
+		citations = AmjadFeatures.cleanCitations(citations);
+
+//		FileOperations.writeObject(citations, new File("Outputs/Amjad/Citations.tmp"));
 	}	
 }
-
-
-
 
 /*
 		HashMap<String, Paper> papers = DatasetReader.readAANMetadata();
@@ -51,12 +55,14 @@ public class TheMain
 		Words = OpinionFinder.readDataset_OpinionFinder();
 
 		AANPapers = AANOperations.readAANMetadata();
+		citations = AmjadFeatures.cleanCitations(citations);
 		citations = AmjadFeatures.getFeatures0and1(citations);	
 		citations = AmjadFeatures.getFeature2(citations, papers);	
 		citations = AmjadFeatures.getFeature3(citations);
 		citations = AmjadFeatures.getFeature4(citations);
 		citations = AmjadFeatures.getFeature5(citations);
-		citations = AmjadFeatures.getFeature8(citations);
+		citations = AmjadFeatures.getFeature7(citations);
+		citations = AmjadFeatures.getFeature10(citations);
 
 		AmjadFeatures.getNegationCues();
 		AmjadFeatures.getSpeculationCues(new File("Datasets/bioscope/full_papers.xml"));
@@ -65,6 +71,10 @@ public class TheMain
 		AmjadFeatures.writeToARFF(citations);
 		AmjadFeatures.computeSentenceScore_OpinionFinder(Citations, Words);	
 		AmjadFeatures.plotPolarityProfiles(citations, papers);
+
+//		Classify
+//		AmjadFeatures.writeToARFF(citations);
+
 
 SentiWordnetWords = SentiWordnet.readDataset_SentiWordnet();
 AmjadFeatures.computeSentenceScore_SentiWordnet(Citations, SentiWordnetWords);
