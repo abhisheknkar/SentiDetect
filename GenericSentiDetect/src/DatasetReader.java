@@ -101,4 +101,49 @@ public class DatasetReader
 		return citations;
 	}
 
+	public static HashMap<String, OpinionFinderWord> readDataset_OpinionFinder(File fin, File fout, int saveFlag) throws IOException
+	{		
+		BufferedReader in = null;
+		in = new BufferedReader(new FileReader(fin));
+		
+		String line = null;
+		String[] temp1;
+		String[] temp2;
+		String[] temp3 = new String[6];
+		
+		HashMap<String, OpinionFinderWord> Words = new HashMap<String, OpinionFinderWord>();
+		
+		while((line = in.readLine()) != null)
+		{
+			temp1 = line.split(" ");
+			
+			for(int i=0; i<6; ++i)
+			{
+				temp2 = temp1[i].split("=");
+				temp3[i] = temp2[1];
+			}
+			if(!Words.containsKey(temp3[2])) 
+			{
+				Words.put(temp3[2], new OpinionFinderWord(temp3[0],temp3[1],temp3[2],temp3[3],temp3[4],temp3[5]));
+			}
+		}
+
+		if (saveFlag != 0) 
+		{
+			FileOutputStream foutStream = new FileOutputStream(fout);
+			ObjectOutputStream oos = new ObjectOutputStream(foutStream);
+			oos.writeObject(Words);		
+		}
+		return Words;
+	}
+
+	public static HashMap<String, OpinionFinderWord> readDataset_OpinionFinder() throws IOException
+	{
+		File fin = new File("./Datasets/OpinionFinder/senti.txt");
+		File fout = new File("./Outputs/OpinionFinderWordList.tmp");
+		int saveFlag = 1;
+		HashMap<String, OpinionFinderWord> Words = readDataset_OpinionFinder(fin,fout,saveFlag);
+		return Words;
+		
+	}
 }

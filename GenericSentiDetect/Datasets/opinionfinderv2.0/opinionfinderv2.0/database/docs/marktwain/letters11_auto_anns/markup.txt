@@ -1,0 +1,204 @@
+
+     <MPQASENT autoclass1="unknown" autoclass2="obj">The house they had taken in Hartford was the Hooker property on
+     Forest Street, a <MPQAPOL autoclass="neutral">handsome</MPQAPOL> place in a distinctly literary
+     neighborhood.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Harriet Beecher Stowe, Charles Dudley Warner, and
+     other well-known writers were within <MPQAPOL autoclass="neutral">easy</MPQAPOL> walking distance; Twichell
+     was <MPQAPOL autoclass="neutral">perhaps</MPQAPOL> half a mile away.</MPQASENT>
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">It was the <MPQAPOL autoclass="neutral">proper</MPQAPOL> environment for Mark Twain.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">He settled his <MPQAPOL autoclass="negative">little</MPQAPOL>
+     family there, and was presently at Redpath's office in Boston, which
+     was a <MPQAPOL autoclass="neutral">congenial</MPQAPOL> place, as we have seen before.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">He did not <MPQAPOL autoclass="negative">fail</MPQAPOL> to
+     return to the company of Nasby, Josh Billings, and those others of
+     Redpath's "<MPQAPOL autoclass="neutral">attractions</MPQAPOL>" as long and as often as distance <MPQAPOL autoclass="neutral">would</MPQAPOL>
+     permit.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Bret Harte, who by this time had won <MPQAPOL autoclass="neutral">fame</MPQAPOL>, was also in
+     Boston now, and frequently, with Howells, Aldrich, and Mark Twain,
+     gathered in some <MPQAPOL autoclass="neutral">quiet</MPQAPOL> restaurant corner for a luncheon that lasted
+     through a <MPQAPOL autoclass="neutral">dim</MPQAPOL> winter afternoon--a period of anecdote, reminiscence,
+     and <MPQAPOL autoclass="neutral">mirth</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">They were all young then, and <MPQAPOL autoclass="negative">laughed</MPQAPOL> <MPQAPOL autoclass="negative">easily</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">Howells,
+     has written of one <MPQAPOL autoclass="negative">such</MPQAPOL> luncheon given by Ralph Keeler, a young
+     Californian--a gathering at which James T. Fields was present
+     "Nothing remains to me of the <MPQAPOL autoclass="negative">happy</MPQAPOL> time but a <MPQAPOL autoclass="negative">sense</MPQAPOL> of <MPQAPOL autoclass="negative">idle</MPQAPOL> and
+     <MPQAPOL autoclass="negative">aimless</MPQAPOL> and <MPQAPOL autoclass="positive">joyful</MPQAPOL> talk-play, beginning and ending nowhere, of <MPQAPOL autoclass="positive">eager</MPQAPOL>
+     <MPQAPOL autoclass="negative">laughter</MPQAPOL>, of countless <MPQAPOL autoclass="positive">good</MPQAPOL> stories from Fields, of a heat-lightning
+     <MPQAPOL autoclass="negative">shimmer</MPQAPOL> of wit from Aldrich, of an occasional concentration of our
+     joint <MPQAPOL autoclass="negative">mockeries</MPQAPOL> upon our host, who took it <MPQAPOL autoclass="positive">gladly</MPQAPOL>."</MPQASENT>
+
+     <MPQASENT autoclass1="unknown" autoclass2="obj">But a <MPQAPOL autoclass="negative">lecture</MPQAPOL> circuit cannot be <MPQAPOL autoclass="neutral">restricted</MPQAPOL> to the radius of Boston.</MPQASENT>
+     <MPQASENT autoclass1="obj" autoclass2="obj">Clemens was presently writing to Redpath from Washington and <MPQAPOL autoclass="neutral">points</MPQAPOL>
+     farther west.</MPQASENT>
+
+
+                       <MPQASENT autoclass1="obj" autoclass2="obj">To James Redpath, in Boston:
+
+                                   WASHINGTON, Tuesday, Oct. 28, 1871.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">DEAR RED,--I have come square out, <MPQAPOL autoclass="neutral">thrown</MPQAPOL> "Reminiscences" overboard, and
+taken "Artemus Ward, Humorist," for my subject.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Wrote it here on Friday
+and Saturday, and read it from MS last night to an <MPQAPOL autoclass="negative">enormous</MPQAPOL> house.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">It
+suits me and I'll never deliver the <MPQAPOL autoclass="neutral">nasty</MPQAPOL>, nauseous "Reminiscences" any
+more.</MPQASENT>
+                              <MPQASENT autoclass1="obj" autoclass2="obj">Yours,
+                                   MARK.</MPQASENT>
+
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">The Artemus Ward <MPQAPOL autoclass="neutral">lecture</MPQAPOL> lasted eleven days, then he wrote:
+
+
+                     To Redpath and Fall, in Boston:
+
+                                   BUFFALO DEPOT, Dec. 8, 1871.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">REDPATH & FALL, BOSTON,--Notify all hands that from this time I shall
+talk nothing but selections from my forthcoming book "Roughing It."</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj"><MPQAPOL autoclass="neutral">Tried</MPQAPOL> it last night.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Suits me tip-top.</MPQASENT>
+                                   <MPQASENT autoclass1="unknown" autoclass2="obj">SAM'L L. CLEMENS.</MPQASENT>
+
+
+     <MPQASENT autoclass1="unknown" autoclass2="obj">The Roughing It chapters <MPQAPOL autoclass="neutral">proved</MPQAPOL> a <MPQAPOL autoclass="neutral">success</MPQAPOL>, and continued in <MPQAPOL autoclass="neutral">high</MPQAPOL>
+     <MPQAPOL autoclass="neutral">favor</MPQAPOL> through the rest of the season.</MPQASENT>
+
+
+                       <MPQASENT autoclass1="unknown" autoclass2="obj">To James Redpath, in Boston:
+
+                                   LOGANSPORT, IND.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Jan. 2, 1872.</MPQASENT>
+<MPQASENT autoclass1="subj" autoclass2="subj"><MPQAPOL autoclass="neutral">FRIEND</MPQAPOL> REDPATH,--Had a <MPQAPOL autoclass="negative">splendid</MPQAPOL> time with a <MPQAPOL autoclass="negative">splendid</MPQAPOL> audience in
+Indianapolis last night--a <MPQAPOL autoclass="positive">perfectly</MPQAPOL> jammed house, <MPQAPOL autoclass="neutral">just</MPQAPOL> as I have had all
+the time out here.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I <MPQAPOL autoclass="positive">like</MPQAPOL> the new <MPQAPOL autoclass="negative">lecture</MPQAPOL> but I <MPQAPOL autoclass="negative">hate</MPQAPOL> the "Artemus Ward"
+talk and won't talk it any more.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">No man ever <MPQAPOL autoclass="neutral">approved</MPQAPOL> that choice of
+subject in my hearing, I <MPQAPOL autoclass="neutral">think</MPQAPOL>.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">Give me some comfort.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">If I am to talk in New York am I going to have a
+<MPQAPOL autoclass="neutral">good</MPQAPOL> house?</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I don't <MPQAPOL autoclass="neutral">care</MPQAPOL> now to have any appointments cancelled.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I'll
+<MPQAPOL autoclass="neutral">even</MPQAPOL> "fetch" those Dutch Pennsylvanians with this <MPQAPOL autoclass="neutral">lecture</MPQAPOL>.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">Have paid up $4000 indebtedness.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">You are the, last on my list.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Shall
+begin to pay you in a few days and then I shall be a <MPQAPOL autoclass="neutral">free</MPQAPOL> man again.</MPQASENT>
+                              <MPQASENT autoclass1="obj" autoclass2="obj">Yours,
+                                        MARK.</MPQASENT>
+
+
+     <MPQASENT autoclass1="unknown" autoclass2="obj">With his debts paid, Clemens was <MPQAPOL autoclass="negative">anxious</MPQAPOL> to be getting home.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Two
+     weeks following the <MPQAPOL autoclass="neutral">above</MPQAPOL> he wrote Redpath that he <MPQAPOL autoclass="neutral">would</MPQAPOL> <MPQAPOL autoclass="neutral">accept</MPQAPOL> no
+     more engagements at any price, outside of New England, and added,
+     "The fewer engagements I have from this time forth the <MPQAPOL autoclass="positive">better</MPQAPOL> I
+     shall be <MPQAPOL autoclass="positive">pleased</MPQAPOL>."</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">By the end of February he was back in Hartford,
+     <MPQAPOL autoclass="negative">refusing</MPQAPOL> an engagement in Boston, and announcing to Redpath, "If I
+     had another engagement I<MPQAPOL autoclass="neutral">'d</MPQAPOL> <MPQAPOL autoclass="neutral">rot</MPQAPOL> before I<MPQAPOL autoclass="neutral">'d</MPQAPOL> fill it."</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">From which we
+     gather that he was not <MPQAPOL autoclass="negative">entirely</MPQAPOL> <MPQAPOL autoclass="positive">happy</MPQAPOL> in the <MPQAPOL autoclass="neutral">lecture</MPQAPOL> field.</MPQASENT>
+
+     <MPQASENT autoclass1="unknown" autoclass2="subj">As a matter of <MPQAPOL autoclass="neutral">fact</MPQAPOL>, Mark Twain <MPQAPOL autoclass="negative">loathed</MPQAPOL> the <MPQAPOL autoclass="neutral">continuous</MPQAPOL> travel and
+     nightly drudgery of platform life.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">He was <MPQAPOL autoclass="negative">fond</MPQAPOL> of <MPQAPOL autoclass="negative">entertaining</MPQAPOL>, and
+     there were moments of <MPQAPOL autoclass="positive">triumph</MPQAPOL> that <MPQAPOL autoclass="negative">repaid</MPQAPOL> him for a <MPQAPOL autoclass="positive">good</MPQAPOL> <MPQAPOL autoclass="positive">deal</MPQAPOL>, but
+     the <MPQAPOL autoclass="negative">tyranny</MPQAPOL> of a schedule and timetables was a constant
+     <MPQAPOL autoclass="negative">exasperation</MPQAPOL>.</MPQASENT>
+
+     <MPQASENT autoclass1="unknown" autoclass2="obj">Meantime, Roughing It had <MPQAPOL autoclass="neutral">appeared</MPQAPOL> and was selling abundantly.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Mark
+     Twain, <MPQAPOL autoclass="neutral">free</MPQAPOL> of debt, and in <MPQAPOL autoclass="positive">pleasant</MPQAPOL> circumstances, <MPQAPOL autoclass="neutral">felt</MPQAPOL> that the
+     <MPQAPOL autoclass="neutral">outlook</MPQAPOL> was <MPQAPOL autoclass="neutral">bright</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">It became <MPQAPOL autoclass="neutral">even</MPQAPOL> more <MPQAPOL autoclass="neutral">so</MPQAPOL> when, in March, the
+     second child, a <MPQAPOL autoclass="negative">little</MPQAPOL> girl, Susy, was born, with no attending
+     <MPQAPOL autoclass="neutral">misfortunes</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">But, then, in the early summer <MPQAPOL autoclass="negative">little</MPQAPOL> Langdon died.</MPQASENT>
+     <MPQASENT autoclass1="unknown" autoclass2="subj">It was seldom, during all of Mark Twain's life, that he <MPQAPOL autoclass="neutral">enjoyed</MPQAPOL> more
+     than a brief period of unmixed <MPQAPOL autoclass="negative">happiness</MPQAPOL>.</MPQASENT>
+
+     <MPQASENT autoclass1="unknown" autoclass2="subj">It was in June of that year that Clemens wrote his first letter to
+     William Dean Howells the first of several hundred that <MPQAPOL autoclass="neutral">would</MPQAPOL> follow
+     in the years to come, and has in it something that is characteristic
+     of nearly all the Clemens-Howells letters--a kind of tender
+     playfulness that answered to something in Howells's make-up, his
+     <MPQAPOL autoclass="neutral">sense</MPQAPOL> of humor, his <MPQAPOL autoclass="positive">wide</MPQAPOL> <MPQAPOL autoclass="positive">knowledge</MPQAPOL> of a <MPQAPOL autoclass="positive">humanity</MPQAPOL> which he pictured
+     <MPQAPOL autoclass="neutral">so</MPQAPOL> <MPQAPOL autoclass="negative">amusingly</MPQAPOL> to the world.</MPQASENT>
+
+
+                   <MPQASENT autoclass1="unknown" autoclass2="obj">To William Dean Howells, in Boston:
+
+                                             HARTFORD, June 15, 1872.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj"><MPQAPOL autoclass="neutral">FRIEND</MPQAPOL> HOWELLS,--<MPQAPOL autoclass="neutral">Could</MPQAPOL> you tell me how I <MPQAPOL autoclass="neutral">could</MPQAPOL> get a copy of your
+portrait as published in Hearth and Home?</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I hear <MPQAPOL autoclass="neutral">so</MPQAPOL> <MPQAPOL autoclass="neutral">much</MPQAPOL> talk about it
+as being among the finest works of art which have yet <MPQAPOL autoclass="neutral">appeared</MPQAPOL> in that
+journal, that I <MPQAPOL autoclass="positive">feel</MPQAPOL> a <MPQAPOL autoclass="positive">strong</MPQAPOL> <MPQAPOL autoclass="positive">desire</MPQAPOL> to see it.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Is it <MPQAPOL autoclass="neutral">suitable</MPQAPOL> for
+framing?</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I have written the publishers of H & H time and again, but they
+say that the <MPQAPOL autoclass="neutral">demand</MPQAPOL> for the portrait <MPQAPOL autoclass="neutral">immediately</MPQAPOL> <MPQAPOL autoclass="negative">exhausted</MPQAPOL> the edition
+and now a copy cannot be had, <MPQAPOL autoclass="neutral">even</MPQAPOL> for the European <MPQAPOL autoclass="neutral">demand</MPQAPOL>, which has now
+begun.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Bret Harte has been here, and says his family <MPQAPOL autoclass="neutral">would</MPQAPOL> not be
+without that portrait for any <MPQAPOL autoclass="neutral">consideration</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">He says his children get up
+in the night and yell for it.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">I <MPQAPOL autoclass="neutral">would</MPQAPOL> give anything for a copy of that
+portrait to put up in my parlor.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I have Oliver Wendell Holmes and Bret
+Harte's, as published in Every Saturday, and of all the swarms that come
+every day to gaze upon them none go away that are not <MPQAPOL autoclass="negative">softened</MPQAPOL> and
+<MPQAPOL autoclass="negative">humbled</MPQAPOL> and made more <MPQAPOL autoclass="negative">resigned</MPQAPOL> to the <MPQAPOL autoclass="neutral">will</MPQAPOL> of God.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">If I had yours to put
+up alongside of them, I <MPQAPOL autoclass="neutral">believe</MPQAPOL> the combination <MPQAPOL autoclass="neutral">would</MPQAPOL> bring more souls to
+<MPQAPOL autoclass="positive">earnest</MPQAPOL> reflection and <MPQAPOL autoclass="positive">ultimate</MPQAPOL> <MPQAPOL autoclass="positive">conviction</MPQAPOL> of their <MPQAPOL autoclass="negative">lost</MPQAPOL> condition, than
+any other kind of warning <MPQAPOL autoclass="neutral">would</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Where in the nation can I get that
+portrait?</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Here are heaps of people that <MPQAPOL autoclass="positive">want</MPQAPOL> it,--that <MPQAPOL autoclass="neutral">need</MPQAPOL> it.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">There
+is my uncle.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">He <MPQAPOL autoclass="positive">wants</MPQAPOL> a copy.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">He is <MPQAPOL autoclass="negative">lying</MPQAPOL> at the <MPQAPOL autoclass="neutral">point</MPQAPOL> of <MPQAPOL autoclass="neutral">death</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">He
+has been <MPQAPOL autoclass="negative">lying</MPQAPOL> at the <MPQAPOL autoclass="neutral">point</MPQAPOL> of <MPQAPOL autoclass="neutral">death</MPQAPOL> for two years.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">He <MPQAPOL autoclass="positive">wants</MPQAPOL> a copy--and
+I <MPQAPOL autoclass="positive">want</MPQAPOL> him to have a copy.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">And I <MPQAPOL autoclass="positive">want</MPQAPOL> you to send a copy to the man that
+shot my dog.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I <MPQAPOL autoclass="positive">want</MPQAPOL> to see if he is <MPQAPOL autoclass="neutral">dead</MPQAPOL> to every human instinct.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">Now you send me that portrait.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I am sending you mine, in this letter;
+and am <MPQAPOL autoclass="positive">glad</MPQAPOL> to do it, for it has been <MPQAPOL autoclass="negative">greatly</MPQAPOL> <MPQAPOL autoclass="negative">admired</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">People who are
+judges of art, find in the execution a <MPQAPOL autoclass="neutral">grandeur</MPQAPOL> which has not been
+equalled in this country, and an <MPQAPOL autoclass="neutral">expression</MPQAPOL> which has not been approached
+in any.</MPQASENT>
+                                   <MPQASENT autoclass1="obj" autoclass2="obj">Yrs <MPQAPOL autoclass="neutral">truly</MPQAPOL>,
+                                             S. L. CLEMENS.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">P. S.  62,000 copies of "Roughing It" sold and delivered in 4 months.</MPQASENT>
+
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">The Clemens family did not spend the summer at Quarry Farm that
+     year.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">The sea air was prescribed for Mrs. Clemens and the <MPQAPOL autoclass="neutral">baby</MPQAPOL>, and
+     they went to Saybrook, Connecticut, to Fenwick Hall.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Clemens wrote
+     <MPQAPOL autoclass="neutral">very</MPQAPOL> little, <MPQAPOL autoclass="neutral">though</MPQAPOL> he <MPQAPOL autoclass="neutral">seems</MPQAPOL> to have planned Tom Sawyer, and <MPQAPOL autoclass="neutral">perhaps</MPQAPOL>
+     made its earliest beginning, which was in <MPQAPOL autoclass="neutral">dramatic</MPQAPOL> form.</MPQASENT>
+
+     <MPQASENT autoclass1="unknown" autoclass2="obj">His mind, <MPQAPOL autoclass="neutral">however</MPQAPOL>, was otherwise <MPQAPOL autoclass="neutral">active</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">He was always more or <MPQAPOL autoclass="neutral">less</MPQAPOL>
+     given to inventions, and in his next letter we find a description of
+     one which he brought to comparative <MPQAPOL autoclass="neutral">perfection</MPQAPOL>.</MPQASENT>
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">He had also conceived the <MPQAPOL autoclass="neutral">idea</MPQAPOL> of another book of travel, and this
+     was his purpose of a projected trip to England.</MPQASENT>
+
+
+                      <MPQASENT autoclass1="obj" autoclass2="obj">To Orion Clemens, in Hartford:
+
+                                        FENWICK HALL, SAYBROOK, CONN.</MPQASENT>
+                                        <MPQASENT autoclass1="obj" autoclass2="obj">Aug. 11, 1872.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">MY DEAR BRO.<MPQASENT autoclass1="obj" autoclass2="obj">--I shall sail for England in the Scotia, Aug. 21.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">But what I <MPQAPOL autoclass="positive">wish</MPQAPOL> to put on record now, is my new invention--hence this
+note, which you will preserve.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">It is this--a self-pasting scrap-book
+--<MPQAPOL autoclass="positive">good</MPQAPOL> <MPQAPOL autoclass="positive">enough</MPQAPOL> <MPQAPOL autoclass="neutral">idea</MPQAPOL> if some juggling tailor does not come along and ante-
+date me a couple of months, as in the case of the elastic veststrap.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">The <MPQAPOL autoclass="negative">nuisance</MPQAPOL> of keeping a scrap-book is:  1.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">One never has paste or gum
+tragacanth <MPQAPOL autoclass="neutral">handy</MPQAPOL>;  2.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Mucilage won't stick, or stay, 4 weeks;
+3.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Mucilage sucks out the ink and makes the scraps unreadable;
+4.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">To daub and paste 3 or 4 pages of scraps is <MPQAPOL autoclass="negative">tedious</MPQAPOL>, <MPQAPOL autoclass="neutral">slow</MPQAPOL>, <MPQAPOL autoclass="negative">nasty</MPQAPOL> and
+<MPQAPOL autoclass="negative">tiresome</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">My <MPQAPOL autoclass="neutral">idea</MPQAPOL> is this: Make a scrap-book with leaves veneered or
+coated with gum-stickum of some kind; wet the page with sponge, brush,
+rag or tongue, and dab on your scraps like postage stamps.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">Lay on the gum in columns of stripes.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">Each stripe of gum the length of say 20 ems, small pica, and as <MPQAPOL autoclass="neutral">broad</MPQAPOL> as
+your finger; a blank about as <MPQAPOL autoclass="neutral">broad</MPQAPOL> as your finger between each 2
+stripes--<MPQAPOL autoclass="neutral">so</MPQAPOL> in wetting the paper you <MPQAPOL autoclass="neutral">need</MPQAPOL> not wet any more of the gum
+than your scrap or scraps will cover--then you may shut up the book and
+the leaves won't stick together.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">Preserve, also, the envelope of this letter--postmark <MPQAPOL autoclass="neutral">ought</MPQAPOL> to be <MPQAPOL autoclass="positive">good</MPQAPOL>
+evidence of the date of this <MPQAPOL autoclass="neutral">great</MPQAPOL> humanizing and <MPQAPOL autoclass="neutral">civilizing</MPQAPOL> invention.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="subj">I'll put it into Dan Slote's hands and tell him he <MPQAPOL autoclass="neutral">must</MPQAPOL> send you all over
+America, to <MPQAPOL autoclass="positive">urge</MPQAPOL> its use upon stationers and booksellers--<MPQAPOL autoclass="neutral">so</MPQAPOL> don't buy
+into a newspaper.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The name of this thing is "Mark Twain's Self-Pasting
+Scrapbook."</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">All <MPQAPOL autoclass="neutral">well</MPQAPOL> here.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Shall be up a P. M.  Tuesday.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Send the carriage.</MPQASENT>
+                                   <MPQASENT autoclass1="obj" autoclass2="obj">Yr Bro.</MPQASENT>
+                                             <MPQASENT autoclass1="obj" autoclass2="obj">S.  L.  CLEMENS.</MPQASENT>
+
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">The Dan Slote of this letter is, of course, his old Quaker City
+     shipmate, who was <MPQAPOL autoclass="neutral">engaged</MPQAPOL> in the blank-book business, the <MPQAPOL autoclass="neutral">firm</MPQAPOL> being
+     Slote & Woodman, located at 119 and 121 William Street, New York.</MPQASENT>
+

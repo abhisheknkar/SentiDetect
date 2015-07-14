@@ -1,0 +1,21 @@
+<MPQASENT autoclass1="unknown" autoclass2="obj">Nowhere is the human being more <MPQAPOL autoclass="neutral">truly</MPQAPOL> <MPQAPOL autoclass="neutral">revealed</MPQAPOL> than in his letters.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj">Notin literary letters--<MPQAPOL autoclass="neutral">prepared</MPQAPOL> with care, and the <MPQAPOL autoclass="neutral">thought</MPQAPOL> of <MPQAPOL autoclass="neutral">possible</MPQAPOL>
+publication--but in those letters wrought out of the press of
+circumstances, and with no <MPQAPOL autoclass="neutral">idea</MPQAPOL> of print in mind.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">A collection of <MPQAPOL autoclass="neutral">such</MPQAPOL>
+documents, written by one whose life has become of <MPQAPOL autoclass="neutral">interest</MPQAPOL> to mankind at
+<MPQAPOL autoclass="neutral">large</MPQAPOL>, has a value <MPQAPOL autoclass="neutral">quite</MPQAPOL> aside from literature, in that it reflects in
+some degree at <MPQAPOL autoclass="neutral">least</MPQAPOL> the soul of the writer.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">The letters of Mark Twain are <MPQAPOL autoclass="neutral">peculiarly</MPQAPOL> of the <MPQAPOL autoclass="negative">revealing</MPQAPOL> sort.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">He was a
+man of few <MPQAPOL autoclass="neutral">restraints</MPQAPOL> and of no <MPQAPOL autoclass="neutral">affectations</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">In his correspondence,
+as in his talk, he spoke what was in his mind, untrammeled by literary
+conventions.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">Necessarily <MPQAPOL autoclass="neutral">such</MPQAPOL> a collection does not constitute a detailed life story,
+but is supplementary to it.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">An extended biography of Mark Twain has
+already been published.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">His letters are here gathered for those who <MPQAPOL autoclass="positive">wish</MPQAPOL>
+to pursue the subject somewhat more <MPQAPOL autoclass="neutral">exhaustively</MPQAPOL> from the <MPQAPOL autoclass="neutral">strictly</MPQAPOL>
+personal side.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Selections from this correspondence were used in the
+biography mentioned.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj"><MPQAPOL autoclass="neutral">Most</MPQAPOL> of these are here reprinted in the <MPQAPOL autoclass="neutral">belief</MPQAPOL> that
+an owner of the "Letters" will <MPQAPOL autoclass="positive">wish</MPQAPOL> the collection to be <MPQAPOL autoclass="neutral">reasonably</MPQAPOL>
+<MPQAPOL autoclass="positive">complete</MPQAPOL>.</MPQASENT>

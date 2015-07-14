@@ -1,0 +1,425 @@
+
+     <MPQASENT autoclass1="unknown" autoclass2="obj">We have no record of Mark Twain's earliest letters.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj"><MPQAPOL autoclass="neutral">Very</MPQAPOL> <MPQAPOL autoclass="neutral">likely</MPQAPOL>
+     they were soiled pencil notes, written to some school <MPQAPOL autoclass="neutral">sweetheart</MPQAPOL>--
+     to "Becky Thatcher," <MPQAPOL autoclass="neutral">perhaps</MPQAPOL>--and tossed across at <MPQAPOL autoclass="neutral">lucky</MPQAPOL> moments,
+     or otherwise, with <MPQAPOL autoclass="negative">happy</MPQAPOL> or <MPQAPOL autoclass="negative">disastrous</MPQAPOL> results.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">One of those
+     smudgy, much-folded school notes of the Tom Sawyer period <MPQAPOL autoclass="neutral">would</MPQAPOL> be
+     <MPQAPOL autoclass="positive">priceless</MPQAPOL> to-day, and somewhere among <MPQAPOL autoclass="neutral">forgotten</MPQAPOL> keepsakes it may
+     exist, but we shall not be <MPQAPOL autoclass="neutral">likely</MPQAPOL> to find it.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">No letter of his
+     boyhood, no scrap of his earlier writing, has come to <MPQAPOL autoclass="neutral">light</MPQAPOL> except
+     his penciled name, SAM CLEMENS, laboriously inscribed on the inside
+     of a small <MPQAPOL autoclass="neutral">worn</MPQAPOL> purse that once held his <MPQAPOL autoclass="neutral">meager</MPQAPOL>, almost non-existent
+     wealth.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">He became a printer's apprentice at twelve, but as he
+     received no salary, the <MPQAPOL autoclass="neutral">need</MPQAPOL> of a purse <MPQAPOL autoclass="neutral">could</MPQAPOL> not have been <MPQAPOL autoclass="neutral">urgent</MPQAPOL>.</MPQASENT>
+     <MPQASENT autoclass1="unknown" autoclass2="subj">He <MPQAPOL autoclass="neutral">must</MPQAPOL> have carried it <MPQAPOL autoclass="neutral">pretty</MPQAPOL> steadily, <MPQAPOL autoclass="neutral">however</MPQAPOL>, from its
+     <MPQAPOL autoclass="neutral">appearance</MPQAPOL>--as a kind of symbol of <MPQAPOL autoclass="positive">hope</MPQAPOL>, <MPQAPOL autoclass="neutral">maybe</MPQAPOL>--a token of that
+     Sellers-optimism which <MPQAPOL autoclass="neutral">dominated</MPQAPOL> his early life, and was never
+     <MPQAPOL autoclass="negative">entirely</MPQAPOL> subdued.</MPQASENT>
+
+     <MPQASENT autoclass1="unknown" autoclass2="subj">No other writing of any kind has been preserved from Sam Clemens's
+     boyhood, none from that period of his youth when he had served his
+     apprenticeship and was a <MPQAPOL autoclass="neutral">capable</MPQAPOL> printer on his brother's paper, a
+     contributor to it when occasion served.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Letters and manuscripts of
+     those days have <MPQAPOL autoclass="neutral">vanished</MPQAPOL>--<MPQAPOL autoclass="neutral">even</MPQAPOL> his <MPQAPOL autoclass="neutral">contributions</MPQAPOL> in printed form are
+     unobtainable.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">It is not <MPQAPOL autoclass="neutral">believed</MPQAPOL> that a single number of Orion
+     Clemens's paper, the Hannibal Journal, exists to-day.</MPQASENT>
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">It was not until he was seventeen years old that Sam Clemens wrote a
+     letter any portion of which has <MPQAPOL autoclass="neutral">survived</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">He was no longer in
+     Hannibal.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Orion's unprosperous enterprise did not <MPQAPOL autoclass="neutral">satisfy</MPQAPOL> him.</MPQASENT>
+     <MPQASENT autoclass1="unknown" autoclass2="subj">His <MPQAPOL autoclass="positive">wish</MPQAPOL> to earn money and to see the world had carried him first to
+     St. Louis, where his sister Pamela was living, then to New York
+     City, where a World's <MPQAPOL autoclass="neutral">Fair</MPQAPOL> in a Crystal Palace was in <MPQAPOL autoclass="neutral">progress</MPQAPOL>.</MPQASENT>
+     <MPQASENT autoclass1="obj" autoclass2="obj">The letter tells of a visit to this <MPQAPOL autoclass="neutral">great</MPQAPOL> exhibition.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">It is not
+     <MPQAPOL autoclass="neutral">complete</MPQAPOL>, and the fragment bears no date, but it was written during
+     the summer of 1853.</MPQASENT>
+
+
+      <MPQASENT autoclass1="obj" autoclass2="obj">Fragment of a letter from Sam L.  Clemens to his sister
+           Pamela Moffett, in St. Louis, summer of 1853:
+
+.  .  .</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">From the gallery (second floor) you have a <MPQAPOL autoclass="positive">glorious</MPQAPOL> sight--the
+flags of the different countries represented, the <MPQAPOL autoclass="negative">lofty</MPQAPOL> dome, <MPQAPOL autoclass="negative">glittering</MPQAPOL>
+jewelry, <MPQAPOL autoclass="negative">gaudy</MPQAPOL> tapestry, &c., with the <MPQAPOL autoclass="neutral">busy</MPQAPOL> crowd passing to and fro--tis
+a <MPQAPOL autoclass="positive">perfect</MPQAPOL> fairy palace--<MPQAPOL autoclass="positive">beautiful</MPQAPOL> beyond description.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">The Machinery department is on the main floor, but I cannot enumerate any
+of it on account of the lateness of the hour (past 8 o'clock.)</MPQASENT> <MPQASENT autoclass1="unknown" autoclass2="subj">It <MPQAPOL autoclass="neutral">would</MPQAPOL>
+take more than a week to examine everything on exhibition; and as I was
+only in a <MPQAPOL autoclass="negative">little</MPQAPOL> over two hours tonight, I only glanced at about one-
+third of the articles; and having a <MPQAPOL autoclass="neutral">poor</MPQAPOL> memory; I have enumerated
+<MPQAPOL autoclass="negative">scarcely</MPQAPOL> any of <MPQAPOL autoclass="neutral">even</MPQAPOL> the principal objects.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">The visitors to the Palace
+average 6,000 daily--double the population of Hannibal.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The price of
+<MPQAPOL autoclass="neutral">admission</MPQAPOL> being 50 cents, they take in about $3,000.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">The Latting Observatory (height about 280 feet) is near the Palace--from
+it you can obtain a <MPQAPOL autoclass="positive">grand</MPQAPOL> <MPQAPOL autoclass="neutral">view</MPQAPOL> of the city and the country round.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The
+Croton Aqueduct, to supply the city with water, is the <MPQAPOL autoclass="neutral">greatest</MPQAPOL> <MPQAPOL autoclass="positive">wonder</MPQAPOL>
+yet.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj"><MPQAPOL autoclass="neutral">Immense</MPQAPOL> sewers are laid across the bed of the Hudson River, and
+pass through the country to Westchester county, where a whole river is
+turned from its course, and brought to New York.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">From the reservoir in
+the city to the Westchester county reservoir, the distance is thirty-
+eight miles!</MPQASENT> <MPQASENT autoclass1="unknown" autoclass2="obj">and if <MPQAPOL autoclass="neutral">necessary</MPQAPOL>, they <MPQAPOL autoclass="neutral">could</MPQAPOL> supply every family in New York
+with one hundred barrels of water per day!</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">I am <MPQAPOL autoclass="negative">very</MPQAPOL> <MPQAPOL autoclass="negative">sorry</MPQAPOL> to learn that Henry has been <MPQAPOL autoclass="neutral">sick</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">He <MPQAPOL autoclass="neutral">ought</MPQAPOL> to go to the
+country and take exercise; for he is not half <MPQAPOL autoclass="neutral">so</MPQAPOL> <MPQAPOL autoclass="neutral">healthy</MPQAPOL> as Ma <MPQAPOL autoclass="neutral">thinks</MPQAPOL> he
+is.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">If he had my walking to do, he <MPQAPOL autoclass="neutral">would</MPQAPOL> be another boy <MPQAPOL autoclass="neutral">entirely</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Four
+times every day I walk a <MPQAPOL autoclass="neutral">little</MPQAPOL> over one mile; and working hard all day,
+and walking four miles, is exercise--I am used to it, now, <MPQAPOL autoclass="neutral">though</MPQAPOL>, and it
+is no <MPQAPOL autoclass="neutral">trouble</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Where is it Orion's going to?</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">Tell Ma my <MPQAPOL autoclass="positive">promises</MPQAPOL> are
+<MPQAPOL autoclass="neutral">faithfully</MPQAPOL> kept, and if I have my health I will take her to Ky. in the
+spring--I shall save money for this.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Tell Jim and all the rest of them
+to write, and give me all the news.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">I am <MPQAPOL autoclass="negative">sorry</MPQAPOL> to hear <MPQAPOL autoclass="negative">such</MPQAPOL> <MPQAPOL autoclass="negative">bad</MPQAPOL> news
+from Will and Captain Bowen.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">I shall write to Will soon.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">The Chatham-
+square Post Office and the Broadway office <MPQAPOL autoclass="neutral">too</MPQAPOL>, are out of my way, and I
+always go to the General Post Office; <MPQAPOL autoclass="neutral">so</MPQAPOL> you <MPQAPOL autoclass="neutral">must</MPQAPOL> write the direction of
+my letters plain, "New York City, N. Y.," without giving the street or
+anything of the kind, or they may go to some of the other offices.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">(It
+has <MPQAPOL autoclass="neutral">just</MPQAPOL> <MPQAPOL autoclass="neutral">struck</MPQAPOL> 2 A.M.  and I always get up at 6, and am at work at 7.)</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="obj">You ask me where I spend my evenings.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Where <MPQAPOL autoclass="neutral">would</MPQAPOL> you <MPQAPOL autoclass="neutral">suppose</MPQAPOL>, with a
+<MPQAPOL autoclass="neutral">free</MPQAPOL> printers' library containing more than 4,000 volumes within a
+quarter of a mile of me, and nobody at home to talk to?</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I shall write to
+Ella soon.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Write soon
+                         <MPQAPOL autoclass="negative">Truly</MPQAPOL> your Brother
+                                             SAM.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">P. S.  I have written this by a <MPQAPOL autoclass="neutral">light</MPQAPOL> <MPQAPOL autoclass="neutral">so</MPQAPOL> <MPQAPOL autoclass="negative">dim</MPQAPOL> that you nor Ma <MPQAPOL autoclass="neutral">could</MPQAPOL> not
+read by it.</MPQASENT>
+
+
+     <MPQASENT autoclass1="unknown" autoclass2="subj">He was lodging in a mechanics' <MPQAPOL autoclass="negative">cheap</MPQAPOL> boarding-house in Duane Street,
+     and we may <MPQAPOL autoclass="neutral">imagine</MPQAPOL> the bareness of his room, the <MPQAPOL autoclass="neutral">feeble</MPQAPOL> <MPQAPOL autoclass="negative">poverty</MPQAPOL> of
+     his lamp.</MPQASENT>
+
+     <MPQASENT autoclass1="subj" autoclass2="subj">"Tell Ma my <MPQAPOL autoclass="positive">promises</MPQAPOL> are <MPQAPOL autoclass="neutral">faithfully</MPQAPOL> kept."</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">It was the day when he
+     had left Hannibal.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">His mother, Jane Clemens, a <MPQAPOL autoclass="neutral">resolute</MPQAPOL>, wiry woman
+     of forty-nine, had put together his few belongings.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">Then, holding
+     up a <MPQAPOL autoclass="negative">little</MPQAPOL> Testament:
+
+     "I <MPQAPOL autoclass="positive">want</MPQAPOL> you to take hold of the end of this, Sam," she said, "and
+     make me a <MPQAPOL autoclass="neutral">promise</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I <MPQAPOL autoclass="positive">want</MPQAPOL> you to repeat after me these words:
+     'I do solemnly <MPQAPOL autoclass="negative">swear</MPQAPOL> that I will not <MPQAPOL autoclass="neutral">throw</MPQAPOL> a card, or drink a drop
+     of liquor while I am gone.'"</MPQASENT>
+
+     <MPQASENT autoclass1="unknown" autoclass2="subj">It was this oath, repeated after her, that he was keeping
+     <MPQAPOL autoclass="neutral">faithfully</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The Will Bowen mentioned is a former playmate, one of
+     Tom Sawyer's <MPQAPOL autoclass="neutral">outlaw</MPQAPOL> band.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">He had gone on the river to learn
+     piloting with an elder brother, the "Captain."</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">What the <MPQAPOL autoclass="negative">bad</MPQAPOL> news
+     was is no longer remembered, but it <MPQAPOL autoclass="neutral">could</MPQAPOL> not have been <MPQAPOL autoclass="neutral">very</MPQAPOL>
+     <MPQAPOL autoclass="negative">serious</MPQAPOL>, for the Bowen boys remained on the river for many years.</MPQASENT>
+     <MPQASENT autoclass1="unknown" autoclass2="obj">"Ella" was Samuel Clemens's cousin and one-time <MPQAPOL autoclass="neutral">sweetheart</MPQAPOL>, Ella
+     Creel.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">"Jim" was Jim Wolfe, an apprentice in Orion's office, and
+     the <MPQAPOL autoclass="neutral">hero</MPQAPOL> of an <MPQAPOL autoclass="neutral">adventure</MPQAPOL> which long after Mark Twain wrote under the
+     title of, "Jim Wolfe and the Cats."</MPQASENT>
+
+     <MPQASENT autoclass1="unknown" autoclass2="obj">There is <MPQAPOL autoclass="neutral">scarcely</MPQAPOL> a hint of the future Mark Twain in this early
+     letter.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">It is the letter of a boy of seventeen who is beginning to
+     take himself <MPQAPOL autoclass="neutral">rather</MPQAPOL> <MPQAPOL autoclass="negative">seriously</MPQAPOL>--who, finding himself for the first
+     time far from home and equal to his own <MPQAPOL autoclass="neutral">responsibilities</MPQAPOL>, is <MPQAPOL autoclass="positive">willing</MPQAPOL>
+     to carry the <MPQAPOL autoclass="neutral">responsibility</MPQAPOL> of others.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Henry, his brother, three
+     years younger, had been left in the printing-office with Orion, who,
+     after a long, profitless <MPQAPOL autoclass="neutral">fight</MPQAPOL>, is planning to remove from Hannibal.</MPQASENT>
+     <MPQASENT autoclass1="unknown" autoclass2="obj">The young traveler is <MPQAPOL autoclass="neutral">concerned</MPQAPOL> as to the family <MPQAPOL autoclass="neutral">outlook</MPQAPOL>, and will
+     furnish <MPQAPOL autoclass="neutral">advice</MPQAPOL> if invited.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">He <MPQAPOL autoclass="neutral">feels</MPQAPOL> the approach of <MPQAPOL autoclass="neutral">prosperity</MPQAPOL>, and
+     will take his mother on a long-coveted trip to her old home in the
+     spring.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">His evenings?</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Where <MPQAPOL autoclass="neutral">should</MPQAPOL> he spend them, with a <MPQAPOL autoclass="neutral">free</MPQAPOL>
+     library of four thousand volumes close by?</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">It is distinctly a
+     <MPQAPOL autoclass="neutral">youthful</MPQAPOL> letter, a bit <MPQAPOL autoclass="negative">pretentious</MPQAPOL>, and <MPQAPOL autoclass="positive">wanting</MPQAPOL> in the spontaneity
+     and humor of a later time.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">It invites <MPQAPOL autoclass="neutral">comment</MPQAPOL>, now, chiefly because
+     it is the first <MPQAPOL autoclass="neutral">surviving</MPQAPOL> document in the long human story.</MPQASENT>
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">He was working in the printing-office of John A. Gray and Green, on
+     Cliff Street, and remained there through the summer.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">He <MPQAPOL autoclass="neutral">must</MPQAPOL> have
+     written more than once during this period, but the next existing
+     letter--also to Sister Pamela--was written in October.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">It is
+     <MPQAPOL autoclass="neutral">perhaps</MPQAPOL> a shade more <MPQAPOL autoclass="neutral">natural</MPQAPOL> in tone than the earlier example, and
+     there is a hint of Mark Twain in the first paragraph.</MPQASENT>
+
+
+                      <MPQASENT autoclass1="obj" autoclass2="obj">To Mrs. Moffett, in St. Louis:
+
+                              NEW YORK .  .  .</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">, Oct.</MPQASENT> <MPQASENT autoclass1="obj" autoclass2="obj">Saturday '53.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj">MY DEAR SISTER,--I have not written to any of the family for some time,
+from the <MPQAPOL autoclass="neutral">fact</MPQAPOL>, firstly, that I didn't <MPQAPOL autoclass="neutral">know</MPQAPOL> where they were, and secondly,
+because I have been <MPQAPOL autoclass="negative">fooling</MPQAPOL> myself with the <MPQAPOL autoclass="neutral">idea</MPQAPOL> that I was going to
+leave New York every day for the last two weeks.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I have taken a <MPQAPOL autoclass="positive">liking</MPQAPOL>
+to the <MPQAPOL autoclass="negative">abominable</MPQAPOL> place, and every time I get <MPQAPOL autoclass="neutral">ready</MPQAPOL> to leave, I put it
+off a day or <MPQAPOL autoclass="neutral">so</MPQAPOL>, from some unaccountable cause.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">It is as <MPQAPOL autoclass="neutral">hard</MPQAPOL> on my
+<MPQAPOL autoclass="neutral">conscience</MPQAPOL> to leave New York, as it was <MPQAPOL autoclass="neutral">easy</MPQAPOL> to leave Hannibal.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">I <MPQAPOL autoclass="neutral">think</MPQAPOL>
+I shall get off Tuesday, <MPQAPOL autoclass="neutral">though</MPQAPOL>.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">Edwin Forrest has been playing, for the last sixteen days, at the
+Broadway Theatre, but I never went to see him till last night.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">The play
+was the "Gladiator."</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">I did not <MPQAPOL autoclass="positive">like</MPQAPOL> parts of it <MPQAPOL autoclass="neutral">much</MPQAPOL>, but other portions
+were <MPQAPOL autoclass="negative">really</MPQAPOL> <MPQAPOL autoclass="negative">splendid</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">In the latter part of the last act, where the
+"Gladiator" (Forrest) dies at his brother's feet, (in all the <MPQAPOL autoclass="negative">fierce</MPQAPOL>
+<MPQAPOL autoclass="negative">pleasure</MPQAPOL> of gratified <MPQAPOL autoclass="negative">revenge</MPQAPOL>,) the man's whole soul <MPQAPOL autoclass="neutral">seems</MPQAPOL> <MPQAPOL autoclass="neutral">absorbed</MPQAPOL> in
+the part he is playing; and it is <MPQAPOL autoclass="negative">really</MPQAPOL> <MPQAPOL autoclass="negative">startling</MPQAPOL> to see him.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I am
+<MPQAPOL autoclass="negative">sorry</MPQAPOL> I did not see him play "Damon and Pythias" the former character
+being his <MPQAPOL autoclass="neutral">greatest</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">He <MPQAPOL autoclass="neutral">appears</MPQAPOL> in Philadelphia on Monday night.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">I have not received a letter from home lately, but got a "'Journal'" the
+other day, in which I see the office has been sold.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I <MPQAPOL autoclass="neutral">suppose</MPQAPOL> Ma, Orion
+and Henry are in St. Louis now.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">If Orion has no other project in his
+head, he <MPQAPOL autoclass="neutral">ought</MPQAPOL> to take the contract for getting out some weekly paper, if
+he cannot get a foremanship.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Now, for <MPQAPOL autoclass="neutral">such</MPQAPOL> a paper as the "Presbyterian"
+(containing about 60,000,--[Sixty thousand ems, type measurement.])</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj">he <MPQAPOL autoclass="positive">could</MPQAPOL> get $20 or $25 per week, and he and Henry <MPQAPOL autoclass="positive">could</MPQAPOL> <MPQAPOL autoclass="positive">easily</MPQAPOL> do the
+work; nothing to do but set the type and make up the forms....
+
+If my letters do not come often, you need not <MPQAPOL autoclass="positive">bother</MPQAPOL> yourself about me;
+for if you have a brother nearly eighteen years of age, who is not <MPQAPOL autoclass="positive">able</MPQAPOL>
+to take care of himself a few miles from home, <MPQAPOL autoclass="positive">such</MPQAPOL> a brother is not
+<MPQAPOL autoclass="positive">worth</MPQAPOL> one's <MPQAPOL autoclass="positive">thoughts</MPQAPOL>: and if I don't manage to take care of No. 1, be
+<MPQAPOL autoclass="positive">assured</MPQAPOL> you will never <MPQAPOL autoclass="positive">know</MPQAPOL> it.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I am not <MPQAPOL autoclass="negative">afraid</MPQAPOL>, <MPQAPOL autoclass="neutral">however</MPQAPOL>; I shall ask
+<MPQAPOL autoclass="neutral">favors</MPQAPOL> from no one, and endeavor to be (and shall be) as "<MPQAPOL autoclass="neutral">independent</MPQAPOL> as
+a wood-sawyer's clerk."</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">I never saw <MPQAPOL autoclass="neutral">such</MPQAPOL> a place for military companies as New York.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Go on the
+street when you will, you are <MPQAPOL autoclass="neutral">sure</MPQAPOL> to meet a company in <MPQAPOL autoclass="neutral">full</MPQAPOL> uniform,
+with all the usual appendages of drums, fifes, &c.  I saw a <MPQAPOL autoclass="neutral">large</MPQAPOL> company
+of soldiers of 1812 the other day, with a '76 veteran scattered here and
+there in the ranks.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">And as I passed through one of the parks lately,
+I came upon a company of boys on parade.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Their uniforms were <MPQAPOL autoclass="neutral">neat</MPQAPOL>, and
+their muskets about half the common size.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Some of them were not more
+than seven or eight years of age; but had <MPQAPOL autoclass="neutral">evidently</MPQAPOL> been well-drilled.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">Passage to Albany (160 miles) on the finest steamers that ply' the
+Hudson, is now 25 cents--<MPQAPOL autoclass="negative">cheap</MPQAPOL> <MPQAPOL autoclass="neutral">enough</MPQAPOL>, but is generally cheaper than that
+in the summer.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">I <MPQAPOL autoclass="positive">want</MPQAPOL> you to write as soon as I tell you where to direct your letter.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="subj">I <MPQAPOL autoclass="neutral">would</MPQAPOL> let you <MPQAPOL autoclass="neutral">know</MPQAPOL> now, if I <MPQAPOL autoclass="neutral">knew</MPQAPOL> myself.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I may <MPQAPOL autoclass="neutral">perhaps</MPQAPOL> be here a week
+longer; but I cannot tell.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">When you write tell me the whereabouts of the
+family.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">My <MPQAPOL autoclass="positive">love</MPQAPOL> to Mr. Moffett and Ella.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Tell Ella I <MPQAPOL autoclass="neutral">intend</MPQAPOL> to write to
+her soon, whether she <MPQAPOL autoclass="positive">wants</MPQAPOL> me to nor not.</MPQASENT>
+                              <MPQASENT autoclass1="obj" autoclass2="obj"><MPQAPOL autoclass="neutral">Truly</MPQAPOL> your Brother,
+                                        SAML L. CLEMENS.</MPQASENT>
+
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">He was in Philadelphia when he wrote the nest letter that has come
+     down to us, and <MPQAPOL autoclass="neutral">apparently</MPQAPOL> <MPQAPOL autoclass="positive">satisfied</MPQAPOL> with the change.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">It is a
+     letter to Orion Clemens, who had disposed of his paper, but
+     <MPQAPOL autoclass="neutral">evidently</MPQAPOL> was <MPQAPOL autoclass="neutral">still</MPQAPOL> in Hannibal.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">An extended description of a trip
+     to Fairmount Park is <MPQAPOL autoclass="neutral">omitted</MPQAPOL> because of its length, its chief
+     <MPQAPOL autoclass="neutral">interest</MPQAPOL> being the <MPQAPOL autoclass="neutral">tendency</MPQAPOL> it <MPQAPOL autoclass="neutral">shows</MPQAPOL> to descriptive writing--the
+     field in which he <MPQAPOL autoclass="neutral">would</MPQAPOL> make his first <MPQAPOL autoclass="positive">great</MPQAPOL> <MPQAPOL autoclass="positive">fame</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">There is,
+     <MPQAPOL autoclass="neutral">however</MPQAPOL>, no hint of humor, and only a <MPQAPOL autoclass="neutral">mild</MPQAPOL> suggestion of the author
+     of the Innocents Abroad in this early attempt.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The letter as here
+     given is otherwise <MPQAPOL autoclass="neutral">complete</MPQAPOL>, the <MPQAPOL autoclass="neutral">omissions</MPQAPOL> being indicated.</MPQASENT>
+
+
+                      <MPQASENT autoclass1="obj" autoclass2="obj">To Orion Clemens, in Hannibal:
+
+                                   PHILADELPHIA, PA.</MPQASENT> <MPQASENT autoclass1="obj" autoclass2="obj">Oct. 26,1853.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">MY DEAR BROTHER,--It was at <MPQAPOL autoclass="neutral">least</MPQAPOL> two weeks before I left New York, that
+I received my last letter from home: and since then, not a word have I
+heard from any of you.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="subj">And now, since I <MPQAPOL autoclass="neutral">think</MPQAPOL> of it, it wasn't a letter,
+either, but the last number of the "Daily Journal," saying that that
+paper was sold, and I <MPQAPOL autoclass="neutral">very</MPQAPOL> <MPQAPOL autoclass="neutral">naturally</MPQAPOL> <MPQAPOL autoclass="neutral">supposed</MPQAPOL> from that, that the family
+had disbanded, and taken up winter quarters in St. Louis.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj"><MPQAPOL autoclass="neutral">Therefore</MPQAPOL>, I
+have been writing to Pamela, till I've <MPQAPOL autoclass="negative">tired</MPQAPOL> of it, and have received no
+answer.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I have been writing for the last two or three weeks, to send Ma
+some money, but <MPQAPOL autoclass="negative">devil</MPQAPOL> take me if I <MPQAPOL autoclass="neutral">knew</MPQAPOL> where she was, and <MPQAPOL autoclass="neutral">so</MPQAPOL> the money
+has slipped out of my pocket somehow or other, but I have a dollar left,
+and a <MPQAPOL autoclass="positive">good</MPQAPOL> <MPQAPOL autoclass="positive">deal</MPQAPOL> owing to me, which will be paid next Monday.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="subj">I shall
+enclose the dollar in this letter, and you can hand it to her.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I <MPQAPOL autoclass="neutral">know</MPQAPOL>
+it's a small amount, but then it will buy her a handkerchief, and at the
+same time serve as a specimen of the kind of stuff we are paid with in
+Philadelphia, for you see it's <MPQAPOL autoclass="neutral">against</MPQAPOL> the law, in Pennsylvania, to keep
+or pass a bill of less denomination than $5.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">I have only seen two or
+three bank bills since I have been in the State.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">On Monday the hands are
+paid off in <MPQAPOL autoclass="neutral">sparkling</MPQAPOL> <MPQAPOL autoclass="neutral">gold</MPQAPOL>, <MPQAPOL autoclass="neutral">fresh</MPQAPOL> from the Mint; <MPQAPOL autoclass="neutral">so</MPQAPOL> your <MPQAPOL autoclass="neutral">dreams</MPQAPOL> are not
+<MPQAPOL autoclass="negative">troubled</MPQAPOL> with the <MPQAPOL autoclass="negative">fear</MPQAPOL> of having <MPQAPOL autoclass="negative">doubtful</MPQAPOL> money in your pocket.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">I am subbing at the Inquirer office.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="subj">One man has <MPQAPOL autoclass="neutral">engaged</MPQAPOL> me to work for
+him every Sunday till the first of next April, (when I shall return home
+to take Ma to Ky;) and another has <MPQAPOL autoclass="neutral">engaged</MPQAPOL> my services for the 24th of
+next month; and if I <MPQAPOL autoclass="positive">want</MPQAPOL> it, I can get subbing every night of the week.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">I go to work at 7 o'clock in the evening, and work till 3 o'clock the
+next morning.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I can go to the theatre and stay till 12 o'clock and then
+go to the office, and get work from that till 3 the next morning; when I
+go to bed, and sleep till 11 o'clock, then get up and loaf the rest of
+the day.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The type is <MPQAPOL autoclass="neutral">mostly</MPQAPOL> agate and minion, with some bourgeois; and
+when one gets a <MPQAPOL autoclass="neutral">good</MPQAPOL> agate take,--["Agate," "minion," etc., sizes of
+type; "take," a piece of work.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Type measurement is by ems, <MPQAPOL autoclass="neutral">meaning</MPQAPOL> the
+width of the letter 'm'.]<MPQASENT autoclass1="obj" autoclass2="obj">--he is <MPQAPOL autoclass="neutral">sure</MPQAPOL> to make money.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I made $2.50 last
+Sunday, and was <MPQAPOL autoclass="neutral">laughed</MPQAPOL> at by all the hands, the poorest of whom sets
+11,000 on Sunday; and if I don't set 10,000, at <MPQAPOL autoclass="neutral">least</MPQAPOL>, next Sunday, I'll
+give them leave to <MPQAPOL autoclass="neutral">laugh</MPQAPOL> as <MPQAPOL autoclass="neutral">much</MPQAPOL> as they <MPQAPOL autoclass="positive">want</MPQAPOL> to.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Out of the 22
+compositors in this office, 12 at <MPQAPOL autoclass="neutral">least</MPQAPOL>, set 15,000 on Sunday.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">Unlike New York, I <MPQAPOL autoclass="positive">like</MPQAPOL> this Philadelphia <MPQAPOL autoclass="positive">amazingly</MPQAPOL>, and the people in
+it.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">There is only one thing that gets my "dander" up--and that is the
+hands are always <MPQAPOL autoclass="positive">encouraging</MPQAPOL> me: telling me--"it's no use to get
+<MPQAPOL autoclass="negative">discouraged</MPQAPOL>--no use to be down-hearted, for there is more work here than
+you can do!"</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">"Down-hearted," the <MPQAPOL autoclass="negative">devil</MPQAPOL>!</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">I have not had a particle of
+<MPQAPOL autoclass="neutral">such</MPQAPOL> a <MPQAPOL autoclass="neutral">feeling</MPQAPOL> since I left Hannibal, more than four months ago.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I <MPQAPOL autoclass="positive">fancy</MPQAPOL>
+they'll have to wait some time till they see me down-hearted or <MPQAPOL autoclass="negative">afraid</MPQAPOL> of
+<MPQAPOL autoclass="negative">starving</MPQAPOL> while I have <MPQAPOL autoclass="neutral">strength</MPQAPOL> to work and am in a city of 400,000
+inhabitants.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">When I was in Hannibal, before I had <MPQAPOL autoclass="neutral">scarcely</MPQAPOL> stepped out
+of the town limits, nothing <MPQAPOL autoclass="neutral">could</MPQAPOL> have <MPQAPOL autoclass="positive">convinced</MPQAPOL> me that I <MPQAPOL autoclass="neutral">would</MPQAPOL> <MPQAPOL autoclass="neutral">starve</MPQAPOL>
+as soon as I got a <MPQAPOL autoclass="negative">little</MPQAPOL> way from home....
+
+The grave of Franklin is in Christ Church-yard, corner of Fifth and Arch
+streets.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">They keep the gates locked, and one can only see the flat slab
+that <MPQAPOL autoclass="neutral">lies</MPQAPOL> over his remains and that of his wife; but you cannot see the
+inscription distinctly <MPQAPOL autoclass="neutral">enough</MPQAPOL> to read it.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The inscription, I <MPQAPOL autoclass="neutral">believe</MPQAPOL>,
+reads <MPQAPOL autoclass="neutral">thus</MPQAPOL>:
+
+                        "Benjamin  |
+                         and       |  Franklin"
+                         Deborah   |
+
+I counted 27 cannons (6 pounders) planted in the edge of the sidewalk in
+Water St. the other day.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">They are driven into the ground, about a foot,
+with the mouth end upwards.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">A ball is driven fast into the mouth of
+each, to <MPQAPOL autoclass="neutral">exclude</MPQAPOL> the water; they <MPQAPOL autoclass="neutral">look</MPQAPOL> like <MPQAPOL autoclass="neutral">so</MPQAPOL> many posts.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">They were put
+there during the <MPQAPOL autoclass="neutral">war</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I have also seen them planted in this manner,
+round the old churches, in N. Y.....
+
+There is one <MPQAPOL autoclass="neutral">fine</MPQAPOL> custom observed in Phila.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">A gentleman is always
+expected to hand up a lady's money for her.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Yesterday, I sat in the
+front end of the 'bus, directly under the driver's box--a lady sat
+opposite me.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">She handed me her money, which was right.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">But, Lord!</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj">a St. Louis lady <MPQAPOL autoclass="neutral">would</MPQAPOL> <MPQAPOL autoclass="neutral">think</MPQAPOL> herself <MPQAPOL autoclass="negative">ruined</MPQAPOL>, if she <MPQAPOL autoclass="neutral">should</MPQAPOL> be <MPQAPOL autoclass="neutral">so</MPQAPOL> <MPQAPOL autoclass="neutral">familiar</MPQAPOL>
+with a <MPQAPOL autoclass="neutral">stranger</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">In St. Louis a man will sit in the front end of the
+stage, and see a lady stagger from the far end, to pay her fare.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The
+Phila.</MPQASENT> <MPQASENT autoclass1="obj" autoclass2="obj">'bus drivers cannot <MPQAPOL autoclass="neutral">cheat</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">In the front of the stage is a thing
+like an office clock, with figures from 0 to 40, marked on its face.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="obj">When the stage starts, the hand of the clock is turned toward the 0.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj">When you get in and pay your fare, the driver <MPQAPOL autoclass="neutral">strikes</MPQAPOL> a bell, and the
+hand <MPQAPOL autoclass="neutral">moves</MPQAPOL> to the figure 1--that is, "one fare, and paid for," and there
+is your receipt, as <MPQAPOL autoclass="neutral">good</MPQAPOL> as if you had it in your pocket.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">When a
+passenger pays his fare and the driver does not <MPQAPOL autoclass="neutral">strike</MPQAPOL> the bell
+<MPQAPOL autoclass="neutral">immediately</MPQAPOL>, he is <MPQAPOL autoclass="negative">greeted</MPQAPOL> "Strike that bell!</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">will you?"</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">I <MPQAPOL autoclass="neutral">must</MPQAPOL> close now.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I <MPQAPOL autoclass="neutral">intend</MPQAPOL> visiting the Navy Yard, Mint, etc., before I
+write again.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">You <MPQAPOL autoclass="neutral">must</MPQAPOL> write often.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">You see I have nothing to write
+<MPQAPOL autoclass="positive">interesting</MPQAPOL> to you, while you can write nothing that will not <MPQAPOL autoclass="neutral">interest</MPQAPOL>
+me.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Don't say my letters are not long <MPQAPOL autoclass="neutral">enough</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Tell Jim Wolfe to write.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">Tell all the boys where I am, and to write.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Jim Robinson, <MPQAPOL autoclass="neutral">particularly</MPQAPOL>.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">I wrote to him from N. Y.  Tell me all that is going on in H--l.
+                                   <MPQAPOL autoclass="positive">Truly</MPQAPOL> your brother
+                                                       SAM.</MPQASENT>
+
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">Those were <MPQAPOL autoclass="negative">primitive</MPQAPOL> times.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj"><MPQAPOL autoclass="neutral">Imagine</MPQAPOL> a passenger in these easy-going days
+calling to a driver or conductor to "Strike that bell!"</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">"H--l" is his abbreviation for Hannibal.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">He had first used it in a title
+of a poem which a few years before, during one of Orion's <MPQAPOL autoclass="neutral">absences</MPQAPOL>, he
+had published in the paper.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">"To Mary in Hannibal" was <MPQAPOL autoclass="neutral">too</MPQAPOL> long to set as
+a display head in single column.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The poem had no <MPQAPOL autoclass="neutral">great</MPQAPOL> <MPQAPOL autoclass="positive">merit</MPQAPOL>, but under
+the abbreviated title it <MPQAPOL autoclass="neutral">could</MPQAPOL> <MPQAPOL autoclass="negative">hardly</MPQAPOL> <MPQAPOL autoclass="negative">fail</MPQAPOL> to invite notice.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">It was one
+of several things he did to liven up the circulation during a brief
+period of his authority.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">The <MPQAPOL autoclass="negative">doubtful</MPQAPOL> money he mentions was the paper issued by private banks,
+"<MPQAPOL autoclass="negative">wild</MPQAPOL> cat," as it was called.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">He had been paid with it in New York,
+and found it usually at a discount--sometimes <MPQAPOL autoclass="neutral">even</MPQAPOL> <MPQAPOL autoclass="negative">worthless</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Wages and
+money were both <MPQAPOL autoclass="neutral">better</MPQAPOL> in Philadelphia, but the fund for his mother's
+trip to Kentucky <MPQAPOL autoclass="neutral">apparently</MPQAPOL> did not grow <MPQAPOL autoclass="neutral">very</MPQAPOL> rapidly.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">The next letter, written a month later, is also to Orion Clemens, who had
+now <MPQAPOL autoclass="neutral">moved</MPQAPOL> to Muscatine, Iowa, and established there a new paper with an
+old title, 'The Journal'.</MPQASENT>
+
+
+                  <MPQASENT autoclass1="obj" autoclass2="obj">To Orion Clemens, in Muscatine, Iowa:
+
+                                   PHILADELPHIA, Nov. 28th, 1853.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">MY DEAR BROTHER,--I received your letter today.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I <MPQAPOL autoclass="neutral">think</MPQAPOL> Ma <MPQAPOL autoclass="neutral">ought</MPQAPOL> to
+spend the winter in St. Louis.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I don't <MPQAPOL autoclass="neutral">believe</MPQAPOL> in that climate--it's <MPQAPOL autoclass="neutral">too</MPQAPOL>
+<MPQAPOL autoclass="negative">cold</MPQAPOL> for her.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">The printers' annual ball and supper came off the other night.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">The
+proceeds amounted to about $1,000.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">The printers, as <MPQAPOL autoclass="neutral">well</MPQAPOL> as other
+people, are endeavoring to raise money to erect a monument to Franklin,
+but there are <MPQAPOL autoclass="neutral">so</MPQAPOL> many <MPQAPOL autoclass="negative">abominable</MPQAPOL> foreigners here (and among printers,
+<MPQAPOL autoclass="neutral">too</MPQAPOL>,) who <MPQAPOL autoclass="negative">hate</MPQAPOL> everything American, that I am <MPQAPOL autoclass="positive">very</MPQAPOL> <MPQAPOL autoclass="neutral">certain</MPQAPOL> as <MPQAPOL autoclass="neutral">much</MPQAPOL> money
+for <MPQAPOL autoclass="neutral">such</MPQAPOL> a purpose <MPQAPOL autoclass="neutral">could</MPQAPOL> be raised in St. Louis, as in Philadelphia.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="obj">I was in Franklin's old office this morning--the "North American"
+(formerly "Philadelphia Gazette") and there was at <MPQAPOL autoclass="neutral">least</MPQAPOL> one foreigner
+for every American at work there.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">How many subscribers has the Journal got?</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">What does the job-work pay?</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="obj">and what does the whole <MPQAPOL autoclass="negative">concern</MPQAPOL> pay?<MPQASENT autoclass1="unknown" autoclass2="subj">.....
+
+I will <MPQAPOL autoclass="neutral">try</MPQAPOL> to write for the paper occasionally, but I <MPQAPOL autoclass="negative">fear</MPQAPOL> my letters
+will be <MPQAPOL autoclass="neutral">very</MPQAPOL> uninteresting, for this <MPQAPOL autoclass="negative">incessant</MPQAPOL> night-work dulls one's
+<MPQAPOL autoclass="neutral">ideas</MPQAPOL> <MPQAPOL autoclass="positive">amazingly</MPQAPOL>.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">From some cause, I cannot set type nearly <MPQAPOL autoclass="neutral">so</MPQAPOL> fast as when I was at home.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">Sunday is a long day, and while others set 12 and 15,000, yesterday, I
+only set 10,000.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj"><MPQAPOL autoclass="neutral">However</MPQAPOL>, I will <MPQAPOL autoclass="neutral">shake</MPQAPOL> this laziness off, soon, I reckon
+....
+
+How do you like "free-soil?"<MPQASENT autoclass1="unknown" autoclass2="subj">--I <MPQAPOL autoclass="neutral">would</MPQAPOL> <MPQAPOL autoclass="positive">like</MPQAPOL> <MPQAPOL autoclass="positive">amazingly</MPQAPOL> to see a <MPQAPOL autoclass="positive">good</MPQAPOL> old-
+fashioned negro.</MPQASENT>
+                                   <MPQASENT autoclass1="unknown" autoclass2="subj">My <MPQAPOL autoclass="positive">love</MPQAPOL> to all
+                                        <MPQAPOL autoclass="negative">Truly</MPQAPOL> your brother
+                                                       SAM.</MPQASENT>
+
+
+     <MPQASENT autoclass1="unknown" autoclass2="subj">We may <MPQAPOL autoclass="neutral">believe</MPQAPOL> that it never occurred to the young printer, <MPQAPOL autoclass="neutral">looking</MPQAPOL>
+     up landmarks of Ben Franklin, that time <MPQAPOL autoclass="neutral">would</MPQAPOL> <MPQAPOL autoclass="neutral">show</MPQAPOL> <MPQAPOL autoclass="neutral">points</MPQAPOL> of
+     resemblance between the <MPQAPOL autoclass="neutral">great</MPQAPOL> Franklin's career and his own.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Yet
+     these <MPQAPOL autoclass="neutral">seem</MPQAPOL> now <MPQAPOL autoclass="neutral">rather</MPQAPOL> <MPQAPOL autoclass="negative">striking</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Like Franklin, he had been taken
+     out of school <MPQAPOL autoclass="neutral">very</MPQAPOL> young and put at the printer's trade; like
+     Franklin, he had worked in his brother's office, and had written for
+     the paper.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Like him, <MPQAPOL autoclass="neutral">too</MPQAPOL>, he had left quietly for New York and
+     Philadelphia to work at the trade of printing, and in time Samuel
+     Clemens, like Benjamin Franklin, <MPQAPOL autoclass="neutral">would</MPQAPOL> become a world-figure, many-
+     sided, human, and of <MPQAPOL autoclass="negative">incredible</MPQAPOL> <MPQAPOL autoclass="neutral">popularity</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">The boy Sam Clemens may
+     have had <MPQAPOL autoclass="neutral">such</MPQAPOL> <MPQAPOL autoclass="neutral">dreams</MPQAPOL>, but we find no trace of them.</MPQASENT>
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">There is but one more letter of this early period.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Young Clemens
+     spent some time in Washington, but if he wrote from there his
+     letters have disappeared.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The last letter is from Philadelphia and
+     <MPQAPOL autoclass="neutral">seems</MPQAPOL> to reflect homesickness.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The novelty of <MPQAPOL autoclass="neutral">absence</MPQAPOL> and travel
+     was wearing thin.</MPQASENT>
+
+
+                      <MPQASENT autoclass1="obj" autoclass2="obj">To Mrs. Moffett, in St. Louis:
+
+                                   PHILADELPHIA, Dec. 5, '53.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="obj">MY DEAR SISTER,--I have already written two letters within the last two
+hours, and you will <MPQAPOL autoclass="negative">excuse</MPQAPOL> me if this is not lengthy.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">If I had the
+money, I <MPQAPOL autoclass="neutral">would</MPQAPOL> come to St. Louis now, while the river is <MPQAPOL autoclass="neutral">open</MPQAPOL>; but within
+the last two or three weeks I have spent about thirty dollars for
+clothing, <MPQAPOL autoclass="neutral">so</MPQAPOL> I <MPQAPOL autoclass="neutral">suppose</MPQAPOL> I shall remain where I am.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">I only <MPQAPOL autoclass="positive">want</MPQAPOL> to return
+to <MPQAPOL autoclass="neutral">avoid</MPQAPOL> night-work, which is <MPQAPOL autoclass="negative">injuring</MPQAPOL> my eyes.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I have received one or
+two letters from home, but they are not written as they <MPQAPOL autoclass="neutral">should</MPQAPOL> be, and I
+<MPQAPOL autoclass="neutral">know</MPQAPOL> no more about what is going on there than the man in the moon.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">One
+only has to leave home to learn how to write an <MPQAPOL autoclass="positive">interesting</MPQAPOL> letter to an
+absent <MPQAPOL autoclass="neutral">friend</MPQAPOL> when he gets back.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I <MPQAPOL autoclass="neutral">suppose</MPQAPOL> you board at Mrs. Hunter's
+yet--and that, I <MPQAPOL autoclass="neutral">think</MPQAPOL>, is somewhere in Olive street <MPQAPOL autoclass="neutral">above</MPQAPOL> Fifth.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">Philadelphia is one of the healthiest places in the Union.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I <MPQAPOL autoclass="positive">wanted</MPQAPOL> to
+spend this winter in a <MPQAPOL autoclass="neutral">warm</MPQAPOL> climate, but it is <MPQAPOL autoclass="neutral">too</MPQAPOL> late now.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">I don't
+<MPQAPOL autoclass="positive">like</MPQAPOL> our present <MPQAPOL autoclass="neutral">prospect</MPQAPOL> for <MPQAPOL autoclass="neutral">cold</MPQAPOL> weather at all.</MPQASENT>
+                                   <MPQASENT autoclass1="unknown" autoclass2="obj"><MPQAPOL autoclass="neutral">Truly</MPQAPOL> your brother
+                                                       SAM.</MPQASENT>
+
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">But he did not return to the West for another half year.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The
+     letters he wrote during that period have not <MPQAPOL autoclass="neutral">survived</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">It was late
+     in the summer of 1854 when he <MPQAPOL autoclass="neutral">finally</MPQAPOL> started for St. Louis.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">He sat
+     up for three days and nights in a smoking-car to make the journey,
+     and arrived <MPQAPOL autoclass="neutral">exhausted</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The river packet was leaving in a few hours
+     for Muscatine, Iowa, where his mother and his two brothers were now
+     located.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">He paid his sister a brief visit, and caught the boat.</MPQASENT>
+     <MPQASENT autoclass1="obj" autoclass2="obj">Worn-out, he dropped into his berth and slept the thirty-six hours
+     of the journey.</MPQASENT>
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">It was early when-he arrived--<MPQAPOL autoclass="neutral">too</MPQAPOL> early to <MPQAPOL autoclass="neutral">arouse</MPQAPOL> the family.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">In
+     the office of the <MPQAPOL autoclass="neutral">little</MPQAPOL> hotel where he waited for daylight he found
+     a small book.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">It contained portraits of the English rulers, with
+     the brief <MPQAPOL autoclass="neutral">facts</MPQAPOL> of their reigns.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Young Clemens <MPQAPOL autoclass="neutral">entertained</MPQAPOL> himself
+     by learning this information by heart.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">He had a <MPQAPOL autoclass="neutral">fine</MPQAPOL> memory for
+     <MPQAPOL autoclass="neutral">such</MPQAPOL> things, and in an hour or two had the printed data <MPQAPOL autoclass="neutral">perfectly</MPQAPOL>
+     and permanently committed.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">This incidentally acquired <MPQAPOL autoclass="neutral">knowledge</MPQAPOL>
+     <MPQAPOL autoclass="neutral">proved</MPQAPOL> of <MPQAPOL autoclass="neutral">immense</MPQAPOL> value to him.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">It was his groundwork for all
+     English history.</MPQASENT>
+

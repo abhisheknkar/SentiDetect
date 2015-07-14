@@ -1,0 +1,781 @@
+
+     <MPQASENT autoclass1="unknown" autoclass2="obj">The author, J. Howard Moore, sent a copy of his book, The Universal
+     Kinship, with a letter in which he said: "<MPQAPOL autoclass="neutral">Most</MPQAPOL> humorists have no
+     <MPQAPOL autoclass="negative">anxiety</MPQAPOL> except to <MPQAPOL autoclass="positive">glorify</MPQAPOL> themselves and add substance to their
+     pocket-books by making their readers <MPQAPOL autoclass="negative">laugh</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">You have <MPQAPOL autoclass="neutral">shown</MPQAPOL>, on many
+     occasions, that your mission is not <MPQAPOL autoclass="neutral">simply</MPQAPOL> to antidote the
+     <MPQAPOL autoclass="negative">melancholy</MPQAPOL> of a world, but includes a <MPQAPOL autoclass="neutral">real</MPQAPOL> and <MPQAPOL autoclass="negative">intelligent</MPQAPOL> <MPQAPOL autoclass="negative">concern</MPQAPOL>
+     for the general <MPQAPOL autoclass="neutral">welfare</MPQAPOL> of your fellowman."</MPQASENT>
+
+     <MPQASENT autoclass1="unknown" autoclass2="obj">The Universal Kinship was the kind of a book that Mark Twain
+     <MPQAPOL autoclass="positive">appreciated</MPQAPOL>, as his acknowledgment <MPQAPOL autoclass="neutral">clearly</MPQAPOL> <MPQAPOL autoclass="neutral">shows</MPQAPOL>.</MPQASENT>
+
+
+                         <MPQASENT autoclass1="unknown" autoclass2="obj">To Mr. J. Howard Moore:
+
+                                                       Feb. 2, '07.</MPQASENT>
+<MPQASENT autoclass1="subj" autoclass2="subj">DEAR MR. MOORE, The book has furnished me several days of <MPQAPOL autoclass="negative">deep</MPQAPOL> <MPQAPOL autoclass="positive">pleasure</MPQAPOL>
+and <MPQAPOL autoclass="positive">satisfaction</MPQAPOL>; it has <MPQAPOL autoclass="negative">compelled</MPQAPOL> my <MPQAPOL autoclass="positive">gratitude</MPQAPOL> at the same time, since
+it saves me the labor of stating my own long-cherished <MPQAPOL autoclass="negative">opinions</MPQAPOL> and
+reflections and <MPQAPOL autoclass="negative">resentments</MPQAPOL> by doing it lucidly and <MPQAPOL autoclass="positive">fervently</MPQAPOL> and
+irascibly for me.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">There is one thing that always puzzles me: as inheritors of the <MPQAPOL autoclass="negative">mentality</MPQAPOL>
+of our reptile ancestors we have <MPQAPOL autoclass="positive">improved</MPQAPOL> the inheritance by a thousand
+grades; but in the matter of the <MPQAPOL autoclass="neutral">morals</MPQAPOL> which they left us we have gone
+backward as many grades.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">That evolution is <MPQAPOL autoclass="negative">strange</MPQAPOL>, and to me
+unaccountable and <MPQAPOL autoclass="negative">unnatural</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">Necessarily we started equipped with their
+<MPQAPOL autoclass="positive">perfect</MPQAPOL> and blemishless <MPQAPOL autoclass="negative">morals</MPQAPOL>; now we are wholly <MPQAPOL autoclass="negative">destitute</MPQAPOL>; we have no
+<MPQAPOL autoclass="neutral">real</MPQAPOL>, <MPQAPOL autoclass="neutral">morals</MPQAPOL>, but only <MPQAPOL autoclass="negative">artificial</MPQAPOL> ones--<MPQAPOL autoclass="neutral">morals</MPQAPOL> created and preserved by
+the forced <MPQAPOL autoclass="negative">suppression</MPQAPOL> of <MPQAPOL autoclass="neutral">natural</MPQAPOL> and hellish instincts.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Yet we are <MPQAPOL autoclass="negative">dull</MPQAPOL>
+<MPQAPOL autoclass="negative">enough</MPQAPOL> to be <MPQAPOL autoclass="negative">vain</MPQAPOL> of them.</MPQASENT> <MPQASENT autoclass1="obj" autoclass2="obj"><MPQAPOL autoclass="neutral">Certainly</MPQAPOL> we are a <MPQAPOL autoclass="neutral">sufficiently</MPQAPOL> <MPQAPOL autoclass="negative">comical</MPQAPOL>
+invention, we humans.</MPQASENT>
+                         <MPQASENT autoclass1="unknown" autoclass2="obj"><MPQAPOL autoclass="neutral">Sincerely</MPQAPOL> Yours,
+                                   S. L. CLEMENS.</MPQASENT>
+
+
+     <MPQASENT autoclass1="subj" autoclass2="subj">Mark Twain's own books were always being excommunicated by some
+     librarian, and the matter never <MPQAPOL autoclass="negative">failed</MPQAPOL> to invite the attention and
+     <MPQAPOL autoclass="neutral">amusement</MPQAPOL> of the press, and the <MPQAPOL autoclass="negative">indignation</MPQAPOL> of many correspondents.</MPQASENT>
+     <MPQASENT autoclass1="subj" autoclass2="subj">Usually the books were Tom Sawyer and Huck Finn, the <MPQAPOL autoclass="neutral">morals</MPQAPOL> of which
+     were not <MPQAPOL autoclass="negative">regarded</MPQAPOL> as wholly <MPQAPOL autoclass="positive">exemplary</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">But in 1907 a small library,
+     in a <MPQAPOL autoclass="neutral">very</MPQAPOL> small town, <MPQAPOL autoclass="neutral">attained</MPQAPOL> a day's national notoriety by putting
+     the ban on Eve's Diary, not <MPQAPOL autoclass="neutral">so</MPQAPOL> <MPQAPOL autoclass="neutral">much</MPQAPOL> on account of its text as for
+     the <MPQAPOL autoclass="neutral">chaste</MPQAPOL> and <MPQAPOL autoclass="positive">exquisite</MPQAPOL> illustrations by Lester Ralph.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">When the
+     reporters came in a troop to learn about it, the author said: "I
+     <MPQAPOL autoclass="neutral">believe</MPQAPOL> this time the <MPQAPOL autoclass="neutral">trouble</MPQAPOL> is mainly with the pictures.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I did
+     not draw them.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I <MPQAPOL autoclass="positive">wish</MPQAPOL> I had--they are <MPQAPOL autoclass="neutral">so</MPQAPOL> <MPQAPOL autoclass="positive">beautiful</MPQAPOL>."</MPQASENT>
+
+     <MPQASENT autoclass1="unknown" autoclass2="obj"><MPQAPOL autoclass="neutral">Just</MPQAPOL> at this time, Dr. William Lyon Phelps, of Yale, was giving a
+     literary talk to the Teachers' Club, of Hartford, dwelling on the
+     <MPQAPOL autoclass="neutral">superlative</MPQAPOL> value of Mark Twain's writings for readers old and
+     young.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Mrs. F. G. Whitmore, an old Hartford <MPQAPOL autoclass="neutral">friend</MPQAPOL>, wrote Clemens
+     of the things that Phelps had said, as consolation for Eve's latest
+     <MPQAPOL autoclass="neutral">banishment</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">This gave him a chance to add something to what he had
+     said to the reporters.</MPQASENT>
+
+
+                      <MPQASENT autoclass1="unknown" autoclass2="obj">To Mrs. Whitmore, in Hartford:
+
+                                                       Feb. 7, 1907.</MPQASENT>
+<MPQASENT autoclass1="subj" autoclass2="subj">DEAR MRS. WHITMORE,--But the <MPQAPOL autoclass="neutral">truth</MPQAPOL> is, that when a Library <MPQAPOL autoclass="neutral">expels</MPQAPOL> a book
+of mine and leaves an unexpurgated Bible <MPQAPOL autoclass="negative">lying</MPQAPOL> around where unprotected
+youth and age can get hold of it, the <MPQAPOL autoclass="negative">deep</MPQAPOL> unconscious <MPQAPOL autoclass="negative">irony</MPQAPOL> of it
+<MPQAPOL autoclass="positive">delights</MPQAPOL> me and doesn't <MPQAPOL autoclass="negative">anger</MPQAPOL> me.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">But <MPQAPOL autoclass="neutral">even</MPQAPOL> if it <MPQAPOL autoclass="negative">angered</MPQAPOL> me <MPQAPOL autoclass="neutral">such</MPQAPOL> words
+as those of Professor Phelps <MPQAPOL autoclass="neutral">would</MPQAPOL> take the <MPQAPOL autoclass="negative">sting</MPQAPOL> all out.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Nobody
+attaches weight to the <MPQAPOL autoclass="neutral">freaks</MPQAPOL> of the Charlton Library, but when a man
+like Phelps speaks, the world gives attention.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Some day I <MPQAPOL autoclass="positive">hope</MPQAPOL> to meet
+him and <MPQAPOL autoclass="positive">thank</MPQAPOL> him for his <MPQAPOL autoclass="positive">courage</MPQAPOL> for saying those things out in public.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj">Custom is, to <MPQAPOL autoclass="neutral">think</MPQAPOL> a <MPQAPOL autoclass="positive">handsome</MPQAPOL> thing in private but tame it down in the
+utterance.</MPQASENT>
+
+<MPQASENT autoclass1="subj" autoclass2="subj">I <MPQAPOL autoclass="positive">hope</MPQAPOL> you are all <MPQAPOL autoclass="neutral">well</MPQAPOL> and <MPQAPOL autoclass="positive">happy</MPQAPOL>; and thereto I add my <MPQAPOL autoclass="positive">love</MPQAPOL>.</MPQASENT>
+                              <MPQASENT autoclass1="unknown" autoclass2="obj"><MPQAPOL autoclass="neutral">Sincerely</MPQAPOL> yours,
+                                        S. L. CLEMENS.</MPQASENT>
+
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">In May, 1907, Mark Twain was invited to England to receive from
+     Oxford the degree of Literary Doctor.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">It was an <MPQAPOL autoclass="neutral">honor</MPQAPOL> that came to
+     him as a sort of laurel crown at the end of a <MPQAPOL autoclass="positive">great</MPQAPOL> career, and
+     <MPQAPOL autoclass="positive">gratified</MPQAPOL> him <MPQAPOL autoclass="positive">exceedingly</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">To Moberly Bell, of the London Times,
+     he expressed his <MPQAPOL autoclass="positive">appreciation</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Bell had been over in April and
+     Clemens <MPQAPOL autoclass="neutral">believed</MPQAPOL> him <MPQAPOL autoclass="negative">concerned</MPQAPOL> in the matter.</MPQASENT>
+
+
+                       <MPQASENT autoclass1="obj" autoclass2="obj">To Moberly Bell, in London:
+
+                                        21 FIFTH AVENUE, May 3, '07
+DEAR MR. BELL,--Your hand is in it!</MPQASENT> <MPQASENT autoclass1="obj" autoclass2="obj">and you have my <MPQAPOL autoclass="positive">best</MPQAPOL> thanks.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj"><MPQAPOL autoclass="neutral">Although</MPQAPOL> I <MPQAPOL autoclass="neutral">would</MPQAPOL>n't cross an ocean again for the price of the ship that
+carried me, I am <MPQAPOL autoclass="positive">glad</MPQAPOL> to do it for an Oxford degree.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I shall plan to
+sail for England a shade before the middle of June, <MPQAPOL autoclass="neutral">so</MPQAPOL> that I can have a
+few days in London before the 26th.</MPQASENT>
+                                   <MPQASENT autoclass1="obj" autoclass2="obj"><MPQAPOL autoclass="neutral">Sincerely</MPQAPOL>,
+                                        S. L. CLEMENS.</MPQASENT>
+
+
+     <MPQASENT autoclass1="unknown" autoclass2="subj">He had taken a house at Tuxedo for the summer, <MPQAPOL autoclass="neutral">desiring</MPQAPOL> to be near
+     New York City, and in the next letter he writes Mr. Rogers
+     <MPQAPOL autoclass="neutral">concerning</MPQAPOL> his London plans.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">We discover, also, in this letter that
+     he has begun work on the Redding home and the cost is to come
+     <MPQAPOL autoclass="neutral">entirely</MPQAPOL> out of the autobiographical chapters then running in the
+     North American Review.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">It may be of passing <MPQAPOL autoclass="neutral">interest</MPQAPOL> to note here
+     that he had the usual house-builder's <MPQAPOL autoclass="neutral">fortune</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">He received thirty
+     thousand dollars for the chapters; the house cost him nearly double
+     that amount.</MPQASENT>
+
+
+                      <MPQASENT autoclass1="obj" autoclass2="obj">To H. H. Rogers, in New York:
+
+                                                            TUXEDO PARK,
+                                                            May 29, '07.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">DEAR ADMIRAL,--Why hang it, I am not going to see you and Mrs. Rogers at
+all in England!</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">It is a <MPQAPOL autoclass="positive">great</MPQAPOL> <MPQAPOL autoclass="negative">disappointment</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I leave there a month
+from now--June 29.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">No, I shall see you; for by your itinerary you are
+<MPQAPOL autoclass="neutral">most</MPQAPOL> <MPQAPOL autoclass="neutral">likely</MPQAPOL> to come to London June 21st or along there.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj"><MPQAPOL autoclass="neutral">So</MPQAPOL> that is <MPQAPOL autoclass="neutral">very</MPQAPOL>
+<MPQAPOL autoclass="positive">good</MPQAPOL> and <MPQAPOL autoclass="positive">satisfactory</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">I have <MPQAPOL autoclass="neutral">declined</MPQAPOL> all engagements but two--Whitelaw
+Reid (dinner) June 21, and the Pilgrims (lunch), June 25.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The Oxford
+ceremony is June 26.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I have paid my return passage in the Minne-
+something, but it is <MPQAPOL autoclass="neutral">just</MPQAPOL> <MPQAPOL autoclass="positive">possible</MPQAPOL> that I may <MPQAPOL autoclass="positive">want</MPQAPOL> to stay in England a
+week or two longer--I can't tell, yet.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">I do <MPQAPOL autoclass="neutral">very</MPQAPOL> <MPQAPOL autoclass="neutral">much</MPQAPOL> <MPQAPOL autoclass="positive">want</MPQAPOL> to meet up
+with the boys for the last time.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">I have signed the contract for the building of the house on my
+Connecticut farm and specified the cost limit, and work has been begun.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="obj">The cost has to all come out of a year's instalments of Autobiography in
+the N. A. Review.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">Clara, is winning her way to <MPQAPOL autoclass="neutral">success</MPQAPOL> and <MPQAPOL autoclass="neutral">distinction</MPQAPOL> with <MPQAPOL autoclass="neutral">sure</MPQAPOL> and <MPQAPOL autoclass="neutral">steady</MPQAPOL>
+<MPQAPOL autoclass="neutral">strides</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">By all accounts she is singing like a bird, and is not <MPQAPOL autoclass="negative">afraid</MPQAPOL>
+on the concert stage any more.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">Tuxedo is a <MPQAPOL autoclass="negative">charming</MPQAPOL> place; I <MPQAPOL autoclass="neutral">think</MPQAPOL> it hasn't its equal anywhere.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj"><MPQAPOL autoclass="neutral">Very</MPQAPOL> <MPQAPOL autoclass="positive">best</MPQAPOL> <MPQAPOL autoclass="positive">wishes</MPQAPOL> to you both.</MPQASENT>
+                                   <MPQASENT autoclass1="obj" autoclass2="obj">S. L. C.
+
+
+     The story of Mark Twain's <MPQAPOL autoclass="negative">extraordinary</MPQAPOL> reception and <MPQAPOL autoclass="positive">triumph</MPQAPOL> in
+     England has been told.<MPQASENT autoclass1="obj" autoclass2="obj">--[Mark Twain; A Biography, chaps.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">cclvi-
+     cclix]--It was, in <MPQAPOL autoclass="neutral">fact</MPQAPOL>, the crowning <MPQAPOL autoclass="negative">glory</MPQAPOL> of his career.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj"><MPQAPOL autoclass="neutral">Perhaps</MPQAPOL>
+     one of the <MPQAPOL autoclass="negative">most</MPQAPOL> <MPQAPOL autoclass="positive">satisfactory</MPQAPOL> incidents of his sojourn was a dinner
+     given to him by the staff of <MPQAPOL autoclass="negative">Punch</MPQAPOL>, in the <MPQAPOL autoclass="positive">historic</MPQAPOL> offices at 10
+     Bouverie Street where no other foreign visitor had been <MPQAPOL autoclass="neutral">thus</MPQAPOL>
+     <MPQAPOL autoclass="positive">honored</MPQAPOL>--a <MPQAPOL autoclass="negative">notable</MPQAPOL> <MPQAPOL autoclass="neutral">distinction</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">When the dinner ended, <MPQAPOL autoclass="negative">little</MPQAPOL> <MPQAPOL autoclass="negative">joy</MPQAPOL>
+     Agnew, daughter of the chief editor, entered and presented to the
+     chief guest the <MPQAPOL autoclass="neutral">original</MPQAPOL> drawing of a <MPQAPOL autoclass="negative">cartoon</MPQAPOL> by Bernard Partridge,
+     which had <MPQAPOL autoclass="neutral">appeared</MPQAPOL> on the front page of <MPQAPOL autoclass="negative">Punch</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">In this picture the
+     presiding <MPQAPOL autoclass="neutral">genius</MPQAPOL> of the paper is offering to Mark Twain health, long
+     life, and <MPQAPOL autoclass="negative">happiness</MPQAPOL> from "The Punch Bowl."</MPQASENT>
+
+     <MPQASENT autoclass1="unknown" autoclass2="subj">A short time after his return to America he received a <MPQAPOL autoclass="positive">pretty</MPQAPOL>
+     <MPQAPOL autoclass="negative">childish</MPQAPOL> letter from <MPQAPOL autoclass="negative">little</MPQAPOL> Miss Agnew <MPQAPOL autoclass="neutral">acknowledging</MPQAPOL> a photograph he
+     had sent her, and giving a list of her pets and occupations.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj"><MPQAPOL autoclass="neutral">Such</MPQAPOL> a
+     letter always <MPQAPOL autoclass="positive">delighted</MPQAPOL> Mark Twain, and his <MPQAPOL autoclass="neutral">pleasure</MPQAPOL> in this one is
+     reflected in his reply.</MPQASENT>
+
+
+                      <MPQASENT autoclass1="unknown" autoclass2="obj">To Miss Joy Agnew, in London:
+
+                                                  TUXEDO PARK, NEW YORK.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj">Unto you greetings and salutation and worship, you dear, <MPQAPOL autoclass="neutral">sweet</MPQAPOL> <MPQAPOL autoclass="negative">little</MPQAPOL>
+rightly-named Joy!</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I can see you now almost as vividly as I saw you that
+night when you sat flashing and beaming upon those sombre swallow-tails.</MPQASENT>
+
+     <MPQASENT autoclass1="unknown" autoclass2="subj">"<MPQAPOL autoclass="neutral">Fair</MPQAPOL> as a <MPQAPOL autoclass="neutral">star</MPQAPOL> when only one
+     Is <MPQAPOL autoclass="neutral">shining</MPQAPOL> in the sky."</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj"><MPQAPOL autoclass="neutral">Oh</MPQAPOL>, you were <MPQAPOL autoclass="neutral">indeed</MPQAPOL> the only one--there wasn't <MPQAPOL autoclass="neutral">even</MPQAPOL> the remotest chance
+of competition with you, dear!</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Ah, you are a decoration, you little
+witch!</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">The <MPQAPOL autoclass="neutral">idea</MPQAPOL> of your house going to the <MPQAPOL autoclass="negative">wanton</MPQAPOL> expense of a flower garden!<MPQASENT autoclass1="obj" autoclass2="obj">--
+aren't you <MPQAPOL autoclass="neutral">enough</MPQAPOL>?</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">And what do you <MPQAPOL autoclass="positive">want</MPQAPOL> to go and <MPQAPOL autoclass="negative">discourage</MPQAPOL> the other
+flowers for?</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Is that the <MPQAPOL autoclass="neutral">right</MPQAPOL> <MPQAPOL autoclass="neutral">spirit</MPQAPOL>?</MPQASENT> <MPQASENT autoclass1="obj" autoclass2="obj">is it considerate?</MPQASENT> <MPQASENT autoclass1="obj" autoclass2="obj">is it kind?</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj">How do you <MPQAPOL autoclass="neutral">suppose</MPQAPOL> they <MPQAPOL autoclass="negative">feel</MPQAPOL> when you come around--<MPQAPOL autoclass="neutral">looking</MPQAPOL> the way you
+<MPQAPOL autoclass="neutral">look</MPQAPOL>?</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">And you <MPQAPOL autoclass="neutral">so</MPQAPOL> pink and <MPQAPOL autoclass="positive">sweet</MPQAPOL> and dainty and <MPQAPOL autoclass="positive">lovely</MPQAPOL> and supernatural?</MPQASENT>
+<MPQASENT autoclass1="subj" autoclass2="subj">Why, it makes them <MPQAPOL autoclass="negative">feel</MPQAPOL> embarrassed and <MPQAPOL autoclass="negative">artificial</MPQAPOL>, of course; and in my
+<MPQAPOL autoclass="neutral">opinion</MPQAPOL> it is <MPQAPOL autoclass="neutral">just</MPQAPOL> as <MPQAPOL autoclass="negative">pathetic</MPQAPOL> as it can be.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Now then you <MPQAPOL autoclass="positive">want</MPQAPOL> to
+<MPQAPOL autoclass="neutral">reform</MPQAPOL>--dear--and do right.</MPQASENT>
+
+<MPQASENT autoclass1="subj" autoclass2="subj"><MPQAPOL autoclass="neutral">Well</MPQAPOL> <MPQAPOL autoclass="neutral">certainly</MPQAPOL> you are <MPQAPOL autoclass="neutral">well</MPQAPOL> off, Joy:
+
+3 bantams;
+3 goldfish;
+3 doves;
+6 canaries;
+2 dogs;
+1 cat;
+
+All you <MPQAPOL autoclass="neutral">need</MPQAPOL>, now, to be permanently beyond the reach of <MPQAPOL autoclass="neutral">want</MPQAPOL>, is one
+more dog--<MPQAPOL autoclass="neutral">just</MPQAPOL> one more <MPQAPOL autoclass="neutral">good</MPQAPOL>, <MPQAPOL autoclass="neutral">gentle</MPQAPOL>, <MPQAPOL autoclass="neutral">high</MPQAPOL> <MPQAPOL autoclass="neutral">principled</MPQAPOL>, <MPQAPOL autoclass="neutral">affectionate</MPQAPOL>,
+<MPQAPOL autoclass="neutral">loyal</MPQAPOL> dog who <MPQAPOL autoclass="neutral">would</MPQAPOL>n't <MPQAPOL autoclass="neutral">want</MPQAPOL> any nobler service than the <MPQAPOL autoclass="neutral">golden</MPQAPOL> <MPQAPOL autoclass="neutral">privilege</MPQAPOL>
+of <MPQAPOL autoclass="neutral">lying</MPQAPOL> at your door, nights, and biting everything that came along--and
+I am that <MPQAPOL autoclass="neutral">very</MPQAPOL> one, and <MPQAPOL autoclass="neutral">ready</MPQAPOL> to come at the dropping of a hat.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">Do you <MPQAPOL autoclass="negative">think</MPQAPOL> you <MPQAPOL autoclass="negative">could</MPQAPOL> convey my <MPQAPOL autoclass="positive">love</MPQAPOL> and thanks to your "daddy" and Owen
+Seaman and those other oppressed and down-trodden subjects of yours, you
+<MPQAPOL autoclass="negative">darling</MPQAPOL> small <MPQAPOL autoclass="negative">tyrant</MPQAPOL>?</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">On my knees!</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">These--with the <MPQAPOL autoclass="neutral">kiss</MPQAPOL> of fealty from your other subject--
+
+                                                  MARK TWAIN
+
+
+     Elinor Glyn, author of Three Weeks and other erotic <MPQAPOL autoclass="neutral">tales</MPQAPOL>, was in
+     America that winter and asked permission to call on Mark Twain.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">An
+     appointment was made and Clemens discussed with her, for an hour or
+     more, those crucial phases of life which have made living a complex
+     <MPQAPOL autoclass="neutral">problem</MPQAPOL> since the days of Eve in Eden.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Mrs. Glyn had never before
+     heard anything like Mark Twain's <MPQAPOL autoclass="neutral">wonderful</MPQAPOL> talk, and she was <MPQAPOL autoclass="negative">anxious</MPQAPOL>
+     to print their interview.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">She wrote what she <MPQAPOL autoclass="neutral">could</MPQAPOL> remember of it
+     and sent it to him for <MPQAPOL autoclass="neutral">approval</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">If his conversation had been
+     <MPQAPOL autoclass="neutral">frank</MPQAPOL>, his <MPQAPOL autoclass="negative">refusal</MPQAPOL> was <MPQAPOL autoclass="negative">hardly</MPQAPOL> <MPQAPOL autoclass="negative">less</MPQAPOL> <MPQAPOL autoclass="neutral">so</MPQAPOL>.</MPQASENT>
+
+
+                    <MPQASENT autoclass1="unknown" autoclass2="obj">To Mrs. Elinor Glyn, in New York:
+
+                                                       Jan. 22, '08.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj">DEAR MRS. GLYN, It reads <MPQAPOL autoclass="neutral">pretty</MPQAPOL> <MPQAPOL autoclass="negative">poorly</MPQAPOL>--I get the <MPQAPOL autoclass="neutral">sense</MPQAPOL> of it, but it is
+a <MPQAPOL autoclass="neutral">poor</MPQAPOL> literary job; <MPQAPOL autoclass="neutral">however</MPQAPOL>, it <MPQAPOL autoclass="neutral">would</MPQAPOL> have to be that because nobody can
+be reported <MPQAPOL autoclass="neutral">even</MPQAPOL> approximately, except by a stenographer.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="obj">Approximations, synopsized speeches, translated poems, <MPQAPOL autoclass="negative">artificial</MPQAPOL> flowers
+and chromos all have a sort of value, but it is small.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">If you had put
+upon paper what I <MPQAPOL autoclass="neutral">really</MPQAPOL> said it <MPQAPOL autoclass="neutral">would</MPQAPOL> have <MPQAPOL autoclass="negative">wrecked</MPQAPOL> your type-machine.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">I said some <MPQAPOL autoclass="neutral">fetid</MPQAPOL>, over-vigorous things, but that was because it was a
+confidential conversation.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I said nothing for print.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">My own report of
+the same conversation reads like Satan roasting a Sunday school.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">It, and
+<MPQAPOL autoclass="neutral">certain</MPQAPOL> other readable chapters of my autobiography will not be published
+until all the Clemens family are <MPQAPOL autoclass="neutral">dead</MPQAPOL>--<MPQAPOL autoclass="neutral">dead</MPQAPOL> and correspondingly
+<MPQAPOL autoclass="negative">indifferent</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">They were written to <MPQAPOL autoclass="neutral">entertain</MPQAPOL> me, not the rest of the
+world.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">I am not here to do <MPQAPOL autoclass="neutral">good</MPQAPOL>--at <MPQAPOL autoclass="neutral">least</MPQAPOL> not to do it intentionally.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj">You <MPQAPOL autoclass="neutral">must</MPQAPOL> pardon me for dictating this letter; I am <MPQAPOL autoclass="negative">sick</MPQAPOL> a-bed and not
+<MPQAPOL autoclass="neutral">feeling</MPQAPOL> as <MPQAPOL autoclass="neutral">well</MPQAPOL> as I <MPQAPOL autoclass="neutral">might</MPQAPOL>.</MPQASENT>
+                              <MPQASENT autoclass1="unknown" autoclass2="obj"><MPQAPOL autoclass="neutral">Sincerely</MPQAPOL> Yours,
+                                             S. L. CLEMENS.</MPQASENT>
+
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">Among the cultured men of England Mark Twain had no greater <MPQAPOL autoclass="neutral">admirer</MPQAPOL>,
+     or warmer <MPQAPOL autoclass="neutral">friend</MPQAPOL>, than Andrew Lang.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">They were at one on <MPQAPOL autoclass="neutral">most</MPQAPOL>
+     literary subjects, and <MPQAPOL autoclass="neutral">especially</MPQAPOL> <MPQAPOL autoclass="neutral">so</MPQAPOL> in their <MPQAPOL autoclass="positive">admiration</MPQAPOL> of the life
+     and character of Joan of Arc.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Both had written of her, and both
+     held her to be something almost more than mortal.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">When, <MPQAPOL autoclass="neutral">therefore</MPQAPOL>,
+     Anatole France published his <MPQAPOL autoclass="positive">exhaustive</MPQAPOL> biography of the maid of
+     Domremy, a book in which he followed, with exaggerated minuteness
+     and <MPQAPOL autoclass="neutral">innumerable</MPQAPOL> footnotes, every step of Joan's physical career at
+     the expense of her <MPQAPOL autoclass="positive">spiritual</MPQAPOL> life, which he was inclined to <MPQAPOL autoclass="negative">cheapen</MPQAPOL>,
+     Lang wrote feelingly, and with some <MPQAPOL autoclass="negative">contempt</MPQAPOL>, of the performance,
+     inviting the author of the Personal Recollections to come to the
+     <MPQAPOL autoclass="neutral">rescue</MPQAPOL> of their <MPQAPOL autoclass="positive">heroine</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">"Compare every one of his <MPQAPOL autoclass="neutral">statements</MPQAPOL> with
+     the passages he cites from authorities, and make him the <MPQAPOL autoclass="negative">laughter</MPQAPOL> of
+     the world" he wrote.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">"If you are <MPQAPOL autoclass="negative">lazy</MPQAPOL> about comparing I can make
+     you a <MPQAPOL autoclass="neutral">complete</MPQAPOL> set of what the authorities say, and of what this
+     <MPQAPOL autoclass="neutral">amazing</MPQAPOL> novelist says that they say.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">When I tell you that he <MPQAPOL autoclass="neutral">thinks</MPQAPOL>
+     the Epiphany (January 6, Twelfth Night) is December 25th--Christmas
+     Day-you begin to see what an <MPQAPOL autoclass="negative">egregious</MPQAPOL> ass he is.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Treat him like
+     Dowden, and oblige"--a reference to Mark Twain's <MPQAPOL autoclass="neutral">defense</MPQAPOL> of Harriet
+     Shelley, in which he had heaped <MPQAPOL autoclass="negative">ridicule</MPQAPOL> on Dowden's Life of the
+     Poet--a masterly performance; one of the <MPQAPOL autoclass="neutral">best</MPQAPOL> that ever came from
+     Mark Twain's pen.</MPQASENT>
+
+     <MPQASENT autoclass1="unknown" autoclass2="obj">Lang's suggestion <MPQAPOL autoclass="neutral">would</MPQAPOL> <MPQAPOL autoclass="neutral">seem</MPQAPOL> to have been a <MPQAPOL autoclass="positive">welcome</MPQAPOL> one.</MPQASENT>
+
+
+                        <MPQASENT autoclass1="unknown" autoclass2="obj">To Andrew Lang, in London:
+
+                                        NEW YORK, April 25, 1908.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj">DEAR MR. LANG,--I haven't seen the book nor any review of it, but only
+not very-understandable references to it--of a sort which discomforted
+me, but of course set my <MPQAPOL autoclass="neutral">interest</MPQAPOL> on fire.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I don't <MPQAPOL autoclass="positive">want</MPQAPOL> to have to read
+it in French--I <MPQAPOL autoclass="neutral">should</MPQAPOL> <MPQAPOL autoclass="neutral">lose</MPQAPOL> the <MPQAPOL autoclass="neutral">nice</MPQAPOL> shades, and <MPQAPOL autoclass="neutral">should</MPQAPOL> do a lot of <MPQAPOL autoclass="neutral">gross</MPQAPOL>
+misinterpreting, <MPQAPOL autoclass="neutral">too</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">But there'll be a translation soon, nicht wahr?</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">I will wait for it.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I note with <MPQAPOL autoclass="positive">joy</MPQAPOL> that you say: "If you are <MPQAPOL autoclass="negative">lazy</MPQAPOL> about
+comparing, (which I <MPQAPOL autoclass="positive">most</MPQAPOL> <MPQAPOL autoclass="positive">certainly</MPQAPOL> am), I can make you a <MPQAPOL autoclass="positive">complete</MPQAPOL> set of
+what the authorities say, and of what this <MPQAPOL autoclass="positive">amazing</MPQAPOL> novelist says that
+they say."</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">Ah, do it for me!</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Then I will attempt the article, and (if I <MPQAPOL autoclass="positive">succeed</MPQAPOL> in
+doing it to my <MPQAPOL autoclass="positive">satisfaction</MPQAPOL>,) will publish it.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">It is long since I
+<MPQAPOL autoclass="neutral">touched</MPQAPOL> a pen (3 1/2 years), and I was <MPQAPOL autoclass="neutral">intending</MPQAPOL> to continue this <MPQAPOL autoclass="positive">happy</MPQAPOL>
+holiday to the gallows, but--there are things that <MPQAPOL autoclass="neutral">could</MPQAPOL> <MPQAPOL autoclass="negative">beguile</MPQAPOL> me to
+<MPQAPOL autoclass="negative">break</MPQAPOL> this <MPQAPOL autoclass="positive">blessed</MPQAPOL> Sabbath.</MPQASENT>
+                    <MPQASENT autoclass1="unknown" autoclass2="subj">Yours <MPQAPOL autoclass="neutral">very</MPQAPOL> <MPQAPOL autoclass="negative">sincerely</MPQAPOL>,
+                                   S. L. CLEMENS.</MPQASENT>
+
+
+     <MPQASENT autoclass1="subj" autoclass2="subj"><MPQAPOL autoclass="neutral">Certainly</MPQAPOL> it is an <MPQAPOL autoclass="positive">interesting</MPQAPOL> <MPQAPOL autoclass="neutral">fact</MPQAPOL> that an Englishman--one of the
+     race that <MPQAPOL autoclass="negative">burned</MPQAPOL> Joan--<MPQAPOL autoclass="neutral">should</MPQAPOL> <MPQAPOL autoclass="negative">feel</MPQAPOL> <MPQAPOL autoclass="negative">moved</MPQAPOL> to <MPQAPOL autoclass="positive">defend</MPQAPOL> her memory
+     <MPQAPOL autoclass="negative">against</MPQAPOL> the top-heavy <MPQAPOL autoclass="negative">perversions</MPQAPOL> of a <MPQAPOL autoclass="negative">distinguished</MPQAPOL> French author.</MPQASENT>
+
+     <MPQASENT autoclass1="unknown" autoclass2="obj">But Lang <MPQAPOL autoclass="neutral">seems</MPQAPOL> never to have sent the notes.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">The copying <MPQAPOL autoclass="neutral">would</MPQAPOL> have
+     been a <MPQAPOL autoclass="positive">tremendous</MPQAPOL> task, and <MPQAPOL autoclass="neutral">perhaps</MPQAPOL> he never found the time for it.</MPQASENT>
+     <MPQASENT autoclass1="unknown" autoclass2="subj">We may <MPQAPOL autoclass="negative">regret</MPQAPOL> to-day that he did not, for Mark Twain's article on
+     the French author's Joan <MPQAPOL autoclass="neutral">would</MPQAPOL> have been at <MPQAPOL autoclass="neutral">least</MPQAPOL> <MPQAPOL autoclass="neutral">unique</MPQAPOL>.</MPQASENT>
+
+     <MPQASENT autoclass1="unknown" autoclass2="obj">Samuel Clemens <MPQAPOL autoclass="neutral">could</MPQAPOL> never accustom himself to the <MPQAPOL autoclass="neutral">loss</MPQAPOL> of his wife.</MPQASENT>
+     <MPQASENT autoclass1="unknown" autoclass2="subj">From the time of her <MPQAPOL autoclass="neutral">death</MPQAPOL>, marriage-which had brought him his
+     <MPQAPOL autoclass="neutral">greatest</MPQAPOL> <MPQAPOL autoclass="positive">joy</MPQAPOL> in life-presented itself to him always with the <MPQAPOL autoclass="neutral">thought</MPQAPOL>
+     of <MPQAPOL autoclass="negative">bereavement</MPQAPOL>, waiting somewhere <MPQAPOL autoclass="positive">just</MPQAPOL> behind.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">The news of an
+     approaching wedding saddened him and there was nearly always a
+     <MPQAPOL autoclass="negative">somber</MPQAPOL> tinge in his <MPQAPOL autoclass="positive">congratulations</MPQAPOL>, of which the following to a
+     dear <MPQAPOL autoclass="neutral">friend</MPQAPOL> is an example:
+
+
+                   To Father Fitz-Simon, in Washington:
+
+                                                  June 5, '08.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="obj">DEAR FATHER FITZ-SIMON,--Marriage--<MPQAPOL autoclass="neutral">yes</MPQAPOL>, it is the supreme <MPQAPOL autoclass="positive">felicity</MPQAPOL> of
+life, I <MPQAPOL autoclass="neutral">concede</MPQAPOL> it.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">And it is also the supreme <MPQAPOL autoclass="negative">tragedy</MPQAPOL> of life.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">The
+deeper the <MPQAPOL autoclass="neutral">love</MPQAPOL> the surer the <MPQAPOL autoclass="neutral">tragedy</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">And the more disconsolating when
+it comes.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">And <MPQAPOL autoclass="neutral">so</MPQAPOL> I <MPQAPOL autoclass="positive">congratulate</MPQAPOL> you.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Not perfunctorily, not lukewarmly, but with a
+fervency and fire that no word in the dictionary is <MPQAPOL autoclass="neutral">strong</MPQAPOL> <MPQAPOL autoclass="neutral">enough</MPQAPOL> to
+convey.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">And in the same breath and with the same depth and <MPQAPOL autoclass="positive">sincerity</MPQAPOL>,
+I <MPQAPOL autoclass="neutral">grieve</MPQAPOL> for you.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Not for both of you and not for the one that shall go
+first, but for the one that is fated to be left behind.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">For that one
+there is no <MPQAPOL autoclass="neutral">recompense</MPQAPOL>.<MPQASENT autoclass1="unknown" autoclass2="obj">--For that one no <MPQAPOL autoclass="neutral">recompense</MPQAPOL> is <MPQAPOL autoclass="neutral">possible</MPQAPOL>.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">There are times--thousands of times--when I can <MPQAPOL autoclass="negative">expose</MPQAPOL> the half of my
+mind, and conceal the other half, but in the matter of the <MPQAPOL autoclass="negative">tragedy</MPQAPOL> of
+marriage I <MPQAPOL autoclass="positive">feel</MPQAPOL> <MPQAPOL autoclass="negative">too</MPQAPOL> <MPQAPOL autoclass="negative">deeply</MPQAPOL> for that, and I have to <MPQAPOL autoclass="neutral">bleed</MPQAPOL> it all out or
+shut it all in.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">And <MPQAPOL autoclass="neutral">so</MPQAPOL> you <MPQAPOL autoclass="neutral">must</MPQAPOL> <MPQAPOL autoclass="neutral">consider</MPQAPOL> what I have been through, and
+am passing through and be <MPQAPOL autoclass="neutral">charitable</MPQAPOL> with me.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">Make the <MPQAPOL autoclass="neutral">most</MPQAPOL> of the sunshine!</MPQASENT> <MPQASENT autoclass1="unknown" autoclass2="subj">and I <MPQAPOL autoclass="positive">hope</MPQAPOL> it will last long--ever <MPQAPOL autoclass="neutral">so</MPQAPOL>
+long.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">I do not <MPQAPOL autoclass="neutral">really</MPQAPOL> <MPQAPOL autoclass="positive">want</MPQAPOL> to be present; yet for <MPQAPOL autoclass="neutral">friendship</MPQAPOL>'s sake and because
+I <MPQAPOL autoclass="positive">honor</MPQAPOL> you <MPQAPOL autoclass="neutral">so</MPQAPOL>, I <MPQAPOL autoclass="neutral">would</MPQAPOL> be there if I <MPQAPOL autoclass="neutral">could</MPQAPOL>.</MPQASENT>
+                         <MPQASENT autoclass1="unknown" autoclass2="obj"><MPQAPOL autoclass="neutral">Most</MPQAPOL> <MPQAPOL autoclass="negative">sincerely</MPQAPOL> your <MPQAPOL autoclass="neutral">friend</MPQAPOL>,
+                                             S. L. CLEMENS.</MPQASENT>
+
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">The new home at Redding was completed in the spring of 1908, and on
+     the 18th of June, when it was <MPQAPOL autoclass="neutral">entirely</MPQAPOL> fitted and furnished, Mark
+     Twain entered it for the first time.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">He had never <MPQAPOL autoclass="neutral">even</MPQAPOL> seen the
+     place nor carefully examined plans which John Howells had made for
+     his house.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">He <MPQAPOL autoclass="positive">preferred</MPQAPOL> the <MPQAPOL autoclass="neutral">surprise</MPQAPOL> of it, and the general
+     <MPQAPOL autoclass="neutral">avoidance</MPQAPOL> of detail.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">That he was <MPQAPOL autoclass="positive">satisfied</MPQAPOL> with the result will be
+     seen in his letters.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">He named it at first "<MPQAPOL autoclass="neutral">Innocence</MPQAPOL> at Home";
+     later changing this title to "Stormfield."</MPQASENT>
+
+     <MPQASENT autoclass1="unknown" autoclass2="obj">The letter which follows is an acknowledgment of an <MPQAPOL autoclass="neutral">interesting</MPQAPOL>
+     souvenir from the battle-field of Tewksbury (1471), and some relics
+     of the Cavalier and Roundhead Regiments encamped at Tewksbury in
+     1643.</MPQASENT>
+
+
+                          <MPQASENT autoclass1="obj" autoclass2="obj">To an English <MPQAPOL autoclass="neutral">admirer</MPQAPOL>:
+
+                              <MPQAPOL autoclass="neutral">INNOCENCE</MPQAPOL> AT HOME, REDDING, CONNECTICUT,
+                                                  Aug. 15, '08.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj">DEAR SIR,--I highly prize the pipes, and shall <MPQAPOL autoclass="neutral">intimate</MPQAPOL> to people that
+"Raleigh" smoked them, and doubtless he did.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">After a <MPQAPOL autoclass="negative">little</MPQAPOL> practice I
+shall be <MPQAPOL autoclass="neutral">able</MPQAPOL> to go <MPQAPOL autoclass="neutral">further</MPQAPOL> and say he did; they will then be the <MPQAPOL autoclass="neutral">most</MPQAPOL>
+<MPQAPOL autoclass="positive">interesting</MPQAPOL> features of my library's decorations.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">The Horse-shoe is
+attracting a <MPQAPOL autoclass="positive">good</MPQAPOL> <MPQAPOL autoclass="positive">deal</MPQAPOL> of attention, because I have <MPQAPOL autoclass="positive">intimated</MPQAPOL> that the
+conqueror's horse cast it; it will attract more when I get my hand in and
+say he cast it, I <MPQAPOL autoclass="positive">thank</MPQAPOL> you for the pipes and the shoe; and also for the
+official guide, which I read through at a single sitting.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">If a person
+<MPQAPOL autoclass="neutral">should</MPQAPOL> say that about a book of mine I <MPQAPOL autoclass="neutral">should</MPQAPOL> <MPQAPOL autoclass="neutral">regard</MPQAPOL> it as <MPQAPOL autoclass="neutral">good</MPQAPOL> evidence
+of the book's <MPQAPOL autoclass="neutral">interest</MPQAPOL>.</MPQASENT>
+                              <MPQASENT autoclass1="unknown" autoclass2="obj"><MPQAPOL autoclass="neutral">Very</MPQAPOL> <MPQAPOL autoclass="positive">truly</MPQAPOL> yours,
+                                   S. L. CLEMENS.</MPQASENT>
+
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">In his philosophy, What Is Man?<MPQASENT autoclass1="unknown" autoclass2="obj">, and now and again in his other
+     writings, we find Mark Twain giving small credit to the human mind
+     as an originator of <MPQAPOL autoclass="neutral">ideas</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">The <MPQAPOL autoclass="neutral">most</MPQAPOL> <MPQAPOL autoclass="neutral">original</MPQAPOL> writer of his time, he
+     took no credit for <MPQAPOL autoclass="neutral">pure</MPQAPOL> invention and <MPQAPOL autoclass="neutral">allowed</MPQAPOL> none to others.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The
+     mind, he declared, adapted, consciously or unconsciously; it did not
+     create.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">In a letter which follows he elucidates this doctrine.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">The
+     reference in it to the "captain" and to the kerosene, as the reader
+     may remember, have to do with Captain "Hurricane" Jones and his
+     theory of the <MPQAPOL autoclass="neutral">miracles</MPQAPOL> of "Isaac and of the prophets of Baal," as
+     <MPQAPOL autoclass="neutral">expounded</MPQAPOL> in Some Rambling Notes of an <MPQAPOL autoclass="neutral">Idle</MPQAPOL> Excursion.</MPQASENT>
+
+     <MPQASENT autoclass1="subj" autoclass2="subj">By a <MPQAPOL autoclass="negative">trick</MPQAPOL> of memory Clemens gives The <MPQAPOL autoclass="neutral">Little</MPQAPOL> Duke as his suggestion
+     for The Prince and the <MPQAPOL autoclass="neutral">Pauper</MPQAPOL>; he <MPQAPOL autoclass="neutral">should</MPQAPOL> have written The Prince and
+     the Page, by the same author.</MPQASENT>
+
+
+                    <MPQASENT autoclass1="unknown" autoclass2="obj">To Rev. F. Y. Christ, in New York:
+
+                                        REDDING, CONN., Aug., '08.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">DEAR SIR,--You say "I often owe my <MPQAPOL autoclass="positive">best</MPQAPOL> sermons to a suggestion received
+in reading or from other exterior sources."</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Your <MPQAPOL autoclass="neutral">remark</MPQAPOL> is not <MPQAPOL autoclass="neutral">quite</MPQAPOL> in
+<MPQAPOL autoclass="neutral">accordance</MPQAPOL> with the <MPQAPOL autoclass="neutral">facts</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">We <MPQAPOL autoclass="neutral">must</MPQAPOL> change it to--"I owe all my <MPQAPOL autoclass="neutral">thoughts</MPQAPOL>,
+sermons and <MPQAPOL autoclass="neutral">ideas</MPQAPOL> to <MPQAPOL autoclass="positive">suggestions</MPQAPOL> received from sources outside of myself."</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj">The <MPQAPOL autoclass="neutral">simplified</MPQAPOL> English of this proposition is--"No man's <MPQAPOL autoclass="neutral">brains</MPQAPOL> ever
+originated an <MPQAPOL autoclass="neutral">idea</MPQAPOL>."</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">It is an <MPQAPOL autoclass="neutral">astonishing</MPQAPOL> thing that after all these
+ages the world goes on <MPQAPOL autoclass="neutral">thinking</MPQAPOL> the human brain machinery can originate a
+<MPQAPOL autoclass="neutral">thought</MPQAPOL>.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">It can't.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">It never has done it.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">In all cases, <MPQAPOL autoclass="neutral">little</MPQAPOL> and <MPQAPOL autoclass="neutral">big</MPQAPOL>, the
+<MPQAPOL autoclass="neutral">thought</MPQAPOL> is born of a suggestion; and in all cases the <MPQAPOL autoclass="neutral">suggestions</MPQAPOL> come to
+the brain from the outside.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">The brain never acts except from exterior
+impulse.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">A man can <MPQAPOL autoclass="positive">satisfy</MPQAPOL> himself of the <MPQAPOL autoclass="neutral">truth</MPQAPOL> of this by a single process,--let
+him examine every <MPQAPOL autoclass="neutral">idea</MPQAPOL> that occurs to him in an hour; a day; in a week
+--in a lifetime if he <MPQAPOL autoclass="positive">please</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">He will always find that an outside
+something <MPQAPOL autoclass="neutral">suggested</MPQAPOL> the <MPQAPOL autoclass="neutral">thought</MPQAPOL>, something which he saw with his eyes or
+heard with his ears or perceived by his touch--not necessarily to-day,
+nor yesterday, nor last year, nor twenty years ago, but sometime or
+other.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Usually the source of the suggestion is <MPQAPOL autoclass="neutral">immediately</MPQAPOL> traceable,
+but sometimes it isn't.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj"><MPQAPOL autoclass="neutral">However</MPQAPOL>, if you will examine every <MPQAPOL autoclass="neutral">thought</MPQAPOL> that occurs to you for the
+next two days, you will find that in at <MPQAPOL autoclass="neutral">least</MPQAPOL> nine cases out of ten you
+can put your finger on the outside suggestion--And that <MPQAPOL autoclass="neutral">ought</MPQAPOL> to <MPQAPOL autoclass="neutral">convince</MPQAPOL>
+you that No. 10 had that source <MPQAPOL autoclass="neutral">too</MPQAPOL>, <MPQAPOL autoclass="neutral">although</MPQAPOL> you cannot at present hunt
+it down and find it.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">The <MPQAPOL autoclass="neutral">idea</MPQAPOL> of writing to me <MPQAPOL autoclass="neutral">would</MPQAPOL> have had to wait a long time if it waited
+until your brain originated it.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">It was born of an outside suggestion--
+Sir Thomas and my old Captain.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">The hypnotist <MPQAPOL autoclass="neutral">thinks</MPQAPOL> he has invented a new thing--suggestion.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">This is
+<MPQAPOL autoclass="neutral">very</MPQAPOL> <MPQAPOL autoclass="negative">sad</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I don't <MPQAPOL autoclass="neutral">know</MPQAPOL> where my captain got his kerosene <MPQAPOL autoclass="neutral">idea</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">(It was
+forty-one years ago, and he is long ago <MPQAPOL autoclass="neutral">dead</MPQAPOL>.)</MPQASENT> <MPQASENT autoclass1="obj" autoclass2="obj">But I <MPQAPOL autoclass="neutral">know</MPQAPOL> that it didn't
+originate in his head, but it was born from a suggestion from the
+outside.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">Yesterday a guest said, "How did you come to <MPQAPOL autoclass="neutral">think</MPQAPOL> of writing 'The Prince
+and the <MPQAPOL autoclass="neutral">Pauper</MPQAPOL>?'"</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">I didn't.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">The <MPQAPOL autoclass="neutral">thought</MPQAPOL> came to me from the outside--
+<MPQAPOL autoclass="positive">suggested</MPQAPOL> by that <MPQAPOL autoclass="positive">pleasant</MPQAPOL> and <MPQAPOL autoclass="negative">picturesque</MPQAPOL> <MPQAPOL autoclass="negative">little</MPQAPOL> history-book, Charlotte
+M. Yonge's "<MPQAPOL autoclass="negative">Little</MPQAPOL> Duke," I <MPQAPOL autoclass="negative">doubt</MPQAPOL> if Mrs. Burnett <MPQAPOL autoclass="negative">knows</MPQAPOL> whence came to
+her the suggestion to write "<MPQAPOL autoclass="negative">Little</MPQAPOL> Lord Fauntleroy," but I <MPQAPOL autoclass="positive">know</MPQAPOL>; it came
+to her from reading "The Prince and the <MPQAPOL autoclass="negative">Pauper</MPQAPOL>."</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">In all my life I have
+never originated an <MPQAPOL autoclass="neutral">idea</MPQAPOL>, and neither has she, nor anybody <MPQAPOL autoclass="neutral">else</MPQAPOL>.</MPQASENT>
+
+<MPQASENT autoclass1="subj" autoclass2="subj">Man's mind is a <MPQAPOL autoclass="positive">clever</MPQAPOL> machine, and can work up materials into <MPQAPOL autoclass="neutral">ingenious</MPQAPOL>
+<MPQAPOL autoclass="positive">fancies</MPQAPOL> and <MPQAPOL autoclass="neutral">ideas</MPQAPOL>, but it can't create the material; none but the gods
+can do that.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">In Sweden I saw a <MPQAPOL autoclass="neutral">vast</MPQAPOL> machine receive a <MPQAPOL autoclass="neutral">block</MPQAPOL> of wood, and
+turn it into marketable matches in two minutes.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">It <MPQAPOL autoclass="neutral">could</MPQAPOL> do everything
+but make the wood.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">That is the kind of machine the human mind is.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj"><MPQAPOL autoclass="neutral">Maybe</MPQAPOL>
+this is not a <MPQAPOL autoclass="neutral">large</MPQAPOL> compliment, but it is all I can <MPQAPOL autoclass="neutral">afford</MPQAPOL>.....
+                         Your <MPQAPOL autoclass="neutral">friend</MPQAPOL> and well-wisher
+                                             S. L. CLEMENS.</MPQASENT>
+
+
+                <MPQASENT autoclass1="unknown" autoclass2="obj">To Mrs. H. H. Rogers, in Fair Hawn, Mass.:
+
+                                        REDDING, CONN, Aug. 12, 1908.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj">DEAR MRS. ROGERS, I <MPQAPOL autoclass="neutral">believe</MPQAPOL> I am the wellest man on the planet to-day,
+and <MPQAPOL autoclass="positive">good</MPQAPOL> for a trip to Fair Haven (which I discussed with the Captain of
+the New Bedford boat, who pleasantly <MPQAPOL autoclass="negative">accosted</MPQAPOL> me in the Grand Central
+August 5) but the doctor came up from New York day before yesterday, and
+gave <MPQAPOL autoclass="positive">positive</MPQAPOL> orders that I <MPQAPOL autoclass="neutral">must</MPQAPOL> not <MPQAPOL autoclass="neutral">stir</MPQAPOL> from here before frost.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">It is
+because I was <MPQAPOL autoclass="neutral">threatened</MPQAPOL> with a swoon, 10 or 12 days ago, and went to New
+York a day or two later to attend my nephew's funeral and got <MPQAPOL autoclass="neutral">horribly</MPQAPOL>
+<MPQAPOL autoclass="negative">exhausted</MPQAPOL> by the heat and came back here and had a bilious collapse.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">In
+24 hours I was as sound as a nut again, but nobody <MPQAPOL autoclass="neutral">believes</MPQAPOL> it but me.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">This is a <MPQAPOL autoclass="positive">prodigiously</MPQAPOL> <MPQAPOL autoclass="positive">satisfactory</MPQAPOL> place, and I am <MPQAPOL autoclass="negative">so</MPQAPOL> <MPQAPOL autoclass="negative">glad</MPQAPOL> I don't have
+to go back to the <MPQAPOL autoclass="negative">turmoil</MPQAPOL> and rush of New York.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">The house <MPQAPOL autoclass="positive">stands</MPQAPOL> <MPQAPOL autoclass="neutral">high</MPQAPOL>
+and the horizons are <MPQAPOL autoclass="neutral">wide</MPQAPOL>, yet the seclusion is <MPQAPOL autoclass="neutral">perfect</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">The nearest
+public road is half a mile away, <MPQAPOL autoclass="neutral">so</MPQAPOL> there is nobody to <MPQAPOL autoclass="neutral">look</MPQAPOL> in, and I
+don't have to wear clothes if I don't <MPQAPOL autoclass="negative">want</MPQAPOL> to.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">I have been down stairs
+in night-gown and slippers a couple of hours, and have been photographed
+in that costume; but I will dress, now, and behave myself.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">That doctor had half an <MPQAPOL autoclass="neutral">idea</MPQAPOL> that there is something the matter with my
+brain.  .  .</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Doctors do <MPQAPOL autoclass="neutral">know</MPQAPOL> <MPQAPOL autoclass="neutral">so</MPQAPOL> <MPQAPOL autoclass="negative">little</MPQAPOL> and they do charge <MPQAPOL autoclass="neutral">so</MPQAPOL> <MPQAPOL autoclass="neutral">much</MPQAPOL> for
+it.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I <MPQAPOL autoclass="positive">wish</MPQAPOL> Henry Rogers <MPQAPOL autoclass="neutral">would</MPQAPOL> come here, and I <MPQAPOL autoclass="positive">wish</MPQAPOL> you <MPQAPOL autoclass="neutral">would</MPQAPOL> come with
+him.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">You can't rest in that <MPQAPOL autoclass="neutral">crowded</MPQAPOL> place, but you <MPQAPOL autoclass="neutral">could</MPQAPOL> rest here, for
+<MPQAPOL autoclass="neutral">sure</MPQAPOL>!</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">I <MPQAPOL autoclass="neutral">would</MPQAPOL> learn bridge, and <MPQAPOL autoclass="neutral">entertain</MPQAPOL> you, and rob you.</MPQASENT>
+                         <MPQASENT autoclass1="unknown" autoclass2="subj">With <MPQAPOL autoclass="positive">love</MPQAPOL> to you both,
+                                        Ever yours,
+                                                  S.  L.  C.
+
+
+     In the foregoing letter we get the first intimation of Mark Twain's
+     <MPQAPOL autoclass="neutral">failing</MPQAPOL> health.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The nephew who had died was Samuel E. Moffett, son
+     of Pamela Clemens.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Moffett, who was a <MPQAPOL autoclass="neutral">distinguished</MPQAPOL> journalist--an
+     editorial writer on Collier's Weekly, a man <MPQAPOL autoclass="positive">beloved</MPQAPOL> by all who <MPQAPOL autoclass="neutral">knew</MPQAPOL>
+     him--had been drowned in the surf off the Jersey beach.</MPQASENT>
+
+
+                 <MPQASENT autoclass1="obj" autoclass2="obj">To W. D. Howells, Kittery Point, Maine:
+
+                                                       Aug. 12, '08.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">DEAR HOWELLS,--Won't you and Mrs. Howells and Mildred come and give us as
+many days as you can <MPQAPOL autoclass="neutral">spare</MPQAPOL>, and examine John's <MPQAPOL autoclass="positive">triumph</MPQAPOL>?</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">It is the <MPQAPOL autoclass="neutral">most</MPQAPOL>
+<MPQAPOL autoclass="positive">satisfactory</MPQAPOL> house I am acquainted with, and the <MPQAPOL autoclass="neutral">most</MPQAPOL> <MPQAPOL autoclass="positive">satisfactorily</MPQAPOL>
+situated.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">But it is no place to work in, because one is outside of it all the time,
+while the sun and the moon are on <MPQAPOL autoclass="neutral">duty</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Outside of it in the loggia,
+where the breezes <MPQAPOL autoclass="neutral">blow</MPQAPOL> and the <MPQAPOL autoclass="neutral">tall</MPQAPOL> arches <MPQAPOL autoclass="neutral">divide</MPQAPOL> up the scenery and
+frame it.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">It's a <MPQAPOL autoclass="negative">ghastly</MPQAPOL> long distance to come, and I <MPQAPOL autoclass="neutral">would</MPQAPOL>n't travel <MPQAPOL autoclass="neutral">such</MPQAPOL> a
+distance to see anything short of a memorial museum, but if you can't
+come now you can at <MPQAPOL autoclass="neutral">least</MPQAPOL> come later when you return to New York, for the
+journey will be only an hour and a half per express-train.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Things are
+gradually and steadily taking shape inside the house, and <MPQAPOL autoclass="neutral">nature</MPQAPOL> is
+taking care of the outside in her <MPQAPOL autoclass="negative">ingenious</MPQAPOL> and <MPQAPOL autoclass="positive">wonderful</MPQAPOL> fashion--and
+she is <MPQAPOL autoclass="neutral">competent</MPQAPOL> and asks no <MPQAPOL autoclass="neutral">help</MPQAPOL> and gets none.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">I have <MPQAPOL autoclass="neutral">retired</MPQAPOL> from New
+York for <MPQAPOL autoclass="neutral">good</MPQAPOL>, I have <MPQAPOL autoclass="neutral">retired</MPQAPOL> from labor for <MPQAPOL autoclass="neutral">good</MPQAPOL>, I have dismissed my
+stenographer and have entered upon a holiday whose other end is in the
+cemetery.</MPQASENT>
+                    <MPQASENT autoclass1="unknown" autoclass2="obj">Yours ever,
+                                   MARK.</MPQASENT>
+
+
+     <MPQASENT autoclass1="unknown" autoclass2="obj">From a gentleman in Buffalo Clemens one day received a letter
+     inclosing an incompleted list of the world's "One Hundred Greatest
+     Men," men who had exerted "the largest visible <MPQAPOL autoclass="neutral">influence</MPQAPOL> on the life
+     and activities of the race."</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">The writer asked that Mark Twain
+     examine the list and <MPQAPOL autoclass="neutral">suggest</MPQAPOL> names, adding "<MPQAPOL autoclass="neutral">would</MPQAPOL> you include Jesus,
+     as the founder of Christianity, in the list?"</MPQASENT>
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">To the list of statesmen Clemens added the name of Thomas Paine; to
+     the list of inventors, Edison and Alexander Graham Bell.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The
+     question he answered in detail.</MPQASENT>
+
+
+                      <MPQASENT autoclass1="obj" autoclass2="obj">To-----------, Buffalo, N.  Y.
+
+                              Private.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">REDDING, CONN, Aug. 28, '08.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">DEAR SIR,--By "private," I <MPQAPOL autoclass="neutral">mean</MPQAPOL> don't print any <MPQAPOL autoclass="neutral">remarks</MPQAPOL> of mine.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">I <MPQAPOL autoclass="positive">like</MPQAPOL> your list.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">The "largest visible <MPQAPOL autoclass="neutral">influence</MPQAPOL>."</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">These terms require you to add Jesus.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">And they doubly and trebly require
+you to add Satan.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">From A.D. 350 to A.D. 1850 these gentlemen exercised a
+vaster <MPQAPOL autoclass="neutral">influence</MPQAPOL> over a fifth part of the human race than was exercised
+over that fraction of the race by all other <MPQAPOL autoclass="neutral">influences</MPQAPOL> combined.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Ninety-
+nine hundredths of this <MPQAPOL autoclass="neutral">influence</MPQAPOL> proceeded from Satan, the remaining
+fraction of it from Jesus.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">During those 1500 years the <MPQAPOL autoclass="neutral">fear</MPQAPOL> of Satan and
+Hell made 99 Christians where <MPQAPOL autoclass="neutral">love</MPQAPOL> of God and Heaven landed one.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">During
+those 1500 years, Satan's <MPQAPOL autoclass="neutral">influence</MPQAPOL> was <MPQAPOL autoclass="neutral">worth</MPQAPOL> <MPQAPOL autoclass="neutral">very</MPQAPOL> nearly a hundred times
+as <MPQAPOL autoclass="neutral">much</MPQAPOL> to the business as was the <MPQAPOL autoclass="neutral">influence</MPQAPOL> of all the rest of the Holy
+Family put together.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">You have asked me a question, and I have answered it <MPQAPOL autoclass="negative">seriously</MPQAPOL> and
+<MPQAPOL autoclass="negative">sincerely</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">You have put in Buddha--a god, with a following, at one time,
+greater than Jesus ever had: a god with <MPQAPOL autoclass="neutral">perhaps</MPQAPOL> a <MPQAPOL autoclass="negative">little</MPQAPOL> <MPQAPOL autoclass="negative">better</MPQAPOL> evidence
+of his godship than that which is offered for Jesus's.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">How then, in
+<MPQAPOL autoclass="neutral">fairness</MPQAPOL>, can you leave Jesus out?</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">And if you put him in, how can you
+logically leave Satan out?</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Thunder is <MPQAPOL autoclass="neutral">good</MPQAPOL>, thunder is <MPQAPOL autoclass="neutral">impressive</MPQAPOL>; but
+it is the lightning that does the work.</MPQASENT>
+                              <MPQASENT autoclass1="unknown" autoclass2="obj"><MPQAPOL autoclass="neutral">Very</MPQAPOL> <MPQAPOL autoclass="positive">truly</MPQAPOL> yours,
+                                        S. L. CLEMENS.</MPQASENT>
+
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">The "Children's Theatre" of the next letter was an institution of
+     the New York East Side in which Mark Twain was <MPQAPOL autoclass="neutral">deeply</MPQAPOL> <MPQAPOL autoclass="positive">interested</MPQAPOL>.</MPQASENT>
+     <MPQASENT autoclass1="unknown" autoclass2="subj">The children were <MPQAPOL autoclass="neutral">most</MPQAPOL>, if not all, of Hebrew parentage, and the
+     performances they gave, under the direction of Alice M. Herts, were
+     <MPQAPOL autoclass="negative">really</MPQAPOL> <MPQAPOL autoclass="positive">remarkable</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">It <MPQAPOL autoclass="neutral">seemed</MPQAPOL> a <MPQAPOL autoclass="neutral">pity</MPQAPOL> that lack of funds <MPQAPOL autoclass="neutral">should</MPQAPOL> have
+     brought this <MPQAPOL autoclass="positive">excellent</MPQAPOL> <MPQAPOL autoclass="positive">educational</MPQAPOL> venture to an <MPQAPOL autoclass="negative">untimely</MPQAPOL> end.</MPQASENT>
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">The following letter was in reply to one inclosing a newspaper
+     clipping reporting a performance of The Prince and the <MPQAPOL autoclass="neutral">Pauper</MPQAPOL>, given
+     by Chicago school children.</MPQASENT>
+
+
+                       <MPQASENT autoclass1="unknown" autoclass2="obj">To Mrs. Hookway, in Chicago:
+                                                  Sept., 1908.</MPQASENT>
+<MPQASENT autoclass1="subj" autoclass2="subj">DEAR MRS. HOOKWAY,--<MPQAPOL autoclass="neutral">Although</MPQAPOL> I am <MPQAPOL autoclass="positive">full</MPQAPOL> of the <MPQAPOL autoclass="positive">spirit</MPQAPOL> of work this
+morning, a rarity with me lately--I <MPQAPOL autoclass="neutral">must</MPQAPOL> <MPQAPOL autoclass="negative">steal</MPQAPOL> a moment or two for a word
+in person: for I have been reading the <MPQAPOL autoclass="positive">eloquent</MPQAPOL> account in the Record-
+Herald and am <MPQAPOL autoclass="positive">pleasurably</MPQAPOL> <MPQAPOL autoclass="positive">stirred</MPQAPOL>, to my deepest <MPQAPOL autoclass="neutral">deeps</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">The reading
+brings vividly back to me my pet and <MPQAPOL autoclass="positive">pride</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">The Children's Theatre of
+the East side, New York.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">And it <MPQAPOL autoclass="positive">supports</MPQAPOL> and re-affirms what I have <MPQAPOL autoclass="neutral">so</MPQAPOL>
+often and strenuously said in public that a children's theatre is <MPQAPOL autoclass="neutral">easily</MPQAPOL>
+the <MPQAPOL autoclass="neutral">most</MPQAPOL> <MPQAPOL autoclass="positive">valuable</MPQAPOL> adjunct that any <MPQAPOL autoclass="neutral">educational</MPQAPOL> institution for the young
+can have, and that no otherwise <MPQAPOL autoclass="positive">good</MPQAPOL> school is <MPQAPOL autoclass="neutral">complete</MPQAPOL> without it.</MPQASENT>
+
+<MPQASENT autoclass1="subj" autoclass2="subj">It is <MPQAPOL autoclass="neutral">much</MPQAPOL> the <MPQAPOL autoclass="negative">most</MPQAPOL> <MPQAPOL autoclass="positive">effective</MPQAPOL> teacher of <MPQAPOL autoclass="negative">morals</MPQAPOL> and <MPQAPOL autoclass="positive">promoter</MPQAPOL> of <MPQAPOL autoclass="negative">good</MPQAPOL>
+conduct that the <MPQAPOL autoclass="negative">ingenuity</MPQAPOL> of man has yet devised, for the <MPQAPOL autoclass="neutral">reason</MPQAPOL> that
+its lessons are not taught wearily by book and by <MPQAPOL autoclass="negative">dreary</MPQAPOL> homily, but by
+visible and <MPQAPOL autoclass="negative">enthusing</MPQAPOL> action; and they go straight to the heart, which is
+the rightest of <MPQAPOL autoclass="neutral">right</MPQAPOL> places for them.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Book <MPQAPOL autoclass="neutral">morals</MPQAPOL> often get no <MPQAPOL autoclass="neutral">further</MPQAPOL>
+than the intellect, if they <MPQAPOL autoclass="neutral">even</MPQAPOL> get that far on their spectral and
+<MPQAPOL autoclass="negative">shadowy</MPQAPOL> pilgrimage: but when they travel from a Children's Theatre they
+do not stop permanently at that halfway house, but go on home.</MPQASENT>
+
+<MPQASENT autoclass1="subj" autoclass2="subj">The children's theatre is the only teacher of <MPQAPOL autoclass="negative">morals</MPQAPOL> and conduct and <MPQAPOL autoclass="negative">high</MPQAPOL>
+<MPQAPOL autoclass="positive">ideals</MPQAPOL> that never <MPQAPOL autoclass="negative">bores</MPQAPOL> the pupil, but always leaves him sorry when the
+lesson is over.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">And as for history, no other teacher is for a moment
+comparable to it: no other can make the <MPQAPOL autoclass="neutral">dead</MPQAPOL> <MPQAPOL autoclass="negative">heroes</MPQAPOL> of the world rise up
+and <MPQAPOL autoclass="neutral">shake</MPQAPOL> the dust of the ages from their bones and live and <MPQAPOL autoclass="neutral">move</MPQAPOL> and
+breathe and speak and be <MPQAPOL autoclass="neutral">real</MPQAPOL> to the looker and listener: no other can
+make the study of the lives and times of the <MPQAPOL autoclass="positive">illustrious</MPQAPOL> <MPQAPOL autoclass="neutral">dead</MPQAPOL> a <MPQAPOL autoclass="positive">delight</MPQAPOL>,
+a <MPQAPOL autoclass="positive">splendid</MPQAPOL> <MPQAPOL autoclass="positive">interest</MPQAPOL>, a <MPQAPOL autoclass="positive">passion</MPQAPOL>; and no other can paint a history-lesson
+in colors that will stay, and stay, and never fade.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">It is my <MPQAPOL autoclass="positive">conviction</MPQAPOL> that the children's theatre is one of the <MPQAPOL autoclass="neutral">very</MPQAPOL>, <MPQAPOL autoclass="negative">very</MPQAPOL>
+<MPQAPOL autoclass="positive">great</MPQAPOL> inventions of the twentieth century; and that its <MPQAPOL autoclass="neutral">vast</MPQAPOL> <MPQAPOL autoclass="neutral">educational</MPQAPOL>
+value--now but dimly perceived and but vaguely <MPQAPOL autoclass="negative">understood</MPQAPOL>--will presently
+come to be recognized.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">By the article which I have been reading I find
+the same things happening in the Howland School that we have become
+<MPQAPOL autoclass="neutral">familiar</MPQAPOL> with in our Children's Theatre (of which I am President, and
+<MPQAPOL autoclass="positive">sufficiently</MPQAPOL> <MPQAPOL autoclass="negative">vain</MPQAPOL> of the <MPQAPOL autoclass="neutral">distinction</MPQAPOL>.)</MPQASENT> <MPQASENT autoclass1="unknown" autoclass2="obj">These things among others;
+
+1.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">The educating history-study does not stop with the <MPQAPOL autoclass="negative">little</MPQAPOL> <MPQAPOL autoclass="neutral">players</MPQAPOL>,
+but the whole school catches the infection and <MPQAPOL autoclass="neutral">revels</MPQAPOL> in it.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">2.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">And it doesn't <MPQAPOL autoclass="neutral">even</MPQAPOL> stop there; the children carry it home and infect
+the family with it--<MPQAPOL autoclass="neutral">even</MPQAPOL> the parents and grandparents; and the whole
+household fall to studying history, and bygone manners and customs and
+costumes with <MPQAPOL autoclass="positive">eager</MPQAPOL> <MPQAPOL autoclass="neutral">interest</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">And this <MPQAPOL autoclass="neutral">interest</MPQAPOL> is carried along to the
+studying of costumes in old book-plates; and beyond that to the selecting
+of fabrics and the making of clothes.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Hundreds of our children learn,
+the plays by listening without book, and by making notes; then the
+listener goes home and plays the piece--all the parts!</MPQASENT> <MPQASENT autoclass1="unknown" autoclass2="obj">to the family.</MPQASENT>
+<MPQASENT autoclass1="subj" autoclass2="subj">And the family are <MPQAPOL autoclass="positive">glad</MPQAPOL> and <MPQAPOL autoclass="positive">proud</MPQAPOL>; <MPQAPOL autoclass="positive">glad</MPQAPOL> to listen to the explanations and
+analyses, <MPQAPOL autoclass="positive">glad</MPQAPOL> to learn, <MPQAPOL autoclass="positive">glad</MPQAPOL> to be lifted to planes <MPQAPOL autoclass="neutral">above</MPQAPOL> their <MPQAPOL autoclass="negative">dreary</MPQAPOL>
+workaday lives.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Our children's theatre is educating 7,000 children--and
+their families.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">When we put on a play of Shakespeare they <MPQAPOL autoclass="neutral">fall</MPQAPOL> to
+studying it <MPQAPOL autoclass="neutral">diligently</MPQAPOL>; <MPQAPOL autoclass="neutral">so</MPQAPOL> that they may be <MPQAPOL autoclass="neutral">qualified</MPQAPOL> to <MPQAPOL autoclass="neutral">enjoy</MPQAPOL> it to the
+limit when the piece is staged.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">3.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Your Howland School children do the construction-work, stage-
+decorations, etc.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">That is our way <MPQAPOL autoclass="neutral">too</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Our young folks do everything
+that is <MPQAPOL autoclass="neutral">needed</MPQAPOL> by the theatre, with their own hands; scene-designing,
+scene-painting, gas-fitting, electric work, costume-designing--costume
+making, everything and all things <MPQAPOL autoclass="neutral">indeed</MPQAPOL>--and their orchestra and its
+leader are from their own ranks.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">The article which I have been reading, says--speaking of the historical
+play produced by the pupils of the Howland School--
+
+"The question <MPQAPOL autoclass="neutral">naturally</MPQAPOL> arises, What has this <MPQAPOL autoclass="negative">drama</MPQAPOL> done for those who <MPQAPOL autoclass="neutral">so</MPQAPOL>
+<MPQAPOL autoclass="positive">enthusiastically</MPQAPOL> took part?<MPQASENT autoclass1="subj" autoclass2="subj">--The touching story has made a year out of
+the Past live for the children as <MPQAPOL autoclass="neutral">could</MPQAPOL> no chronology or bald statement
+of historical events; it has cultivated the <MPQAPOL autoclass="neutral">fancy</MPQAPOL> and given to the
+<MPQAPOL autoclass="neutral">imagination</MPQAPOL> <MPQAPOL autoclass="neutral">strength</MPQAPOL> and <MPQAPOL autoclass="positive">purity</MPQAPOL>; work in composition has ceased to be
+drudgery, for when all other themes <MPQAPOL autoclass="negative">fall</MPQAPOL> flat a subject dealing with some
+aspect of the <MPQAPOL autoclass="negative">drama</MPQAPOL> presented never <MPQAPOL autoclass="negative">fails</MPQAPOL> to <MPQAPOL autoclass="positive">arouse</MPQAPOL> <MPQAPOL autoclass="positive">interest</MPQAPOL> and a <MPQAPOL autoclass="neutral">rapid</MPQAPOL>
+pushing of pens over paper."</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">That is <MPQAPOL autoclass="negative">entirely</MPQAPOL> <MPQAPOL autoclass="negative">true</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">The <MPQAPOL autoclass="neutral">interest</MPQAPOL> is not confined to the <MPQAPOL autoclass="neutral">drama</MPQAPOL>'s
+story, it spreads out all around the period of the story, and gives to
+all the outlying and unrelated happenings of that period a <MPQAPOL autoclass="positive">fascinating</MPQAPOL>
+<MPQAPOL autoclass="positive">interest</MPQAPOL>--an <MPQAPOL autoclass="neutral">interest</MPQAPOL> which does not fade out with the years, but remains
+always <MPQAPOL autoclass="positive">fresh</MPQAPOL>, always <MPQAPOL autoclass="positive">inspiring</MPQAPOL>, always <MPQAPOL autoclass="positive">welcome</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">History-facts <MPQAPOL autoclass="neutral">dug</MPQAPOL> by the
+job, with sweat and tears out of a dry and <MPQAPOL autoclass="negative">spiritless</MPQAPOL> text-book--but
+never mind, all who have <MPQAPOL autoclass="negative">suffered</MPQAPOL> <MPQAPOL autoclass="neutral">know</MPQAPOL> what that is.  .  .</MPQASENT>
+                                   <MPQASENT autoclass1="obj" autoclass2="obj">I remain, dear madam,
+                                             <MPQAPOL autoclass="neutral">Sincerely</MPQAPOL> yours,
+                                                       S. L. CLEMENS.</MPQASENT>
+
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">Mark Twain had a <MPQAPOL autoclass="neutral">special</MPQAPOL> <MPQAPOL autoclass="positive">fondness</MPQAPOL> for cats.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">As a boy he always
+     owned one and it generally had a seat beside him at the table.</MPQASENT>
+     <MPQASENT autoclass1="obj" autoclass2="obj">There were cats at Quarry Farm and at Hartford, and in the house at
+     Redding there was a gray mother-cat named Tammany, of which he was
+     <MPQAPOL autoclass="neutral">especially</MPQAPOL> <MPQAPOL autoclass="positive">fond</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Kittens capering about were his chief <MPQAPOL autoclass="neutral">delight</MPQAPOL>.</MPQASENT>
+     <MPQASENT autoclass1="obj" autoclass2="obj">In a letter to a Chicago woman he tells how those of Tammany
+     assisted at his <MPQAPOL autoclass="neutral">favorite</MPQAPOL> game.</MPQASENT>
+
+
+               <MPQASENT autoclass1="unknown" autoclass2="obj">To Mrs. Mabel Larkin Patterson, in Chicago:
+
+                                             REDDING, CONNECTICUT,
+                                                       Oct. 2, '08.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj">DEAR MRS. PATTERSON,--The contents of your letter are <MPQAPOL autoclass="neutral">very</MPQAPOL> <MPQAPOL autoclass="positive">pleasant</MPQAPOL> and
+<MPQAPOL autoclass="positive">very</MPQAPOL> <MPQAPOL autoclass="positive">welcome</MPQAPOL>, and I <MPQAPOL autoclass="positive">thank</MPQAPOL> you for them, <MPQAPOL autoclass="neutral">sincerely</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">If I can find a
+photograph of my "Tammany" and her kittens, I will enclose it in this.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">One of them <MPQAPOL autoclass="positive">likes</MPQAPOL> to be crammed into a corner-pocket of the billiard
+table--which he fits as snugly as does a finger in a glove and then he
+watches the game (and <MPQAPOL autoclass="neutral">obstructs</MPQAPOL> it) by the hour, and spoils many a shot
+by putting out his paw and changing the direction of a passing ball.</MPQASENT>
+<MPQASENT autoclass1="subj" autoclass2="subj">Whenever a ball is in his arms, or <MPQAPOL autoclass="neutral">so</MPQAPOL> <MPQAPOL autoclass="neutral">close</MPQAPOL> to him that it cannot be
+played upon without <MPQAPOL autoclass="neutral">risk</MPQAPOL> of <MPQAPOL autoclass="neutral">hurting</MPQAPOL> him, the <MPQAPOL autoclass="neutral">player</MPQAPOL> is <MPQAPOL autoclass="neutral">privileged</MPQAPOL> to
+remove it to anyone of the 3 spots that chances to be vacant.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">Ah, no, my lecturing days are over for <MPQAPOL autoclass="neutral">good</MPQAPOL> and all.</MPQASENT>
+                                        <MPQASENT autoclass1="obj" autoclass2="obj"><MPQAPOL autoclass="neutral">Sincerely</MPQAPOL> yours,
+                                                  S. L. CLEMENS.</MPQASENT>
+
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">The letter to Howells which follows was written a short time before
+     the passage of the copyright extension bill, which rendered Mark
+     Twain's new plan, here mentioned, <MPQAPOL autoclass="neutral">unneeded</MPQAPOL>--at <MPQAPOL autoclass="neutral">least</MPQAPOL> for the time.</MPQASENT>
+
+
+                      <MPQASENT autoclass1="obj" autoclass2="obj">To W. D. Howells, in New York:
+
+                                             Monday, Oct. 26, '08.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj"><MPQAPOL autoclass="neutral">Oh</MPQAPOL>, I say!</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">Where are you hiding, and why are you hiding?</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">You promised
+to come here and you didn't keep your word.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">(This sounds like
+<MPQAPOL autoclass="neutral">astonishment</MPQAPOL>--but don't be <MPQAPOL autoclass="negative">misled</MPQAPOL> by that.)</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">Come, fire up again on your fiction-mill and give us another <MPQAPOL autoclass="positive">good</MPQAPOL>
+<MPQAPOL autoclass="positive">promise</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">And this time keep it--for it is your turn to be <MPQAPOL autoclass="negative">astonished</MPQAPOL>.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">Come and stay as long as you <MPQAPOL autoclass="neutral">possibly</MPQAPOL> can.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I invented a new copyright
+extension <MPQAPOL autoclass="neutral">scheme</MPQAPOL> last Friday, and sat up all night arranging its details.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="obj">It will <MPQAPOL autoclass="neutral">interest</MPQAPOL> you.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Yesterday I got it down on paper in as <MPQAPOL autoclass="neutral">compact</MPQAPOL> a
+form as I <MPQAPOL autoclass="neutral">could</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Harvey and I have examined the <MPQAPOL autoclass="neutral">scheme</MPQAPOL>, and to-morrow or
+next day he will send me a couple of copyright-experts to arrange about
+getting <MPQAPOL autoclass="neutral">certain</MPQAPOL> statistics for me.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">Authors, publishers and the public have always been <MPQAPOL autoclass="negative">damaged</MPQAPOL> by the
+copyright laws.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The proposed amendment will advantage all three--the
+public <MPQAPOL autoclass="neutral">most</MPQAPOL> of all.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I <MPQAPOL autoclass="neutral">think</MPQAPOL> Congress will pass it and settle the <MPQAPOL autoclass="neutral">vexed</MPQAPOL>
+question permanently.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">I shall <MPQAPOL autoclass="neutral">need</MPQAPOL> your assent and the assent of about a dozen other authors.</MPQASENT>
+<MPQASENT autoclass1="obj" autoclass2="obj">Also the assent of all the <MPQAPOL autoclass="neutral">large</MPQAPOL> <MPQAPOL autoclass="neutral">firms</MPQAPOL> of the 300 publishers.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">These
+authors and publishers will furnish said assent I am <MPQAPOL autoclass="positive">sure</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">Not <MPQAPOL autoclass="neutral">even</MPQAPOL> the
+pirates will be <MPQAPOL autoclass="neutral">able</MPQAPOL> to furnish a <MPQAPOL autoclass="negative">serious</MPQAPOL> <MPQAPOL autoclass="negative">objection</MPQAPOL>, I <MPQAPOL autoclass="neutral">think</MPQAPOL>.</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="obj">Come along.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">This place <MPQAPOL autoclass="neutral">seemed</MPQAPOL> at its <MPQAPOL autoclass="positive">best</MPQAPOL> when all around was summer-
+green; later it <MPQAPOL autoclass="neutral">seemed</MPQAPOL> at its <MPQAPOL autoclass="positive">best</MPQAPOL> when all around was <MPQAPOL autoclass="negative">burning</MPQAPOL> with the
+autumn <MPQAPOL autoclass="negative">splendors</MPQAPOL>; and now once more it <MPQAPOL autoclass="neutral">seems</MPQAPOL> at its <MPQAPOL autoclass="positive">best</MPQAPOL>, with the trees
+naked and the ground a painter's palette.</MPQASENT>
+                                   <MPQASENT autoclass1="unknown" autoclass2="obj">Yours ever,
+                                             MARK.</MPQASENT>
+
+
+     <MPQASENT autoclass1="obj" autoclass2="obj">Clemens was a <MPQAPOL autoclass="positive">great</MPQAPOL> <MPQAPOL autoclass="positive">admirer</MPQAPOL> of the sea stories of W. W. Jacobs and
+     generally kept one or more of this author's volumes in reach of his
+     bed, where <MPQAPOL autoclass="neutral">most</MPQAPOL> of his reading was done.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">The acknowledgment that
+     follows was sent when he had finished Salthaven.</MPQASENT>
+
+
+                       <MPQASENT autoclass1="obj" autoclass2="obj">To W. W. Jacobs, in England:
+
+                                                       REDDING, CONN,
+                                                       Oct. 28, '08.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj">DEAR MR. JACOBS,--It has a <MPQAPOL autoclass="neutral">delightful</MPQAPOL> <MPQAPOL autoclass="neutral">look</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="subj" autoclass2="subj">I will not venture to say
+how <MPQAPOL autoclass="positive">delightful</MPQAPOL>, because the words <MPQAPOL autoclass="positive">would</MPQAPOL> sound <MPQAPOL autoclass="negative">extravagant</MPQAPOL>, and <MPQAPOL autoclass="neutral">would</MPQAPOL>
+thereby <MPQAPOL autoclass="negative">lose</MPQAPOL> some of their <MPQAPOL autoclass="neutral">strength</MPQAPOL> and to that degree <MPQAPOL autoclass="negative">misrepresent</MPQAPOL> me.</MPQASENT>
+<MPQASENT autoclass1="subj" autoclass2="subj">It is my <MPQAPOL autoclass="negative">conviction</MPQAPOL> that Dialstone Lane holds the <MPQAPOL autoclass="negative">supremacy</MPQAPOL> over all
+purely <MPQAPOL autoclass="negative">humorous</MPQAPOL> books in our language, but I <MPQAPOL autoclass="negative">feel</MPQAPOL> about Salthaven as the
+Cape Cod poet <MPQAPOL autoclass="negative">feels</MPQAPOL> about Simon Hanks:
+
+               "The Lord <MPQAPOL autoclass="negative">knows</MPQAPOL> all things, <MPQAPOL autoclass="negative">great</MPQAPOL> and small,
+               With <MPQAPOL autoclass="negative">doubt</MPQAPOL> he's not <MPQAPOL autoclass="negative">perplexed</MPQAPOL>:
+               'Tis Him alone that <MPQAPOL autoclass="negative">knows</MPQAPOL> it all
+               But Simon Hanks comes next."</MPQASENT>
+
+<MPQASENT autoclass1="unknown" autoclass2="subj">The poet was <MPQAPOL autoclass="negative">moved</MPQAPOL> by <MPQAPOL autoclass="negative">envy</MPQAPOL> and <MPQAPOL autoclass="negative">malice</MPQAPOL> and <MPQAPOL autoclass="negative">jealousy</MPQAPOL>, but I am not: I place
+Salthaven close up next to Dialstone because I <MPQAPOL autoclass="negative">think</MPQAPOL> it has a <MPQAPOL autoclass="negative">fair</MPQAPOL> and
+<MPQAPOL autoclass="negative">honest</MPQAPOL> <MPQAPOL autoclass="positive">right</MPQAPOL> to that <MPQAPOL autoclass="negative">high</MPQAPOL> <MPQAPOL autoclass="neutral">position</MPQAPOL>.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">I have kept the other book <MPQAPOL autoclass="neutral">moving</MPQAPOL>;
+I shall begin to hand this one around now.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">And many thanks to you for remembering me.</MPQASENT>
+
+<MPQASENT autoclass1="obj" autoclass2="obj">This house is out in the solitudes of the woods and the hills, an hour
+and a half from New York, and I <MPQAPOL autoclass="neutral">mean</MPQAPOL> to stay in it winter and summer the
+rest of my days.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">I <MPQAPOL autoclass="negative">beg</MPQAPOL> you to come and <MPQAPOL autoclass="neutral">help</MPQAPOL> occupy it a few days the
+next time you visit the U.S.
+                         <MPQAPOL autoclass="neutral">Sincerely</MPQAPOL> yours,
+                                   S. L. CLEMENS.</MPQASENT>
+
+
+     <MPQASENT autoclass1="unknown" autoclass2="obj">One of the <MPQAPOL autoclass="neutral">attractions</MPQAPOL> of Stormfield was a <MPQAPOL autoclass="positive">beautiful</MPQAPOL> mantel in the
+     billiard room, presented by the Hawaiian Promotion Committee.</MPQASENT>  <MPQASENT autoclass1="obj" autoclass2="obj">It
+     had not arrived when the rest of the house was completed, but came
+     in time to be set in place early in the morning of the owner's
+     seventy-third birthday.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">It was made of a variety of Hawaiian woods,
+     and was the work of a native carver, F. M. Otremba.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="obj">Clemens was
+     <MPQAPOL autoclass="neutral">deeply</MPQAPOL> <MPQAPOL autoclass="negative">touched</MPQAPOL> by the offering from those "western isles"--the
+     memory of which was always <MPQAPOL autoclass="neutral">so</MPQAPOL> <MPQAPOL autoclass="neutral">sweet</MPQAPOL> to him.</MPQASENT>
+
+
+                         <MPQASENT autoclass1="unknown" autoclass2="obj">To Mr. Wood, in Hawaii:
+
+                                                       Nov. 30, '08.</MPQASENT>
+<MPQASENT autoclass1="unknown" autoclass2="subj">DEAR MR. WOOD,--The <MPQAPOL autoclass="positive">beautiful</MPQAPOL> mantel was put in its place an hour ago,
+and its <MPQAPOL autoclass="positive">friendly</MPQAPOL> "Aloha" was the first uttered <MPQAPOL autoclass="negative">greeting</MPQAPOL> my 73rd birthday
+received.</MPQASENT>  <MPQASENT autoclass1="unknown" autoclass2="subj">It is <MPQAPOL autoclass="positive">rich</MPQAPOL> in color, <MPQAPOL autoclass="neutral">rich</MPQAPOL> in quality, and <MPQAPOL autoclass="positive">rich</MPQAPOL> in decoration,
+<MPQAPOL autoclass="neutral">therefore</MPQAPOL> it <MPQAPOL autoclass="negative">exactly</MPQAPOL> <MPQAPOL autoclass="positive">harmonizes</MPQAPOL> with the <MPQAPOL autoclass="positive">taste</MPQAPOL> for <MPQAPOL autoclass="neutral">such</MPQAPOL> things which was
+born in me and which I have seldom been <MPQAPOL autoclass="negative">able</MPQAPOL> to <MPQAPOL autoclass="negative">indulge</MPQAPOL> to my content.</MPQASENT>
+<MPQASENT autoclass1="subj" autoclass2="subj">It will be a <MPQAPOL autoclass="positive">great</MPQAPOL> <MPQAPOL autoclass="positive">pleasure</MPQAPOL> to me, daily renewed, to have under my eye
+this <MPQAPOL autoclass="negative">lovely</MPQAPOL> reminder of the loveliest fleet of islands that <MPQAPOL autoclass="negative">lies</MPQAPOL> anchored
+in any ocean, and I <MPQAPOL autoclass="negative">beg</MPQAPOL> to <MPQAPOL autoclass="positive">thank</MPQAPOL> the Committee for providing me that
+<MPQAPOL autoclass="positive">pleasure</MPQAPOL>.</MPQASENT>
+                    <MPQASENT autoclass1="unknown" autoclass2="obj"><MPQAPOL autoclass="neutral">Sincerely</MPQAPOL> Yours,
+                              S. L. CLEMENS.</MPQASENT>
+

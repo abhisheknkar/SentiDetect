@@ -34,7 +34,7 @@ public class OpinionFinder
 		System.out.println("Total time: " + totalTime + "ms.");		
 	}
 	
-	public static  ArrayList<OpinionFinderWord> readDataset_OpinionFinder(File fin, File fout, int saveFlag) throws IOException
+	public static ArrayList<OpinionFinderWord> readDataset_OpinionFinder(File fin, File fout, int saveFlag) throws IOException
 	{		
 		BufferedReader in = null;
 		in = new BufferedReader(new FileReader(fin));

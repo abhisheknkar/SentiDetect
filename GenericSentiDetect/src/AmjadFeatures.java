@@ -5,6 +5,10 @@ import java.util.regex.Pattern;
 
 import edu.stanford.nlp.dcoref.sievepasses.PronounMatch;
 import edu.stanford.nlp.ling.CoreAnnotations;
+import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.TextAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
+import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
@@ -20,8 +24,14 @@ import edu.stanford.nlp.util.CoreMap;
 //All members are static functions
 public class AmjadFeatures 
 {
+	private static String nearestPOS = "-1";
 	private static final String[] PronounList = {"i", "me", "my", "mine", "we", "us", "we", "our", "ours",
 			"he", "she", "it", "they", "him", "her", "them","his", "her", "its", "their", "theirs"}; 
+	private static final String[] contrastList = {"yet", "and yet", "nevertheless", "nonetheless", 
+			"after all", "however", "though", "otherwise", "on the contrary", 
+			"in contrast", "notwithstanding", "on the other hand", "at the same time",
+			"although this may be true", "in spite of", "be that as it may", "then again",
+			"in reality", "after all", "albeit", "although", "whereas", "despite", "regardless"};
 	
 	private final static String[] POSadv = {"RB","RBR","RBS", "WRB"};
 	private final static String[] POSverb = {"VB","VBD","VBG","VBN","VBP","VBZ"};
@@ -205,6 +215,37 @@ public class AmjadFeatures
         return citations;
 	}
 
+	public static ArrayList<Citation> getFeature6(ArrayList<Citation> citations) throws IOException
+	{
+		/*
+		 * To detect presence of contrast expressions
+		 */
+//		int count = 0;
+		boolean found = false;
+		for(Citation citation : citations)
+		{
+			for (int i = 0; i < citation.Sentence.length; ++i)
+			{
+				if(citation.SentenceScore[i] != 0)
+				{
+					for (int j = 0; j < contrastList.length; ++j)
+					{
+						found = citation.Sentence[i].matches("(?i).*\\b"+ contrastList[j] +"\\b.*");
+						if (found) 
+						{
+//							System.out.println(count++ + "," + contrastList[j]);
+							citation.Features[6]=1;
+//							System.out.println("Pronoun: " + PronounList[j] + ", Sentence: " + citation.Sentence[i]);
+							break;
+						}
+					}
+					if (found) break;
+				}
+			}
+		}		
+        return citations;
+	}
+	
 	public static ArrayList<Citation> getFeature7(ArrayList<Citation> citations) throws IOException
 	{
 		/*
@@ -264,6 +305,81 @@ public class AmjadFeatures
 		return citations;
 	}
 	
+	public static ArrayList<Citation> getFeature8(ArrayList<Citation> citations) throws IOException
+	{
+		/*
+		 * Closest subjectivity cue
+		 * Start from TREF, go left first, then right in search of subjective words.
+		 * For the closest word, get the word and the score
+		 */
+		String[] sentencesplit;
+		int TREFindex = -1;
+		int mindist = Integer.MAX_VALUE;
+		int minindex = -1;
+		int score = 0;
+		String type, priorpolarity;
+
+		ArrayList<Integer> subjIndices = new ArrayList<Integer>();
+		
+		HashMap<String, OpinionFinderWord> subjwords = DatasetReader.readDataset_OpinionFinder();
+//		System.out.println(subjwords.keySet().toString());
+		
+		for (Citation citation : citations)
+		{
+			TREFindex = -1;
+			subjIndices.clear();
+			sentencesplit = citation.Sentence[1].split(" ");
+
+			for(int i = 0; i < sentencesplit.length; ++i)
+			{
+				if(sentencesplit[i].contains("<TREF>"))
+				{
+					TREFindex = i;
+				}
+				else
+				{
+					//Check if subjective
+//					System.out.println(sentencesplit[i]);
+					if(subjwords.containsKey(sentencesplit[i].toLowerCase()))
+					{
+						subjIndices.add(i);
+					}
+				}
+			}
+			//Find closest one
+			mindist = Integer.MAX_VALUE;
+			minindex = -1;
+			if(TREFindex != -1)
+			{
+				for (Integer index : subjIndices)
+				{
+					if(Math.abs(TREFindex - index) < mindist)
+					{
+						minindex = index;
+						mindist = Math.abs(TREFindex - index);
+					}
+				}
+				if(minindex != -1)
+				{
+					score = 1;
+					type = subjwords.get(sentencesplit[minindex].toLowerCase()).Type;
+					priorpolarity = subjwords.get(sentencesplit[minindex].toLowerCase()).PriorPolarity;
+					if(type.equals("strongsubj")) score *= 2;
+					
+					if(priorpolarity.equals("negative")) score = -score;
+					else if(priorpolarity.equals("neutral")) score = 0;
+
+//					System.out.println("Score: " + citation.Sentence[1]);
+//					System.out.println("Closest Subj Word: " + sentencesplit[minindex]);
+				}
+				else score = 0;
+				citation.Features[8] = score;
+//				System.out.println(score);
+			}
+		}
+		return citations;
+	}
+	
 	public static ArrayList<Citation> getFeature9and10(ArrayList<Citation> citations) throws IOException
 	{
 		/*
@@ -272,11 +388,15 @@ public class AmjadFeatures
 		 */
 		
 		File depfile = new File("Outputs/Amjad/dependencies.tmp");
+		File POS3file = new File("Outputs/Amjad/POS3.tmp");
+
 		HashMap<String, Integer> depmap = new HashMap<String, Integer>();
+		HashMap<String, Integer> POS3map = new HashMap<String, Integer>();
 		if(depfile.exists()) depmap = FileOperations.readObject(depfile);
+		if(POS3file.exists()) POS3map = FileOperations.readObject(POS3file);
 		
 		String source_string, dest_string, type_string, to_write;
-		int source_till, dest_till;
+		int source_till, dest_till, count=0;
 		int distance = Integer.MAX_VALUE;
 		String text;
 		ArrayList<ArrayList<String>> targetPOS = new ArrayList<ArrayList<String>>();
@@ -287,7 +407,7 @@ public class AmjadFeatures
 
 		Properties props = new Properties();
 		// creates a StanfordCoreNLP object, with POS tagging, lemmatization, NER, parsing, and coreference resolution 
-        props.put("annotators", "tokenize, ssplit, parse");
+        props.put("annotators", "tokenize, ssplit, pos, lemma, parse");
         StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
 		
         for (Citation citation : citations)
@@ -321,19 +441,40 @@ public class AmjadFeatures
             		dest_till = dest_string.indexOf('-');
             		dest_string = dest_string.substring(0, dest_till).toLowerCase();
 
-//            		System.out.println(source_string + "->" + dest_string + "," + edge.getRelation().toString());
             		to_write = edge.getRelation().toString() + "_" + source_string + "_" + dest_string;
             		if (!depmap.containsKey(to_write)) depmap.put(to_write, depmap.size()); 
             	}
             	IndexedWord source = dependencies.getNodeByWordPattern("<TREF>");
+            	
+            	nearestPOS = "-1";
             	distance = getBFSDistanceto3POS(dependencies,source,targetPOS,new ArrayList<IndexedWord>(), Integer.MAX_VALUE);
-//            	System.out.println(dependencies.toString());
+
+            	//Lemmatize
+            	if(!nearestPOS.equals("-1"))
+            	{
+            		String unlemmatized = nearestPOS.substring(0, nearestPOS.indexOf('-'));
+            		for(CoreLabel token: sentence.get(TokensAnnotation.class))
+                    {       
+                        String word = token.get(TextAnnotation.class);      
+                        if(!word.equals(unlemmatized)) continue;
+                        String lemma = token.get(LemmaAnnotation.class); 
+                        nearestPOS = lemma;
+//                      System.out.println("Word: " + unlemmatized + ", lemmatized version :" + lemma);
+                    }            		
+            	}
+            	
+            	if (!POS3map.containsKey(nearestPOS)) POS3map.put(nearestPOS, POS3map.size());           	
+
+        		citation.Features[9] = POS3map.get(nearestPOS);
+//        		System.out.println("Sentence: " + citation.Sentence[1] + "\nClosest POS: (" + nearestPOS + ", " + POS3map.get(nearestPOS) +")\n");
+            	System.out.println(count++);
 //            	System.out.println(dependencies.edgeListSorted().toString());
-            	System.out.println("Distance between TREF and required POS tag is: " + distance);            	
+//            	System.out.println("Distance between TREF and required POS tag is: " + distance);            	
     	    }	        	
             citation.Features[10] = distance;
         }
         FileOperations.writeObject(depmap, depfile);
+        FileOperations.writeObject(POS3map, POS3file);
         return citations;
 	}	
 
@@ -471,7 +612,7 @@ public class AmjadFeatures
 
 	public static void writeToARFF(ArrayList<Citation> citations)
 	{
-		int features = 7;	//Including outputs
+		int features = 10;	//Including outputs
 		try 
 		{
 			File file = new File("Outputs/Amjad/features_train.arff");
@@ -488,6 +629,9 @@ public class AmjadFeatures
 					+ "@attribute PP_1or3 {0,1}\n"
 					+ "@attribute negation {0,1}\n"
 					+ "@attribute speculation {0,1}\n"
+					+ "@attribute contrary {0,1}\n"
+					+ "@attribute headline {0,1,2,3,4}\n"
+					+ "@attribute subjectivity {-2,-1,0,1,2}\n"
 					+ "@attribute polarity {1,2,3}\n\n"
 					+ "@data\n";
 			
@@ -522,6 +666,7 @@ public class AmjadFeatures
 			e.printStackTrace();
 		}
 	}
+	
 	public static void plotPolarityProfiles(ArrayList<Citation> citations, HashMap<String, Paper> papers) throws IOException
 	{
 		/*
@@ -580,7 +725,6 @@ public class AmjadFeatures
 		
 	}
 	
-
 	public static int getBFSDistanceto3POS(SemanticGraph G, IndexedWord source, ArrayList<ArrayList<String>> targetPOS, ArrayList<IndexedWord> visitednodes, int distance)
 	{
 		int BFSDistance;
@@ -596,7 +740,11 @@ public class AmjadFeatures
 				{
 					for(String pos : list)
 					{
-						if(child.toString().contains(pos)) return 1;
+						if(child.toString().contains(pos)) 
+						{
+							nearestPOS = child.toString();
+							return 1;
+						}
 					}
 				}
 			}
