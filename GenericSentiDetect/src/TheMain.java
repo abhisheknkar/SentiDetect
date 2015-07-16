@@ -42,17 +42,15 @@ public class TheMain
 		else citations = DatasetReader.readAmjadCitations();
 		//Extract features here
 		citations = AmjadFeatures.cleanCitations(citations);
-		citations = AmjadFeatures.getFeatures0and1(citations);	
-		citations = AmjadFeatures.getFeature2(citations, papers);	
-		citations = AmjadFeatures.getFeature3(citations);
-		citations = AmjadFeatures.getFeature4(citations);
-		citations = AmjadFeatures.getFeature6(citations);
-		citations = AmjadFeatures.getFeature5(citations);
-		citations = AmjadFeatures.getFeature7(citations);
-		citations = AmjadFeatures.getFeature8(citations);
-		AmjadFeatures.writeToARFF(citations);
+		citations = AmjadFeatures.getContextFeature0and2(citations);	
+		citations = AmjadFeatures.getContextFeature4and5(citations);	
+		citations = AmjadFeatures.getContextFeature6_7and8(citations);	
+		
+		
+		AmjadFeatures.writeToARFF_Context(citations);
+		
+//		FileOperations.writeObject(citations, new File("Outputs/Amjad/Citations.tmp"));
 
-		FileOperations.writeObject(citations, new File("Outputs/Amjad/Citations.tmp"));
 	}	
 }
 
@@ -75,11 +73,15 @@ public class TheMain
 		citations = AmjadFeatures.getFeature8(citations);
 		citations = AmjadFeatures.getFeature9and10(citations);
 
+		citations = AmjadFeatures.getContextFeature0and2(citations);	
+		citations = AmjadFeatures.getContextFeature4and5(citations);	
+		citations = AmjadFeatures.getContextFeature6and8(citations);	
+
 		AmjadFeatures.getNegationCues();
 		AmjadFeatures.getSpeculationCues(new File("Datasets/bioscope/full_papers.xml"));
 		AmjadFeatures.getSpeculationCues(new File("Datasets/bioscope/abstracts.xml"));
 
-		AmjadFeatures.writeToARFF(citations);
+		AmjadFeatures.writeToARFF_Polarity(citations);
 		AmjadFeatures.computeSentenceScore_OpinionFinder(Citations, Words);	
 		AmjadFeatures.plotPolarityProfiles(citations, papers);
 

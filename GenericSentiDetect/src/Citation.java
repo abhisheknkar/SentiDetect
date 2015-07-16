@@ -7,13 +7,15 @@ public class Citation implements Serializable
 	int year;
 	String[] Sentence = new String[4];
 	int [] SentenceScore = new int[4];
-	int [] OpinionFinderScore = new int[4];
-	double [][] SentiWordnetScore = new double[4][2];
+//	int [] OpinionFinderScore = new int[4];
+//	double [][] SentiWordnetScore = new double[4][2];
 	int FunctionIndex;
 	int PolarityIndex;
 	int[] Features = new int[11];
+	int[][] ContextFeatures = new int[4][9];
 	int StanfordNLPScore_explicit;
 	/*
+	 * Polarity Features:
 	 * 0: Ref count
 	 * 1: Is Separate (1 means is separate)
 	 * 2: Self Citation
@@ -26,6 +28,17 @@ public class Citation implements Serializable
 	 * 8: Closest subjective clue
 	 * 9: Closest Verb / Adjective / Adverb
 	 * 10: Dependency Relations
+	 * 
+	 * Context Features:
+	 * 0: Demonstrative Determiners
+	 * 1: Conjunctive Adverbs
+	 * 2: Position
+	 * 3: Contains closest noun phrase
+	 * 4: 1st bigram
+	 * 5: 1st trigram
+	 * 6: References other than the target
+	 * 7: Mention of target reference (explicit or anaphoric)
+	 * 8: Multiple references
 	 */
 
 	public Citation(String[] Input)

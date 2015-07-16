@@ -36,7 +36,8 @@ public class AmjadFeatures
 	private final static String[] POSadv = {"RB","RBR","RBS", "WRB"};
 	private final static String[] POSverb = {"VB","VBD","VBG","VBN","VBP","VBZ"};
 	private final static String[] POSadj = {"JJ","JJR","JJS"};
-
+	private static final String[] demonstratives = {"this", "that", "these", "those"};
+	
 	public static ArrayList<Citation> cleanCitations(ArrayList<Citation> citations)
 	{
 		String REF = "<REF>.*?</REF>";
@@ -429,8 +430,8 @@ public class AmjadFeatures
             	// System.out.println(tree.toString());
     			
             	// this is the Stanford dependency graph of the current sentence
-            	SemanticGraph dependencies = sentence.get(CollapsedCCProcessedDependenciesAnnotation.class);
 
+            	SemanticGraph dependencies = sentence.get(CollapsedCCProcessedDependenciesAnnotation.class);
             	for(SemanticGraphEdge edge : dependencies.edgeListSorted())
             	{
             		source_string = edge.getSource().toString();
@@ -467,7 +468,8 @@ public class AmjadFeatures
 
         		citation.Features[9] = POS3map.get(nearestPOS);
 //        		System.out.println("Sentence: " + citation.Sentence[1] + "\nClosest POS: (" + nearestPOS + ", " + POS3map.get(nearestPOS) +")\n");
-            	System.out.println(count++);
+            	count++;
+        		if(count%10 == 0) System.out.println(count + " out of " + citations.size());
 //            	System.out.println(dependencies.edgeListSorted().toString());
 //            	System.out.println("Distance between TREF and required POS tag is: " + distance);            	
     	    }	        	
@@ -478,6 +480,112 @@ public class AmjadFeatures
         return citations;
 	}	
 
+	public static ArrayList<Citation> getContextFeature0and2(ArrayList<Citation> citations) throws IOException
+	{
+		boolean found = false;
+		for (Citation citation : citations)
+		{
+			for(int i = 0; i < 4; ++i)
+			{
+				citation.ContextFeatures[i][2] = i - 1;
+//				System.out.println(citation.ContextFeatures[i][2]);
+				
+				for (int j = 0; j < demonstratives.length; ++j)
+				{
+					found = citation.Sentence[i].toLowerCase().contains(demonstratives[j]);
+					if (found) 
+					{
+						citation.ContextFeatures[i][0]=1;
+//						System.out.println("Demonstrative: " + demonstratives[j] + ", Sentence: " + citation.Sentence[i]);
+						break;
+					}
+				}
+			}
+		}
+		return citations;
+	}
+
+	public static ArrayList<Citation> getContextFeature4and5(ArrayList<Citation> citations) throws IOException
+	{
+		/*
+		 * Bi- and tri- grams
+		 */
+		boolean readfromfile = false;
+		File bigramfile = new File("Outputs/bigramfeatures.tmp");
+		File trigramfile = new File("Outputs/trigramfeatures.tmp");
+
+		HashMap<String, Integer> bigrams = new HashMap<String, Integer>();
+		HashMap<String, Integer> trigrams = new HashMap<String, Integer>();
+		
+		if(readfromfile)
+		{
+			bigrams = FileOperations.readObject(bigramfile);
+			trigrams = FileOperations.readObject(trigramfile);
+		}
+		
+		String bigram, trigram;
+		String[] sentencesplit;
+		
+		for (Citation citation : citations)
+		{
+			for(int i = 0; i < 4; ++i)
+			{
+				sentencesplit = citation.Sentence[i].toLowerCase().split(" ");
+				if(sentencesplit.length >= 2) 
+				{
+					bigram = sentencesplit[0] + " " + sentencesplit[1];
+				}
+				else bigram = "-1";
+
+				if(sentencesplit.length >= 3) 
+				{
+					trigram = bigram + " " + sentencesplit[2];
+				}
+				else trigram = "-1";
+				
+				if(!bigrams.containsKey(bigram)) bigrams.put(bigram, bigrams.size());
+				if(!trigrams.containsKey(trigram)) trigrams.put(trigram, trigrams.size());
+
+				citation.ContextFeatures[i][4] = bigrams.get(bigram);
+				citation.ContextFeatures[i][5] = trigrams.get(trigram);
+
+//				System.out.println("Bigram: " + citation.ContextFeatures[i][4] + ", " + bigram + "\nTrigram: " + citation.ContextFeatures[i][5] + ", " + trigram);
+			}
+		}
+		return citations;
+	}
+
+	public static ArrayList<Citation> getContextFeature6_7and8(ArrayList<Citation> citations) throws IOException
+	{
+		for (Citation citation : citations)
+		{
+			for(int i = 0; i < 4; ++i)
+			{
+				if(citation.Sentence[i].contains("<REF>"))
+				{
+					citation.ContextFeatures[i][6] = 1;
+//					System.out.println("Sentence: " + citation.Sentence[i] + "\nContains other ref: " + citation.ContextFeatures[i][6]);
+				}
+				else citation.ContextFeatures[i][6] = 0;
+				
+				if(citation.Sentence[i].contains("<TREF>"))
+				{
+					citation.ContextFeatures[i][7] = 1;
+//					System.out.println("Sentence: " + citation.Sentence[i] + "\nContains other ref: " + citation.ContextFeatures[i][6]);
+				}
+				else citation.ContextFeatures[i][7] = 0;
+				
+				if(findNoOfOccurrences(citation.Sentence[i], "<REF>") + findNoOfOccurrences(citation.Sentence[i], "<TREF>") > 1)
+				{
+					citation.ContextFeatures[i][8] = 1;
+//					System.out.println("Contains multiple refs: " + citation.ContextFeatures[i][8] + "\n");
+				}
+				else citation.ContextFeatures[i][8] = 0;
+			}
+		}
+		return citations;
+	}
+	
 	public static int findNoOfOccurrences(String str, String findStr)
 	{
 		int lastIndex = 0;
@@ -494,50 +602,6 @@ public class AmjadFeatures
 		}
 //		System.out.println(count);	//		for (Citation Citation : citations)
 		return count;
-	}
-
-	public static void computeSentenceScore_OpinionFinder(ArrayList<Citation> citations, ArrayList<OpinionFinderWord> Words)
-	{
-		String Sentence;
-		int PolarityThreshold = 1;
-		int DisplayIndividualScores = 0;
-		int NoPrintFlag = 1;
-		
-		for (Citation Citation : citations)
-		{
-			for (int i = 0; i < 4; ++i)
-			{
-				if (Citation.SentenceScore[i] != 0)
-				{
-					Sentence = Citation.Sentence[i];
-					if (DisplayIndividualScores == 1) System.out.println(Sentence);
-					Citation.OpinionFinderScore[i] = OpinionFinder.computeScore_OpinionFinder(Words, Sentence, PolarityThreshold, DisplayIndividualScores, NoPrintFlag);
-					
-				}
-			}
-		}		
-	}
-
-	public static void computeSentenceScore_SentiWordnet(ArrayList<Citation> citations, HashMap<String, double[]> SentiWordnetWords)
-	{
-		String Sentence;
-		int PolarityThreshold = 1;
-		int DisplayIndividualScores = 0;
-		int NoPrintFlag = 1;
-		
-		for (Citation Citation : citations)
-		{
-			for (int i = 0; i < 4; ++i)
-			{
-				if (Citation.SentenceScore[i] != 0)
-				{
-					Sentence = Citation.Sentence[i];
-					if (DisplayIndividualScores == 1) System.out.println(Sentence);
-					Citation.SentiWordnetScore[i] = SentiWordnet.computeScore_SentiWordnet(SentiWordnetWords, Sentence, PolarityThreshold, DisplayIndividualScores, NoPrintFlag);
-					
-				}
-			}
-		}		
 	}
 
 	public static void computeSentenceScore_StanfordNLP(ArrayList<Citation> citations)
@@ -610,12 +674,12 @@ public class AmjadFeatures
 		}
 	}
 
-	public static void writeToARFF(ArrayList<Citation> citations)
+	public static void writeToARFF_Polarity(ArrayList<Citation> citations)
 	{
 		int features = 10;	//Including outputs
 		try 
 		{
-			File file = new File("Outputs/Amjad/features_train.arff");
+			File file = new File("Outputs/Amjad/features_polarity.arff");
  
 			// if file doesnt exists, then create it
 			if (!file.exists()) 
@@ -667,6 +731,68 @@ public class AmjadFeatures
 		}
 	}
 	
+	public static void writeToARFF_Context(ArrayList<Citation> citations)
+	{
+		int features = 8;	//Including outputs
+
+		int[] featurestowrite = {0,2,4,5,6,7,8};
+		
+		try 
+		{
+			File file = new File("Outputs/Amjad/features_context.arff");
+ 
+			// if file doesnt exists, then create it
+			if (!file.exists()) 
+			{
+				file.createNewFile();
+			}
+			String initialization = "@relation context\n\n"
+					+ "@attribute demonstrative {0,1}\n"
+					+ "@attribute position {-1,0,1,2}\n"
+					+ "@attribute bigram real\n"
+					+ "@attribute trigram real\n"
+					+ "@attribute refOther {0,1}\n"
+					+ "@attribute refTarget {0,1}\n"
+					+ "@attribute refMultiple {0,1}\n"
+					+ "@attribute context {0,1}\n\n"
+					+ "@data\n";
+			
+			String content;
+			
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+
+			int count = 0;
+			bw.write(initialization);
+			for (Citation citation : citations)
+			{
+				for (int j = 0; j < 4; ++j)
+				{
+					content = "";
+				 	for (int i = 0; i < features; ++i)
+					{
+						if (i!=features-1)
+						{
+							content += citation.ContextFeatures[j][featurestowrite[i]] + ",";
+						}
+						else 
+						{
+							content += citation.SentenceScore[j] + "\n";
+						}
+					}
+					bw.write(content);
+//					System.out.println(count++);
+				}	
+			}
+			bw.close();
+			System.out.println("ARFF File written");
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+	}
+
 	public static void plotPolarityProfiles(ArrayList<Citation> citations, HashMap<String, Paper> papers) throws IOException
 	{
 		/*
@@ -837,4 +963,16 @@ public class AmjadFeatures
 		System.out.println(speculations.size());
 		
 	}
+
+/*
+	public static ArrayList<Citation> getContextFeature0(ArrayList<Citation> citations) throws IOException
+	{
+		for (Citation citation : citations)
+		{
+			
+		}
+		return citations;
+	}
+*/
+
 }
