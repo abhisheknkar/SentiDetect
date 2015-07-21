@@ -964,15 +964,4 @@ public class AmjadFeatures
 		
 	}
 
-/*
-	public static ArrayList<Citation> getContextFeature0(ArrayList<Citation> citations) throws IOException
-	{
-		for (Citation citation : citations)
-		{
-			
-		}
-		return citations;
-	}
-*/
-
 }

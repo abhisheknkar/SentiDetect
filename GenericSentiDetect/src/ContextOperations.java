@@ -1,5 +1,11 @@
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -8,6 +14,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -15,21 +22,28 @@ import java.util.regex.Pattern;
 import java.util.Scanner;
 import java.lang.StringBuffer;
 
+import edu.stanford.nlp.ling.HasWord;
+import edu.stanford.nlp.ling.Sentence;
+import edu.stanford.nlp.process.DocumentPreprocessor;
+
 public class ContextOperations 
 {
 	private static final boolean verbose = false;
-	private static final String[] refnametypes = new String[4];
+	private static final boolean test = false;
+	private static final String[] refnametypes = new String[6];
 	private static final int TOTAL_CITATION_NAMETYPES = 4;
 	static
 	{
-		refnametypes[0] = "[A-Z][A-Za-z]*([ \r\n]+[A-Za-z]\\.?[-A-Za-z\n]+){1,5}";	//<FN> <LN>
-		refnametypes[1] = "[A-Z][A-Za-z]*,([ \r\n]+[A-Za-z]\\.?[-A-Za-z\n]+){1,5}"; //<LN>, <FN>			
-		refnametypes[2] = "([A-Z][\\. \r\n]+)+([A-Za-z][-A-Za-z\n]+){1,5}"; //I. <LN>			
-		refnametypes[3] = "([A-Z][-A-Za-z\n]+)+[, \r\n]+([A-Z][\\. \r\n])+"; //<LN>, I.		
+		refnametypes[0] = "[A-Z][-A-Za-z]*[ \r\n]+[a-z]+[ \r\n]+[A-Z][A-Za-z]*";//<FN> <small> <LN>
+		refnametypes[1] = "[A-Z][-A-Za-z]*([ \r\n]+[A-Za-z]\\.?[-A-Za-z\n]+){1,5}";	//<FN> <LN>
+		refnametypes[2] = "[A-Z][-A-Za-z]*,([ \r\n]+[A-Za-z]\\.?[-A-Za-z\n]+){1,5}"; //<LN>, <FN>			
+		refnametypes[3] = "([A-Z][\\. \r\n]+)+([A-Za-z][-A-Za-z\n]+){1,5}"; //I. <LN>			
+		refnametypes[4] = "([A-Z][-A-Za-z\n]+)+[, \r\n]+([A-Z][\\. \r\n])+"; //<LN>, I.		
+		refnametypes[5] = "[A-Z][-A-Za-z]*[ \r\n]+[A-Z][\\. \r\n]+[A-Z][-A-Za-z]*"; //<FN> M. <LN>
 	}
-	private static final String name = "(" + refnametypes[0] + "|" + refnametypes[1] + "|" + refnametypes[2] + "|" + refnametypes[3] + ")";
+	private static final String name = "(" + refnametypes[0] + "|" + refnametypes[1] + "|" + refnametypes[2] + "|" + refnametypes[3] + "|" + refnametypes[4] + ")";
 	private static final String whitespace = "[ \r\n]*";
-	private static final String EtAl = whitespace + "[Ee][Tt][ \\.]+[Aa][Ll][ \\.]*";
+	private static final String EtAl = whitespace + "[Ee][Tt][ \\.]+[Aa][Ll][, \\.]*";
 	private static final String COMMA = "[,;]?";
 	
 	private static final String nameoccurrence1 = name;
@@ -42,59 +56,128 @@ public class ContextOperations
 //************************Main function*****************************************	
 	public static void main(String[] args) throws IOException
 	{
-		boolean test = false;
+		/*
+		 * In main(), we iterate over the papers specified in search of citation contexts
+		 * First, we check if the paper exists.
+		 * For all those which do: 
+		 * 1. We create an entry in the map "references" with the paper id as the key and the list of references as the values
+		 * 2. Then we get the content of each paper from the file
+		 * 3. Then we get the location where the references start
+		 * 4. If it is a valid location, we try to get the attributes of all the references beyond that point: the author names, their surnames, the paper title, the year of pub.
+		 * 5. Now we try to get the context of each of those references in the text of the paper.
+		 * 6. For that, we first split the sentence upto refstart into 
+		 *  
+		 */
 		boolean append = true;
-		int count=0, paperlimit = 50;
-		int paperstart = 15;
+		int count=0; 
+		int paperstart = 0;
+		int paperlimit = 1000;
 		
 		long startTime = System.currentTimeMillis();
 		HashMap <String, Paper> papers = DatasetReader.readAANMetadata();
 		int refStart = 0;
 		HashMap<String,String> authorsurnamemap = new HashMap<String,String>();
 		HashMap<String, ArrayList<Reference>> references = null;
-		String filepath;
-		File fin = new File("Outputs/Contexts/AAN.tmp");
+		String filepath, finalexpression;
+		File fin = new File("Outputs/Contexts/references.tmp");
+		File ferror = new File("Outputs/Contexts/errorlog.txt");
 		
-		if(append) if(fin.exists()) references = FileOperations.readObject(fin);
+//		if(append) if(fin.exists()) references = FileOperations.readObject(fin);
 		if (references == null) references = new HashMap<String, ArrayList<Reference>>();
-		
+
 		for (Map.Entry<String, Paper> entry : papers.entrySet())
 		{
-			if(!test) 
+			try
 			{
-				++count; if(count > paperlimit) break;
-				if(count < paperstart) continue;
-				filepath = "C:/Abhishek_Narwekar/Papers,Datasets/Citation Polarity/Datasets/AAN/aan/papers_text/" + entry.getValue().id + ".txt";
-				System.out.println("Extracting reference from paper " + entry.getKey() + ", count = " + count);
-			}
-			else filepath = "Datasets/AAN/testpaper.txt";
-			File f = new File(filepath);
-			
-			if (f.exists())
-			{
-				if (test)references.put("test", new ArrayList<Reference>());
-				else references.put(entry.getKey(), new ArrayList<Reference>());
-				String content = new String(Files.readAllBytes(Paths.get(filepath)), StandardCharsets.UTF_8);
-				refStart = getRefSectionStart(content);
-				System.out.println("Refstart" + refStart);
-				
-				if (refStart > 0)
-				{
-					if(test)references = getPotentialAuthors("test", content.substring(refStart, content.length()), references);		
-					else references = getPotentialAuthors(entry.getKey(), content.substring(refStart, content.length()), references);
-					
-					for (Map.Entry<String, ArrayList<Reference>> e : references.entrySet())
-					{					
-						for (Reference r : e.getValue())
-						{
-							r = getContextofReference(content.substring(0, refStart), r);
-							r.citedid = getIDofCitedPaper(r, papers);
-	//						System.out.println(r.citedid);
-						}						
-					}
+				if(test) 
+				{	
+					++count;
+					if(count > 1) break;
+					filepath = "Datasets/AAN/testpaper.txt";
 				}
-				content = null;
-				if(test) break;
+				else 
+				{
+					++count; if(count > paperstart + paperlimit) break;
+					if(count < paperstart) continue;
+					filepath = "C:/Abhishek_Narwekar/Papers,Datasets/Citation Polarity/Datasets/AAN/aan/papers_text/" + entry.getValue().id + ".txt";
+					System.out.println("Extracting reference from paper " + entry.getKey() + ", count = " + count);
+				}
+				File f = new File(filepath);
+				
+				if (f.exists())
+				{
+					if (test)references.put("test", new ArrayList<Reference>());
+					else references.put(entry.getKey(), new ArrayList<Reference>());
+					String content = new String(Files.readAllBytes(Paths.get(filepath)), StandardCharsets.UTF_8);
+					
+					//Clean content
+					content = cleanString(content, false);
+									
+					refStart = getRefSectionStart(content);
+					
+					if (refStart > 0)
+					{
+						if(test)references = getPotentialAuthors("test", content.substring(refStart, content.length()), references);		
+						else references = getPotentialAuthors(entry.getKey(), content.substring(refStart, content.length()), references);
+						
+/*
+						for(Map.Entry<String, ArrayList<Reference>> reflist : references.entrySet())
+
+						{
+							System.out.println("In paper: " + reflist.getKey() + ", reference: ");
+							for(Reference ref : reflist.getValue())
+							{ 
+								System.out.println("\nReference---" + ref.reftext + "---has authors: ");
+								for(String surname : ref.authorsurnamemap.values())
+								{
+									System.out.println(surname + ",");
+								}
+							}
+						}
+*/						
+						//***Split content into sentences!
+						ArrayList<String> contentsplit = splitToSentence(content.substring(0, refStart));
+						for (Reference r : references.get(entry.getKey()))
+						{
+//							r = getContextofReference(content.substring(0, refStart), r);
+							r = getContextofReference2(contentsplit, r);
+							r.citedid = getIDofCitedPaper(r, papers);
+							
+							//Write to txt file
+							finalexpression = "";
+							finalexpression += entry.getKey() + "\t" + r.citedid;
+							
+							for (int j = 0; j < r.contexts.size(); ++j)
+								for (int i = 0; i < 4; ++i) 
+								{
+									finalexpression += "\t" + r.contexts.get(j)[i];
+								}
+							 
+							try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("Outputs/Contexts/r" + paperstart + "_" + (paperstart+paperlimit) + ".txt", true)))) 
+							{
+//								System.out.print(finalexpression);
+				 			    out.println(finalexpression);
+				 			}
+							catch (IOException e2) {}
+						}						
+						//Write outputs
+						if(count % 10  == 0) 
+						{
+							System.out.print("Writing outputs...\n");
+							FileOperations.writeObject(references, fin);
+						}
+					}
+					content = null;
+					if(test) break;
+				}
+			}
+			catch(Exception e)
+			{
+				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("Outputs/Contexts/errorlog.txt", true)))) {
+	 			    out.println("Error in count " + count + "; Message: " + e);
+	 			}catch (IOException e2) {
+	 			    //exception handling left as an exercise for the reader
+	 			}
 			}
 		}
 		FileOperations.writeObject(references, fin);
@@ -103,10 +186,28 @@ public class ContextOperations
 	}
 //*********************End of main***********************************************	
 
+	public static ArrayList<String> splitToSentence(String content) 
+	{		
+		String s;
+		Reader reader = new StringReader(content);
+		DocumentPreprocessor dp = new DocumentPreprocessor(reader);
+		ArrayList<String> sentenceList = new ArrayList<String>();
+
+		for (List<HasWord> sentence : dp) {
+		   String sentenceString = Sentence.listToString(sentence);
+		   s = sentenceString.toString();
+		   s = s.replaceAll("-LRB- ", "(");
+		   s = s.replaceAll(" -RRB-", ")");
+		   sentenceList.add(s);
+		}
+		return sentenceList;
+		
+	}
+
 	public static int getRefSectionStart(String content)
 	{
-//		String regex = "(?i)(r.?e.?f.?e.?r.?e.?n.?c.?e.?s)|(b.?i.?b.?l.?i.?o.?g.?r.?a.?p.?h.?y.?)";
-		String regex = "(?i)(r.?e.?f.?e.?r.?e.?n.?c.?e.?s)";
+		String regex = "(?i)(r.?e.?f.?e.?r.?e.?n.?c.?e.?s)|(?i)(b.?i.?b.?l.?i.?o.?g.?r.?a.?p.?h.?y.?)";
+//		String regex = "(?i)(r.?e.?f.?e.?r.?e.?n.?c.?e.?s)";
 
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(content);
@@ -139,6 +240,7 @@ public class ContextOperations
 		String year = "";
 
 		ArrayList<Reference> rList = new ArrayList<Reference>();
+//		System.out.println(matcher.find());
 		while(matcher.find())
 		{
 			Reference r = new Reference();
@@ -167,33 +269,38 @@ public class ContextOperations
 			r.reftext = allauthors;
 			r.year = year;
 			int lastoccur = 0;
-
+			
 			//Getting the surname: Identify the type of name
 			surnamearray = new String[authorarray.length];
 			for (int i = 0; i < authorarray.length; ++i)
 			{
-//				System.out.println(authorarray[i]);
-				for (int j = 0; j < refnametypes.length; ++j)
+				for (int j = 0; j < refnametypes.length ; ++j)
 				{
 					if (authorarray[i].matches(refnametypes[j]))
 					{
 						switch(j)
 						{
-							case 0:
+							case 1:
+							case 5:
 								lastoccur = authorarray[i].lastIndexOf(' ');
 								if(lastoccur<0) break;
 								surnamearray[i] = authorarray[i].substring(lastoccur+1, authorarray[i].length());
 								break;
-							case 1:
-							case 3:
+							case 2:
+							case 4:
 								lastoccur = authorarray[i].indexOf(',');
 								if(lastoccur<0) break;
 								surnamearray[i] = authorarray[i].substring(0, lastoccur);
 								break;
-							case 2:
+							case 3:
 								lastoccur = Math.max(authorarray[i].lastIndexOf('.'),authorarray[i].lastIndexOf(' '));
 								if(lastoccur<0) break;
 								surnamearray[i] = authorarray[i].substring(lastoccur+1, authorarray[i].length());
+								break;
+							case 0:
+								String[] namesplit = authorarray[i].split("[ \r\n]+");
+								if(namesplit.length > 2)
+								surnamearray[i] = namesplit[namesplit.length-2] + " " + namesplit[namesplit.length-1];
 								break;
 						}
 
@@ -210,7 +317,7 @@ public class ContextOperations
 		if (verbose)
 			for (Reference r1 : rList)
 			{
-				System.out.println("***\nRef Text: " + r1.reftext + ".\nAuthors(surnames):\n");
+				System.out.println("***\nRef Text: " + r1.reftext + ".\nAuthors(surnames):");
 				for (Map.Entry<String, String> e : r1.authorsurnamemap.entrySet())
 					System.out.println(e.getKey() + "-" + e.getValue());
 			}
@@ -226,6 +333,9 @@ public class ContextOperations
 		int temploc;
 		surnames = r.authorsurnamemap.values().toArray(surnames);
 
+		//Replace the newlines
+		content.replaceAll("\n", " ");
+		
 //		System.out.println(r.reftext);
 		
 		String yearbracket = "[\\(]?" + whitespace + r.year + whitespace + "[\\)]?";
@@ -248,7 +358,16 @@ public class ContextOperations
 			}
 		}
 		if (surnames.length > 0) citationnametype[3] = surnames[0] + COMMA + whitespace + yearbracket;	//A1 (year)
-	
+
+/*
+		System.out.println("\nLooking for the following name patterns:\n");
+		for (int i = 0; i < TOTAL_CITATION_NAMETYPES; ++i)
+		{
+			System.out.println(citationnametype[i]);
+		}
+*/		
+
+		
 		for (int i = 0; i < TOTAL_CITATION_NAMETYPES; ++i)
 		{
 			if (citationnametype[i].length() > 0) 
@@ -277,6 +396,8 @@ public class ContextOperations
 					
 					for (int k = 0; k < 4; ++k)
 					{
+						//Replace the newlines
+//						r.contexts.get(Math.max(0,r.contexts.size()-1))[k].replaceAll("\n", " ");
 						r.contexts.get(Math.max(0,r.contexts.size()-1))[k] = content.substring(fullstoplocs[k]+1, fullstoplocs[k+1]+1);
 					}
 					
@@ -291,11 +412,83 @@ public class ContextOperations
 		return r;
 	}
 	
+	public static Reference getContextofReference2(ArrayList<String> contentsplit, Reference r) throws IOException
+	{
+		String currentsentence;
+		String[] surnames = new String[r.authorsurnamemap.size()];
+		surnames = r.authorsurnamemap.values().toArray(surnames);
+	
+		//Divide entire content into sentences
+		
+		String yearbracket = "[\\(]?" + whitespace + r.year + whitespace + "[\\)]?";
+		String[] citationnametype = new String[TOTAL_CITATION_NAMETYPES];
+		for (int i = 0; i < TOTAL_CITATION_NAMETYPES; ++i) citationnametype[i] = "";
+		
+		Pattern p = null;
+		Matcher m = null;
+		
+		if (surnames.length > 0) citationnametype[0] = surnames[0] + COMMA + EtAl + whitespace + yearbracket; //<A1> et al (year)
+		if (surnames.length > 1)
+		{ 
+			citationnametype[1] = surnames[0] + whitespace + "[Aa][Nn][Dd]" + whitespace + surnames[1] + COMMA + whitespace + yearbracket;	//A1 and A2 (year)
+		}
+		if (surnames.length > 2)
+		{
+			for (int i = 0; i < surnames.length; ++i)
+			{
+				citationnametype[2] += surnames[i] + COMMA + whitespace + yearbracket;	//A1, ...AN (year)
+			}
+		}
+		if (surnames.length > 0) citationnametype[3] = surnames[0] + COMMA + whitespace + yearbracket;	//A1 (year)
+
+/*
+		System.out.println("\nLooking for the following name patterns:\n");
+		for (int i = 0; i < TOTAL_CITATION_NAMETYPES; ++i)
+		{
+			System.out.println(citationnametype[i]);
+		}
+*/		
+
+		
+		for (int i = 0; i < TOTAL_CITATION_NAMETYPES; ++i)
+		{
+			if (citationnametype[i].length() > 0) 
+			{	
+				//Search in each sentence
+				for (int j = 0; j < contentsplit.size(); ++j)
+				{
+					p = Pattern.compile(citationnametype[i]);
+					m = p.matcher(contentsplit.get(j));
+									
+					if (m.find())
+					{
+						if (verbose) System.out.println("Matched : \"" + m.group() + "\" at location: " + m.start());
+						
+						r.contexts.add(new String[4]);
+												
+						for (int k = 0; k < 4; ++k)
+						{
+							if(j + k - 1 < 0 || j + k - 1 > contentsplit.size()-1) continue;
+							r.contexts.get(Math.max(0,r.contexts.size()-1))[k] = contentsplit.get(j+k-1);
+						}
+						
+						if (verbose)
+						{
+							System.out.println("Context: ");
+							for (int l = 0; l < 4; ++l) System.out.println(l + " - " + r.contexts.get(r.contexts.size()-1)[l]);
+						}
+					}
+				}
+			}
+		}
+		return r;
+	}
+	
 	public static String cleanString(String input, boolean authorflag)
 	{
 		String output = input;
 		output = output.replaceAll("[\r\n]", " ");
-		if(authorflag) output = output.replaceAll("and", ",");
+		if(authorflag) output = output.replaceAll("\\band\\b", ",");
 		output = output.replaceAll("[ ]+", " ");
 		output = output.replaceAll(" +[,;]? +", ",");			
 

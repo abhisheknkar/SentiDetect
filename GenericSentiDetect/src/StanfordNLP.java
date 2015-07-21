@@ -5,12 +5,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.security.auth.kerberos.DelegationPermission;
 
 import edu.stanford.nlp.dcoref.CorefChain;
 import edu.stanford.nlp.dcoref.CorefCoreAnnotations.CorefChainAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations;
+import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.ling.CoreAnnotations.NamedEntityTagAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.PartOfSpeechAnnotation;
@@ -18,9 +22,12 @@ import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.TextAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
 import edu.stanford.nlp.ling.CoreLabel;
+import edu.stanford.nlp.ling.Sentence;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
+import edu.stanford.nlp.process.DocumentPreprocessor;
+import edu.stanford.nlp.process.PTBTokenizer.PTBTokenizerFactory;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.semgraph.SemanticGraphEdge;
 import edu.stanford.nlp.semgraph.SemanticGraphCoreAnnotations.CollapsedCCProcessedDependenciesAnnotation;
@@ -41,6 +48,66 @@ public class StanfordNLP
 	private final static String[] POSverb = {"VB","VBD","VBG","VBN","VBP","VBZ"};
 	private final static String[] POSadj = {"JJ","JJR","JJS"};
 	
+/*	public static void main(String[] args) throws IOException
+	{
+		// creates a StanfordCoreNLP object, with POS tagging, lemmatization, NER, parsing, and coreference resolution 
+		Properties props = new Properties();
+		props.put("annotators", "tokenize, ssplit, pos, lemma, ner");
+		StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+
+		// read some text in the text variable
+		String text = "He said, 'There are many types, for e.g. a, b and c. I wasn't convinced TBH.";// Add your text here!
+
+		// create an empty Annotation just with the given text
+		Annotation document = new Annotation(text);
+
+		// run all Annotators on this text
+		pipeline.annotate(document);
+
+		// these are all the sentences in this document
+		// a CoreMap is essentially a Map that uses class objects as keys and has values with custom types
+		List<CoreMap> sentences = document.get(SentencesAnnotation.class);
+
+		for(CoreMap sentence: sentences) {
+			System.out.println(sentence);
+		  // traversing the words in the current sentence
+		  // a CoreLabel is a CoreMap with additional token-specific methods
+		  for (CoreLabel token: sentence.get(TokensAnnotation.class)) {
+		    // this is the text of the token
+		    String word = token.get(TextAnnotation.class);
+		    // this is the POS tag of the token
+		    String pos = token.get(PartOfSpeechAnnotation.class);
+		    // this is the NER label of the token
+		    String ne = token.get(NamedEntityTagAnnotation.class);       
+		  }
+
+		}
+	}
+*/
+	public static void main(String[] args) throws IOException
+	{
+		long startTime = System.currentTimeMillis();
+//		String paragraph = "My 1st sentence. “Does it work for questions?” My third sentence.";
+//		String paragraph = "He said, 'There are many types, for e.g. a, b and c. I wasn't convinced TBH.";// Add your text here!
+		String paragraph = "I am e.g. Abhishek  (the dude).  I need to parse sentences. FAST!";// Add your text here!
+
+//		String paragraph = new String(Files.readAllBytes(Paths.get("Datasets/AAN/testpaper.txt")), StandardCharsets.UTF_8);
+		Reader reader = new StringReader(paragraph);
+		DocumentPreprocessor dp = new DocumentPreprocessor(reader);
+		List<String> sentenceList = new ArrayList<String>();
+	
+		for (List<HasWord> sentence : dp) {		
+		   String sentenceString = Sentence.listToString(sentence);
+		   sentenceList.add(sentenceString.toString());
+		}
+	
+		for (String sentence : sentenceList) {
+		   System.out.println(sentence+"\n***");
+		}
+		long endTime   = System.currentTimeMillis();
+		System.out.println("Total time: " + (endTime - startTime) + "ms.");		
+
+	}
 /*	public static void main(String[] args) throws IOException
     {		
 		long startTime = System.currentTimeMillis();
@@ -84,7 +151,7 @@ public class StanfordNLP
 		long endTime   = System.currentTimeMillis();
 		System.out.println("Total time: " + (endTime - startTime) + "ms.");		
     }
-*/
+
 	
 	public static String getClassofNodebyString(SemanticGraph dependencies, String input)
 	{
@@ -137,4 +204,5 @@ public class StanfordNLP
 		}
 		return distance;
 	}
+*/
 }
