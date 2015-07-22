@@ -54,4 +54,10 @@ public class Citation implements Serializable
 			 PolarityIndex = Integer.parseInt(Input[12]); if (PolarityIndex < 1 || PolarityIndex > 3) PolarityIndex = 1;
 		 }		 
 	}
+	
+	public Citation()
+	{		
+	}
+	
+	
 }

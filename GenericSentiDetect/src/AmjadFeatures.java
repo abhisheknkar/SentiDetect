@@ -674,14 +674,12 @@ public class AmjadFeatures
 		}
 	}
 
-	public static void writeToARFF_Polarity(ArrayList<Citation> citations)
+	public static void writeToARFF_Polarity(ArrayList<Citation> citations, File file) throws IOException
 	{
 		int features = 10;	//Including outputs
 		try 
 		{
-			File file = new File("Outputs/Amjad/features_polarity.arff");
- 
-			// if file doesnt exists, then create it
+			// if file doesn't exists, then create it
 			if (!file.exists()) 
 			{
 				file.createNewFile();

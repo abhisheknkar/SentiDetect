@@ -1,9 +1,12 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -92,6 +95,58 @@ public class DatasetReader
 		{
 			temp1 = line.split("\t");			
 			citations.add(new Citation(temp1));			
+		}
+		
+		if (saveFlag != 0) 
+		{
+			FileOperations.writeObject(citations, fout);
+		}
+		return citations;
+	}
+
+	public static ArrayList<Citation> readTestCitations(int start, int end) throws IOException
+	{		
+		File fin = new File("./Outputs/Contexts/r" + start + "_" + end + ".txt");
+		File fout = new File("./Outputs/citations/TestCitationList" + start + "_" + end + ".tmp");
+		File ferror = new File("./Outputs/Contexts/citations/errorlog_" + start + "_" + end + ".txt");
+		int saveFlag = 0;
+		
+		BufferedReader in = null;
+		in = new BufferedReader(new FileReader(fin));
+		
+		String line = null;
+		String[] temp1 = null;
+		
+		ArrayList<Citation> citations = new ArrayList<Citation>();
+		int count = 0;
+		while((line = in.readLine()) != null)
+		{
+			String[] temp2 = new String[13];
+			++count;
+			try
+			{
+				temp1 = line.split("\t");			
+				if(temp1.length > 3)
+				{
+					for(int i = 0; i < 3; ++i) temp2[i] = temp1[i];
+						
+					for(int i = 0; i < 4; ++i) 
+					{
+						temp2[3+2*i] = temp1[3+i];
+						temp2[4+2*i] = "1";
+					}
+					temp2[11] = "0"; temp2[12] = "0";
+
+					
+					citations.add(new Citation(temp2));							
+				}
+			}
+			catch(Exception e)
+			{
+				try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(ferror, true)))) {
+	 			    out.println("Error in count " + count + "; Message: " + e);
+	 			}
+			}
 		}
 		
 		if (saveFlag != 0) 

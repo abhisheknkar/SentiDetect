@@ -70,8 +70,8 @@ public class ContextOperations
 		 */
 		boolean append = true;
 		int count=0; 
-		int paperstart = 0;
-		int paperlimit = 1000;
+		int paperstart = 501;
+		int paperlimit = 99;
 		
 		long startTime = System.currentTimeMillis();
 		HashMap <String, Paper> papers = DatasetReader.readAANMetadata();
@@ -143,22 +143,27 @@ public class ContextOperations
 							r = getContextofReference2(contentsplit, r);
 							r.citedid = getIDofCitedPaper(r, papers);
 							
-							//Write to txt file
-							finalexpression = "";
-							finalexpression += entry.getKey() + "\t" + r.citedid;
-							
+
 							for (int j = 0; j < r.contexts.size(); ++j)
+							{
+								//Write to txt file
+								finalexpression = "";
+								finalexpression += entry.getKey() + "\t" + r.citedid + "\t" + r.year ;
 								for (int i = 0; i < 4; ++i) 
 								{
 									finalexpression += "\t" + r.contexts.get(j)[i];
 								}
 							 
-							try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("Outputs/Contexts/r" + paperstart + "_" + (paperstart+paperlimit) + ".txt", true)))) 
-							{
-//								System.out.print(finalexpression);
-				 			    out.println(finalexpression);
-				 			}
-							catch (IOException e2) {}
+								if(r.contexts.size() > 0 && !r.citedid.equals("-1"))
+								{
+									try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("Outputs/Contexts/r" + paperstart + "_" + (paperstart+paperlimit) + ".txt", true)))) 
+									{
+	//									System.out.print(finalexpression);
+						 			    out.println(finalexpression);
+						 			}
+									catch (IOException e2) {}
+								}
+							}
 						}						
 						//Write outputs
 						if(count % 10  == 0) 
@@ -196,8 +201,12 @@ public class ContextOperations
 		for (List<HasWord> sentence : dp) {
 		   String sentenceString = Sentence.listToString(sentence);
 		   s = sentenceString.toString();
-		   s = s.replaceAll("-LRB- ", "(");
-		   s = s.replaceAll(" -RRB-", ")");
+		   s = s.replaceAll("-LRB-[ ]*", "(");
+		   s = s.replaceAll("[ ]*-RRB-", ")");
+		   s = s.replaceAll("-LSB-[ ]*", "[");
+		   s = s.replaceAll("[ ]*-RSB-", "]");
+		   s = s.replaceAll("-LCB-[ ]*", "{");
+		   s = s.replaceAll("[ ]*-RCB-", "}");
 		   sentenceList.add(s);
 		}
 		return sentenceList;
@@ -267,7 +276,7 @@ public class ContextOperations
 			allauthors = cleanString(allauthors, true);
 			authorarray = allauthors.split(",[ ]*");
 			r.reftext = allauthors;
-			r.year = year;
+			r.year = year.substring(0, 4);	//Ignore the alphabet subscript.
 			int lastoccur = 0;
 			
 			//Getting the surname: Identify the type of name
@@ -488,6 +497,7 @@ public class ContextOperations
 	{
 		String output = input;
 		output = output.replaceAll("[\r\n]", " ");
+		output = output.replaceAll("\t", " ");
 		if(authorflag) output = output.replaceAll("\\band\\b", ",");
 		output = output.replaceAll("[ ]+", " ");
 		output = output.replaceAll(" +[,;]? +", ",");			
