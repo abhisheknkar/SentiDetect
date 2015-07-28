@@ -18,26 +18,24 @@ public class TheMain
 	{
 		long startTime = System.currentTimeMillis();
 		
-//		doAmjadOperations();
-		getTestFeatures();
+		doAmjadOperations();
+//		getTestFeatures();
 		
 		
 		long endTime   = System.currentTimeMillis();
 		System.out.println("Total time: " + (endTime - startTime) + "ms.");		
 	}
 
-	public static void getTestFeatures() throws IOException
+	public static ArrayList<Citation> getTestFeatures(ArrayList<Citation> citations) throws IOException
 	{
 		/*
 		 * This function reads the file containing the contexts into an arraylist of citations. 
 		 */
-		int start = 501;
-		int end = 600;
 
-		File fout_features_pol_test = new File("Outputs/Amjad/test_features/f" + start + "_" + end + ".arff");
-		
+//		File fout_features_pol_test = new File("Outputs/Amjad/test_features/f" + start + "_" + end + ".arff");
+
+		System.out.println("Extracting citations from test...");
 		HashMap<String, Paper> papers = DatasetReader.readAANMetadata();
-		ArrayList<Citation> citations = DatasetReader.readTestCitations(start, end);
 		citations = AmjadFeatures.cleanCitations(citations);
 		citations = AmjadFeatures.getFeatures0and1(citations);	
 		citations = AmjadFeatures.getFeature2(citations, papers);	
@@ -47,8 +45,9 @@ public class TheMain
 		citations = AmjadFeatures.getFeature5(citations);
 		citations = AmjadFeatures.getFeature7(citations);
 		citations = AmjadFeatures.getFeature8(citations);
-		AmjadFeatures.writeToARFF_Polarity(citations, fout_features_pol_test);
-
+//		AmjadFeatures.writeToARFF_Polarity(citations, fout_features_pol_test);
+		System.out.println("Extracted citations from test!");
+		return citations;
 	}
 	
 	public static void doAmjadOperations() throws IOException
@@ -78,11 +77,8 @@ public class TheMain
 		citations = AmjadFeatures.getFeature5(citations);
 		citations = AmjadFeatures.getFeature7(citations);
 		citations = AmjadFeatures.getFeature8(citations);
-		AmjadFeatures.writeToARFF_Polarity(citations, fout_features_pol);
-
-		
-		
-		AmjadFeatures.writeToARFF_Context(citations);
+//		AmjadFeatures.writeToARFF_Polarity(citations, fout_features_pol);
+//		AmjadFeatures.writeToARFF_Context(citations);
 		
 //		FileOperations.writeObject(citations, new File("Outputs/Amjad/Citations.tmp"));
 

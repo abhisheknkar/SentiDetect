@@ -16,12 +16,13 @@ public class Test1
 {
 	public static void main(String[] args) throws IOException
 	{
-		String source = "3";
-		String dest = "7";
-		SparseGraph<String, Integer> G = GeneralOperations.readGraph(new File("Datasets/graphinput.txt"), " ");
-		int distance = GeneralOperations.getBFSDistance(G, source, dest, new ArrayList<String>(), Integer.MAX_VALUE);
-		System.out.println("BFS Distance between " + source + " and "  + dest + " is " + distance);
-		
+		String content = "Are you a (hunter?";
+		Pattern p = Pattern.compile("[\\(]+");
+		Matcher m = p.matcher(content);
+						
+		if (m.find())
+		{
+			System.out.println("Matched : \"" + m.group() + "\" at location: " + m.start());
+		}
 	}
-
 }

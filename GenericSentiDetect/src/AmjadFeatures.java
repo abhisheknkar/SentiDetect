@@ -714,7 +714,8 @@ public class AmjadFeatures
 					}
 					else 
 					{
-						content += citation.PolarityIndex + "\n";
+						if(citation.PolarityIndex == -99) content += "?\n";
+						else content += citation.PolarityIndex + "\n";
 					}
 				}
 				bw.write(content);

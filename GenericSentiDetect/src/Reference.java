@@ -9,5 +9,6 @@ public class Reference implements Serializable
 	public String year;
 	public String titletext;
 	public String citedid;
+	public ArrayList<Integer> sentencenumbers = new ArrayList<Integer>();
 	
 }
